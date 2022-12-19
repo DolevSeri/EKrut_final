@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class AreaManager_MainViewController{
+	// COMMENT
 	//AreaManager_MainViewController myController;
 	@FXML
 	private Button btnexit;
