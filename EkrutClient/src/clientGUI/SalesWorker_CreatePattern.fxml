@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="485.0" prefHeight="482.0" prefWidth="310.0" style="-fx-background-color: #D0A9F5;">
+         <children>
+            <ImageView fx:id="icon" fitHeight="59.0" fitWidth="49.0" layoutX="247.0" layoutY="14.0" />
+            <ImageView fx:id="saleImage" fitHeight="264.0" fitWidth="282.0" layoutX="14.0" layoutY="117.0" />
+         </children>
+      </Pane>
+      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Button fx:id="btnSendSale" ellipsisString="" layoutX="259.0" layoutY="321.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="156.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Send to Activate" textAlignment="CENTER" textFill="#8d48e1" textOverrun="CLIP" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label layoutX="73.0" layoutY="-31.0" prefHeight="154.0" prefWidth="408.0" text="Create New Pattern" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="39.0" />
+         </font>
+      </Label>
+      <Label layoutX="75.0" layoutY="130.0" text="Discount Precent:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbDiscount" layoutX="250.0" layoutY="123.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Discount" />
+      <Label layoutX="75.0" layoutY="190.0" prefHeight="30.0" prefWidth="145.0" text="Choose Start Time:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbSrartTime" layoutX="250.0" layoutY="190.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Time" />
+      <Label layoutX="75.0" layoutY="250.0" prefHeight="30.0" prefWidth="145.0" text="Choose End Time:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbEndTime" layoutX="250.0" layoutY="250.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Time" />
+   </children>
+</AnchorPane>
