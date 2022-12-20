@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import entities.User;
 
 
 public class MySqlController {
@@ -46,6 +49,41 @@ public class MySqlController {
 			dbConnector = null;
 		}
 
+	}
+	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
+			ps.setString(1, userANDpassword.get(0));
+			ps.setString(2, userANDpassword.get(1));
+			ResultSet result = ps.executeQuery();
+			if (result.next() == false) {
+				return null;
+			} else {
+				//Save user details
+				User user = new User(result.getString("username"), result.getString("password"), result.getString("firstName"),
+						result.getString("lastName"), result.getString("email"),
+						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"));
+				//Set the login status to true so no one else can access it
+				try {
+					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
+					System.out.println("Update succsed");
+				} catch (SQLException e1) {
+					System.out.println("update user to loggedin failed!");
+				}
+				try {
+					ps.setBoolean(1, true);
+					ps.setString(2, result.getString("username"));
+					ps.executeUpdate();
+				} catch (Exception e) {
+					System.out.println("Executing statement-Updating login status on users table had failed!");
+				}
+				//Return user details
+				return user; 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static String viewUser(String ID) {

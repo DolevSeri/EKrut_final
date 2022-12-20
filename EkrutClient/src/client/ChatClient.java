@@ -63,6 +63,7 @@ public class ChatClient extends AbstractClient {
 		Message message = (Message) msg;
 		switch (message.getRequest()) {
 		case Connected:
+			System.out.println("Client connected to Server!");
 			break;
 		case Disconnected:
 			break;

@@ -46,9 +46,8 @@ public enum Request {
 
 	},
 	Unsuccsesful_LogIn {
-
 		public String toString() {
-			return "Log in Unsuccsesful Wrong username OR password";
+			return "Error! Wrong username OR password";
 		}
 	},
 }

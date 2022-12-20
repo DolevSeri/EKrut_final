@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.IdentificationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.IdentificationController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -32,7 +33,7 @@
             <Font name="Cooper Black" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogIn" layoutX="230.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogIn" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogIn" layoutX="230.0" layoutY="261.0" mnemonicParsing="false" onAction="#getLoginBtn" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogIn" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -40,8 +41,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <TextField fx:id="txtUserName" layoutX="191.0" layoutY="141.0" />
-      <TextField fx:id="txtPwd" layoutX="191.0" layoutY="195.0" />
+      <TextField fx:id="txtUsername" layoutX="191.0" layoutY="141.0" />
       <Label fx:id="lblUsername" layoutX="54.0" layoutY="141.0" text="UserName:" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
@@ -67,5 +67,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
+      <PasswordField fx:id="txtPswd" layoutX="192.0" layoutY="195.0" />
    </children>
 </AnchorPane>
