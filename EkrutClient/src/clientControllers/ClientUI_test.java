@@ -11,7 +11,7 @@ public class ClientUI_test extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-//da3
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
