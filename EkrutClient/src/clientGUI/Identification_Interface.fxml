@@ -58,7 +58,10 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ImageView fx:id="QRimage" fitHeight="108.0" fitWidth="131.0" layoutX="191.0" layoutY="355.0" />
+      <ImageView fx:id="QRimage" fitHeight="108.0" fitWidth="131.0" layoutX="191.0" layoutY="355.0">
+         <image>
+            <Image url="@../../../EkrutCommon/src/images/QR_Code.png" />
+         </image></ImageView>
       <Label fx:id="lblErrorOnDetails" layoutX="31.0" layoutY="233.0" prefHeight="22.0" prefWidth="454.0" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
