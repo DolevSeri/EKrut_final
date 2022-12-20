@@ -41,7 +41,7 @@ public class ConnectFormController {
 	@FXML
     void getConnectBtn(ActionEvent event) throws IOException {
     	String ip = IPText.getText();
-		FXMLLoader loader = new FXMLLoader();
+		//FXMLLoader loader = new FXMLLoader();
 		//commennFunction-בדיקה שלא ריק
     	// Validate
     	if(checkNull(ip)){
@@ -49,16 +49,27 @@ public class ConnectFormController {
     		return; 
     	}
     	ClientUI.setChat(ip,5555);
-		ClientUI.chat.accept(new Message(Request.Connect_request,null));  // change later to Message OBJECT 
-		
+		//ClientUI.chat.accept(new Message(Request.Connect_request,null));  // change later to Message OBJECT 
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/Identification_Interface.fxml"));
+		try {
+			loader.load();
+			Parent root = loader.getRoot();
+			stage.getScene().setRoot(root);
+			stage.sizeToScene();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	
     	// Go to next screen (controller creates the screen)
-		((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
-		Stage primaryStage1 = new Stage();
-		AnchorPane root = loader.load(getClass().getResource("/clientGUI/Identification_Interface.fxml").openStream());
-		Scene scene = new Scene(root);			
-		primaryStage1.setTitle("Connection Form");
-		primaryStage1.setScene(scene);		
-		primaryStage1.show();
+//		((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
+//		Stage primaryStage1 = new Stage();
+//		AnchorPane root = loader.load(getClass().getResource("/clientGUI/Identification_Interface.fxml").openStream());
+//		Scene scene = new Scene(root);			
+//		primaryStage1.setTitle("Connection Form");
+//		primaryStage1.setScene(scene);		
+//		primaryStage1.show();
 
     	
     }
