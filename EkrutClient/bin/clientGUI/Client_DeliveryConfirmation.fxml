@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
+         <children>
+            <Label layoutX="149.0" layoutY="14.0" text="OL_Configuration" />
+            <ImageView fitHeight="329.0" fitWidth="237.0" layoutX="16.0" layoutY="90.0">
+               <image>
+                  <Image url="@../images/Orders.jpeg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="58.0" layoutY="-23.0" prefHeight="154.0" prefWidth="504.0" text="Delivery Confirmation" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="37.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnConfirm" layoutX="325.0" layoutY="414.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="166.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Confirm And Pay" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Button fx:id="btnBack" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Button fx:id="btnCancel" layoutX="120.0" layoutY="414.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Cancel Order" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label layoutX="137.0" layoutY="257.0" prefHeight="20.0" prefWidth="87.0" text="Total Price:" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtTotalPrice" editable="false" layoutX="250.0" layoutY="254.0" promptText="0" />
+      <Line endX="100.0" layoutX="400.0" layoutY="295.0" startX="-370.6000061035156" />
+      <Label layoutX="48.0" layoutY="347.0" text="Enter Address:" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAddress" layoutX="178.0" layoutY="347.0" prefHeight="26.0" prefWidth="180.0" promptText="Ha-HAgana 10, Kiryat Atta" />
+      <Button fx:id="btnCheckAddress" layoutX="400.0" layoutY="347.0" mnemonicParsing="false" style="-fx-background-color: #CEF6F5; -fx-border-color: GREY;" text="Set Address">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="46.0" layoutY="96.0" prefHeight="145.0" prefWidth="438.0">
+         <content>
+            <GridPane fx:id="gpRecipte" prefHeight="147.0" prefWidth="439.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="37.0" layoutY="13.0" text="Product" textFill="#8d48e1" underline="true">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label layoutX="44.0" layoutY="15.0" text="Quantity" textFill="#8d48e1" underline="true">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label layoutX="56.0" layoutY="14.0" text="Price" textFill="#8d48e1" underline="true">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Label layoutX="50.0" layoutY="305.0" text="Please enter: Street, house number and city with space between them. " textFill="#ec28b1" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="224.0" layoutY="323.0" text="For example:" textFill="#ec28b1" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAddressConfirmation" layoutX="62.0" layoutY="383.0" prefHeight="18.0" prefWidth="399.0" />
+   </children>
+</AnchorPane>
