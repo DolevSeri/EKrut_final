@@ -19,6 +19,7 @@ public class AreaManager_MainViewController{
 	//////
 	//////
 	//AreaManager_MainViewController myController;
+	// its all Inbars fault.
 	@FXML
 	private Button btnexit;
 
