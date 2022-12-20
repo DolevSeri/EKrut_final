@@ -3,26 +3,21 @@ package clientControllers;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import enums.Request;
 import client.ChatClient;
 import client.ClientUI;
-import client.ClientUI;
+import common.SetScene;
 import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class IdentificationController {
@@ -52,6 +47,8 @@ public class IdentificationController {
 
 	@FXML
 	private Label lblErrorOnDetails;
+	
+	private SetScene newScreen = new SetScene();
 
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
@@ -69,23 +66,21 @@ public class IdentificationController {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(txtUsername.getText());
 		usernameAndPsw.add(txtPswd.getText());
-		System.out.println("dkdkkd");
 		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
-		System.out.println("dkdkkd");
 		// if user is already loggedin
-		if (ChatClient.user.getIsLoggedIn() == true) {
+		if(!ChatClient.userController.isUserExist()) {
+			//In case the user login input was invalid (username/password) - error label will be shown
 			lblErrorOnDetails.setVisible(true);
-			lblErrorOnDetails.setText(Request.LoggedIn_UnsuccsesAlreadyLoggedIn.toString());
+			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
 		}
-		// if user is not found
-		else if (ChatClient.user.getUsername() == null) {
-			lblErrorOnDetails.setVisible(true);
-			lblErrorOnDetails.setText(Request.Unsuccsesful_LogIn.toString());
-		}
-		// if log in succseed
 		else {
-			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-
+			if(ChatClient.userController.getUser().isLoggedIn() == true) {
+				lblErrorOnDetails.setVisible(true);
+				lblErrorOnDetails.setText("User is already logged in!");
+			}
+			else {
+				((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
+			}
 		}
 	}
 }

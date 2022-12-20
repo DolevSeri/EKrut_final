@@ -8,7 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entities.User;
-
+import enums.Region;
+import enums.Role;
 
 public class MySqlController {
 
@@ -50,35 +51,40 @@ public class MySqlController {
 		}
 
 	}
+
 	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
 			ps.setString(1, userANDpassword.get(0));
 			ps.setString(2, userANDpassword.get(1));
 			ResultSet result = ps.executeQuery();
 			if (result.next() == false) {
 				return null;
 			} else {
-				//Save user details
+				// Save user details
 				User user = new User(result.getString("username"), result.getString("password"), result.getString("firstName"),
-						result.getString("lastName"), result.getString("email"),
-						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"));
-				//Set the login status to true so no one else can access it
+						result.getString("lastName"), result.getString("email"), result.getString("phoneNumber"),
+						result.getBoolean("isLoggedIn"), result.getString("id"), Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+				// Set the login status to true so no one else can access it
 				try {
+
 					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
 					System.out.println("Update succsed");
 				} catch (SQLException e1) {
 					System.out.println("update user to loggedin failed!");
 				}
 				try {
+
 					ps.setBoolean(1, true);
 					ps.setString(2, result.getString("username"));
 					ps.executeUpdate();
 				} catch (Exception e) {
 					System.out.println("Executing statement-Updating login status on users table had failed!");
 				}
-				//Return user details
-				return user; 
+				// Return user details
+
+				return user;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,27 +94,27 @@ public class MySqlController {
 
 	public static String viewUser(String ID) {
 		String sub = "";
-		//Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
+		// Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
 		PreparedStatement stmt;
 		System.err.println(ID);
 		try {
-			stmt = dbConnector.prepareStatement("SELECT * FROM ekrutdb.subscriber WHERE ID=\"" + ID +"\";");
+			stmt = dbConnector.prepareStatement("SELECT * FROM ekrutdb.subscriber WHERE ID=\"" + ID + "\";");
 			ResultSet res = stmt.executeQuery();
-			//System.out.println(res.getNString(0));
+			// System.out.println(res.getNString(0));
 			while (res.next()) {
-			sub+=(res.getString(1))+" ";
-			sub+=(res.getString(2))+" ";
-			sub+=(res.getString(3))+" ";
-			sub+=(res.getString(4)+" ");
-			sub+=(res.getString(5))+" ";
-			sub+=(res.getString(6)+" ");
-			sub+=(res.getString(7));
-			System.out.println("Import data suceeded");
+				sub += (res.getString(1)) + " ";
+				sub += (res.getString(2)) + " ";
+				sub += (res.getString(3)) + " ";
+				sub += (res.getString(4) + " ");
+				sub += (res.getString(5)) + " ";
+				sub += (res.getString(6) + " ");
+				sub += (res.getString(7));
+				System.out.println("Import data suceeded");
 
 			}
 		} catch (SQLException e) {
 			System.out.println("Import data fail!!!");
-			
+
 		}
 		System.out.println("!" + sub.toString());
 
@@ -120,21 +126,20 @@ public class MySqlController {
 		PreparedStatement ps = null;
 		try {
 			ps = dbConnector.prepareStatement(
-					"UPDATE ekrutdb.subscriber SET creditCardNumber = ?,"
-					+ " subscriberNumber = ? WHERE ID = ?");
+					"UPDATE ekrutdb.subscriber SET creditCardNumber = ?," + " subscriberNumber = ? WHERE ID = ?");
 		} catch (SQLException e1) {
 			System.out.println("Statement failure");
 		}
 		try {
-			System.out.println(updatedSubscriber[1]+" " + updatedSubscriber[2] + " " + updatedSubscriber[3]);
+			System.out.println(updatedSubscriber[1] + " " + updatedSubscriber[2] + " " + updatedSubscriber[3]);
 			ps.setString(1, updatedSubscriber[2]);
-			
+
 			ps.setString(2, updatedSubscriber[3]);
 			System.out.println("2131");
 			ps.setString(3, updatedSubscriber[1]);
 			System.out.println("!#@!#");
 			ps.executeUpdate();
-			
+
 			System.out.println("Update data suceeded");
 		} catch (Exception e) {
 			System.out.println("Update data fail!!!");

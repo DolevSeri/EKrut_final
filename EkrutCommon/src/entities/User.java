@@ -2,7 +2,10 @@ package entities;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+import enums.Region;
+import enums.Role;
+
+public class User implements Serializable {
 
 	/**
 	 * 
@@ -16,9 +19,11 @@ public class User implements Serializable{
 	private String phoneNumber;
 	private boolean isLoggedIn;
 	private String id;
+	private Role role;
+	private Region region;
 
 	public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
-			boolean isLoggedIn, String id) {
+			boolean isLoggedIn, String id, Role role, Region region) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -28,61 +33,88 @@ public class User implements Serializable{
 		this.phoneNumber = phoneNumber;
 		this.isLoggedIn = isLoggedIn;
 		this.id = id;
+		this.role = role;
+		this.region = region;
 	}
 
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
-	public String getPswd() {
-		return this.password;
+	public String getPassword() {
+		return password;
 	}
 
 	public String getFirstName() {
-		return this.firstName;
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public Region getRegion() {
+		return region;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public String getLastName() {
-		return this.lastName;
-	}
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String userId) {
-		this.id = userId;
-	}
-
-	public String getPhoneNumber() {
-		return this.phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getEmail() {
-		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public boolean getIsLoggedIn() {
-		return isLoggedIn;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public void setRegion(Region region) {
+		this.region = region;
 	}
 }
