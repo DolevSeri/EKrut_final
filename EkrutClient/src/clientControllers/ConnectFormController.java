@@ -49,7 +49,7 @@ public class ConnectFormController {
     		return; 
     	}
     	ClientUI.setChat(ip,5555);
-		//ClientUI.chat.accept(new Message(Request.Connect_request,null));  // change later to Message OBJECT 
+		ClientUI.chat.accept(new Message(Request.Connect_request,null));  // change later to Message OBJECT 
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/Identification_Interface.fxml"));
 		try {

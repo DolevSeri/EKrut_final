@@ -4,8 +4,12 @@
 package server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import entities.ClientConnected;
+import entities.Message;
+import entities.User;
+import enums.Request;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
@@ -28,7 +32,7 @@ public class EchoServer extends AbstractServer {
 	/**
 	 * The default port to listen on.
 	 */
-	// final public static int DEFAULT_PORT = 5555;
+	final public static int DEFAULT_PORT = 5555;
 
 	// Constructors ****************************************************
 
@@ -59,63 +63,64 @@ public class EchoServer extends AbstractServer {
 	 * @param
 	 */
 	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
-		if (msg instanceof String) {
-			String messageFromClient = String.valueOf(msg);
-
-			String[] result = messageFromClient.split("\\s");
-			System.out.println("Message received: " + result[0] +" from " + client);
-			//System.out.println("Message received: " + messageFromClient + " from " + client);
-			switch (result[0]) {
-
-			case "Connect":
-				updateClientList(client, "Connected");
-				try {
-					client.sendToClient("Connected");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Could not send message to client.");
-				}
-				break;
-			case "Disconnect":
-				updateClientList(client, "Disconnected");
-				try {
-					client.sendToClient("Disconnected");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Could not send message to client.");
-				}
-				break;
-			case "View":
-				try {
-					//sub = MySqlController.viewUser(result[1]);
-					//ArrayList<String> arr = new ArrayList<>();
-					//arr.add(sub.toString());
-					client.sendToClient("View "+MySqlController.viewUser(result[1]));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Could not send message to client.");
-				}
-				break;
-			case "Update":
-				try {
-					MySqlController.updateSubscriberTable(result);
-					client.sendToClient("Update succeeded");
-				} catch (IOException e) {
-					System.out.println("Could not send message to client.");
-				}
-			default:
-				break;
+		Message messageFromClient = (Message) msg;
+		switch (messageFromClient.getRequest()) {
+		case Connect_request:
+			updateClientList(client, "Connected");
+			try {
+				client.sendToClient(new Message(Request.Connected, null));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Could not send message to client.");
 			}
+			break;
+		case Disconnect_request:
+			updateClientList(client, "Disconnected");
+			try {
+				client.sendToClient(new Message(Request.Disconnected, null));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Login_Request:
+			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
+			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
+			Message msgToClient; // msg for server
+			if (user != null) {
+				if(user.getIsLoggedIn() == false) {
+					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPswd());
+					System.out.println("User details were imported successfully");
+					msgToClient = new Message(Request.LoggedIn_Succses, user);
+				}
+				else {
+					System.out.println("User already logged in");
+					msgToClient = new Message(Request.Unsuccsesful_LogIn, user);
+				}
+			} else {
+				System.out.println("User login failed");
+				msgToClient = new Message(Request.Unsuccsesful_LogIn, null);
+			}
+			// Send message to the client that everything went well
+			try {
+				client.sendToClient(msgToClient);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
 	private void updateClientList(ConnectionToClient client, String connectionStatus) {
-		//if (connectionStatus.equals("Disconnect")) {
+		// if (connectionStatus.equals("Disconnect")) {
 		for (int i = 0; i < clientList.size(); i++) {
 			if (clientList.get(i).getIP().equals(client.getInetAddress().getHostAddress()))
 				clientList.remove(i);
-			}
-		
+		}
+
 		clientList.add(new ClientConnected(client.getInetAddress().getHostAddress(),
 				client.getInetAddress().getHostAddress(), connectionStatus));
 		// System.out.println(clientList);

@@ -55,8 +55,6 @@ public class IdentificationController {
 
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
-		logoImage.setImage(new Image("/images/FullLogo_Transparent_NoBuffer.png"));
-		QRimage.setImage(new Image("/images/QR_Code.png"));
 	}
 
 	@FXML
