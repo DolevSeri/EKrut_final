@@ -120,13 +120,6 @@ public class EchoServer extends AbstractServer {
 				client.getInetAddress().getHostAddress(), connectionStatus));
 		// System.out.println(clientList);
 	}
-	/*
-	 * private void updateClientList() {
-	 * 
-	 * (new clientConnected("1312312","dsadasdsad","SAdad")); (new
-	 * clientConnected("131212","adasdsad","Sdad")); (new
-	 * clientConnected("1","ds","S")); }
-	 */
 
 	/**
 	 * This method overrides the one in the superclass. Called when the server

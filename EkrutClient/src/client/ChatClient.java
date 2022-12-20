@@ -10,6 +10,7 @@ import java.io.IOException;
 import common.ChatIF;
 import entities.Message;
 import entities.Subscriber;
+import entities.User;
 import ocsf.client.AbstractClient;
 
 /**
@@ -30,6 +31,8 @@ public class ChatClient extends AbstractClient {
 	 */
 	ChatIF clientUI;
 	public static Subscriber s1 = new Subscriber(null, null, null, null, null, null, null);
+	public static User user = new User();
+
 	public static boolean awaitResponse = false;
 
 	// Constructors ****************************************************
@@ -57,9 +60,16 @@ public class ChatClient extends AbstractClient {
 	 */
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
-		Message msgFromServer = (Message) msg;
-		switch (msgFromServer.getRequest()) {
+		Message message = (Message) msg;
+		switch (message.getRequest()) {
 		case Connected:
+			break;
+		case Disconnected:
+			break;
+		case LoggedIn_Succses:
+			user = (User)message.getObject();
+			break;
+		default:
 			break;
 		}
 	}
