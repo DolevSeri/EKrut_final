@@ -11,6 +11,7 @@ import common.ChatIF;
 import entities.Message;
 import entities.Subscriber;
 import entities.User;
+import entityControllers.UserController;
 import ocsf.client.AbstractClient;
 
 /**
@@ -31,7 +32,7 @@ public class ChatClient extends AbstractClient {
 	 */
 	ChatIF clientUI;
 	public static Subscriber s1 = new Subscriber(null, null, null, null, null, null, null);
-	public static User user = new User();
+	public static UserController userController = new UserController();
 
 	public static boolean awaitResponse = false;
 
@@ -68,7 +69,13 @@ public class ChatClient extends AbstractClient {
 		case Disconnected:
 			break;
 		case LoggedIn_Succses:
-			user = (User)message.getObject();
+			userController.setUser((User)message.getObject());
+			break;
+		case LoggedIn_UnsuccsesAlreadyLoggedIn:
+			userController.setUser((User)message.getObject());
+			break;
+		case Unsuccsesful_LogIn:
+			userController.setUser(null);
 			break;
 		default:
 			break;

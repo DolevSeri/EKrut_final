@@ -84,20 +84,22 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Login_Request:
+			System.out.println("hi");
 			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
 			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
 			Message msgToClient; // msg for server
 			if (user != null) {
-				if(user.getIsLoggedIn() == false) {
-					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPswd());
+				if (user.isLoggedIn() == false) {
+					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
 					System.out.println("User details were imported successfully");
 					msgToClient = new Message(Request.LoggedIn_Succses, user);
-				}
-				else {
+				} else {
+					System.out.println("hi");
 					System.out.println("User already logged in");
-					msgToClient = new Message(Request.Unsuccsesful_LogIn, user);
+					msgToClient = new Message(Request.LoggedIn_UnsuccsesAlreadyLoggedIn, user);
 				}
-			} else {
+			} 
+			else {
 				System.out.println("User login failed");
 				msgToClient = new Message(Request.Unsuccsesful_LogIn, null);
 			}
