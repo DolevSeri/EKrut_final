@@ -52,11 +52,11 @@ public enum Request {
 	},
 	Logout_request {
 		public String toString() {
-			return "Request Disconnect";
+			return "Request Logout";
 		}
 	},	LoggedOut {
 		public String toString() {
-			return "Request Disconnect";
+			return "User Logged out";
 		}
 	},
 }

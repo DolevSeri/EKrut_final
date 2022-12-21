@@ -10,19 +10,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- * @author peleg
- * IdentificationController- a controller class that will connect between the fxml:Identification_Interface to the server by handle all
- * the action from this screen.
+ * @author peleg IdentificationController- a controller class that will connect
+ *         between the fxml:Identification_Interface to the server by handle all
+ *         the action from this screen.
  *
  */
 public class IdentificationController {
@@ -46,7 +45,10 @@ public class IdentificationController {
 
 	@FXML
 	private ImageView logoImage;
-
+	
+	/**
+	 *QRimag - an image that will help us to connect the subscriber to system.
+	 */
 	@FXML
 	private ImageView QRimage;
 
@@ -58,7 +60,7 @@ public class IdentificationController {
 
 	@FXML
 	private Label lblErrorOnDetails;
-	
+
 	private SetSceneController newScreen = new SetSceneController();
 
 	public void initialize() {
@@ -67,66 +69,67 @@ public class IdentificationController {
 
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
+		ClientUI.chat.accept(new Message(Request.Disconnect_request,null));
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		System.out.println("exit ConnectForm");
+		System.out.println("exit Identification Form");
 		System.exit(0);
 	}
-
+	/**@author Ron
+	 * getLoginBtn-a method that gets an action:clicked on Login button,then client sends login request to server.
+	 * usernameAndPsw - an ArrayList that keeps the user name and password and send it to server.
+	 * @param event
+	 * @throws Exception
+	 */
 	@FXML
-	
 	public void getLoginBtn(ActionEvent event) throws Exception {
+		
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(txtUsername.getText());
 		usernameAndPsw.add(txtPswd.getText());
 		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
 		// if user is already loggedin
-		if(!ChatClient.userController.isUserExist()) {
-			//In case the user login input was invalid (username/password) - error label will be shown
+		if (!ChatClient.userController.isUserExist()) {
+			// In case the user login input was invalid (username/password) - error label
+			// will be shown
 			lblErrorOnDetails.setVisible(true);
 			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
-		}
-		else {
-			if(ChatClient.userController.getUser().isLoggedIn() == true) {
+		} else {
+			if (ChatClient.userController.getUser().isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
-			}
-			else {
-				((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
-				Stage primaryStage = new Stage();
-				AnchorPane root = loader.load(getClass().getResource("/clientGUI/"+ChatClient.userController.getUser().getRole().toString()));
-				Scene scene = new Scene(root);	
-				primaryStage.setTitle("Costumer Menu");
-				primaryStage.setScene(scene);		
-				primaryStage.show();
+			} else {
+				((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+				// loading next screen for specific user.
+				newScreen.setScreen(new Stage(),
+						"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
 			}
 		}
 	}
-	
-	public void clickOnQRImage(ActionEvent event) throws Exception {
+
+	/**
+	 * @param event
+	 */
+	public void clickOnQRImage(MouseEvent event) {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add("costumer2");
 		usernameAndPsw.add("123456");
 		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
 		// if user is already loggedin
-		if(!ChatClient.userController.isUserExist()) {
-			//In case the user login input was invalid (username/password) - error label will be shown
+		if (!ChatClient.userController.isUserExist()) {
+			// In case the user login input was invalid (username/password) - error label
+			// will be shown
 			lblErrorOnDetails.setVisible(true);
 			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
-		}
-		else {
-			if(ChatClient.userController.getUser().isLoggedIn() == true) {
+		} else {
+			if (ChatClient.userController.getUser().isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
+			} else {
+				((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+				// loading next screen for specific user.
+				newScreen.setScreen(new Stage(),
+						"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
 			}
-			else {
-				((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
-				Stage primaryStage = new Stage();
-				AnchorPane root = loader.load(getClass().getResource("/clientGUI/"+ChatClient.userController.getUser().getRole().toString()));
-				Scene scene = new Scene(root);	
-				primaryStage.setTitle("Costumer Menu");
-				primaryStage.setScene(scene);		
-				primaryStage.show();
-			}
-		}
 		}
 	}
+}

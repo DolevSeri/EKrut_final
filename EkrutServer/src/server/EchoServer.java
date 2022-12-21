@@ -4,6 +4,7 @@
 package server;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import entities.ClientConnected;
@@ -111,6 +112,20 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+		case Logout_request:
+			User userLogout = (User)messageFromClient.getObject();
+			try {
+				MySqlController.UserLogoutAndUpdateDB(userLogout);
+				try {
+					client.sendToClient(new Message(Request.LoggedOut,null));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		default:
 			break;
 		}

@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OL_MainVieController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0">
+            <ImageView fx:id="imageLogo" fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0">
                <image>
                   <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
                </image>
@@ -21,7 +21,7 @@
             <Label layoutX="170.0" layoutY="14.0" text="OL_Configuration" />
          </children>
       </Pane>
-      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -63,7 +63,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut1" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

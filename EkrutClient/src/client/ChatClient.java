@@ -77,6 +77,8 @@ public class ChatClient extends AbstractClient {
 		case Unsuccsesful_LogIn:
 			userController.setUser(null);
 			break;
+		case LoggedOut:
+			userController.setUser(null);
 		default:
 			break;
 		}

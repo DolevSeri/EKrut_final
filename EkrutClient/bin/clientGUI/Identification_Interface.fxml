@@ -23,7 +23,7 @@
             <Label layoutX="170.0" layoutY="14.0" text="EK_Configuration" />
          </children>
       </Pane>
-      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -58,10 +58,11 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ImageView fx:id="QRimage" fitHeight="108.0" fitWidth="131.0" layoutX="191.0" layoutY="355.0" onMouseClicked="#clickOnQRImage" onTouchPressed="#clickOnQRImage">
+      <ImageView fx:id="QRimage" fitHeight="108.0" fitWidth="131.0" layoutX="191.0" layoutY="355.0" onMouseClicked="#clickOnQRImage" onMousePressed="#clickOnQRImage" onTouchPressed="#clickOnQRImage">
          <image>
             <Image url="@../../../EkrutCommon/src/images/QR_Code.png" />
-         </image></ImageView>
+         </image>
+      </ImageView>
       <Label fx:id="lblErrorOnDetails" layoutX="31.0" layoutY="233.0" prefHeight="22.0" prefWidth="454.0" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
