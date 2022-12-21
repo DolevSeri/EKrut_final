@@ -50,4 +50,13 @@ public enum Request {
 			return "Error! Wrong username OR password";
 		}
 	},
+	Logout_request {
+		public String toString() {
+			return "Request Disconnect";
+		}
+	},	LoggedOut {
+		public String toString() {
+			return "Request Disconnect";
+		}
+	},
 }
