@@ -9,23 +9,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_InventoryManagementFormController">
    <children>
       <Pane layoutX="472.0" prefHeight="482.0" prefWidth="323.0" style="-fx-background-color: #D0A9F5;">
          <children>
             <ImageView fitHeight="200.0" fitWidth="323.0" layoutX="11.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/inventory_dilemma.jpg" />
+                  <Image url="@../../../EkrutCommon/src/images/inventory_dilemma.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="260.0" layoutY="14.0">
                <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
+                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnexit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -35,7 +35,7 @@
             <Font name="Cooper Black" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnSetTreshold" layoutX="135.0" layoutY="154.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Set Treshold" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnSetTreshold" layoutX="135.0" layoutY="154.0" mnemonicParsing="false" onAction="#clickBtnSetTreshold" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Set Treshold" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -43,7 +43,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnCalls" layoutX="135.0" layoutY="277.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Stock Calls Management" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCalls" layoutX="135.0" layoutY="277.0" mnemonicParsing="false" onAction="#clickBtnStockCalls" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Stock Calls Management" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -51,7 +51,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btBack" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickBtnBack" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

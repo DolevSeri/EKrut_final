@@ -2,6 +2,7 @@ package clientControllers;
 
 import java.io.IOException;
 
+import client.ClientUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,10 +31,6 @@ public class AreaManager_MainViewController{
 	@FXML
 	private Button btnUserManagement;
 
-	@FXML
-	void clickBtnInventoryMangement(ActionEvent event) {
-
-	}
 
 	@FXML
 	void clickBtnLogOut(ActionEvent event) {
@@ -41,7 +38,7 @@ public class AreaManager_MainViewController{
 	}
 
 //	public static void main(String[] args) {
-//		launch(args);
+//		launch();
 //
 //	}
 //	
@@ -63,7 +60,7 @@ public class AreaManager_MainViewController{
 
 	@FXML
 	void clickBtnUserManagement(ActionEvent event) {
-	//	((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+//		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 //		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_UsersConfirmationForm.fxml"));
 //		//Parent root;
 //		try {
@@ -94,12 +91,41 @@ public class AreaManager_MainViewController{
 
 	@FXML
 	void clickBtnViewMonthlyReports(ActionEvent event) {
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_ReportChoose.fxml"));
+		try {
+			loader.load();
+			Parent root = loader.getRoot();
+			stage.getScene().setRoot(root);
+			stage.sizeToScene();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 
 	}
+	
+	@FXML
+	void clickBtnInventoryMangement(ActionEvent event) {
+
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_InventoryManagementForm.fxml"));
+		try {
+			loader.load();
+			Parent root = loader.getRoot();
+			stage.getScene().setRoot(root);
+			stage.sizeToScene();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
 
 	@FXML
 	void clickExitBtn(ActionEvent event) {
-
+		ClientUI.chat.accept("Disconnect");
+		System.exit(0);	
 	}
 
 }
