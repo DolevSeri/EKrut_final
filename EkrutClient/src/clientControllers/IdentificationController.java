@@ -1,23 +1,19 @@
 package clientControllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import client.ChatClient;
 import client.ClientUI;
-import common.SetScene;
 import entities.Message;
 import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -63,7 +59,7 @@ public class IdentificationController {
 	@FXML
 	private Label lblErrorOnDetails;
 	
-	private SetScene newScreen = new SetScene();
+	private SetSceneController newScreen = new SetSceneController();
 
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);

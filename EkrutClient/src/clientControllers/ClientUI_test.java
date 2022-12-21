@@ -1,8 +1,6 @@
 package clientControllers;
 
 import java.io.IOException;
-
-import common.SetScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -17,7 +15,7 @@ public class ClientUI_test extends Application {
 
 		
 
-		SetScene scene = new SetScene();
+		SetSceneController scene = new SetSceneController();
 		scene.setScreen(new Stage(), "/clientGUI/AreaManager_MainView.fxml");
 	}
 
