@@ -34,45 +34,23 @@ public class AreaManager_MainViewController{
 
 	@FXML
 	void clickBtnLogOut(ActionEvent event) {
-
+		ClientUI.chat.accept("Disconnect");
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/Identification_Interface.fxml"));
+		try {
+			loader.load();
+			Parent root = loader.getRoot();
+			stage.getScene().setRoot(root);
+			stage.sizeToScene();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 
-//	public static void main(String[] args) {
-//		launch();
-//
-//	}
-//	
-//	@Override 
-//	public void start(Stage primaryStage) throws Exception {
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_MainView.fxml"));
-//		Parent root;
-//		try {
-//			root = loader.load();
-//			my = loader.getController();
-//			Scene scene = new Scene(root);
-//			primaryStage.setScene(scene);
-//			primaryStage.show();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
 
 	@FXML
 	void clickBtnUserManagement(ActionEvent event) {
-//		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-//		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_UsersConfirmationForm.fxml"));
-//		//Parent root;
-//		try {
-//			root = loader.load();
-//			Scene scene = new Scene(root);
-//			Stage primaryStage = new Stage();
-//			primaryStage.setScene(scene);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	
 		
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_UsersConfirmationForm.fxml"));
@@ -85,8 +63,6 @@ public class AreaManager_MainViewController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
-
 	}
 
 	@FXML

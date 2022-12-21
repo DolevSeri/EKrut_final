@@ -2,7 +2,7 @@ package clientControllers;
 
 import java.io.IOException;
 
-
+import client.ClientUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,6 +41,12 @@ public class AreaManager_UsersConfirmationFormController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    }
+    
+    @FXML
+    void getExitBtn(ActionEvent event) {
+		ClientUI.chat.accept("Disconnect");
+		System.exit(0);	
     }
 
 }

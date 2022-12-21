@@ -8,39 +8,28 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class AreaManager_ReportChooseController {
+public class AreaManager_InventoryCallsController {
 
     @FXML
     private Button btnBack;
 
     @FXML
-    private Button btnShowReport;
+    private Button btnCreateCall;
 
     @FXML
     private Button btnexit1;
 
     @FXML
-    private ComboBox<?> cmbDevice;
+    private GridPane gpCallsList;
 
     @FXML
-    private ComboBox<?> cmbMonth;
-
-    @FXML
-    private ComboBox<?> cmbType;
-
-    @FXML
-    private ComboBox<?> cmbYear;
-
-    @FXML
-    void clickBtnBack(ActionEvent event) {
+    void clickBackBtn(ActionEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_MainView.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_InventoryManagementForm.fxml"));
 		try {
 			loader.load();
 			Parent root = loader.getRoot();
@@ -53,14 +42,15 @@ public class AreaManager_ReportChooseController {
     }
 
     @FXML
-    void clickBtnShowReport(ActionEvent event) {
+    void clickCreateNewCallBtn(ActionEvent event) {
 
     }
 
     @FXML
     void getExitBtn(ActionEvent event) {
 		ClientUI.chat.accept("Disconnect");
-		System.exit(0);	
+		System.exit(0);
     }
+
 
 }
