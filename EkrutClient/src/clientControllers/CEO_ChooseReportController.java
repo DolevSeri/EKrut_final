@@ -117,6 +117,7 @@ public class CEO_ChooseReportController {
 
     @FXML
     void getExitBtn(ActionEvent event) {
+    	//ClientUI.chat.accept("Disconnect");
 		System.exit(0);
     }
     
