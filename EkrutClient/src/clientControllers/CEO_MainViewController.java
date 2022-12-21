@@ -27,6 +27,7 @@ public class CEO_MainViewController {
 
     @FXML
     void getExitBtn(ActionEvent event)  throws Exception  {
+    	//ClientUI.chat.accept("Disconnect");
 		System.exit(0);
     }
 
