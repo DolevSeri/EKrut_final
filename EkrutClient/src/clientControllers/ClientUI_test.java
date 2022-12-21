@@ -18,7 +18,7 @@ public class ClientUI_test extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		//ClientLoginController controller = loader.getController();
 		///EkrutClient/src/clientGUI/AreaManager_MainView.fxml
-		Parent root = FXMLLoader.load(getClass().getResource("AreaManager_MainView.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/clientGUI/AreaManager_MainView.fxml"));
 		// Parent root = FXMLLoader.load(getClass().getResource("ClientLogin.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setScene(scene);
