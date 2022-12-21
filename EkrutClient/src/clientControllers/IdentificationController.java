@@ -66,6 +66,7 @@ public class IdentificationController {
 	}
 
 	@FXML
+	
 	public void getLoginBtn(ActionEvent event) throws Exception {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(txtUsername.getText());
