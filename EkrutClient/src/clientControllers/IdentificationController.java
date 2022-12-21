@@ -13,14 +13,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class IdentificationController {
+	FXMLLoader loader = new FXMLLoader();
 	@FXML
 	private TextField txtUsername = null;
 
@@ -80,6 +84,12 @@ public class IdentificationController {
 			}
 			else {
 				((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
+				Stage primaryStage = new Stage();
+				AnchorPane root = loader.load(getClass().getResource("/clientGUI/"+ChatClient.userController.getUser().getRole().toString()));
+				Scene scene = new Scene(root);	
+				primaryStage.setTitle("Costumer Menu");
+				primaryStage.setScene(scene);		
+				primaryStage.show();
 			}
 		}
 	}
