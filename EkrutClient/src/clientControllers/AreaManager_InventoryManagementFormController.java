@@ -31,6 +31,7 @@ public class AreaManager_InventoryManagementFormController {
     void clickBtnBack(ActionEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_MainView.fxml"));
+		
 		try {
 			loader.load();
 			Parent root = loader.getRoot();
