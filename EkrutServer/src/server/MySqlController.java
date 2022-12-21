@@ -11,8 +11,15 @@ import entities.User;
 import enums.Region;
 import enums.Role;
 
-public class MySqlController {
 
+
+/**
+ * @author peleg
+ * MySqlController- a controller class that will connect between the server and the DB by retrieving data from the database and sending it to the server.
+ *
+ */
+public class MySqlController {
+    
 	private static Connection dbConnector = null;
 
 	public static void connectToDB(String dbName, String dbUserName, String dbPwd) {
@@ -26,7 +33,7 @@ public class MySqlController {
 			/* handle the error */
 			System.out.println("Driver definition failed");
 		}
-		// "jdbc:mysql://localhost/ekrutdb?serverTimezone=IST"
+		
 		try {
 			dbConnector = DriverManager.getConnection(dbName, dbUserName, dbPwd);
 			System.out.println("SQL connection succeed");
@@ -51,7 +58,8 @@ public class MySqlController {
 		}
 
 	}
-
+/**peleg
+ * LoginCheckAndUpdateLoggedIn method-a method that get an ArrayList with username and password and will do the login operation for any user */
 	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
 		try {
 			PreparedStatement ps = dbConnector
@@ -62,6 +70,51 @@ public class MySqlController {
 			if (result.next() == false) {
 				return null;
 			} else {
+				/**peleg
+				 * user- a variable that will help us save the user that wants to log in */
+				// Save user details
+				User user = new User(result.getString("username"), result.getString("password"), result.getString("firstName"),
+						result.getString("lastName"), result.getString("email"), result.getString("phoneNumber"),
+						result.getBoolean("isLoggedIn"), result.getString("id"), Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+				// Set the login status to true so no one else can access it
+				try {
+
+					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
+					System.out.println("Update succsed");
+				} catch (SQLException e1) {
+					System.out.println("update user to loggedin failed!");
+				}
+				try {
+
+					ps.setBoolean(1, true);
+					ps.setString(2, result.getString("username"));
+					ps.executeUpdate();
+				} catch (Exception e) {
+					System.out.println("Executing statement-Updating login status on users table had failed!");
+				}
+				// Return user details
+
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**peleg
+	 * LoginSubscriber method-will help us to connect a subscriber by simulating the login of a user who is a subscriber */
+	public static User LoginSubscriber(ArrayList<String> userANDpassword) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
+			ps.setString(1, userANDpassword.get(0));
+			ps.setString(2, userANDpassword.get(1));
+			ResultSet result = ps.executeQuery();
+			if (result.next() == false) {
+				return null;
+			} else {
+				/**peleg
+				 * user- a variable that will help us save the user that wants to log in */
 				// Save user details
 				User user = new User(result.getString("username"), result.getString("password"), result.getString("firstName"),
 						result.getString("lastName"), result.getString("email"), result.getString("phoneNumber"),

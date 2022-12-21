@@ -23,7 +23,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * @author peleg
+ * IdentificationController- a controller class that will connect between the fxml:Identification_Interface to the server by handle all
+ * the action from this screen.
+ *
+ */
 public class IdentificationController {
+	/**
+	 * peleg
+	 * 
+	 *
+	 */
 	FXMLLoader loader = new FXMLLoader();
 	@FXML
 	private TextField txtUsername = null;
@@ -94,4 +105,32 @@ public class IdentificationController {
 			}
 		}
 	}
-}
+	
+	public void clickOnQRImage(ActionEvent event) throws Exception {
+		ArrayList<String> usernameAndPsw = new ArrayList<>();
+		usernameAndPsw.add("costumer2");
+		usernameAndPsw.add("123456");
+		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
+		// if user is already loggedin
+		if(!ChatClient.userController.isUserExist()) {
+			//In case the user login input was invalid (username/password) - error label will be shown
+			lblErrorOnDetails.setVisible(true);
+			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
+		}
+		else {
+			if(ChatClient.userController.getUser().isLoggedIn() == true) {
+				lblErrorOnDetails.setVisible(true);
+				lblErrorOnDetails.setText("User is already logged in!");
+			}
+			else {
+				((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
+				Stage primaryStage = new Stage();
+				AnchorPane root = loader.load(getClass().getResource("/clientGUI/"+ChatClient.userController.getUser().getRole().toString()));
+				Scene scene = new Scene(root);	
+				primaryStage.setTitle("Costumer Menu");
+				primaryStage.setScene(scene);		
+				primaryStage.show();
+			}
+		}
+		}
+	}
