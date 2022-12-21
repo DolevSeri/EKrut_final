@@ -7,18 +7,12 @@ public enum Role {
 			return "CEO_MainView.fxml";
 		}
 	},
-	
-	Costumer_Service_Expert{
-		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "CostumerServiceExpertMenu.fxml";
-		}
-	},
+
 	
 	Costumer{
 		public String toString() {
 			//the string will be the exact name of the FXML we would like to show
-			return "Client_OL_MainView.fxml";
+			return "MainOrderFrame.fxml";
 		}
 	},
 	/*

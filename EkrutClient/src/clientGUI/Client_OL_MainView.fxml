@@ -15,7 +15,7 @@
          <children>
             <ImageView fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0">
                <image>
-                  <Image url="@../images/FullLogo_Transparent_NoBuffer.png" />
+                  <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
             <Label layoutX="170.0" layoutY="14.0" text="OL_Configuration" />
@@ -26,9 +26,9 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="55.0" prefHeight="154.0" prefWidth="504.0" text="Welcome Back Israel Israeli" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="118.0" layoutY="29.0" prefHeight="103.0" prefWidth="351.0" text="Please Take your pick:" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
-            <Font name="Cooper Black" size="32.0" />
+            <Font name="Cooper Black" size="29.0" />
          </font>
       </Label>
       <Button fx:id="btnCreatePickUp" layoutX="166.0" layoutY="136.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new PickUP order" textFill="#8d48e1" underline="true">
@@ -47,7 +47,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogOut" layoutX="442.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -58,6 +58,14 @@
       <Button fx:id="btnConfirmDelivery" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Button fx:id="btnLogOut1" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
          </font>
          <effect>
             <Blend mode="BLUE" />
