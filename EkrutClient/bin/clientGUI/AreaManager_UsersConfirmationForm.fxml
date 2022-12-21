@@ -29,7 +29,7 @@
             </ImageView>
          </children>
       </Pane>
-      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font name="Cooper Black" size="40.0" />
          </font>
       </Label>
-      <Button fx:id="btnBack" layoutX="14.0" layoutY="570.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="14.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickBackBtn" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
