@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_ReportChooseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_ReportChooseController">
    <children>
       <Pane layoutX="443.0" prefHeight="482.0" prefWidth="352.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -31,7 +31,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutX="28.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickBackBtn" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="28.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickBtnBack" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

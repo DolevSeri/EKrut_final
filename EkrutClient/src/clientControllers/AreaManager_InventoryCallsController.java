@@ -1,7 +1,7 @@
 package clientControllers;
 
-import common.SetScene;
 import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -20,22 +20,23 @@ public class AreaManager_InventoryCallsController {
 
     @FXML
     private GridPane gpCallsList;
+    
+	SetSceneController scene = new SetSceneController();
 
     @FXML
     void clickBackBtn(ActionEvent event) {
-    	SetScene scene = new SetScene();
-		scene.setScreen(new Stage(), "/clientGUI/AreaManager_InventoryManagementForm.fxml");
+    	scene.back(event, "/clientGUI/AreaManager_InventoryManagementForm.fxml");
     }
 
     @FXML
     void clickCreateNewCallBtn(ActionEvent event) {
+    	scene.setScreen(new Stage(), "/clientGUI/AreaManager_NewCallForm.fxml");
 
     }
 
     @FXML
     void getExitBtn(ActionEvent event) {
-		//ClientUI.chat.accept("Disconnect");
-		System.exit(0);
+		scene.exitOrLogOut(event, false);
     }
 
 
