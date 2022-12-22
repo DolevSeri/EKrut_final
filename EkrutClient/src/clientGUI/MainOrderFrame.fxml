@@ -13,7 +13,7 @@
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="281.0" fitWidth="212.0" layoutX="32.0" layoutY="101.0">
+            <ImageView fx:id="imgLogo" fitHeight="281.0" fitWidth="212.0" layoutX="32.0" layoutY="101.0">
                <image>
                   <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
                </image>

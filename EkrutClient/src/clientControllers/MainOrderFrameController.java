@@ -12,10 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MainOrderFrameController {
 	 FXMLLoader loader = new FXMLLoader();
+	 
 	@FXML
 	Label lblWelcome = null;
 
@@ -36,35 +38,25 @@ public class MainOrderFrameController {
 
     @FXML
     private ImageView imgLogo;
-
-	@FXML
-	public void getLogoutButton(ActionEvent event) {
-	}
+    
+    private SetSceneController newScreen = new SetSceneController();
+    @FXML
+    void getLogoutButton(ActionEvent event) {
+    	newScreen.exitOrLogOut(event, true);
+    }
 	public void initialize() {
 		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName() +" "+ ChatClient.userController.getUser().getLastName()+"!");
-		//imgLogo.setVisible(true);
 	}
 	@FXML
 	public void clickOnLocaclOrder(ActionEvent event) throws IOException {
 		System.out.println("Costumer want loacl order");
 		((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
-		Stage primaryStage = new Stage();
-		SplitPane root = loader.load(getClass().getResource("/clientGUI/Client_EK_MainView.fxml").openStream());
-		Scene scene = new Scene(root);			
-		primaryStage.setTitle("EK_Configurition Order Main Screen");
-		primaryStage.setScene(scene);		
-		primaryStage.show();
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 	}
 	@FXML
 	public void clickOnDistantOrder(ActionEvent event) throws IOException {
 		System.out.println("Costumer want distant order");
-		((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
-		Stage primaryStage = new Stage();
-		SplitPane root = loader.load(getClass().getResource("/clientGUI/Client_OL_MainView.fxml").openStream());
-		Scene scene = new Scene(root);			
-		primaryStage.setTitle("OL_Configurition Order Main Screen");
-		primaryStage.setScene(scene);		
-		primaryStage.show();
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 	}
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
@@ -72,4 +64,5 @@ public class MainOrderFrameController {
 		System.out.println("exit ConnectForm");
 		System.exit(0);
 	}
+	
 }

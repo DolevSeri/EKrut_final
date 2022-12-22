@@ -17,10 +17,8 @@ public class SetSceneController {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(path));
 			Scene scene = new Scene(root);
-
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(scene);
-
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -32,16 +30,15 @@ public class SetSceneController {
 		setScreen(new Stage(), path);
 	}
 
-	public void exitOrLogOut(ActionEvent event,boolean isLogOut) {
-		ClientUI.chat.accept(new Message(Request.Logout_request, ChatClient.userController.getUser().getUsername()));
+	public void exitOrLogOut(ActionEvent event, boolean isLogOut) {
+		ClientUI.chat.accept(new Message(Request.Logout_request, ChatClient.userController.getUser()));
 		if (isLogOut) {
 			((Node) event.getSource()).getScene().getWindow().hide();
-			setScreen(new Stage(), "clientGUI/Identification_Interface.fxml");
-		}
-		else {
-			ClientUI.chat.accept(new Message(Request.Disconnect_request,null));
+			setScreen(new Stage(),"/clientGUI/Identification_Interface.fxml");
 
+		} else {
+			ClientUI.chat.accept(new Message(Request.Disconnect_request, null));
+			System.exit(0);
 		}
-		System.exit(0);
 	}
 }
