@@ -1,9 +1,11 @@
 package serverControllers;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import entities.ClientConnected;
+import common.ClientConnected;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,14 +18,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import server.Console;
 import server.EchoServer;
 import server.ServerUI;
 
 public class ServerPortFrameController {
-	ServerPortFrameController myController;
+
 	@FXML
 	private TextField txtIP;
 
@@ -61,7 +64,7 @@ public class ServerPortFrameController {
 	private Button btnDisconnect;
 
 	@FXML
-	private Button btnDefault;
+	private Button btnImport;
 	@FXML
 	private Button btnExit;
 	@FXML
@@ -72,7 +75,6 @@ public class ServerPortFrameController {
 	@FXML
 	public void clickBtnConnect(ActionEvent event) throws Exception {
 		String ekrutPort, dbName, dbUserName, dbPwd;
-		// IP = txtIP.getText();
 		ekrutPort = txtPort.getText();
 		dbName = txtDbName.getText();
 		dbUserName = txtDbUser.getText();
@@ -93,23 +95,8 @@ public class ServerPortFrameController {
 		}
 	}
 
-	@FXML
-	public void clickbtnDefault(ActionEvent event) {
-		txtPort.setText("5555");
-		try {
-			txtIP.setText(getLocalHost());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
-		txtDbUser.setText("root");
-		txtDbPass.setText("Dolev1995");
-
-	}
-
 	public void showConsoleStream() {
-		// showConsole = new PrintStream(new Console(txtConsole));
+		showConsole = new PrintStream(new Console(txtConsole));
 		System.setOut(showConsole);
 		System.setErr(showConsole);
 	}
@@ -121,34 +108,32 @@ public class ServerPortFrameController {
 		btnConnect.setDisable(false);
 	}
 
-	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/serverGUI/ServerPort.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		primaryStage.setTitle("Ekrut");
-		myController = loader.getController();
-		//Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
-		//myController.ekrutLogo.setImage(image);
-		primaryStage.setScene(scene);
-		// showConsoleStream();
-
-		myController.txtPort.setText("5555");
-		myController.txtIP.setText(getLocalHost());
-		myController.txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
-		myController.txtDbUser.setText("root");
-		myController.txtDbPass.setText("Dolev1995");
-		myController.btnDisconnect.setDisable(true);
-		primaryStage.show();
+	public void initialize() {
+	    showConsoleStream();
+		txtPort.setText("5555");
+		txtIP.setText(getLocalHost());
+		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST&useSSL=false");
+		txtDbUser.setText("root");
+		txtDbPass.setText("Dolev1995");
+		btnDisconnect.setDisable(true);
+		btnImport.setDisable(true);
 
 	}
 
-	public String getLocalHost() throws Exception {
-		String localHost = InetAddress.getLocalHost().getHostAddress().toString();
-		return localHost;
+	public String getLocalHost() {
+		String localHost;
+		try {
+			localHost = InetAddress.getLocalHost().getHostAddress().toString();
+			return localHost;
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public void getExitBtn(ActionEvent event) throws Exception {
-		System.out.println("exit Tool");
+		ServerUI.stopServer();
 		System.exit(0);
 	}
 
@@ -156,6 +141,32 @@ public class ServerPortFrameController {
 		IP.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("IP"));
 		Host.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("host"));
 		Status.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("status"));
+
+	}
+
+	public void start(Stage primaryStage) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/serverGUI/ServerPort.fxml"));
+		Parent root;
+		try {
+			root = loader.load();
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.initStyle(StageStyle.UNDECORATED);
+
+			primaryStage.show();	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void clickbtnImport(ActionEvent event) {
+		txtPort.setText("5555");
+		txtIP.setText(getLocalHost());
+		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
+		txtDbUser.setText("root");
+		txtDbPass.setText("Dolev1995");
 
 	}
 
