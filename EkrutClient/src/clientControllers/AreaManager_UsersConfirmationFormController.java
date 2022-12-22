@@ -1,12 +1,10 @@
 package clientControllers;
 
-import common.SetScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 public class AreaManager_UsersConfirmationFormController {
 
@@ -21,17 +19,17 @@ public class AreaManager_UsersConfirmationFormController {
 
     @FXML
     private GridPane gpUsersList;
+    
+	SetSceneController scene = new SetSceneController();
 
     @FXML
     void clickBackBtn(ActionEvent event) {
-    	SetScene scene = new SetScene();
-		scene.setScreen(new Stage(), "/clientGUI/AreaManager_MainView.fxml");
+    	scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
     }
     
     @FXML
     void getExitBtn(ActionEvent event) {
-		//ClientUI.chat.accept("Disconnect");
-		System.exit(0);	
+		scene.exitOrLogOut(event, false);	
     }
 
 }

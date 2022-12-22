@@ -1,6 +1,6 @@
 package clientControllers;
 
-import common.SetScene;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,11 +29,12 @@ public class AreaManager_ReportChooseController {
 
     @FXML
     private ComboBox<?> cmbYear;
+    
+	SetSceneController scene = new SetSceneController();
 
     @FXML
     void clickBtnBack(ActionEvent event) {
-    	SetScene scene = new SetScene();
-		scene.setScreen(new Stage(), "/clientGUI/AreaManager_MainView.fxml");
+    	scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
     }
 
     @FXML
@@ -43,8 +44,7 @@ public class AreaManager_ReportChooseController {
 
     @FXML
     void getExitBtn(ActionEvent event) {
-		//ClientUI.chat.accept("Disconnect");
-		System.exit(0);	
+		scene.exitOrLogOut(event, false);
     }
 
 }
