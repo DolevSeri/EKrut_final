@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_InventoryManagementController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_InventoryManagementController">
    <children>
       <Pane layoutX="472.0" prefHeight="482.0" prefWidth="323.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="200.0" fitWidth="323.0" layoutX="11.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgInventory" fitHeight="200.0" fitWidth="323.0" layoutX="11.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../EkrutCommon/src/images/inventory_dilemma.jpg" />
                </image>
             </ImageView>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="260.0" layoutY="14.0">
+            <ImageView fx:id="imgLogo" fitHeight="59.0" fitWidth="49.0" layoutX="260.0" layoutY="14.0">
                <image>
                   <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>

@@ -3,6 +3,7 @@ package clientControllers;
 import java.io.IOException;
 
 import client.ClientUI;
+import common.SetScene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,7 @@ public class AreaManager_MainViewController{
 	private Button btnViewMonthlyReports;
 
 	@FXML
-	private Button btnInventoryMangement;
+	private Button btnInventoryManagement;
 
 	@FXML
 	private Button btnLogOut;
@@ -48,50 +49,20 @@ public class AreaManager_MainViewController{
 	@FXML
 	void clickBtnUserManagement(ActionEvent event) {
 		
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_UsersConfirmationForm.fxml"));
-		
-		try {
-			loader.load();
-			Parent root = loader.getRoot();
-			stage.getScene().setRoot(root);
-			stage.sizeToScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		SetScene scene = new SetScene();
+		scene.setScreen(new Stage(), "/clientGUI/AreaManager_UsersConfirmationForm.fxml");
 	}
 
 	@FXML
 	void clickBtnViewMonthlyReports(ActionEvent event) {
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_ReportChoose.fxml"));
-		try {
-			loader.load();
-			Parent root = loader.getRoot();
-			stage.getScene().setRoot(root);
-			stage.sizeToScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-
+		SetScene scene = new SetScene();
+		scene.setScreen(new Stage(), "/clientGUI/AreaManager_ReportChoose.fxml");
 	}
 	
 	@FXML
-	void clickBtnInventoryMangement(ActionEvent event) {
-
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/AreaManager_InventoryManagementForm.fxml"));
-		try {
-			loader.load();
-			Parent root = loader.getRoot();
-			stage.getScene().setRoot(root);
-			stage.sizeToScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+	void clickBtnInventoryManagement(ActionEvent event) {
+		SetScene scene = new SetScene();
+		scene.setScreen(new Stage(), "/clientGUI/AreaManager_InventoryManagementForm.fxml");
 	}
 
 

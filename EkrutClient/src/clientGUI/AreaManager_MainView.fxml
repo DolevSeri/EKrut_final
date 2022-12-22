@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_MainViewController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -37,7 +37,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnInventoryMangement" layoutX="153.0" layoutY="228.0" mnemonicParsing="false" onAction="#clickBtnInventoryMangement" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Inventory Managemant" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnInventoryManagement" layoutX="153.0" layoutY="228.0" mnemonicParsing="false" onAction="#clickBtnInventoryManagement" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Inventory Managemant" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
