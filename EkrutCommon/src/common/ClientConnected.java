@@ -1,4 +1,4 @@
-package entities;
+package common;
 
 public class ClientConnected {
 	private String IP,host,status;

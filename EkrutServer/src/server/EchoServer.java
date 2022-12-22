@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import entities.ClientConnected;
+import common.ClientConnected;
 import entities.Message;
 import entities.User;
 import enums.Request;
