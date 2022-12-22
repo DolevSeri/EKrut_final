@@ -93,7 +93,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnDefault" disable="true" layoutX="103.0" layoutY="397.0" mnemonicParsing="false" onAction="#clickbtnDefault" style="-fx-background-color: #CEF6F5; -fx-border-color: GREY;" text="Default" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnImport" layoutX="103.0" layoutY="397.0" mnemonicParsing="false" onAction="#clickbtnImport" style="-fx-background-color: #CEF6F5; -fx-border-color: GREY;" text="Import" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
