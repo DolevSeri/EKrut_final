@@ -42,21 +42,13 @@ public class CEO_ChooseReportController {
     
     @FXML
     private Label errorFieldsMsg;
+    
+	SetSceneController scene = new SetSceneController();
 
     @FXML
     void clickBtnBack(ActionEvent event) {
     	
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/CEO_MainView.fxml"));
-		try {
-			loader.load();
-			Parent root = loader.getRoot();
-			stage.getScene().setRoot(root);
-			stage.sizeToScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+    	scene.back(event, "/clientGUI/CEO_MainView.fxml");
 
     }
     
