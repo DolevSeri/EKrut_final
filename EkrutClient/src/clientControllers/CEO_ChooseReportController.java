@@ -10,9 +10,11 @@ import enums.Request;
 import enums.Role;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 /**
  * This class represents the controller for the Reports View FXML file.
  * It handles the user's interactions with the view and communicates with the server to retrieve the required data.
@@ -62,9 +64,13 @@ public class CEO_ChooseReportController {
 	 */
     @FXML
     void clickBtnBack(ActionEvent event) {
-    	
-    	scene.back(event, "/clientGUI/CEO_MainView.fxml");
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+    	if(ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
+        	scene.back(event, "/clientGUI/CEO_MainView.fxml");
 
+    	}
+    	else
+    		scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
     }
     /**
      * Initializes the view and sets up the necessary components and data.
@@ -79,12 +85,12 @@ public class CEO_ChooseReportController {
 		cmbYear.getItems().addAll(years);
     	ArrayList<String> months= new ArrayList<String>(Arrays.asList("01","02","03","04","05","06","07","08","09","10","11","12"));
     	cmbMonth.getItems().addAll(months);
-		ArrayList<String> reportsType= new ArrayList<String>(Arrays.asList("Inventory reports","Orders reports","Costumer Reports"));
+		ArrayList<String> reportsType= new ArrayList<String>(Arrays.asList("Inventory report","Orders report","Clients report"));
 		cmbType.getItems().addAll(reportsType);
 		
     	if(ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
     		cmbDevice.setDisable(true);
-    		ArrayList<String> area = new ArrayList<String>(Arrays.asList("Tel-Aviv","Haifa","Kiryat-Ata","Karmiel","Beer-Sheva"));
+    		ArrayList<String> area = new ArrayList<String>(Arrays.asList("Tel Aviv","Haifa","Kiryat Ata","Karmiel","Beer Sheva"));
     		cmbArea.getItems().addAll(area);
     		cmbDevice.setPromptText("Choose region first!");
 
@@ -93,6 +99,7 @@ public class CEO_ChooseReportController {
     	else {
     		cmbArea.setVisible(false);
     		String area = ChatClient.userController.getUser().getRegion().toString();
+    		cmbArea.setValue(area);
     		lblRegion.setText(area);
     		lblRegion.setVisible(true);
     		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
@@ -134,7 +141,32 @@ public class CEO_ChooseReportController {
         	errorFieldsMsg.setVisible(true);
         }
         else {
+        	System.out.println("hello user");
+        	System.out.println(fields.get(3).toString());
+        	if(fields.get(3).toString().equals("Inventory report")) {
+        		//NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+        	    scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
+        		
+        	}
+        	switch(fields.get(3).toString()) {
+        	case "Inventory report":
+        		//NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+        	    scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
+        	    break;
+        	case "Orders report":
+        		//NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+        	    scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
+        	    break;
+        	case "Clients report":
+        		//NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+        	    scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
+        	    break;
+        	default:
+        	   
+        	}
+    
         	
+
         }
         	
     }
@@ -146,7 +178,7 @@ public class CEO_ChooseReportController {
      */
     @FXML
     void getExitBtn(ActionEvent event) {
-    	//ClientUI.chat.accept("Disconnect");
+    	ClientUI.chat.accept("Disconnect");
 		System.exit(0);
     }
 

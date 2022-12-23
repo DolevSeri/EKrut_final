@@ -90,7 +90,7 @@ public class MySqlController {
 					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
 					System.out.println("Update succsed");
 				} catch (SQLException e1) {
-					System.out.println("update user to loggedin failed!");
+					System.out.println("update user to logged in failed!");
 				}
 				try {
 
