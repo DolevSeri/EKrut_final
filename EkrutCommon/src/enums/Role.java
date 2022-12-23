@@ -15,30 +15,37 @@ public enum Role {
 			return "MainOrderFrame.fxml";
 		}
 	},
-	/*
-	Marketing_Employee{
+	AreaManager{
 		public String toString() {
 			//the string will be the exact name of the FXML we would like to show
-			return "MarketingEmployeeMenu.fxml";
+			return "AreaManager_MainView.fxml";
+		}
+	},
+	SalesManager{
+		public String toString() {
+			//the string will be the exact name of the FXML we would like to show
+			return "AreaManager_MainView.fxml";
+		}
+	},
+	SalesWorker{
+		public String toString() {
+			//the string will be the exact name of the FXML we would like to show
+			return "AreaManager_MainView.fxml";
+		}
+	},
+	DeliveryOP{
+		public String toString() {
+			//the string will be the exact name of the FXML we would like to show
+			return "AreaManager_MainView.fxml";
+		}
+	},
+	OpWorker{
+		public String toString() {
+			//the string will be the exact name of the FXML we would like to show
+			return "AreaManager_MainView.fxml";
 		}
 	},
 	
-	Store_Manager{
-		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "StoreManagerMenu.fxml";
-		}
-	},
-	Store_Employee{
-		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "StoreEmployeeMenu.fxml";
-		}
-	},
-	Delivery_Man{
-		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "DeliveryManMenu.fxml";
-		}
-	}*/
+	
+	
 }

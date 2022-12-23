@@ -1,13 +1,13 @@
 package enums;
 
 public enum Region {
-	Tel_Aviv{
+	TelAviv{
 		public String toString() {
 			return "Tel Aviv";
 		}
 	},
 	
-	Beer_Sheva{
+	BeerSheva{
 		public String toString() {
 			return "Beer Sheva";
 		}
@@ -23,7 +23,12 @@ public enum Region {
 			return "Karmiel";
 		}
 	},
-	Kiryat_Ata{
+	KiryatAta{
+		public String toString() {
+			return "Kiryat Ata";
+		}
+	},
+	All{
 		public String toString() {
 			return "Kiryat Ata";
 		}
