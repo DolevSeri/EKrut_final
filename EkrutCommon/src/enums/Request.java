@@ -59,4 +59,14 @@ public enum Request {
 			return "User Logged out";
 		}
 	},
+	Get_Devices_By_Area{
+		public String toString() {
+			return "Request devices";
+		}
+	},
+	Devices_Imported{
+		public String toString() {
+			return "Devices imported successfully! ";
+		}
+	},
 }

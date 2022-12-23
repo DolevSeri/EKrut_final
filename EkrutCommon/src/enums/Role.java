@@ -15,14 +15,14 @@ public enum Role {
 			return "MainOrderFrame.fxml";
 		}
 	},
-	/*
-	Marketing_Employee{
+	
+	AreaManager{
 		public String toString() {
 			//the string will be the exact name of the FXML we would like to show
-			return "MarketingEmployeeMenu.fxml";
+			return "AreaManager_MainView.fxml";
 		}
 	},
-	
+	/*
 	Store_Manager{
 		public String toString() {
 			//the string will be the exact name of the FXML we would like to show

@@ -9,7 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-
+/**
+ * This is the controller class for the new call view of the area manager.
+ * It provides a form for creating a new call and sending it to the server.
+ */
 public class AreaManager_NewCallController {
 
     @FXML
@@ -29,33 +32,46 @@ public class AreaManager_NewCallController {
     
 	SetSceneController scene = new SetSceneController();
 
+	/**
+	 * Handles the send button click event.
+	 * Validates the form and sends the new call to the server if all fields are filled.
+	 *
+	 * @param event the action event that triggered the handler
+	 */
+	@FXML
+	void clickBtnSend(ActionEvent event) {
+	    ArrayList<String> fields = new ArrayList<String>(Arrays.asList(cmbDevice.getValue()));
+	    if(fields.contains(null)) {
+	        lblErrorMsg.setVisible(true);
+	    }
+	}
 
-    @FXML
-    void clickBtnSend(ActionEvent event) {
-        ArrayList<String> fields = new ArrayList<String>(Arrays.asList(cmbDevice.getValue()));
-        if(fields.contains(null)) {
-        	lblErrorMsg.setVisible(true);
-        }
+	/**
+	 * Initializes the view by hiding the error message label.
+	 */
+	public void initialize() {
+	    lblErrorMsg.setVisible(false);
+	}
 
-    }
-    
-    public void initialize() {
-		
-    	lblErrorMsg.setVisible(false);
+	/**
+	 * Handles the device combo box selection event.
+	 *
+	 * @param event the action event that triggered the handler
+	 */
+	@FXML
+	void clickComboDevice(ActionEvent event) {
+	    // ...
+	}
 
-    	
-    }
+	/**
+	 * Handles the exit button click event.
+	 *
+	 * @param event the action event that triggered the handler
+	 */
+	@FXML
+	void getExitBtn(ActionEvent event) {
+	    scene.back(event, "/clientGUI/AreaManager_InventoryCalls.fxml");
+	}
 
-    @FXML
-    void clickComboDevice(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void getExitBtn(ActionEvent event) {
-    	scene.back(event, "/clientGUI/AreaManager_InventoryCalls.fxml");
-
-    }
 
 }

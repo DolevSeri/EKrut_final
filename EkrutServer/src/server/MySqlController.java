@@ -11,15 +11,14 @@ import entities.User;
 import enums.Region;
 import enums.Role;
 
-
-
 /**
- * @author peleg
- * MySqlController- a controller class that will connect between the server and the DB by retrieving data from the database and sending it to the server.
+ * @author peleg MySqlController- a controller class that will connect between
+ *         the server and the DB by retrieving data from the database and
+ *         sending it to the server.
  *
  */
 public class MySqlController {
-    
+
 	private static Connection dbConnector = null;
 
 	public static void connectToDB(String dbName, String dbUserName, String dbPwd) {
@@ -33,7 +32,7 @@ public class MySqlController {
 			/* handle the error */
 			System.out.println("Driver definition failed");
 		}
-		
+
 		try {
 			dbConnector = DriverManager.getConnection(dbName, dbUserName, dbPwd);
 			System.out.println("SQL connection succeed");
@@ -58,24 +57,33 @@ public class MySqlController {
 		}
 
 	}
-/**peleg
- * LoginCheckAndUpdateLoggedIn method-a method that get an ArrayList with username and password and will do the login operation for any user */
+
+	/**
+	 * peleg LoginCheckAndUpdateLoggedIn method-a method that get an ArrayList with
+	 * username and password and will do the login operation for any user
+	 */
 	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
 		try {
 			PreparedStatement ps = dbConnector
 					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
+			
 			ps.setString(1, userANDpassword.get(0));
 			ps.setString(2, userANDpassword.get(1));
 			ResultSet result = ps.executeQuery();
+
 			if (result.next() == false) {
 				return null;
 			} else {
-				/**peleg
-				 * user- a variable that will help us save the user that wants to log in */
+
+				/**
+				 * peleg user- a variable that will help us save the user that wants to log in
+				 */
 				// Save user details
-				User user = new User(result.getString("username"), result.getString("password"), result.getString("firstName"),
-						result.getString("lastName"), result.getString("email"), result.getString("phoneNumber"),
-						result.getBoolean("isLoggedIn"), result.getString("id"), Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+				User user = new User(result.getString("username"), result.getString("password"),
+						result.getString("firstName"), result.getString("lastName"), result.getString("email"),
+						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"),
+						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+
 				// Set the login status to true so no one else can access it
 				try {
 
@@ -93,29 +101,30 @@ public class MySqlController {
 					System.out.println("Executing statement-Updating login status on users table had failed!");
 				}
 				// Return user details
-
 				return user;
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	/** 
+
+	/**
 	 * @author ron
 	 */
 	public static void UserLogoutAndUpdateDB(User user) throws SQLException {
-		PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");	
+		PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
 		System.out.println("Update succsed");
-			try {
-				ps.setBoolean(1, false);
-				ps.setString(2,user.getUsername());
-				ps.executeUpdate();
-			} catch (Exception e) {
-				System.out.println("Executing statement-Updating login status on users table had failed!");
-			}
+		try {
+			ps.setBoolean(1, false);
+			ps.setString(2, user.getUsername());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("Executing statement-Updating login status on users table had failed!");
+		}
 	}
+
 	public static String viewUser(String ID) {
 		String sub = "";
 		// Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
@@ -173,5 +182,22 @@ public class MySqlController {
 	public static void updateSubscriberTable(String messageFromClient) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static ArrayList<String> getAllDevicesByArea(String area) {
+		PreparedStatement ps;
+		ArrayList<String> devices = new ArrayList<String>();
+
+		try {
+			ps = dbConnector.prepareStatement("SELECT deviceName FROM ekrut.devices WHERE region=\"" + area + "\";");
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				devices.add(res.getString(1));
+			}
+			System.out.println("Import data suceeded");
+		} catch (Exception e) {
+			System.out.println("Import data failed!");
+		}
+		return devices;
 	}
 }
