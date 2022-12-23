@@ -6,6 +6,7 @@
 package client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import common.ChatIF;
 import entities.Message;
@@ -33,6 +34,7 @@ public class ChatClient extends AbstractClient {
 	ChatIF clientUI;
 	public static Subscriber s1 = new Subscriber(null, null, null, null, null, null, null);
 	public static UserController userController = new UserController();
+	public static ArrayList<String> devices = new ArrayList<>();
 
 	public static boolean awaitResponse = false;
 
@@ -59,9 +61,13 @@ public class ChatClient extends AbstractClient {
 	 *
 	 * @param msg The message from the server.
 	 */
+	
+	@SuppressWarnings("unchecked")
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
 		Message message = (Message) msg;
+		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from server");
+
 		switch (message.getRequest()) {
 		case Connected:
 			System.out.println("Client connected to Server!");
@@ -79,6 +85,8 @@ public class ChatClient extends AbstractClient {
 			break;
 		case LoggedOut:
 			userController.setUser(null);
+		case Devices_Imported:
+			devices = (ArrayList<String>)message.getObject();			
 		default:
 			break;
 		}

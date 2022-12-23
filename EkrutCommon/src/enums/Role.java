@@ -21,13 +21,8 @@ public enum Role {
 			return "AreaManager_MainView.fxml";
 		}
 	},
-	SalesManager{
-		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "AreaManager_MainView.fxml";
-		}
-	},
-	SalesWorker{
+
+	Store_Manager{
 		public String toString() {
 			//the string will be the exact name of the FXML we would like to show
 			return "AreaManager_MainView.fxml";
