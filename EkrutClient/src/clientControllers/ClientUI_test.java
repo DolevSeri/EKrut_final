@@ -16,7 +16,7 @@ public class ClientUI_test extends Application {
 		
 
 		SetSceneController scene = new SetSceneController();
-		scene.setScreen(new Stage(), "/clientGUI/AreaManager_UserInformationView.fxml");
+		scene.setScreen(new Stage(), "/clientGUI/CEO_MainView.fxml");
 	}
 
 	@Override

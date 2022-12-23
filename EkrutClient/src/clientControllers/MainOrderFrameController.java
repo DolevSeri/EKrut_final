@@ -7,12 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MainOrderFrameController {
@@ -40,6 +37,7 @@ public class MainOrderFrameController {
     private ImageView imgLogo;
     
     private SetSceneController newScreen = new SetSceneController();
+    
     @FXML
     void getLogoutButton(ActionEvent event) {
     	newScreen.exitOrLogOut(event, true);

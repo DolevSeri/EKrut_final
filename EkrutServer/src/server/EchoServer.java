@@ -63,8 +63,11 @@ public class EchoServer extends AbstractServer {
 	 * @param client The connection from which the message originated.
 	 * @param
 	 */
+	@SuppressWarnings("unchecked")
 	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Message messageFromClient = (Message) msg;
+		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from " + client);
+
 		switch (messageFromClient.getRequest()) {
 		case Connect_request:
 			updateClientList(client, "Connected");
@@ -85,17 +88,16 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Login_Request:
-			System.out.println("hi");
+			
 			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
 			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
-			Message msgToClient; // msg for server
+			Message msgToClient;
 			if (user != null) {
 				if (user.isLoggedIn() == false) {
 					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
 					System.out.println("User details were imported successfully");
 					msgToClient = new Message(Request.LoggedIn_Succses, user);
 				} else {
-					System.out.println("hi");
 					System.out.println("User already logged in");
 					msgToClient = new Message(Request.LoggedIn_UnsuccsesAlreadyLoggedIn, user);
 				}
@@ -126,6 +128,15 @@ public class EchoServer extends AbstractServer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		case Get_Devices_By_Area:
+			String area = (String)messageFromClient.getObject();
+			try {
+				client.sendToClient(new Message(Request.Devices_Imported,MySqlController.getAllDevicesByArea(area)));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		default:
 			break;
 		}

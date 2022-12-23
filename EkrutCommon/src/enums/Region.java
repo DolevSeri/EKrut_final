@@ -28,4 +28,9 @@ public enum Region {
 			return "Kiryat Ata";
 		}
 	},
+	All{
+		public String toString() {
+			return "All";
+		}	
+	},
 }
