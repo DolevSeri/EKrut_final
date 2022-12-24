@@ -69,4 +69,15 @@ public enum Request {
 			return "Devices imported successfully! ";
 		}
 	},
+	GetOrdersData{
+		public String toString() {
+			return "Request orders";
+		}
+		
+	},
+	OrdersData_Imported{
+		public String toString() {
+			return "Orders data imported successfully!";
+		}
+	},
 }

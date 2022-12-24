@@ -6,8 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import entities.User;
+import entities.MonthlyOrderReport;
 import enums.Region;
 import enums.Role;
 
@@ -66,7 +67,7 @@ public class MySqlController {
 		try {
 			PreparedStatement ps = dbConnector
 					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
-			
+
 			ps.setString(1, userANDpassword.get(0));
 			ps.setString(2, userANDpassword.get(1));
 			ResultSet result = ps.executeQuery();
@@ -182,6 +183,41 @@ public class MySqlController {
 	public static void updateSubscriberTable(String messageFromClient) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public static MonthlyOrderReport getOrdersReportData(ArrayList<String> reportDetails) {
+		String device = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
+		String[] itemsList = null;
+		String products = null, mostWantedProduct = null;
+		HashMap<String, Integer> mapOfItems = new HashMap<String, Integer>();
+		int numOfTotalOrders = 0, numOfOrdersThatCanceled = 0;
+		PreparedStatement ps = null;
+		try {
+			ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.orders_report WHERE month = ? AND year = ? AND store = ?");
+			ps.setString(1, month);
+			ps.setString(2, year);
+			ps.setString(3, device);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				products = rs.getString("products");
+				numOfTotalOrders = rs.getInt("numOfTotalOrders");
+				// numOfOrdersThatCanceled = rs.getInt("numOfOrdersThatCanceled");
+				mostWantedProduct = rs.getString("mostWantedItemName");
+			} else
+				return null;
+		} catch (SQLException e) {
+			System.out.println("Statement for getting Monthly Orders Report has failed!");
+		}
+		System.out.println("Succefully imported Monthly Orders Report Data!");
+		String date = month + "/" + year;
+		itemsList = products.split(",");
+		for (int i = 0; i < (itemsList.length); i = i + 2) {
+			mapOfItems.put(itemsList[i], (int) Integer.valueOf(itemsList[i + 1]));
+		}
+
+		return new MonthlyOrderReport(mapOfItems, numOfTotalOrders, (float) numOfTotalOrders / 30, device, date,
+				mostWantedProduct);
 	}
 
 	public static ArrayList<String> getAllDevicesByArea(String area) {
