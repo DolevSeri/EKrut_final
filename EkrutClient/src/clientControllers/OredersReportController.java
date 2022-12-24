@@ -1,6 +1,10 @@
 package clientControllers;
 
+import java.util.ArrayList;
+
 import client.ClientUI;
+import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -38,6 +42,12 @@ public class OredersReportController {
     private Label lblDate;
 
 	SetSceneController scene = new SetSceneController();
+	ArrayList<String> fields =  CEO_ChooseReportController.fields;
+	
+	
+    public void initialize() {
+
+    }
 
 	
     @FXML
