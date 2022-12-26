@@ -13,8 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class MainOrderFrameController {
-	 FXMLLoader loader = new FXMLLoader();
-	 
+	FXMLLoader loader = new FXMLLoader();
+
 	@FXML
 	Label lblWelcome = null;
 
@@ -33,34 +33,39 @@ public class MainOrderFrameController {
 	@FXML
 	Button btnExit;
 
-    @FXML
-    private ImageView imgLogo;
-    
-    private SetSceneController newScreen = new SetSceneController();
-    
-    @FXML
-    void getLogoutButton(ActionEvent event) {
-    	newScreen.exitOrLogOut(event, true);
-    }
-	public void initialize() {
-		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName() +" "+ ChatClient.userController.getUser().getLastName()+"!");
+	@FXML
+	private ImageView imgLogo;
+
+	private SetSceneController newScreen = new SetSceneController();
+
+	@FXML
+	void getLogoutButton(ActionEvent event) {
+		newScreen.exitOrLogOut(event, true);
 	}
+
+	public void initialize() {
+		lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
+				+ ChatClient.userController.getUser().getLastName() + "!");
+	}
+
 	@FXML
 	public void clickOnLocaclOrder(ActionEvent event) throws IOException {
 		System.out.println("Costumer want loacl order");
-		((Node)event.getSource()).getScene().getWindow().hide(); //hiding primary window
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 	}
+
 	@FXML
 	public void clickOnDistantOrder(ActionEvent event) throws IOException {
 		System.out.println("Costumer want distant order");
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 	}
+
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		System.out.println("exit ConnectForm");
 		System.exit(0);
 	}
-	
+
 }
