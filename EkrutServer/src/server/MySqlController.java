@@ -10,10 +10,11 @@ import java.util.HashMap;
 
 import entities.Device;
 import entities.MonthlyOrderReport;
+import entities.Order;
 import entities.User;
 import enums.Region;
 import enums.Role;
-import javafx.collections.ObservableList;
+import enums.SupplyMethod;
 
 /**
  * @author peleg MySqlController- a controller class that will connect between
@@ -250,13 +251,100 @@ public class MySqlController {
 			for (Device device : devicesToUpdate) {
 				ps.setInt(1, device.getThreshold());
 				ps.setString(2, device.getDeviceID());
-		        ps.executeUpdate();
+				ps.executeUpdate();
 			}
 			System.out.println("Update threshold suceeded!");
 
 		} catch (SQLException e) {
 			System.out.println("Update threshold failed!");
 		}
+
+	}
+	
+	public static void createMonthlyOrdersReport(ArrayList<String> reportData) {
+		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
+		ArrayList<Device> areaDevices = getAllDevicesByArea(area); 
+		String mostSelling = null, devices = "";
+		Integer max = 0, num;
+		int totalOrders = 0, totalPickUpOrders = 0;
+		HashMap<String, Integer> deviceNumOfOrders = new HashMap<>();
+		ArrayList<Order> ordersOfDevice = new ArrayList<>();
+		for(Device device : areaDevices) {
+			ordersOfDevice.addAll(getOrdersDataOfDevice(device.getDeviceID()));
+		}
+		for(Order order : ordersOfDevice) {
+			if(order.getOrdetMonth().equals(month) && order.getOrderYear().equals(year)) {
+				totalOrders++;
+				if(order.getSupplyMethod().equals(SupplyMethod.PickUp))
+					totalPickUpOrders++;
+				
+				if(!deviceNumOfOrders.containsKey(order.getDeviceID())) {
+					deviceNumOfOrders.put(order.getDeviceID(), 1);
+				}
+				else {
+					num = deviceNumOfOrders.get(order.getDeviceID()) + 1;
+					deviceNumOfOrders.replace(order.getDeviceID(), num);
+				}
+			}
+		
+		}
+		for(String str : deviceNumOfOrders.keySet()) {
+			num = deviceNumOfOrders.get(str);
+			if( num > max) {
+				max = num;
+				mostSelling = str;
+			}
+			devices += "," + str + "," + num ;
+		}
+		devices.replaceFirst(",", "");
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orderReport "
+					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices) VALUES(?, ?, ?, ?, ?, ?, ?)");
+			try {
+				ps.setString(0,month);
+				ps.setString(1, year);
+				ps.setString(2, area);
+				ps.setInt(3, totalOrders);
+				ps.setInt(4, totalPickUpOrders);
+				ps.setString(5, mostSelling);
+				ps.setString(6, devices);
+			}catch(Exception e) {
+				System.out.println(e);
+				System.out.println("Enter data to ordersReport on DB failed");
+				System.out.println("Error on createMonthlyOrderReport");
+			}
+		}catch(Exception e) {
+			System.out.println(e);
+			System.out.println("Exucute statement failed");
+			System.out.println("Error on createMonthlyOrderReport");
+		}
 		
 	}
+
+	private static ArrayList<Order> getOrdersDataOfDevice(String deviceID) {
+		ArrayList<Order> orders = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders WHERE deviceID = ? ");
+			try {
+				ps.setString(0, deviceID);
+			} catch (Exception e) {
+				System.out.println("Executing statement failed!");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				orders.add(new Order(rs.getString("deviceID"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
+						rs.getString("costumerID"), rs.getString("orderDate"), 
+						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
+			}
+		} catch (Exception e) {
+			System.out.println("Import orders data from orders table has failed!");
+			System.out.println("Failed at getOrdersDataOfDevice method");
+		}
+		
+
+		return orders;
+	}
+
+
+
 }
