@@ -9,10 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import common.ChatIF;
+import entities.Device;
 import entities.Message;
 import entities.Subscriber;
 import entities.User;
+import entityControllers.DeviceController;
 import entityControllers.UserController;
+import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
 
 /**
@@ -34,7 +37,7 @@ public class ChatClient extends AbstractClient {
 	ChatIF clientUI;
 	public static Subscriber s1 = new Subscriber(null, null, null, null, null, null, null);
 	public static UserController userController = new UserController();
-	public static ArrayList<String> devices = new ArrayList<>();
+	public static DeviceController deviceController = new DeviceController();
 
 	public static boolean awaitResponse = false;
 
@@ -62,7 +65,7 @@ public class ChatClient extends AbstractClient {
 	 * @param msg The message from the server.
 	 */
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-access" })
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
 		Message message = (Message) msg;
@@ -86,7 +89,9 @@ public class ChatClient extends AbstractClient {
 		case LoggedOut:
 			userController.setUser(null);
 		case Devices_Imported:
-			devices = (ArrayList<String>)message.getObject();			
+			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));	
+		case Threshold_Updated:
+			break;
 		default:
 			break;
 		}

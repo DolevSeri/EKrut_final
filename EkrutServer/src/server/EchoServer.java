@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.ClientConnected;
+import entities.Device;
 import entities.Message;
 import entities.User;
 import enums.Request;
@@ -144,7 +145,13 @@ public class EchoServer extends AbstractServer {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-
+		case Threshold_Update_Request:
+			MySqlController.updateDeviceThreshold((ArrayList<Device>)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Threshold_Updated,null));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
 		default:
 			break;
 		}

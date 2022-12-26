@@ -1,8 +1,13 @@
 package clientControllers;
 
+import client.ChatClient;
+import client.ClientUI;
+import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 /**
  * This is the controller class for the main view of the area manager.
@@ -25,8 +30,18 @@ public class AreaManager_MainViewController{
 	@FXML
 	private Button btnUserManagement;
 	
+	@FXML
+	private Label lblWelcome;
 	SetSceneController scene = new SetSceneController();
+	
+	@FXML
+	public void initialize() {
+		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName()
+				+" "+ ChatClient.userController.getUser().getLastName()+"!");
+	
 
+	}
+	
 	/**
 	 * Handles the log out button click event.
 	 *

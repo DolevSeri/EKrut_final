@@ -54,30 +54,41 @@ public enum Request {
 		public String toString() {
 			return "Request Logout";
 		}
-	},	LoggedOut {
+	},
+	LoggedOut {
 		public String toString() {
 			return "User Logged out";
 		}
 	},
-	Get_Devices_By_Area{
+	Get_Devices_By_Area {
 		public String toString() {
 			return "Request devices";
 		}
 	},
-	Devices_Imported{
+	Devices_Imported {
 		public String toString() {
-			return "Devices imported successfully! ";
+			return "Devices imported successfully!";
 		}
 	},
-	GetOrdersData{
+	GetOrdersData {
 		public String toString() {
 			return "Request orders";
 		}
-		
+
 	},
-	OrdersData_Imported{
+	OrdersData_Imported {
 		public String toString() {
 			return "Orders data imported successfully!";
+		}
+	},
+	Threshold_Update_Request {
+		public String toString() {
+			return "Request update threshold";
+		}
+	},
+	Threshold_Updated{
+		public String toString() {
+			return "Threshold updated successfully!";
 		}
 	},
 }
