@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OrderScreenController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="322.0" layoutY="12.0">
+            <ImageView fx:id="logoImage" fitHeight="59.0" fitWidth="49.0" layoutX="322.0" layoutY="12.0">
                <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
+                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
             <Label layoutX="96.0" layoutY="34.0" prefHeight="74.0" prefWidth="226.0" text="Shopping Cart:" textAlignment="CENTER" underline="true" wrapText="true">
@@ -27,7 +27,7 @@
                   <Font name="Cooper Black" size="27.0" />
                </font>
             </Label>
-            <Button fx:id="btnCancel" layoutX="47.0" layoutY="566.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Cancel" textFill="WHITE" underline="true">
+            <Button fx:id="btnCancel" layoutX="47.0" layoutY="566.0" mnemonicParsing="false" onAction="#clickOnCancel" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Cancel" textFill="WHITE" underline="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Blend mode="BLUE" />
                </effect>
             </Button>
-            <Button fx:id="btnEndOrder" layoutX="256.0" layoutY="566.0" mnemonicParsing="false" onAction="#getbtnshowSubscriberDetails" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="End Order" textFill="WHITE" underline="true">
+            <Button fx:id="btnEndOrder" layoutX="256.0" layoutY="566.0" mnemonicParsing="false" onAction="#clickOnEndOrder" prefHeight="40.0" prefWidth="91.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="End Order" textFill="WHITE" underline="true">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -70,7 +70,7 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickOnExit" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -80,7 +80,7 @@
             <Font name="Cooper Black" size="40.0" />
          </font>
       </Label>
-      <Button fx:id="btnBack" layoutX="22.0" layoutY="570.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="22.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickOnBack" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
