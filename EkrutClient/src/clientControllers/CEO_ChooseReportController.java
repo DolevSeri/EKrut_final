@@ -6,6 +6,7 @@ import java.util.Arrays;
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
+import entityControllers.DeviceController;
 import enums.Request;
 import enums.Role;
 import javafx.event.ActionEvent;
@@ -84,6 +85,7 @@ public class CEO_ChooseReportController {
 	 * retrieves the list of devices for the logged in user's region and adds them
 	 * to the device combo box.
 	 */
+	@SuppressWarnings("static-access")
 	public void initialize() {
 
 		ArrayList<String> years = new ArrayList<String>(
@@ -110,7 +112,7 @@ public class CEO_ChooseReportController {
 			lblRegion.setText(area);
 			lblRegion.setVisible(true);
 			ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
-			cmbDevice.getItems().addAll(ChatClient.devices);
+			cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 
 		}
 
@@ -125,13 +127,14 @@ public class CEO_ChooseReportController {
 	 *
 	 * @param event the ActionEvent object representing the selection event
 	 */
+	@SuppressWarnings("static-access")
 	@FXML
 	void clickComboArea(ActionEvent event) {
 		cmbDevice.getItems().clear();
 		cmbDevice.setDisable(false);
 		String areaChoosen = cmbArea.getValue().toString();
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChoosen));
-		cmbDevice.getItems().addAll(ChatClient.devices);
+		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 
 	}
 
@@ -190,8 +193,7 @@ public class CEO_ChooseReportController {
 	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
-		ClientUI.chat.accept("Disconnect");
-		System.exit(0);
+		scene.exitOrLogOut(event, false);
 	}
 
 }

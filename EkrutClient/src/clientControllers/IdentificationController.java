@@ -98,7 +98,7 @@ public class IdentificationController {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
-				((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+				//((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 				// loading next screen for specific user.
 				newScreen.setScreen(new Stage(),
 						"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());

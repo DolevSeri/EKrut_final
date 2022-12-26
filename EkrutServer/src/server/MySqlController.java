@@ -7,10 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import entities.User;
+
+import entities.Device;
 import entities.MonthlyOrderReport;
+import entities.User;
 import enums.Region;
 import enums.Role;
+import javafx.collections.ObservableList;
 
 /**
  * @author peleg MySqlController- a controller class that will connect between
@@ -220,20 +223,40 @@ public class MySqlController {
 				mostWantedProduct);
 	}
 
-	public static ArrayList<String> getAllDevicesByArea(String area) {
+	public static ArrayList<Device> getAllDevicesByArea(String area) {
 		PreparedStatement ps;
-		ArrayList<String> devices = new ArrayList<String>();
+		ArrayList<Device> devices = new ArrayList<>();
 
 		try {
-			ps = dbConnector.prepareStatement("SELECT deviceName FROM ekrut.devices WHERE region=\"" + area + "\";");
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices WHERE region=\"" + area + "\";");
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				devices.add(res.getString(1));
+				devices.add(new Device(res.getString(1), res.getInt(2), Region.valueOf(res.getString(3)),
+						res.getString(4)));
 			}
 			System.out.println("Import data suceeded");
 		} catch (Exception e) {
 			System.out.println("Import data failed!");
 		}
 		return devices;
+	}
+
+	public static void updateDeviceThreshold(ArrayList<Device> devicesToUpdate) {
+		PreparedStatement ps;
+		try {
+			ps = dbConnector.prepareStatement("UPDATE ekrut.devices SET threshold = ? WHERE deviceID = ?");
+
+			// Update the records in the database
+			for (Device device : devicesToUpdate) {
+				ps.setInt(1, device.getThreshold());
+				ps.setString(2, device.getDeviceID());
+		        ps.executeUpdate();
+			}
+			System.out.println("Update threshold suceeded!");
+
+		} catch (SQLException e) {
+			System.out.println("Update threshold failed!");
+		}
+		
 	}
 }
