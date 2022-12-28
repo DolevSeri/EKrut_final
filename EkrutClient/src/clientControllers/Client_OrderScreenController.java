@@ -1,8 +1,20 @@
 package clientControllers;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import client.ChatClient;
+import client.ClientUI;
+import entities.Product;
+import entities.ProductInDevice;
+import entities.Message;
+import enums.Request;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,6 +49,23 @@ public class Client_OrderScreenController {
 
 	@FXML
 	private ImageView logoImage;
+
+	public static ArrayList<Product> selectedItems = new ArrayList<Product>();
+	private ObservableList<ProductInDevice> products;
+	public static double totalPrice = 0;
+
+	public void initialize() {
+		ClientUI.chat
+				.accept(new Message(Request.Get_Products, ChatClient.userController.getUser().getRegion().toString()));
+		products = ChatClient.productCatalogController.getProductCatalog();
+		SetGrid();
+
+	}
+
+	private void SetGrid() {
+		// TODO Auto-generated method stub
+
+	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {

@@ -89,7 +89,7 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Login_Request:
-			
+
 			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
 			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
 			Message msgToClient;
@@ -102,8 +102,7 @@ public class EchoServer extends AbstractServer {
 					System.out.println("User already logged in");
 					msgToClient = new Message(Request.LoggedIn_UnsuccsesAlreadyLoggedIn, user);
 				}
-			} 
-			else {
+			} else {
 				System.out.println("User login failed");
 				msgToClient = new Message(Request.Unsuccsesful_LogIn, null);
 			}
@@ -116,11 +115,11 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Logout_request:
-			User userLogout = (User)messageFromClient.getObject();
+			User userLogout = (User) messageFromClient.getObject();
 			try {
 				MySqlController.UserLogoutAndUpdateDB(userLogout);
 				try {
-					client.sendToClient(new Message(Request.LoggedOut,null));
+					client.sendToClient(new Message(Request.LoggedOut, null));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -130,25 +129,32 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 		case Get_Devices_By_Area:
-			String area = (String)messageFromClient.getObject();
+			String area = (String) messageFromClient.getObject();
 			try {
-				client.sendToClient(new Message(Request.Devices_Imported,MySqlController.getAllDevicesByArea(area)));
-			}
-			catch (Exception e) {
+				client.sendToClient(new Message(Request.Devices_Imported, MySqlController.getAllDevicesByArea(area)));
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		case GetOrdersData:
-			ArrayList<String> fields = (ArrayList<String>)messageFromClient.getObject();
+			ArrayList<String> fields = (ArrayList<String>) messageFromClient.getObject();
 			try {
-				client.sendToClient(new Message(Request.OrdersData_Imported,MySqlController.getOrdersReportData(fields)));
-			}
-			catch (Exception e) {
+				client.sendToClient(
+						new Message(Request.OrdersData_Imported, MySqlController.getOrdersReportData(fields)));
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		case Threshold_Update_Request:
-			MySqlController.updateDeviceThreshold((ArrayList<Device>)messageFromClient.getObject());
+			MySqlController.updateDeviceThreshold((ArrayList<Device>) messageFromClient.getObject());
 			try {
-				client.sendToClient(new Message(Request.Threshold_Updated,null));
+				client.sendToClient(new Message(Request.Threshold_Updated, null));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
+		case Get_Products:
+			String deviceName = (String) messageFromClient.getObject();
+			MySqlController.getProductsFromDevice(deviceName);
+			try {
+				client.sendToClient(new Message(Request.Products_Imported, null));
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}

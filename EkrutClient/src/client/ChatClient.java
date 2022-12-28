@@ -10,10 +10,13 @@ import java.util.ArrayList;
 
 import common.ChatIF;
 import entities.Device;
+import entities.Product;
+import entities.ProductInDevice;
 import entities.Message;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.DeviceController;
+import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
@@ -38,6 +41,7 @@ public class ChatClient extends AbstractClient {
 	public static Subscriber s1 = new Subscriber(null, null, null, null, null, null, null);
 	public static UserController userController = new UserController();
 	public static DeviceController deviceController = new DeviceController();
+	public static ProductCatalogController productCatalogController = new ProductCatalogController();
 
 	public static boolean awaitResponse = false;
 
@@ -64,7 +68,7 @@ public class ChatClient extends AbstractClient {
 	 *
 	 * @param msg The message from the server.
 	 */
-	
+
 	@SuppressWarnings({ "unchecked", "static-access" })
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
@@ -78,10 +82,10 @@ public class ChatClient extends AbstractClient {
 		case Disconnected:
 			break;
 		case LoggedIn_Succses:
-			userController.setUser((User)message.getObject());
+			userController.setUser((User) message.getObject());
 			break;
 		case LoggedIn_UnsuccsesAlreadyLoggedIn:
-			userController.setUser((User)message.getObject());
+			userController.setUser((User) message.getObject());
 			break;
 		case Unsuccsesful_LogIn:
 			userController.setUser(null);
@@ -89,9 +93,12 @@ public class ChatClient extends AbstractClient {
 		case LoggedOut:
 			userController.setUser(null);
 		case Devices_Imported:
-			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));	
+			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>) message.getObject()));
 		case Threshold_Updated:
 			break;
+		case Products_Imported:
+			productCatalogController.setProductCatalog(
+					FXCollections.observableArrayList((ArrayList<ProductInDevice>) message.getObject()));
 		default:
 			break;
 		}
@@ -124,6 +131,7 @@ public class ChatClient extends AbstractClient {
 			quit();
 		}
 	}
+
 	public void handleMessageFromClientUI(Message message) {
 		try {
 			openConnection();
@@ -138,7 +146,7 @@ public class ChatClient extends AbstractClient {
 				}
 			}
 		} catch (IOException e) {
-			clientUI.display("Could not send message to server.  Terminating client."+e);
+			clientUI.display("Could not send message to server.  Terminating client." + e);
 			quit();
 		}
 	}

@@ -1,46 +1,43 @@
 package enums;
 
 public enum Role {
-	CEO{
+	CEO {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
+			// the string will be the exact name of the FXML we would like to show
 			return "CEO_MainView.fxml";
 		}
 	},
 
-	
-	Costumer{
+	Costumer {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
-			return "MainOrderFrame.fxml";
+			// the string will be the exact name of the FXML we would like to show
+			return "Costumer";
 		}
 	},
-	AreaManager{
+	AreaManager {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
+			// the string will be the exact name of the FXML we would like to show
 			return "AreaManager_MainView.fxml";
 		}
 	},
 
-	Store_Manager{
+	Store_Manager {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
+			// the string will be the exact name of the FXML we would like to show
 			return "AreaManager_MainView.fxml";
 		}
 	},
-	DeliveryOP{
+	DeliveryOP {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
+			// the string will be the exact name of the FXML we would like to show
 			return "AreaManager_MainView.fxml";
 		}
 	},
-	OpWorker{
+	OpWorker {
 		public String toString() {
-			//the string will be the exact name of the FXML we would like to show
+			// the string will be the exact name of the FXML we would like to show
 			return "AreaManager_MainView.fxml";
 		}
 	},
-	
-	
-	
+
 }

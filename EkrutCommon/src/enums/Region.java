@@ -1,37 +1,26 @@
 package enums;
 
 public enum Region {
-	TelAviv{
+	NORTH {
 		public String toString() {
-			return "Tel Aviv";
-		}
-	},
-	
-	BeerSheva{
-		public String toString() {
-			return "Beer Sheva";
-		}
-	},
-	
-	Haifa{
-		public String toString() {
-			return "Haifa";
-		}
-	},
-	Karmiel{
-		public String toString() {
-			return "Karmiel";
-		}
-	},
-	KiryatAta{
-		public String toString() {
-			return "Kiryat Ata";
-		}
-	},
-	All{
-		public String toString() {
-			return "Kiryat Ata";
+			return "North";
 		}
 	},
 
+	SOUTH {
+		public String toString() {
+			return "South";
+		}
+	},
+
+	UAE {
+		public String toString() {
+			return "UAE";
+		}
+	},
+	ALL {
+		public String toString() {
+			return "ALL";
+		}
+	},
 }
