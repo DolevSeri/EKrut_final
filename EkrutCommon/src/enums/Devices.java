@@ -8,34 +8,34 @@ package enums;
 public enum Devices {
 	TelAviv {
 		public String toString() {
-			return "Tel Aviv";
+			return "TELAVIV";
 		}
 	},
 
 	BeerSheva {
 		public String toString() {
-			return "Beer Sheva";
+			return "BEERSHEVA";
 		}
 	},
 
 	Haifa {
 		public String toString() {
-			return "Haifa";
+			return "HAIFA";
 		}
 	},
 	Karmiel {
 		public String toString() {
-			return "Karmiel";
+			return "KARMIEL";
 		}
 	},
 	Dubai {
 		public String toString() {
-			return "Dubai";
+			return "DUBAI";
 		}
 	},
 	Qatar {
 		public String toString() {
-			return "Qatar";
+			return "QATAR";
 		}
 	},
 

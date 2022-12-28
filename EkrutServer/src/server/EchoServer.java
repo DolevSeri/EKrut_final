@@ -152,9 +152,16 @@ public class EchoServer extends AbstractServer {
 			}
 		case Get_Products:
 			String deviceName = (String) messageFromClient.getObject();
-			MySqlController.getProductsFromDevice(deviceName);
 			try {
-				client.sendToClient(new Message(Request.Products_Imported, null));
+				client.sendToClient(
+						new Message(Request.Products_Imported, MySqlController.getProductsFromDevice(deviceName)));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
+		case Get_Costumer:
+			String userID = (String) messageFromClient.getObject();
+			try {
+				client.sendToClient(new Message(Request.Costumer_Imported, MySqlController.getCostumerData(userID)));
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}

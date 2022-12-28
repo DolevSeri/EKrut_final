@@ -1,5 +1,6 @@
 package clientControllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -15,11 +16,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class Client_OrderScreenController {
@@ -52,18 +56,49 @@ public class Client_OrderScreenController {
 
 	public static ArrayList<Product> selectedItems = new ArrayList<Product>();
 	private ObservableList<ProductInDevice> products;
+	private ArrayList<ProductController> productControllers = new ArrayList<>();
 	public static double totalPrice = 0;
 
 	public void initialize() {
-		ClientUI.chat
-				.accept(new Message(Request.Get_Products, ChatClient.userController.getUser().getRegion().toString()));
+		ClientUI.chat.accept(
+				new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice().toString()));
 		products = ChatClient.productCatalogController.getProductCatalog();
+		try {
+			setCatalog();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		SetGrid();
+	}
 
+	private void setCatalog() throws IOException {
+		int column = 0;
+		int row = 1;
+		int i = 0;
+		for (ProductInDevice p : products) {
+			FXMLLoader fxmlLoader = new FXMLLoader();
+			fxmlLoader.setLocation(getClass().getResource("/clientGUI/Product.fxml"));
+			AnchorPane anchorPane = fxmlLoader.load();
+			ProductController productController = fxmlLoader.getController();
+			productControllers.add(productController);
+			productControllers.get(i).setData(p.getProductName(), p.getPrice(), null, p.getImagePath());
+			gpCart.add(anchorPane, column++, row++);// (child column,row)
+			if (column == 3)
+				column=0;
+			// Set grid width
+			gpCart.setMinWidth(Region.USE_COMPUTED_SIZE);
+			gpCart.setPrefWidth(Region.USE_COMPUTED_SIZE);
+			gpCart.setMaxWidth(Region.USE_COMPUTED_SIZE);
+			// Set grid height
+			gpCart.setMinHeight(Region.USE_COMPUTED_SIZE);
+			gpCart.setPrefHeight(Region.USE_COMPUTED_SIZE);
+			gpCart.setMaxHeight(Region.USE_COMPUTED_SIZE);
+			GridPane.setMargin(anchorPane, new Insets(5));
+		}
 	}
 
 	private void SetGrid() {
-		// TODO Auto-generated method stub
 
 	}
 

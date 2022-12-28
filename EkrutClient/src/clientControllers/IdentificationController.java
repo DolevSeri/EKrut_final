@@ -99,6 +99,7 @@ public class IdentificationController {
 			} else {
 				// loading next screen for specific user.
 				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
+					 ClientUI.chat.accept(new Message(Request.Get_Costumer,ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
@@ -106,8 +107,7 @@ public class IdentificationController {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
 
-				}
-				else {
+				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					newScreen.setScreen(new Stage(),
 							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());

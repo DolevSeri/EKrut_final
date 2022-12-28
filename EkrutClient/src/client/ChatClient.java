@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import common.ChatIF;
+import entities.Costumer;
 import entities.Device;
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Message;
 import entities.Subscriber;
 import entities.User;
+import entityControllers.CostumerController;
 import entityControllers.DeviceController;
 import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
@@ -42,7 +44,7 @@ public class ChatClient extends AbstractClient {
 	public static UserController userController = new UserController();
 	public static DeviceController deviceController = new DeviceController();
 	public static ProductCatalogController productCatalogController = new ProductCatalogController();
-
+	public static CostumerController costumerController = new CostumerController();
 	public static boolean awaitResponse = false;
 
 	// Constructors ****************************************************
@@ -99,6 +101,9 @@ public class ChatClient extends AbstractClient {
 		case Products_Imported:
 			productCatalogController.setProductCatalog(
 					FXCollections.observableArrayList((ArrayList<ProductInDevice>) message.getObject()));
+		case Costumer_Imported:
+			Costumer costumer = (Costumer) message.getObject();
+			costumerController.setCostumer(costumer);
 		default:
 			break;
 		}

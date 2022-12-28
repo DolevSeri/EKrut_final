@@ -101,4 +101,14 @@ public enum Request {
 			return "Products updated successfully!";
 		}
 	},
+	Get_Costumer {
+		public String toString() {
+			return "Request update Costumer";
+		}
+	},
+	Costumer_Imported {
+		public String toString() {
+			return "Costumer imported succsesfuly!";
+		}
+	},
 }

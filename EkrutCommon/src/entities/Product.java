@@ -7,11 +7,10 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int productCode;
 	private String productName;
-	private float price;
+	private double price;
 	private String imagePath;
-	
 
-	public Product(int productCode, String productName, float price, String imagePath) {
+	public Product(int productCode, String productName, double price, String imagePath) {
 
 		this.productCode = productCode;
 		this.productName = productName;
@@ -43,7 +42,7 @@ public class Product implements Serializable {
 		this.productName = productName;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
