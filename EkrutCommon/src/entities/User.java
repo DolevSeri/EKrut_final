@@ -2,14 +2,17 @@ package entities;
 
 import java.io.Serializable;
 
+import enums.Configuration;
+import enums.Devices;
 import enums.Region;
 import enums.Role;
 
+/**
+ * 
+ * @author peleg Class that describe user object
+ */
 public class User implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
@@ -21,9 +24,10 @@ public class User implements Serializable {
 	private String id;
 	private Role role;
 	private Region region;
+	private Configuration configuration;
 
 	public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
-			boolean isLoggedIn, String id, Role role, Region region) {
+			boolean isLoggedIn, String id, Role role, Region region, Configuration configuration) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -35,8 +39,8 @@ public class User implements Serializable {
 		this.id = id;
 		this.role = role;
 		this.region = region;
+		this.configuration = configuration;
 	}
-
 
 	public String getUsername() {
 		return username;
@@ -117,4 +121,13 @@ public class User implements Serializable {
 	public void setRegion(Region region) {
 		this.region = region;
 	}
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(Configuration configuration) {
+		this.configuration = configuration;
+	}
+
 }

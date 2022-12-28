@@ -11,10 +11,17 @@ import java.util.HashMap;
 import entities.Device;
 import entities.MonthlyOrderReport;
 import entities.Order;
+import entities.Product;
+import entities.ProductInDevice;
 import entities.User;
+import enums.Configuration;
+import enums.Devices;
+import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
 import enums.SupplyMethod;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * @author peleg MySqlController- a controller class that will connect between
@@ -87,7 +94,8 @@ public class MySqlController {
 				User user = new User(result.getString("username"), result.getString("password"),
 						result.getString("firstName"), result.getString("lastName"), result.getString("email"),
 						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"),
-						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")),
+						Configuration.valueOf(result.getString("configuration")));
 
 				// Set the login status to true so no one else can access it
 				try {
@@ -232,7 +240,7 @@ public class MySqlController {
 			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices WHERE region=\"" + area + "\";");
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				devices.add(new Device(res.getString(1), res.getInt(2), Region.valueOf(res.getString(3)),
+				devices.add(new Device(res.getString(1), res.getInt(2), Devices.valueOf(res.getString(3)),
 						res.getString(4)));
 			}
 			System.out.println("Import data suceeded");
@@ -260,65 +268,64 @@ public class MySqlController {
 		}
 
 	}
-	
+
 	public static void createMonthlyOrdersReport(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
-		ArrayList<Device> areaDevices = getAllDevicesByArea(area); 
+		ArrayList<Device> areaDevices = getAllDevicesByArea(area);
 		String mostSelling = null, devices = "";
 		Integer max = 0, num;
 		int totalOrders = 0, totalPickUpOrders = 0;
 		HashMap<String, Integer> deviceNumOfOrders = new HashMap<>();
 		ArrayList<Order> ordersOfDevice = new ArrayList<>();
-		for(Device device : areaDevices) {
+		for (Device device : areaDevices) {
 			ordersOfDevice.addAll(getOrdersDataOfDevice(device.getDeviceID()));
 		}
-		for(Order order : ordersOfDevice) {
-			if(order.getOrdetMonth().equals(month) && order.getOrderYear().equals(year)) {
+		for (Order order : ordersOfDevice) {
+			if (order.getOrdetMonth().equals(month) && order.getOrderYear().equals(year)) {
 				totalOrders++;
-				if(order.getSupplyMethod().equals(SupplyMethod.PickUp))
+				if (order.getSupplyMethod().equals(SupplyMethod.PickUp))
 					totalPickUpOrders++;
-				
-				if(!deviceNumOfOrders.containsKey(order.getDeviceID())) {
+
+				if (!deviceNumOfOrders.containsKey(order.getDeviceID())) {
 					deviceNumOfOrders.put(order.getDeviceID(), 1);
-				}
-				else {
+				} else {
 					num = deviceNumOfOrders.get(order.getDeviceID()) + 1;
 					deviceNumOfOrders.replace(order.getDeviceID(), num);
 				}
 			}
-		
+
 		}
-		for(String str : deviceNumOfOrders.keySet()) {
+		for (String str : deviceNumOfOrders.keySet()) {
 			num = deviceNumOfOrders.get(str);
-			if( num > max) {
+			if (num > max) {
 				max = num;
 				mostSelling = str;
 			}
-			devices += "," + str + "," + num ;
+			devices += "," + str + "," + num;
 		}
 		devices.replaceFirst(",", "");
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orderReport "
 					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices) VALUES(?, ?, ?, ?, ?, ?, ?)");
 			try {
-				ps.setString(0,month);
+				ps.setString(0, month);
 				ps.setString(1, year);
 				ps.setString(2, area);
 				ps.setInt(3, totalOrders);
 				ps.setInt(4, totalPickUpOrders);
 				ps.setString(5, mostSelling);
 				ps.setString(6, devices);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Enter data to ordersReport on DB failed");
 				System.out.println("Error on createMonthlyOrderReport");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println(e);
 			System.out.println("Exucute statement failed");
 			System.out.println("Error on createMonthlyOrderReport");
 		}
-		
+
 	}
 
 	private static ArrayList<Order> getOrdersDataOfDevice(String deviceID) {
@@ -333,18 +340,46 @@ public class MySqlController {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				orders.add(new Order(rs.getString("deviceID"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
-						rs.getString("costumerID"), rs.getString("orderDate"), 
+						rs.getString("costumerID"), rs.getString("orderDate"),
 						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
 			}
 		} catch (Exception e) {
 			System.out.println("Import orders data from orders table has failed!");
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
-		
 
 		return orders;
 	}
 
+	/**
+	 * Method that will import the product in device to the catalog screen
+	 * 
+	 * @param String object deviceName
+	 * @return products - list of Products in device object
+	 */
+	public static ObservableList<ProductInDevice> getProductsFromDevice(String deviceName) {
 
+		ObservableList<ProductInDevice> products = FXCollections.observableArrayList();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.products.*, ekrut.product_in_device.quantity , ekrut.product_in_device.status, ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.deviceName = ?");
+			try {
+				ps.setString(0, deviceName);
+			} catch (Exception e) {
+				System.out.println("Executing statement failed!");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				products.add(new ProductInDevice(rs.getInt("productCode"), rs.getString("productName"),
+						rs.getFloat("price"), rs.getString("imagePath"), rs.getInt("quantity"),
+						ProductStatus.valueOf(rs.getString("status")), Devices.valueOf(rs.getString("deviceName"))));
+			}
+		} catch (Exception e) {
+			System.out.println("Import orders data from orders table has failed!");
+			System.out.println("Failed at getOrdersDataOfDevice method");
+		}
+
+		return products;
+	}
 
 }

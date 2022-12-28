@@ -86,9 +86,19 @@ public enum Request {
 			return "Request update threshold";
 		}
 	},
-	Threshold_Updated{
+	Threshold_Updated {
 		public String toString() {
 			return "Threshold updated successfully!";
+		}
+	},
+	Get_Products {
+		public String toString() {
+			return "Request updated Products!";
+		}
+	},
+	Products_Imported {
+		public String toString() {
+			return "Products updated successfully!";
 		}
 	},
 }
