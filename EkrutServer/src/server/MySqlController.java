@@ -12,7 +12,6 @@ import entities.Costumer;
 import entities.Device;
 import entities.MonthlyOrderReport;
 import entities.Order;
-import entities.Product;
 import entities.ProductInDevice;
 import entities.User;
 import enums.Configuration;
@@ -22,8 +21,6 @@ import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
 import enums.SupplyMethod;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * @author peleg MySqlController- a controller class that will connect between
@@ -242,8 +239,7 @@ public class MySqlController {
 			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices WHERE region=\"" + area + "\";");
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				devices.add(new Device(res.getString(1), res.getInt(2), Devices.valueOf(res.getString(3)),
-						res.getString(4)));
+				devices.add(new Device(res.getString(1), res.getInt(2), Region.valueOf(res.getString(3)),Devices.valueOf(res.getString(4))));	
 			}
 			System.out.println("Import data suceeded");
 		} catch (Exception e) {

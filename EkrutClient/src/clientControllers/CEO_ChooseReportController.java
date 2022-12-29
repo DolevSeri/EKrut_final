@@ -85,7 +85,6 @@ public class CEO_ChooseReportController {
 	 * retrieves the list of devices for the logged in user's region and adds them
 	 * to the device combo box.
 	 */
-	@SuppressWarnings("static-access")
 	public void initialize() {
 
 		ArrayList<String> years = new ArrayList<String>(
@@ -101,7 +100,7 @@ public class CEO_ChooseReportController {
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
 			cmbDevice.setDisable(true);
 			ArrayList<String> area = new ArrayList<String>(
-					Arrays.asList("Tel Aviv", "Haifa", "Kiryat Ata", "Karmiel", "Beer Sheva"));
+					Arrays.asList("NORTH", "SOUTH", "Kiryat Ata", "Karmiel", "Beer Sheva"));
 			cmbArea.getItems().addAll(area);
 			cmbDevice.setPromptText("Choose region first!");
 

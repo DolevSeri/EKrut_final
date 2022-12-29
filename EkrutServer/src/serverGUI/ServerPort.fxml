@@ -66,9 +66,9 @@
       </Label>
       <TableView fx:id="tblConClients" layoutX="319.0" layoutY="153.0" prefHeight="91.0" prefWidth="331.0">
         <columns>
-          <TableColumn fx:id="IP" onEditStart="#setCulomns" prefWidth="115.0" text="IP" />
-          <TableColumn fx:id="Host" onEditStart="#setCulomns" prefWidth="119.0" text="Host" />
-            <TableColumn fx:id="Status" onEditStart="#setCulomns" prefWidth="96.66668701171875" text="Status" />
+          <TableColumn fx:id="IP" onEditStart="#setColumns" prefWidth="115.0" text="IP" />
+          <TableColumn fx:id="Host" onEditStart="#setColumns" prefWidth="119.0" text="Host" />
+            <TableColumn fx:id="Status" onEditStart="#setColumns" prefWidth="96.66668701171875" text="Status" />
         </columns>
       </TableView>
       <Label layoutX="393.0" layoutY="260.0" text="Console Output" textFill="#8d48e1" underline="true">

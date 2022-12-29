@@ -107,7 +107,7 @@ public class ServerPortFrameController {
 			EchoServer sv = ServerUI.getSv();
 			tblConClients.setEditable(true);
 			tblConClients.setItems(sv.getClientList());
-			setCulomns();
+			setColumns();
 		}
 	}
 	/**
@@ -181,7 +181,7 @@ public class ServerPortFrameController {
 	/**
 	 * Sets the columns for the clients table.
 	 */
-	public void setCulomns() {
+	public void setColumns() {
 		IP.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("IP"));
 		Host.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("host"));
 		Status.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("status"));
