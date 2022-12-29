@@ -340,11 +340,73 @@ public class MySqlController {
 			System.out.println("Import orders data from orders table has failed!");
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
-		
-
 		return orders;
 	}
 
+	public static void createMonthlyInventoryReport(ArrayList<String> reportData) {
+		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
+		String itemUnderThres = null, itemsList = "";
+		Integer max = 0, num;
+		HashMap<String, Integer> producsUnderThreshold = getProductsUnderThresholdCount(reportData);
+		
+		for(String str : producsUnderThreshold.keySet()) {
+			num = producsUnderThreshold.get(str);
+			itemsList += "," + str + "," + num.toString();
+			if(max < num) {
+				max = producsUnderThreshold.get(str);
+				itemUnderThres = str;
+				
+			}	
+		}
+		itemsList.replaceFirst(",", "");
+		
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryReport "
+					+ "(month, year, deviceID, products, itemUnderThres) VALUES(?, ?, ?, ?, ?)");
+			try {
+				ps.setString(0, month);
+				ps.setString(1, year);
+				ps.setString(3, device);
+				ps.setString(4, itemsList);
+				ps.setString(5, itemUnderThres);
+			} catch (Exception e) {
+				System.out.println(e);
+				System.out.println("Enter data to ordersReport on DB failed");
+				System.out.println("Error on createMonthlyInventoryReport");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error on execute statement");
+		}
+		
+		
+	}
+	
+	public static HashMap<String, Integer> getProductsUnderThresholdCount(ArrayList<String> reportData){
+		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2); 
+		HashMap<String, Integer> productsThres = new HashMap<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.items_under_threshold WHERE"
+					+ " deviceID = ? AND month = ? AND year = ? ");
+			try {
+				ps.setString(0, device);
+				ps.setString(1, month);
+				ps.setString(2, year);
+			}catch(Exception e) {
+				System.out.println("Executing statement failed!");
+			}
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				productsThres.put(rs.getString("serialNumber"), rs.getInt("count"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Exucute statement failed");
+			System.out.println("Error on getProductsUnderThresholdCount");
+		}
+		return productsThres;
+	}
 
 
 }
