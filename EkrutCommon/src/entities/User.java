@@ -3,7 +3,6 @@ package entities;
 import java.io.Serializable;
 
 import enums.Configuration;
-import enums.Devices;
 import enums.Region;
 import enums.Role;
 
