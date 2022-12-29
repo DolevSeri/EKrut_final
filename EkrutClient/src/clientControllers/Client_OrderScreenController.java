@@ -58,8 +58,8 @@ public class Client_OrderScreenController {
 	public static double totalPrice = 0;
 
 	public void initialize() {
-		ClientUI.chat.accept(
-				new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice().toString()));
+		ClientUI.chat
+				.accept(new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice()));
 		products = ChatClient.productCatalogController.getProductCatalog();
 		try {
 			setCatalog();
@@ -89,9 +89,6 @@ public class Client_OrderScreenController {
 				// Set grid width
 
 			}
-			// gpCatalog.setMinWidth(Region.USE_COMPUTED_SIZE);
-			// gpCatalog.setPrefWidth(Region.USE_COMPUTED_SIZE);
-			// gpCatalog.setMaxWidth(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setMinHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setPrefHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setMaxHeight(Region.USE_COMPUTED_SIZE);

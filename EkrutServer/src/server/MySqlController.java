@@ -374,7 +374,7 @@ public class MySqlController {
 			while (rs.next()) {
 				products.add(new ProductInDevice(rs.getInt("productCode"), rs.getString("productName"),
 						rs.getDouble("price"), rs.getString("imagePath"), rs.getInt("quantity"),
-						ProductStatus.valueOf(rs.getString("status")), Devices.valueOf(rs.getString("deviceName"))));
+						ProductStatus.valueOf(rs.getString("status")), rs.getString("deviceName")));
 			}
 			return products;
 		} catch (Exception e) {
@@ -394,7 +394,7 @@ public class MySqlController {
 	public static Costumer getCostumerData(String userID) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,ekrut.costumers.status,ekrut.costumers.deviceName FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? AND ekrut.users.id=ekrut.costumers.costumerID");
+					"SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,ekrut.costumers.status,ekrut.costumers.deviceName FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? AND ekrut.users.username=ekrut.costumers.username");
 			try {
 				ps.setString(1, userID);
 			} catch (Exception e) {
@@ -408,7 +408,7 @@ public class MySqlController {
 						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
 						Configuration.valueOf(rs.getString("configuration")), rs.getString("creditCard"),
 						rs.getString("subscriberID"), CostumerStatus.valueOf(rs.getString("status")),
-						Devices.valueOf(rs.getString("deviceName")));
+						rs.getString("deviceName"));
 				return costumer;
 			}
 		} catch (Exception e) {

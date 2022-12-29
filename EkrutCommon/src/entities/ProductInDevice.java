@@ -10,10 +10,10 @@ public class ProductInDevice extends Product {
 	private static final long serialVersionUID = 1L;
 	private int quantity;
 	private ProductStatus status;
-	private Devices device;
+	private String device;
 
 	public ProductInDevice(int productCode, String productName, double price, String imagePath, int quantity,
-			ProductStatus status, Devices device) {
+			ProductStatus status, String device) {
 		super(productCode, productName, price, imagePath);
 		this.status = status;
 		this.device = device;
@@ -28,7 +28,7 @@ public class ProductInDevice extends Product {
 		return status;
 	}
 
-	public Devices getDevice() {
+	public String getDevice() {
 		return device;
 	}
 
@@ -40,7 +40,7 @@ public class ProductInDevice extends Product {
 		this.status = status;
 	}
 
-	public void setDevice(Devices device) {
+	public void setDevice(String device) {
 		this.device = device;
 	}
 
