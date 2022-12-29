@@ -14,21 +14,24 @@ import enums.Role;
  */
 public class Costumer extends User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String creditCard;
 	private String subscriberID;
 	private CostumerStatus status;
-	private Devices device;
+	private String deviceName;
 
 	public Costumer(String username, String password, String firstName, String lastName, String email,
 			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region, Configuration configuration,
-			String creditCard, String subscriberID, CostumerStatus status, Devices device) {
-		
-		
+			String creditCard, String subscriberID, CostumerStatus status, String deviceName) {
+
 		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region, configuration);
 		this.creditCard = creditCard;
 		this.subscriberID = subscriberID;
 		this.status = status;
-		this.device = device;
+		this.deviceName = deviceName;
 	}
 
 	public String getCreditCard() {
@@ -43,8 +46,8 @@ public class Costumer extends User implements Serializable {
 		return status;
 	}
 
-	public Devices getDevice() {
-		return device;
+	public String getDevice() {
+		return deviceName;
 	}
 
 	public void setCreditCard(String creditCard) {
@@ -59,8 +62,8 @@ public class Costumer extends User implements Serializable {
 		this.status = status;
 	}
 
-	public void setDevice(Devices device) {
-		this.device = device;
+	public void setDevice(String deviceName) {
+		this.deviceName = deviceName;
 	}
 
 }
