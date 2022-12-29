@@ -3,6 +3,7 @@ package clientControllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import client.ChatClient;
@@ -18,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -56,7 +58,7 @@ public class Client_OrderScreenController {
 
 	public static ArrayList<Product> selectedItems = new ArrayList<Product>();
 	private ObservableList<ProductInDevice> products;
-	private ArrayList<ProductController> productControllers = new ArrayList<>();
+	private List<ProductController> productControllers = new ArrayList<>();
 	public static double totalPrice = 0;
 
 	public void initialize() {
@@ -74,28 +76,32 @@ public class Client_OrderScreenController {
 
 	private void setCatalog() throws IOException {
 		int column = 0;
-		int row = 1;
+		int row = 0;
 		int i = 0;
 		for (ProductInDevice p : products) {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/clientGUI/Product.fxml"));
 			AnchorPane anchorPane = fxmlLoader.load();
+
 			ProductController productController = fxmlLoader.getController();
 			productControllers.add(productController);
-			productControllers.get(i).setData(p.getProductName(), p.getPrice(), null, p.getImagePath());
-			gpCart.add(anchorPane, column++, row++);// (child column,row)
-			if (column == 3)
-				column=0;
-			// Set grid width
-			gpCart.setMinWidth(Region.USE_COMPUTED_SIZE);
-			gpCart.setPrefWidth(Region.USE_COMPUTED_SIZE);
-			gpCart.setMaxWidth(Region.USE_COMPUTED_SIZE);
-			// Set grid height
-			gpCart.setMinHeight(Region.USE_COMPUTED_SIZE);
-			gpCart.setPrefHeight(Region.USE_COMPUTED_SIZE);
-			gpCart.setMaxHeight(Region.USE_COMPUTED_SIZE);
-			GridPane.setMargin(anchorPane, new Insets(5));
+			productControllers.get(i++).setData(p.getProductName(), p.getPrice(), null, p.getImagePath());
+			gpCatalog.add(anchorPane, column++, row);// (child column,row)
+			if (column == 3) {
+				row++;
+				column = 0;
+				// Set grid width
+
+			}
+			// gpCatalog.setMinWidth(Region.USE_COMPUTED_SIZE);
+			// gpCatalog.setPrefWidth(Region.USE_COMPUTED_SIZE);
+			// gpCatalog.setMaxWidth(Region.USE_COMPUTED_SIZE);
+			gpCatalog.setMinHeight(Region.USE_COMPUTED_SIZE);
+			gpCatalog.setPrefHeight(Region.USE_COMPUTED_SIZE);
+			gpCatalog.setMaxHeight(Region.USE_COMPUTED_SIZE);
+			GridPane.setMargin(anchorPane, new Insets(3));
 		}
+
 	}
 
 	private void SetGrid() {

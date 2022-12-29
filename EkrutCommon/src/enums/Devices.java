@@ -6,34 +6,34 @@ package enums;
  * class enum that will contain the name of devices 
  */
 public enum Devices {
-	TelAviv {
+	TELAVIV {
 		public String toString() {
 			return "TELAVIV";
 		}
 	},
 
-	BeerSheva {
+	BEERSHEVA {
 		public String toString() {
 			return "BEERSHEVA";
 		}
 	},
 
-	Haifa {
+	HAIFA {
 		public String toString() {
 			return "HAIFA";
 		}
 	},
-	Karmiel {
+	KARMIEL {
 		public String toString() {
 			return "KARMIEL";
 		}
 	},
-	Dubai {
+	DUBAI {
 		public String toString() {
 			return "DUBAI";
 		}
 	},
-	Qatar {
+	QATAR {
 		public String toString() {
 			return "QATAR";
 		}

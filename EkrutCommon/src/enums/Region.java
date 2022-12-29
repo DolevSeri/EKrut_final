@@ -3,13 +3,13 @@ package enums;
 public enum Region {
 	NORTH {
 		public String toString() {
-			return "North";
+			return "NORTH";
 		}
 	},
 
 	SOUTH {
 		public String toString() {
-			return "South";
+			return "SOUTH";
 		}
 	},
 
