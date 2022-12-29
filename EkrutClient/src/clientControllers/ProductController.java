@@ -27,7 +27,7 @@ public class ProductController {
 		lblName.setText(name);
 		lblPrice.setText(String.valueOf(price));
 		lblSale.setText(sale);
-		// Image image = new Image(imagePath);
-		// productLogo.setImage(image);
+		Image image = new Image(imagePath);
+		productLogo.setImage(image);
 	}
 }
