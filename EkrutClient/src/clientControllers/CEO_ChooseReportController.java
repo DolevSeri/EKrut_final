@@ -156,7 +156,7 @@ public class CEO_ChooseReportController {
 			switch (fields.get(3).toString()) {
 			case "Inventory report":
 				// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-
+				
 				scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
 				break;
 			case "Orders report":

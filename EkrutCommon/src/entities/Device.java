@@ -7,7 +7,8 @@ import enums.Devices;
 public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String deviceID, deviceName;
+	private String deviceName;
+	private String deviceID;
 	private int threshold;
 	private Devices region;
 
@@ -18,6 +19,7 @@ public class Device implements Serializable {
 		this.threshold = threshold;
 		this.region = region;
 	}
+
 
 	public String getDeviceID() {
 		return deviceID;
