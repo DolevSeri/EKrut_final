@@ -4,6 +4,10 @@ import enums.Devices;
 import enums.ProductStatus;
 
 public class ProductInDevice extends Product {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int quantity;
 	private ProductStatus status;
 	private Devices device;

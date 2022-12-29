@@ -335,7 +335,7 @@ public class MySqlController {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders WHERE deviceID = ? ");
 			try {
-				ps.setString(0, deviceID);
+				ps.setString(1, deviceID);
 			} catch (Exception e) {
 				System.out.println("Executing statement failed!");
 			}
@@ -431,7 +431,7 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"SELECT ekrut.products.*, ekrut.product_in_device.quantity , ekrut.product_in_device.status, ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.deviceName = ?");
 			try {
-				ps.setString(0, deviceName);
+				ps.setString(1, deviceName);
 			} catch (Exception e) {
 				System.out.println("Executing statement failed!");
 			}
@@ -461,7 +461,7 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,ekrut.costumers.status,ekrut.costumers.deviceName FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? AND ekrut.users.id=ekrut.costumers.costumerID");
 			try {
-				ps.setString(0, userID);
+				ps.setString(1, userID);
 			} catch (Exception e) {
 				System.out.println("Executing statement failed!");
 			}

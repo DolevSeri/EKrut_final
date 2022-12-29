@@ -4,29 +4,27 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="154.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ItemController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductController">
    <children>
-      <ImageView fx:id="itemImage" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="263.0" layoutY="40.0" prefHeight="18.0" prefWidth="82.0" text="Item Name:" />
-      <Label layoutX="263.0" layoutY="68.0" prefHeight="20.0" prefWidth="82.0" text="Item Code">
+      <ImageView fx:id="productLogo" fitHeight="136.0" fitWidth="173.0" layoutX="35.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblPrice" alignment="CENTER" layoutX="14.0" layoutY="188.0" prefHeight="18.0" prefWidth="58.0" text="price">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="263.0" layoutY="105.0" prefHeight="18.0" prefWidth="82.0" text="Price:" />
-      <Label fx:id="lblName" layoutX="388.0" layoutY="40.0" prefHeight="18.0" prefWidth="62.0" text="d" />
-      <Label fx:id="lblCode" layoutX="388.0" layoutY="68.0" prefHeight="18.0" prefWidth="74.0" text="d" />
-      <Label fx:id="lblPrice" layoutX="388.0" layoutY="104.0" prefHeight="18.0" prefWidth="74.0" text="d" />
-      <Button fx:id="btnAdd" layoutX="495.0" layoutY="64.0" mnemonicParsing="false" onAction="#clickOnAdd" prefHeight="26.0" prefWidth="91.0" style="-fx-background-color: #7FFF00;" text="Add to cart" textFill="#000000b3">
+      <Button fx:id="addToCart" layoutX="87.0" layoutY="184.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #00FF00;" text="Add" textFill="#0000008c">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Line endX="225.60000610351562" endY="154.0" startX="225.60000610351562" />
-      <Line endX="225.60000610351562" endY="154.0" layoutX="224.0" startX="225.60000610351562" />
+      <Label fx:id="lblName" alignment="CENTER" layoutX="50.0" layoutY="161.0" prefHeight="18.0" prefWidth="136.0" text="name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblSale" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="42.0" />
    </children>
 </AnchorPane>
