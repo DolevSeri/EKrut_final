@@ -25,11 +25,7 @@ import javafx.stage.Stage;
  *
  */
 public class IdentificationController {
-	/**
-	 * peleg
-	 * 
-	 *
-	 */
+
 	FXMLLoader loader = new FXMLLoader();
 	@FXML
 	private TextField txtUsername = null;
@@ -45,9 +41,9 @@ public class IdentificationController {
 
 	@FXML
 	private ImageView logoImage;
-	
+
 	/**
-	 *QRimag - an image that will help us to connect the subscriber to system.
+	 * QRimag - an image that will help us to connect the subscriber to system.
 	 */
 	@FXML
 	private ImageView QRimage;
@@ -69,20 +65,23 @@ public class IdentificationController {
 
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
-		ClientUI.chat.accept(new Message(Request.Disconnect_request,null));
+		ClientUI.chat.accept(new Message(Request.Disconnect_request, null));
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		System.out.println("exit Identification Form");
 		System.exit(0);
 	}
-	/**@author Ron
-	 * getLoginBtn-a method that gets an action:clicked on Login button,then client sends login request to server.
-	 * usernameAndPsw - an ArrayList that keeps the user name and password and send it to server.
+
+	/**
+	 * @author Ron getLoginBtn-a method that gets an action:clicked on Login
+	 *         button,then client sends login request to server. usernameAndPsw - an
+	 *         ArrayList that keeps the user name and password and send it to
+	 *         server.
 	 * @param event
 	 * @throws Exception
 	 */
 	@FXML
 	public void getLoginBtn(ActionEvent event) throws Exception {
-		
+
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(txtUsername.getText());
 		usernameAndPsw.add(txtPswd.getText());
@@ -98,10 +97,21 @@ public class IdentificationController {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
-				//((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 				// loading next screen for specific user.
-				newScreen.setScreen(new Stage(),
-						"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
+					 ClientUI.chat.accept(new Message(Request.Get_Costumer,ChatClient.userController.getUser().getId()));
+					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
+					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")) {
+						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
+					} else {
+						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
+					}
+
+				} else {
+					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
+					newScreen.setScreen(new Stage(),
+							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+				}
 			}
 		}
 	}
@@ -125,10 +135,20 @@ public class IdentificationController {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
-				((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 				// loading next screen for specific user.
-				newScreen.setScreen(new Stage(),
-						"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
+					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
+					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")) {
+						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
+					} else {
+						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
+					}
+
+				} else {
+					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
+					newScreen.setScreen(new Stage(),
+							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+				}
 			}
 		}
 	}
