@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import entities.Costumer;
 import entities.Device;
 import entities.MonthlyOrderReport;
 import entities.Order;
@@ -15,6 +16,7 @@ import entities.Product;
 import entities.ProductInDevice;
 import entities.User;
 import enums.Configuration;
+import enums.CostumerStatus;
 import enums.Devices;
 import enums.ProductStatus;
 import enums.Region;
@@ -357,9 +359,9 @@ public class MySqlController {
 	 * @param String object deviceName
 	 * @return products - list of Products in device object
 	 */
-	public static ObservableList<ProductInDevice> getProductsFromDevice(String deviceName) {
+	public static ArrayList<ProductInDevice> getProductsFromDevice(String deviceName) {
 
-		ObservableList<ProductInDevice> products = FXCollections.observableArrayList();
+		ArrayList<ProductInDevice> products = new ArrayList<>();
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"SELECT ekrut.products.*, ekrut.product_in_device.quantity , ekrut.product_in_device.status, ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.deviceName = ?");
@@ -371,15 +373,49 @@ public class MySqlController {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				products.add(new ProductInDevice(rs.getInt("productCode"), rs.getString("productName"),
-						rs.getFloat("price"), rs.getString("imagePath"), rs.getInt("quantity"),
+						rs.getDouble("price"), rs.getString("imagePath"), rs.getInt("quantity"),
 						ProductStatus.valueOf(rs.getString("status")), Devices.valueOf(rs.getString("deviceName"))));
 			}
+			return products;
 		} catch (Exception e) {
 			System.out.println("Import orders data from orders table has failed!");
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
 
-		return products;
+		return null;
+	}
+
+	/**
+	 * a method that will help us import costumer data for the products in device.
+	 * 
+	 * @param userID String that will help us to import the costumer from DB
+	 * @return costumer object
+	 */
+	public static Costumer getCostumerData(String userID) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,ekrut.costumers.status,ekrut.costumers.deviceName FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? AND ekrut.users.id=ekrut.costumers.costumerID");
+			try {
+				ps.setString(0, userID);
+			} catch (Exception e) {
+				System.out.println("Executing statement failed!");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Costumer costumer = new Costumer(rs.getString("username"), rs.getString("password"),
+						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
+						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
+						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
+						Configuration.valueOf(rs.getString("configuration")), rs.getString("creditCard"),
+						rs.getString("subscriberID"), CostumerStatus.valueOf(rs.getString("status")),
+						Devices.valueOf(rs.getString("deviceName")));
+				return costumer;
+			}
+		} catch (Exception e) {
+			System.out.println("Import orders data from orders table has failed!");
+			System.out.println("Failed at getOrdersDataOfDevice method");
+		}
+		return null;
 	}
 
 }

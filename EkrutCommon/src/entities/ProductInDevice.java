@@ -8,7 +8,7 @@ public class ProductInDevice extends Product {
 	private ProductStatus status;
 	private Devices device;
 
-	public ProductInDevice(int productCode, String productName, float price, String imagePath, int quantity,
+	public ProductInDevice(int productCode, String productName, double price, String imagePath, int quantity,
 			ProductStatus status, Devices device) {
 		super(productCode, productName, price, imagePath);
 		this.status = status;
