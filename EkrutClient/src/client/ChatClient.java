@@ -14,10 +14,12 @@ import entities.Device;
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Message;
+import entities.OrderReport;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.CostumerController;
 import entityControllers.DeviceController;
+import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
@@ -45,6 +47,7 @@ public class ChatClient extends AbstractClient {
 	public static DeviceController deviceController = new DeviceController();
 	public static ProductCatalogController productCatalogController = new ProductCatalogController();
 	public static CostumerController costumerController = new CostumerController();
+	public static OrderReportController orderReportController = new OrderReportController();
 	public static boolean awaitResponse = false;
 
 	// Constructors ****************************************************
@@ -95,7 +98,11 @@ public class ChatClient extends AbstractClient {
 		case LoggedOut:
 			userController.setUser(null);
 		case Devices_Imported:
-			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>) message.getObject()));
+			System.out.println("Device imported msg got to client");
+			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
+		case OrdersReportData_Imported:
+			System.out.println("Orders Report data imported msg got to client");
+			orderReportController.setOrderReport((OrderReport)message.getObject());
 		case Threshold_Updated:
 			break;
 		case Products_Imported:

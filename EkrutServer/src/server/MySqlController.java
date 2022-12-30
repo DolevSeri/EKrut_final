@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import entities.Costumer;
 import entities.Device;
-import entities.MonthlyOrderReport;
+import entities.OrderReport;
 import entities.Order;
 import entities.ProductInDevice;
 import entities.User;
@@ -196,11 +196,11 @@ public class MySqlController {
 //
 //	}
 
-	public static MonthlyOrderReport getOrdersReportData(ArrayList<String> reportDetails) {
-		String device = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
-		String[] itemsList = null;
-		String products = null, mostSellingDevice = null;
-		HashMap<String, Integer> mapOfItems = new HashMap<String, Integer>();
+	public static OrderReport getOrdersReportData(ArrayList<String> reportDetails) {
+		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
+		String[] deviceList = null;
+		String devices = null, mostSellingDevice = null;
+		HashMap<String, Integer> mapOfDevices = new HashMap<String, Integer>();
 		int numOfTotalOrders = 0, numOfPickUpOrders = 0;
 		PreparedStatement ps = null;
 		try {
@@ -208,10 +208,10 @@ public class MySqlController {
 					"SELECT * FROM ekrut.orders_report " + "WHERE month = ? AND year = ? AND area = ?");
 			ps.setString(1, month);
 			ps.setString(2, year);
-			ps.setString(3, device);
+			ps.setString(3, area);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				products = rs.getString("products");
+				devices = rs.getString("devices");
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
 				numOfPickUpOrders = rs.getInt("totalPickUp");
 				mostSellingDevice = rs.getString("mostSelling");
@@ -220,15 +220,15 @@ public class MySqlController {
 		} catch (SQLException e) {
 			System.out.println("Statement for getting Monthly Orders Report has failed!");
 		}
-		System.out.println("Succefully imported Monthly Orders Report Data!");
-		String date = month + "/" + year;
-		itemsList = products.split(",");
-		for (int i = 0; i < (itemsList.length); i = i + 2) {
-			mapOfItems.put(itemsList[i], (int) Integer.valueOf(itemsList[i + 1]));
+		System.out.println("Succefully imported Monthly Orders Report Data");
+
+		deviceList = devices.split(",");
+		for (int i = 0; i < (deviceList.length); i = i + 2) {
+			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
 		}
 
-		return new MonthlyOrderReport(mapOfItems, numOfTotalOrders, (float) numOfTotalOrders / 30, device, date,
-				mostSellingDevice);
+		return new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
+				numOfPickUpOrders, area, month, year, mostSellingDevice);
 	}
 
 	public static ArrayList<Device> getAllDevicesByArea(String region) {
@@ -241,7 +241,7 @@ public class MySqlController {
 			while (res.next()) {
 				devices.add(new Device(res.getInt(1), Region.valueOf(res.getString(2)), res.getString(3)));
 			}
-			System.out.println("Import data suceeded");
+			System.out.println("Import devices by area data suceeded");
 		} catch (Exception e) {
 			System.out.println("Import devices by area data failed");
 		}
