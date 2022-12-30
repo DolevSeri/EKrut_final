@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.IdentificationController">
+   <children>
+      <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
+         <children>
+            <ImageView fx:id="ekrutLogo" fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0">
+               <image>
+                  <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
+               </image></ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="189.0" layoutY="12.0" prefHeight="154.0" prefWidth="504.0" text="EKRUT" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="32.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnLogOut" layoutX="441.0" layoutY="437.0" mnemonicParsing="false" onAction="#getLoginBtn" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label fx:id="lblErrorOnDetails" layoutX="31.0" layoutY="233.0" prefHeight="22.0" prefWidth="454.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextArea layoutX="6.0" layoutY="140.0" prefHeight="229.0" prefWidth="504.0" text="Hi, if you want to use Our machine&#10; you need to register as a customer,&#10; submit a request to our user management &#10;representative through the button&#10; below to register!">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </TextArea>
+      <Button layoutX="175.0" layoutY="381.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" style="-fx-background-color: #00FF00;" text="Send Request" textFill="#627b33">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
