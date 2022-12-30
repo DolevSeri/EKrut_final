@@ -2,31 +2,20 @@ package entities;
 
 import java.io.Serializable;
 
-import enums.Devices;
+import enums.Region;
 
 public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String deviceName;
-	private String deviceID;
 	private int threshold;
-	private Devices region;
+	private Region region;
 
-	public Device(String deviceID, int threshold, Devices region, String deviceName) {
+	public Device(int threshold, Region region, String deviceName) {
 		super();
-		this.deviceID = deviceID;
 		this.deviceName = deviceName;
 		this.threshold = threshold;
 		this.region = region;
-	}
-
-
-	public String getDeviceID() {
-		return deviceID;
-	}
-
-	public void setDeviceID(String deviceID) {
-		this.deviceID = deviceID;
 	}
 
 	public String getDeviceName() {
@@ -45,16 +34,13 @@ public class Device implements Serializable {
 		this.threshold = threshold;
 	}
 
-	public Devices getRegion() {
+	public Region getRegion() {
 		return region;
 	}
 
-	public void setRegion(Devices region) {
+	public void setRegion(Region region) {
 		this.region = region;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 }

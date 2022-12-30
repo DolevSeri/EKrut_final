@@ -137,75 +137,75 @@ public class MySqlController {
 		}
 	}
 
-	public static String viewUser(String ID) {
-		String sub = "";
-		// Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
-		PreparedStatement stmt;
-		System.err.println(ID);
-		try {
-			stmt = dbConnector.prepareStatement("SELECT * FROM ekrutdb.subscriber WHERE ID=\"" + ID + "\";");
-			ResultSet res = stmt.executeQuery();
-			// System.out.println(res.getNString(0));
-			while (res.next()) {
-				sub += (res.getString(1)) + " ";
-				sub += (res.getString(2)) + " ";
-				sub += (res.getString(3)) + " ";
-				sub += (res.getString(4) + " ");
-				sub += (res.getString(5)) + " ";
-				sub += (res.getString(6) + " ");
-				sub += (res.getString(7));
-				System.out.println("Import data suceeded");
-
-			}
-		} catch (SQLException e) {
-			System.out.println("Import data fail!!!");
-
-		}
-		System.out.println("!" + sub.toString());
-
-		return sub;
-
-	}
-
-	public static void updateSubscriberTable(String[] updatedSubscriber) {
-		PreparedStatement ps = null;
-		try {
-			ps = dbConnector.prepareStatement(
-					"UPDATE ekrutdb.subscriber SET creditCardNumber = ?," + " subscriberNumber = ? WHERE ID = ?");
-		} catch (SQLException e1) {
-			System.out.println("Statement failure");
-		}
-		try {
-			System.out.println(updatedSubscriber[1] + " " + updatedSubscriber[2] + " " + updatedSubscriber[3]);
-			ps.setString(1, updatedSubscriber[2]);
-
-			ps.setString(2, updatedSubscriber[3]);
-			System.out.println("2131");
-			ps.setString(3, updatedSubscriber[1]);
-			System.out.println("!#@!#");
-			ps.executeUpdate();
-
-			System.out.println("Update data suceeded");
-		} catch (Exception e) {
-			System.out.println("Update data fail!!!");
-		}
-	}
-
-	public static void updateSubscriberTable(String messageFromClient) {
-		// TODO Auto-generated method stub
-
-	}
+//	public static String viewUser(String ID) {
+//		String sub = "";
+//		// Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
+//		PreparedStatement stmt;
+//		System.err.println(ID);
+//		try {
+//			stmt = dbConnector.prepareStatement("SELECT * FROM ekrutdb.subscriber WHERE ID=\"" + ID + "\";");
+//			ResultSet res = stmt.executeQuery();
+//			// System.out.println(res.getNString(0));
+//			while (res.next()) {
+//				sub += (res.getString(1)) + " ";
+//				sub += (res.getString(2)) + " ";
+//				sub += (res.getString(3)) + " ";
+//				sub += (res.getString(4) + " ");
+//				sub += (res.getString(5)) + " ";
+//				sub += (res.getString(6) + " ");
+//				sub += (res.getString(7));
+//				System.out.println("Import data suceeded");
+//
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("Import data fail!!!");
+//
+//		}
+//		System.out.println("!" + sub.toString());
+//
+//		return sub;
+//
+//	}
+//
+//	public static void updateSubscriberTable(String[] updatedSubscriber) {
+//		PreparedStatement ps = null;
+//		try {
+//			ps = dbConnector.prepareStatement(
+//					"UPDATE ekrutdb.subscriber SET creditCardNumber = ?," + " subscriberNumber = ? WHERE ID = ?");
+//		} catch (SQLException e1) {
+//			System.out.println("Statement failure");
+//		}
+//		try {
+//			System.out.println(updatedSubscriber[1] + " " + updatedSubscriber[2] + " " + updatedSubscriber[3]);
+//			ps.setString(1, updatedSubscriber[2]);
+//
+//			ps.setString(2, updatedSubscriber[3]);
+//			System.out.println("2131");
+//			ps.setString(3, updatedSubscriber[1]);
+//			System.out.println("!#@!#");
+//			ps.executeUpdate();
+//
+//			System.out.println("Update data suceeded");
+//		} catch (Exception e) {
+//			System.out.println("Update data fail!!!");
+//		}
+//	}
+//
+//	public static void updateSubscriberTable(String messageFromClient) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	public static MonthlyOrderReport getOrdersReportData(ArrayList<String> reportDetails) {
 		String device = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
 		String[] itemsList = null;
-		String products = null, mostWantedProduct = null;
+		String products = null, mostSellingDevice = null;
 		HashMap<String, Integer> mapOfItems = new HashMap<String, Integer>();
-		int numOfTotalOrders = 0, numOfOrdersThatCanceled = 0;
+		int numOfTotalOrders = 0, numOfPickUpOrders = 0;
 		PreparedStatement ps = null;
 		try {
-			ps = dbConnector
-					.prepareStatement("SELECT * FROM ekrut.orders_report WHERE month = ? AND year = ? AND store = ?");
+			ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.orders_report " + "WHERE month = ? AND year = ? AND area = ?");
 			ps.setString(1, month);
 			ps.setString(2, year);
 			ps.setString(3, device);
@@ -213,8 +213,8 @@ public class MySqlController {
 			if (rs.next()) {
 				products = rs.getString("products");
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
-				// numOfOrdersThatCanceled = rs.getInt("numOfOrdersThatCanceled");
-				mostWantedProduct = rs.getString("mostWantedItemName");
+				numOfPickUpOrders = rs.getInt("totalPickUp");
+				mostSellingDevice = rs.getString("mostSelling");
 			} else
 				return null;
 		} catch (SQLException e) {
@@ -228,22 +228,22 @@ public class MySqlController {
 		}
 
 		return new MonthlyOrderReport(mapOfItems, numOfTotalOrders, (float) numOfTotalOrders / 30, device, date,
-				mostWantedProduct);
+				mostSellingDevice);
 	}
 
-	public static ArrayList<Device> getAllDevicesByArea(String area) {
+	public static ArrayList<Device> getAllDevicesByArea(String region) {
 		PreparedStatement ps;
 		ArrayList<Device> devices = new ArrayList<>();
 
 		try {
-			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices WHERE region=\"" + area + "\";");
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices WHERE region=\"" + region + "\";");
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				devices.add(new Device(res.getString(1), res.getInt(2), Region.valueOf(res.getString(3)),Devices.valueOf(res.getString(4))));	
+				devices.add(new Device(res.getInt(1), Region.valueOf(res.getString(2)), res.getString(3)));
 			}
 			System.out.println("Import data suceeded");
 		} catch (Exception e) {
-			System.out.println("Import data failed!");
+			System.out.println("Import devices by area data failed");
 		}
 		return devices;
 	}
@@ -251,23 +251,24 @@ public class MySqlController {
 	public static void updateDeviceThreshold(ArrayList<Device> devicesToUpdate) {
 		PreparedStatement ps;
 		try {
-			ps = dbConnector.prepareStatement("UPDATE ekrut.devices SET threshold = ? WHERE deviceID = ?");
+			ps = dbConnector.prepareStatement("UPDATE ekrut.devices SET threshold = ? WHERE deviceName = ?");
 
 			// Update the records in the database
 			for (Device device : devicesToUpdate) {
 				ps.setInt(1, device.getThreshold());
-				ps.setString(2, device.getDeviceID());
+				ps.setString(2, device.getDeviceName());
 				ps.executeUpdate();
 			}
-			System.out.println("Update threshold suceeded!");
+			System.out.println("Update threshold suceeded");
 
 		} catch (SQLException e) {
-			System.out.println("Update threshold failed!");
+			System.out.println("Update threshold failed");
 		}
 
 	}
 
 	public static void createMonthlyOrdersReport(ArrayList<String> reportData) {
+
 		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
 		ArrayList<Device> areaDevices = getAllDevicesByArea(area);
 		String mostSelling = null, devices = "";
@@ -275,20 +276,21 @@ public class MySqlController {
 		int totalOrders = 0, totalPickUpOrders = 0;
 		HashMap<String, Integer> deviceNumOfOrders = new HashMap<>();
 		ArrayList<Order> ordersOfDevice = new ArrayList<>();
+
 		for (Device device : areaDevices) {
-			ordersOfDevice.addAll(getOrdersDataOfDevice(device.getDeviceID()));
+			ordersOfDevice.addAll(getOrdersDataOfDevice(device.getDeviceName()));
 		}
 		for (Order order : ordersOfDevice) {
-			if (order.getOrdetMonth().equals(month) && order.getOrderYear().equals(year)) {
+			if (order.getMonth().equals(month) && order.getYear().equals(year)) {
 				totalOrders++;
 				if (order.getSupplyMethod().equals(SupplyMethod.PickUp))
 					totalPickUpOrders++;
 
-				if (!deviceNumOfOrders.containsKey(order.getDeviceID())) {
-					deviceNumOfOrders.put(order.getDeviceID(), 1);
+				if (!deviceNumOfOrders.containsKey(order.getDeviceName())) {
+					deviceNumOfOrders.put(order.getDeviceName(), 1);
 				} else {
-					num = deviceNumOfOrders.get(order.getDeviceID()) + 1;
-					deviceNumOfOrders.replace(order.getDeviceID(), num);
+					num = deviceNumOfOrders.get(order.getDeviceName()) + 1;
+					deviceNumOfOrders.replace(order.getDeviceName(), num);
 				}
 			}
 
@@ -326,23 +328,22 @@ public class MySqlController {
 
 	}
 
-	private static ArrayList<Order> getOrdersDataOfDevice(String deviceID) {
+	private static ArrayList<Order> getOrdersDataOfDevice(String deviceName) {
 		ArrayList<Order> orders = new ArrayList<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders WHERE deviceID = ? ");
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders WHERE deviceName = ? ");
 			try {
-				ps.setString(1, deviceID);
+				ps.setString(1, deviceName);
 			} catch (Exception e) {
 				System.out.println("Executing statement failed!");
 			}
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				orders.add(new Order(rs.getString("deviceID"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
-						rs.getString("costumerID"), rs.getString("orderDate"),
-						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
+				orders.add(new Order(deviceName, rs.getInt(1), rs.getFloat(3), rs.getString(5), rs.getString(8),
+						rs.getString(9), rs.getString(10), SupplyMethod.valueOf(rs.getString(4)), rs.getString(7)));
 			}
 		} catch (Exception e) {
-			System.out.println("Import orders data from orders table has failed!");
+			System.out.println("Import orders data from orders table has failed");
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
 		return orders;
@@ -353,27 +354,28 @@ public class MySqlController {
 		String itemUnderThres = null, itemsList = "";
 		Integer max = 0, num;
 		HashMap<String, Integer> producsUnderThreshold = getProductsUnderThresholdCount(reportData);
-		
-		for(String str : producsUnderThreshold.keySet()) {
+
+		for (String str : producsUnderThreshold.keySet()) {
 			num = producsUnderThreshold.get(str);
 			itemsList += "," + str + "," + num.toString();
-			if(max < num) {
+			if (max < num) {
 				max = producsUnderThreshold.get(str);
 				itemUnderThres = str;
-				
-			}	
+
+			}
 		}
 		itemsList.replaceFirst(",", "");
-		
+
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryReport "
-					+ "(month, year, deviceID, products, itemUnderThres) VALUES(?, ?, ?, ?, ?)");
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
+					+ "(month, year, deviceName, products, itemUnderThres) VALUES(?, ?, ?, ?, ?)");
 			try {
 				ps.setString(0, month);
 				ps.setString(1, year);
-				ps.setString(3, device);
-				ps.setString(4, itemsList);
-				ps.setString(5, itemUnderThres);
+				ps.setString(2, device);
+				ps.setString(3, itemsList);
+				ps.setString(4, itemUnderThres);
+
 			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Enter data to ordersReport on DB failed");
@@ -384,26 +386,25 @@ public class MySqlController {
 			e.printStackTrace();
 			System.out.println("Error on execute statement");
 		}
-		
-		
+
 	}
-	
-	public static HashMap<String, Integer> getProductsUnderThresholdCount(ArrayList<String> reportData){
-		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2); 
+
+	public static HashMap<String, Integer> getProductsUnderThresholdCount(ArrayList<String> reportData) {
+		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
 		HashMap<String, Integer> productsThres = new HashMap<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.items_under_threshold WHERE"
-					+ " deviceID = ? AND month = ? AND year = ? ");
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.products_under_threshold WHERE"
+					+ " deviceName = ? AND month = ? AND year = ? ");
 			try {
 				ps.setString(0, device);
 				ps.setString(1, month);
 				ps.setString(2, year);
-			}catch(Exception e) {
-				System.out.println("Executing statement failed!");
+			} catch (Exception e) {
+				System.out.println("Executing statement failed");
 			}
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				productsThres.put(rs.getString("serialNumber"), rs.getInt("count"));
+			while (rs.next()) {
+				productsThres.put(rs.getString("prCode"), rs.getInt("count"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -412,7 +413,6 @@ public class MySqlController {
 		}
 		return productsThres;
 	}
-
 
 	/**
 	 * Method that will import the product in device to the catalog screen
@@ -424,13 +424,20 @@ public class MySqlController {
 
 		ArrayList<ProductInDevice> products = new ArrayList<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT ekrut.products.*, ekrut.product_in_device.quantity , ekrut.product_in_device.status, ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.deviceName = ?");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT ekrut.products.*, ekrut.product_in_device.quantity , "
+							+ "ekrut.product_in_device.status, ekrut.product_in_device.deviceName "
+							+ "FROM ekrut.products,ekrut.product_in_device "
+							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode "
+							+ "and ekrut.product_in_device.deviceName = ?");
+
 			try {
 				ps.setString(1, deviceName);
+
 			} catch (Exception e) {
 				System.out.println("Executing statement failed!");
 			}
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				products.add(new ProductInDevice(rs.getInt("productCode"), rs.getString("productName"),
@@ -438,6 +445,7 @@ public class MySqlController {
 						ProductStatus.valueOf(rs.getString("status")), rs.getString("deviceName")));
 			}
 			return products;
+
 		} catch (Exception e) {
 			System.out.println("Import orders data from orders table has failed!");
 			System.out.println("Failed at getOrdersDataOfDevice method");

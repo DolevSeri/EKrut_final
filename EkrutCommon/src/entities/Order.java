@@ -3,27 +3,61 @@ package entities;
 import enums.SupplyMethod;
 
 public class Order {
-	private String deviceID;
+	private String deviceName;
 	private int orderID;
 	private float orderPrice;
-	private String costumerID;
-	private String orderDate;
+	private String username;
+	private String day;
+	private String month;
+	private String year;
 	private SupplyMethod supplyMethod;
 	private String orderProducts;
 	
 
 	
-	public Order(String deviceID, int orderID, float orderPrice, String costumerID, String orderDate,
-			SupplyMethod supplyMethod, String orderProducts) {
-		this.deviceID = deviceID;
+	public Order(String deviceName, int orderID, float orderPrice, String username,
+			String day, String month, String year, SupplyMethod supplyMethod, String orderProducts) {
+		this.deviceName = deviceName;
 		this.orderID = orderID;
 		this.orderPrice = orderPrice;
-		this.costumerID = costumerID;
-		this.orderDate = orderDate;
+		this.username = username;
+		this.day = day;
+		this.month = month;
+		this.year = year;
 		this.supplyMethod = supplyMethod;
 		this.orderProducts = orderProducts;
 	}
 	
+
+	public String getDay() {
+		return day;
+	}
+
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+
+	public String getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+
+	public String getYear() {
+		return year;
+	}
+
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
 
 	public String getOrderProducts() {
 		return orderProducts;
@@ -35,20 +69,12 @@ public class Order {
 	}
 
 
-	public String getOrdetMonth() {
-		return orderDate.substring(5, 7);
-	}
-	
-	public String getOrderYear() {
-		return orderDate.substring(0, 4);
+	public String getDeviceName() {
+		return deviceName;
 	}
 
-	public String getDeviceID() {
-		return deviceID;
-	}
-
-	public void setDeviceID(String deviceID) {
-		this.deviceID = deviceID;
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
 	}
 
 	public int getOrderID() {
@@ -67,21 +93,14 @@ public class Order {
 		this.orderPrice = orderPrice;
 	}
 
-	public String getCostumerID() {
-		return costumerID;
+	public String getCostumerUserName() {
+		return username;
 	}
 
-	public void setCostumerID(String costumerID) {
-		this.costumerID = costumerID;
+	public void setCostumerID(String username) {
+		this.username = username;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
 
 	public SupplyMethod getSupplyMethod() {
 		return supplyMethod;

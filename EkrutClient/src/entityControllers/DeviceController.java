@@ -15,6 +15,7 @@ public class DeviceController {
 
 	public void setAreaDevices(ObservableList<Device> areaDevice) {
 		areaDevices.clear();
+		System.out.println(areaDevices.toString()+"mmmmmm");
 		areaDevices = areaDevice;
 	}
 
