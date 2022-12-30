@@ -70,7 +70,7 @@
       <ComboBox fx:id="cmbYear" layoutX="190.0" layoutY="167.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Year" />
       <ComboBox fx:id="cmbMonth" layoutX="190.0" layoutY="223.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Month" />
       <ComboBox fx:id="cmbType" layoutX="190.0" layoutY="277.0" onAction="#clickTypeOfReport" prefHeight="38.0" prefWidth="174.0" promptText="Choose Type" />
-      <Label layoutX="47.0" layoutY="336.0" prefHeight="30.0" prefWidth="62.0" text="Device:" textFill="#8d48e1">
+      <Label fx:id="lblDevice" layoutX="47.0" layoutY="336.0" prefHeight="30.0" prefWidth="62.0" text="Device:" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>

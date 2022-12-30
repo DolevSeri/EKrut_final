@@ -54,8 +54,12 @@ public class ChooseReportController {
 
 	@FXML
 	private Label lblRegion;
+	
+	@FXML
+	private Label lblDevice;
 
 	public static ArrayList<String> fields;
+	
 	boolean isCEO;
 
 	SetSceneController scene = new SetSceneController();
@@ -136,28 +140,30 @@ public class ChooseReportController {
 		String areaChosen = cmbArea.getValue().toString();
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChosen));
 		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
+		cmbDevice.setPromptText("Choose Device");
+
 
 	}
 	
-//	@FXML
-//	void clickTypeOfReport(ActionEvent event) {
-//		if (isCEO) {
-//			String type = cmbType.getValue().toString();
-//			switch(type) {
-//			case "Orders report":
-//				cmbDevice.setDisable(true);
-//				cmbDevice.setValue("none");
-//			case "Inventory report":
-//				cmbDevice.setDisable(false);
-//			case "Costumer report":
-//				cmbDevice.setDisable(true);
-//				cmbDevice.setValue("none");
-//
-//			}
-//			
-//		}
-//		
-//	}
+	@FXML
+	void clickTypeOfReport(ActionEvent event) {
+		String type = cmbType.getValue().toString();
+		if(type.equals("Orders report") || type.equals("Clients report") ) {
+			cmbDevice.setVisible(false);
+			lblDevice.setVisible(false);	
+			cmbDevice.setValue("Choose Device");
+		}
+		else {
+			cmbDevice.setValue(null);
+			cmbDevice.setVisible(true);
+			lblDevice.setVisible(true);	
+			
+
+		}
+			
+		
+		
+	}
 
 	/**
 	 * Handles the 'Show Reports' button click event. Validates the selected fields
@@ -168,44 +174,52 @@ public class ChooseReportController {
 	 */
 	@FXML
 	void clickBtnShowReports(ActionEvent event) {
-		fields = new ArrayList<String>(Arrays.asList(cmbArea.getValue(), cmbYear.getValue(), cmbMonth.getValue(),
-				cmbType.getValue(), cmbDevice.getValue()));
-		if (fields.contains(null)) {
-			errorFieldsMsg.setVisible(true);
-		} else {
-			switch (fields.get(3).toString()) {
-			
-			case "Inventory report":
-				// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-				
-				scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
-				break;
-				
-			case "Orders report":
-		
-				// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-				ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
-				
-			  if(ChatClient.orderReportController.getOrderReport() == null) {
-				  errorFieldsMsg.setText("No such report");
-				  errorFieldsMsg.setVisible(true);
-				 
-			  }
-			  else {
-				     
-				  ((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-    			  scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
-			  }
-				break;
-				
-			case "Clients report":
-				// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-				scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
-				break;
-			default:
-
+		try {
+			fields = new ArrayList<String>(Arrays.asList(cmbArea.getValue(), cmbYear.getValue(), cmbMonth.getValue(),
+					cmbType.getValue(), cmbDevice.getValue()));
+			if(cmbType.getValue() == null) {
+				errorFieldsMsg.setVisible(true);
 			}
-
+			if (fields.contains(null)) {
+				errorFieldsMsg.setVisible(true);
+			} else {
+				switch (fields.get(3).toString()) {
+				
+				case "Inventory report":
+					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+					
+					scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
+					break;
+					
+				case "Orders report":
+			
+					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+					ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
+					
+				  if(ChatClient.orderReportController.getOrderReport() == null) {
+					  errorFieldsMsg.setText("No such report");
+					  errorFieldsMsg.setVisible(true);
+					 
+				  }
+				  else {
+					     
+					  ((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+	    			  scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
+				  }
+					break;
+					
+				case "Clients report":
+					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+					scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
+					break;
+				default:
+	
+				}
+	
+			}
+		}
+		catch(NullPointerException e) {
+			System.out.println("Null pointer exception - error msg shown in client GUI");
 		}
 
 	}
