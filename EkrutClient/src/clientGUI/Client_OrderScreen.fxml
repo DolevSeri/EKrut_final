@@ -43,11 +43,10 @@
                   <Blend mode="BLUE" />
                </effect>
             </Button>
-            <ScrollPane hbarPolicy="NEVER" layoutX="39.0" layoutY="101.0" prefHeight="404.0" prefWidth="328.0">
+            <ScrollPane hbarPolicy="NEVER" layoutX="39.0" layoutY="101.0" prefHeight="404.0" prefWidth="357.0">
                <content>
-                  <GridPane fx:id="gpCart" prefHeight="402.0" prefWidth="330.0">
+                  <GridPane fx:id="gpCart" gridLinesVisible="true" prefHeight="402.0" prefWidth="360.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -63,9 +62,14 @@
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lblTotalPrice" layoutX="189.0" layoutY="525.0" text="0">
+            <Label fx:id="lblTotalPrice" layoutX="178.0" layoutY="520.0" text="0">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="231.0" layoutY="521.0" prefHeight="18.0" prefWidth="64.0" text="ILS">
+               <font>
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </children>
