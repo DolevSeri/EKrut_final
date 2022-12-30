@@ -100,7 +100,7 @@ public class CEO_ChooseReportController {
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
 			cmbDevice.setDisable(true);
 			ArrayList<String> area = new ArrayList<String>(
-					Arrays.asList("NORTH", "SOUTH", "Kiryat Ata", "Karmiel", "Beer Sheva"));
+					Arrays.asList("NORTH", "SOUTH", "UAE"));
 			cmbArea.getItems().addAll(area);
 			cmbDevice.setPromptText("Choose region first!");
 
@@ -126,13 +126,13 @@ public class CEO_ChooseReportController {
 	 *
 	 * @param event the ActionEvent object representing the selection event
 	 */
-	@SuppressWarnings("static-access")
+
 	@FXML
 	void clickComboArea(ActionEvent event) {
 		cmbDevice.getItems().clear();
 		cmbDevice.setDisable(false);
-		String areaChoosen = cmbArea.getValue().toString();
-		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChoosen));
+		String areaChosen = cmbArea.getValue().toString();
+		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChosen));
 		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 
 	}
