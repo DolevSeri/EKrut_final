@@ -1,8 +1,11 @@
 package entities;
 
+import java.io.Serializable;
+
 import enums.SupplyMethod;
 
-public class Order {
+public class Order implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String deviceName;
 	private int orderID;
 	private float orderPrice;

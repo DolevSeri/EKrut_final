@@ -1,10 +1,17 @@
 package clientControllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
+import entities.OrderReport;
 import enums.Request;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -42,10 +49,36 @@ public class OrdersReportController {
     private Label lblDate;
 
 	SetSceneController scene = new SetSceneController();
-	ArrayList<String> fields =  ChooseReportController.fields;
-	
+	 
 	
     public void initialize() {
+    	OrderReport orderReport = ChatClient.orderReportController.getOrderReport();
+    	HashMap<String, Integer> deviceAndAmountHashMap = orderReport.getDeviceAndAmountHashMap();
+    	Integer totalOrdersCount = orderReport.getTotalOrdersCount();
+    	Integer numOfPickUpOrders = orderReport.getNumOfPickUpOrders();
+    	float ordersPerDayAvg = orderReport.getOrdersPerDayAvg();
+    	
+    	String area = orderReport.getArea();
+    	String month = orderReport.getMonth();
+    	String year = orderReport.getYear();
+    	String mostSellingDevice =  orderReport.getMostSellingDevice();
+    	
+    	
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        
+        for(Entry<String, Integer> device: deviceAndAmountHashMap.entrySet()) {
+        	String deviceName = device.getKey();
+        	Integer ordersCount = device.getValue();
+        	pieChartData.add(new PieChart.Data(deviceName, ordersCount));
+        	
+        }
+        lblDevice.setText(area);
+        lblDate.setText(month+"/"+year);
+        chrtOrderReport.setData(pieChartData);
+        lblBestSaller.setText(mostSellingDevice);
+        lblPickUpCounter.setText(numOfPickUpOrders.toString());
+        lblTotalOrders.setText(totalOrdersCount.toString());
+    	
 
     }
 

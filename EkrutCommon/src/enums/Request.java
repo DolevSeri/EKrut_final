@@ -70,13 +70,13 @@ public enum Request {
 			return "Devices imported successfully!";
 		}
 	},
-	GetOrdersData {
+	GetOrdersReportData {
 		public String toString() {
 			return "Request orders";
 		}
 
 	},
-	OrdersData_Imported {
+	OrdersReportData_Imported {
 		public String toString() {
 			return "Orders data imported successfully!";
 		}

@@ -135,11 +135,11 @@ public class EchoServer extends AbstractServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		case GetOrdersData:
+		case GetOrdersReportData:
 			ArrayList<String> fields = (ArrayList<String>) messageFromClient.getObject();
 			try {
 				client.sendToClient(
-						new Message(Request.OrdersData_Imported, MySqlController.getOrdersReportData(fields)));
+						new Message(Request.OrdersReportData_Imported, MySqlController.getOrdersReportData(fields)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
