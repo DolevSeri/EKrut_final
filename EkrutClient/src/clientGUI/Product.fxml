@@ -9,13 +9,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductController">
    <children>
-      <ImageView fx:id="productLogo" fitHeight="136.0" fitWidth="173.0" layoutX="35.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="productLogo" fitHeight="136.0" fitWidth="173.0" layoutX="35.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lblPrice" alignment="CENTER" layoutX="9.0" layoutY="189.0" prefHeight="19.0" prefWidth="50.0" text="price ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="addToCart" layoutX="87.0" layoutY="184.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #00FF00;" text="Add" textFill="#0000008c">
+      <Button fx:id="addToCart" layoutX="87.0" layoutY="184.0" mnemonicParsing="false" onAction="#clickOnAdd" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #00FF00;" text="Add" textFill="#0000008c">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -31,5 +31,6 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
+      <Label fx:id="lblError" alignment="CENTER" layoutX="62.0" layoutY="144.0" prefHeight="18.0" prefWidth="118.0" textFill="#df0a0a" />
    </children>
 </AnchorPane>
