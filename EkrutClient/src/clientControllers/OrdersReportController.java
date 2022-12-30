@@ -12,7 +12,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class OredersReportController {
+public class OrdersReportController {
 
     @FXML
     private PieChart chrtOrderReport;
@@ -42,7 +42,7 @@ public class OredersReportController {
     private Label lblDate;
 
 	SetSceneController scene = new SetSceneController();
-	ArrayList<String> fields =  CEO_ChooseReportController.fields;
+	ArrayList<String> fields =  ChooseReportController.fields;
 	
 	
     public void initialize() {
