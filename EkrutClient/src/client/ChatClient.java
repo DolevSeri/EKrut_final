@@ -71,7 +71,7 @@ public class ChatClient extends AbstractClient {
 	 * @param msg The message from the server.
 	 */
 
-	@SuppressWarnings({ "unchecked", "static-access" })
+	@SuppressWarnings({ "unchecked"})
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
 		Message message = (Message) msg;

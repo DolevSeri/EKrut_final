@@ -42,7 +42,7 @@ public class OredersReportController {
     private Label lblDate;
 
 	SetSceneController scene = new SetSceneController();
-	ArrayList<String> fields =  CEO_ChooseReportController.fields;
+	ArrayList<String> fields =  ChooseReportController.fields;
 	
 	
     public void initialize() {
