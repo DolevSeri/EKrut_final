@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * 
  * @author Inbar Mizrahi
  */
-public class CEO_ChooseReportController {
+public class ChooseReportController {
 
 	@FXML
 	private Button btnexit;
