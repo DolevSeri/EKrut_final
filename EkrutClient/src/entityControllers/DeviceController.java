@@ -22,6 +22,7 @@ public class DeviceController {
 		areaDevicesNames.clear();
 		for (Device device : areaDevices) {
 			areaDevicesNames.add(device.getDeviceName().toString());
+			
 		}
 		return areaDevicesNames;
 	}
