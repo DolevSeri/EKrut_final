@@ -118,7 +118,12 @@ public class IdentificationController {
 	}
 
 	/**
+	 * @author  clickOnQrImage-a method that gets an action:clicked on QR
+	 *         image to a subscriber,then client sends login request to server. usernameAndPsw - an
+	 *         ArrayList that keeps the user name and password and send it to
+	 *         server.
 	 * @param event
+	 * @throws Exception
 	 */
 	public void clickOnQRImage(MouseEvent event) {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
