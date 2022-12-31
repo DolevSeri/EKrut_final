@@ -159,9 +159,7 @@ public class ChooseReportController {
 			lblDevice.setVisible(true);	
 			
 
-		}
-			
-		
+		}	
 		
 	}
 
@@ -187,7 +185,7 @@ public class ChooseReportController {
 				
 				case "Inventory report":
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-					
+				
 					scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
 					break;
 					
@@ -195,7 +193,7 @@ public class ChooseReportController {
 			
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
 					ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
-					
+					System.out.println(ChatClient.orderReportController.getOrderReport().toString());
 				  if(ChatClient.orderReportController.getOrderReport() == null) {
 					  errorFieldsMsg.setText("No such report");
 					  errorFieldsMsg.setVisible(true);

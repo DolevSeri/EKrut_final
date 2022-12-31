@@ -68,7 +68,6 @@ public class EchoServer extends AbstractServer {
 	public void handleMessageFromClient(Object msg, ConnectionToClient client) {
 		Message messageFromClient = (Message) msg;
 		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from " + client);
-
 		switch (messageFromClient.getRequest()) {
 		case Connect_request:
 			updateClientList(client, "Connected");

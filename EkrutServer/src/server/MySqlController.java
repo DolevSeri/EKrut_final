@@ -98,7 +98,6 @@ public class MySqlController {
 
 				// Set the login status to true so no one else can access it
 				try {
-
 					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
 					System.out.println("Update succsed");
 				} catch (SQLException e1) {
@@ -227,9 +226,11 @@ public class MySqlController {
 		for (int i = 0; i < (deviceList.length); i = i + 2) {
 			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
 		}
-
-		return new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
+		
+		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
 				numOfPickUpOrders, area, month, year, mostSellingDevice);
+	
+		return report;
 	}
 
 	public static ArrayList<Device> getAllDevicesByArea(String region) {
@@ -336,6 +337,7 @@ public class MySqlController {
 			System.out.println("Exucute statement failed");
 			System.out.println("Error on createMonthlyOrderReport");
 		}
+		System.out.println("Insert data to orders_report was successfull");
 
 	}
 
