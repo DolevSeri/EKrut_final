@@ -215,6 +215,7 @@ public class MySqlController {
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
 				numOfPickUpOrders = rs.getInt("totalPickUp");
 				mostSellingDevice = rs.getString("mostSelling");
+				
 			} else
 				return null;
 		} catch (SQLException e) {
@@ -267,6 +268,16 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * Creates a monthly orders report and stores it in the database. The report
+	 * contains data on the total number of orders, the number of orders that were
+	 * picked up, the most popular device in the area, and a list of all devices in
+	 * the area and the number of orders for each device.
+	 * 
+	 * @param reportData a list containing the month, year, and area for which to
+	 *        create the report
+	 */
+
 	public static void createMonthlyOrdersReport(ArrayList<String> reportData) {
 
 		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
@@ -308,13 +319,13 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orderReport "
 					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices) VALUES(?, ?, ?, ?, ?, ?, ?)");
 			try {
-				ps.setString(0, month);
-				ps.setString(1, year);
-				ps.setString(2, area);
-				ps.setInt(3, totalOrders);
-				ps.setInt(4, totalPickUpOrders);
-				ps.setString(5, mostSelling);
-				ps.setString(6, devices);
+				ps.setString(1, month);
+				ps.setString(2, year);
+				ps.setString(3, area);
+				ps.setInt(4, totalOrders);
+				ps.setInt(5, totalPickUpOrders);
+				ps.setString(6, mostSelling);
+				ps.setString(7, devices);
 			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Enter data to ordersReport on DB failed");
@@ -328,6 +339,13 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * Retrieves a list of all orders for a specific device from the database.
+	 * 
+	 * @param deviceName the name of the device for which to retrieve the orders
+	 * @return an ArrayList of Order objects containing the data for each order for
+	 *         the given device
+	 */
 	private static ArrayList<Order> getOrdersDataOfDevice(String deviceName) {
 		ArrayList<Order> orders = new ArrayList<>();
 		try {
@@ -348,6 +366,17 @@ public class MySqlController {
 		}
 		return orders;
 	}
+
+	/**
+	 * Creates a report on the inventory of a specific device for a given month and
+	 * year. The report includes a list of all the products that were below a
+	 * certain threshold, and the product with the highest count of being below the
+	 * threshold.
+	 * 
+	 * @param reportData an ArrayList of Strings containing the month, year, and
+	 *                   device for which the report is to be generated, in that
+	 *                   order
+	 */
 
 	public static void createMonthlyInventoryReport(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
@@ -370,11 +399,11 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
 					+ "(month, year, deviceName, products, itemUnderThres) VALUES(?, ?, ?, ?, ?)");
 			try {
-				ps.setString(0, month);
-				ps.setString(1, year);
-				ps.setString(2, device);
-				ps.setString(3, itemsList);
-				ps.setString(4, itemUnderThres);
+				ps.setString(1, month);
+				ps.setString(2, year);
+				ps.setString(3, device);
+				ps.setString(4, itemsList);
+				ps.setString(5, itemUnderThres);
 
 			} catch (Exception e) {
 				System.out.println(e);
@@ -389,16 +418,26 @@ public class MySqlController {
 
 	}
 
+	/*
+	 * Retrieves a count of the number of products that were below a certain
+	 * threshold for a given month and year, for a specific device.
+	 * 
+	 * @param reportData an ArrayList of Strings containing the month, year, and
+	 * device for which the report is to be generated, in that order
+	 * 
+	 * @return a HashMap mapping product codes to their respective count of being
+	 * below the threshold
+	 */
 	public static HashMap<String, Integer> getProductsUnderThresholdCount(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
 		HashMap<String, Integer> productsThres = new HashMap<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.products_under_threshold WHERE"
-					+ " deviceName = ? AND month = ? AND year = ? ");
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.products_under_threshold "
+					+ "WHERE deviceName = ? AND month = ? AND year = ? ");
 			try {
-				ps.setString(0, device);
-				ps.setString(1, month);
-				ps.setString(2, year);
+				ps.setString(1, device);
+				ps.setString(2, month);
+				ps.setString(3, year);
 			} catch (Exception e) {
 				System.out.println("Executing statement failed");
 			}
@@ -462,8 +501,11 @@ public class MySqlController {
 	 */
 	public static Costumer getCostumerData(String userID) {
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,ekrut.costumers.status,ekrut.costumers.deviceName FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? AND ekrut.users.username=ekrut.costumers.username");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT ekrut.users.*,ekrut.costumers.creditCard,ekrut.costumers.subscriberID,"
+							+ "ekrut.costumers.status,ekrut.costumers.deviceName "
+							+ "FROM ekrut.users,ekrut.costumers WHERE ekrut.users.id = ? "
+							+ "AND ekrut.users.username=ekrut.costumers.username");
 			try {
 				ps.setString(1, userID);
 			} catch (Exception e) {
@@ -485,6 +527,141 @@ public class MySqlController {
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
 		return null;
+	}
+
+	/*
+	 * Creates a report on the activity level of customers in a given area during a
+	 * specific month and year. The activity level is defined as follows: low
+	 * activity: 0 to 5 orders medium activity: 6 to 12 orders high activity: 13 to
+	 * 20 orders very high activity: more than 20 orders
+	 * 
+	 * @param reportData an ArrayList of Strings containing the month, year, and
+	 * area for which the report is to be generated, in that order
+	 */
+	public static void createMonthlyCostumersReport(ArrayList<String> reportData) {
+		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
+		ArrayList<Costumer> costumersOfArea = getCostumersByArea(area);
+		ArrayList<Integer> costumersOrdersCount = new ArrayList<>();
+		HashMap<String, Integer> costumersActivity = new HashMap<>();
+
+		costumersActivity.put("lowActivity", 0);
+		costumersActivity.put("mediumActivity", 0);
+		costumersActivity.put("highActivity", 0);
+		costumersActivity.put("veryHigh", 0);
+
+		for (Costumer c : costumersOfArea) {
+			costumersOrdersCount.add(getCostumerOrdersCount(c.getUsername(), month, year));
+		}
+
+		for (Integer i : costumersOrdersCount) {
+			if (i >= 0 && i <= 5)
+				costumersActivity.replace("lowActivity", costumersActivity.get("lowActivity"),
+						costumersActivity.get("lowActivity") + 1);
+			if (i > 5 && i <= 12)
+				costumersActivity.replace("mediumActivity", costumersActivity.get("mediumActivity"),
+						costumersActivity.get("mediumActivity") + 1);
+			if (i > 12 && i <= 20)
+				costumersActivity.replace("highActivity", costumersActivity.get("highActivity"),
+						costumersActivity.get("highActivity") + 1);
+			else
+				costumersActivity.replace("veryHigh", costumersActivity.get("veryHigh"),
+						costumersActivity.get("veryHigh") + 1);
+		}
+
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.costumer_report "
+					+ "(region, month, year, lowActivityCount, "
+					+ "mediumActivityCount, highActivityCount, veryHighActivityCount) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			try {
+				ps.setString(1, area);
+				ps.setString(2, month);
+				ps.setString(3, year);
+				ps.setInt(4, costumersActivity.get("lowActivity"));
+				ps.setInt(5, costumersActivity.get("mediumActivity"));
+				ps.setInt(6, costumersActivity.get("highActivity"));
+				ps.setInt(7, costumersActivity.get("veryHighActivity"));
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Enter costumer report details to DB failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement on createMonthlyCostumersReport failed");
+		}
+
+	}
+
+	/*
+	 * method will return the number of orders that related to costumer that he made
+	 * on related month and year
+	 * 
+	 * @param costumer username, month and year
+	 * 
+	 * @return Array list of costumers that belongs to his area
+	 */
+	private static int getCostumerOrdersCount(String username, String month, String year) {
+		Integer cnt = 0;
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT COUNT(*) ekrut.orders " + "WHERE username = ? AND month = ? AND year = ?");
+			try {
+				ps.setString(1, username);
+				ps.setString(2, month);
+				ps.setString(3, year);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Executing statement failed on getCostumerOrdersCount");
+			}
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				cnt = rs.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return cnt;
+	}
+
+	/*
+	 * method will return all costumers that approved on specific area
+	 * 
+	 * @param area name
+	 * 
+	 * @return Array list of costumers that belongs to his area
+	 */
+	private static ArrayList<Costumer> getCostumersByArea(String area) {
+
+		ArrayList<Costumer> areaCostumers = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT c.username, c.creditCard, c.subscriberID, c.status, c.deviceName, "
+							+ "u.firstName, u.lastName, u.email, u.phoneNumber, u.isLoggedIn, u.id, "
+							+ "u.role, u.region, u.configuration " + "FROM ekrut.costumers c "
+							+ "JOIN ekrut.users u ON c.username = u.username "
+							+ "WHERE u.region = ? AND c.status = 'APPROVED'");
+			try {
+				ps.setString(1, area);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Executing statement failed on getCostumersByArea");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				areaCostumers.add(new Costumer(rs.getString("username"), rs.getString("password"),
+						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
+						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
+						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
+						Configuration.valueOf(rs.getString("configuration")), rs.getString("creditCard"),
+						rs.getString("subscriberID"), CostumerStatus.valueOf(rs.getString("status")),
+						rs.getString("deviceName")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed on getCostumersByArea");
+		}
+
+		return areaCostumers;
 	}
 
 }
