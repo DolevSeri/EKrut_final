@@ -8,6 +8,7 @@ import enums.Devices;
 import enums.Region;
 import enums.Role;
 
+
 /**
  * 
  * @author ron and peleg Class that will save costumer data

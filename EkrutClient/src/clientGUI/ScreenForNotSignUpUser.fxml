@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_EK_MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.NotRegisterCostumerController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -48,7 +48,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </TextArea>
-      <Button layoutX="175.0" layoutY="381.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" style="-fx-background-color: #00FF00;" text="Send Request" textFill="#627b33">
+      <Button fx:id="btnSendRequest" layoutX="175.0" layoutY="381.0" mnemonicParsing="false" onAction="#clickOnBtnSendRequest" prefHeight="26.0" prefWidth="181.0" style="-fx-background-color: #00FF00;" text="Send Request" textFill="#627b33">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

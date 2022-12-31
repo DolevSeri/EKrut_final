@@ -6,6 +6,7 @@ import enums.Configuration;
 import enums.Region;
 import enums.Role;
 
+
 /**
  * 
  * @author peleg Class that describe user object
@@ -24,6 +25,7 @@ public class User implements Serializable {
 	private Role role;
 	private Region region;
 	private Configuration configuration;
+	
 
 	public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
 			boolean isLoggedIn, String id, Role role, Region region, Configuration configuration) {
@@ -39,6 +41,7 @@ public class User implements Serializable {
 		this.role = role;
 		this.region = region;
 		this.configuration = configuration;
+		
 	}
 
 	public String getUsername() {
@@ -56,6 +59,8 @@ public class User implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
+
+
 
 	public String getEmail() {
 		return email;
