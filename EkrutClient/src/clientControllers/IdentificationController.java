@@ -107,6 +107,9 @@ public class IdentificationController {
 					} else {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
+					if(ChatClient.costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED")) {
+						newScreen.setScreen(new Stage(), "/clientGUI/ScreenForNotApproveUserAfterLogin.fxml");
+					}
 
 				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
@@ -151,6 +154,7 @@ public class IdentificationController {
 					} else {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
+					
 
 				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
