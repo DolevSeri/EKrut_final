@@ -74,43 +74,53 @@ public class ChatClient extends AbstractClient {
 	 * @param msg The message from the server.
 	 */
 
-	@SuppressWarnings({ "unchecked", "static-access" })
+	@SuppressWarnings({ "unchecked" })
 	public void handleMessageFromServer(Object msg) {
 		awaitResponse = false;
 		Message message = (Message) msg;
 		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from server");
 
 		switch (message.getRequest()) {
+		
 		case Connected:
 			System.out.println("Client connected to Server!");
 			break;
+		
 		case Disconnected:
 			break;
+		
 		case LoggedIn_Succses:
 			userController.setUser((User) message.getObject());
 			break;
+		
 		case LoggedIn_UnsuccsesAlreadyLoggedIn:
 			userController.setUser((User) message.getObject());
 			break;
+		
 		case Unsuccsesful_LogIn:
 			userController.setUser(null);
 			break;
+		
 		case LoggedOut:
 			userController.setUser(null);
+		
 		case Devices_Imported:
-			System.out.println("Device imported msg got to client");
 			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
+		
 		case OrdersReportData_Imported:
-			System.out.println("Orders Report data imported msg got to client");
 			orderReportController.setOrderReport((OrderReport)message.getObject());
+		
 		case Threshold_Updated:
 			break;
+		
 		case Products_Imported:
 			productCatalogController.setProductCatalog(
 					FXCollections.observableArrayList((ArrayList<ProductInDevice>) message.getObject()));
+		
 		case Costumer_Imported:
 			Costumer costumer = (Costumer) message.getObject();
 			costumerController.setCostumer(costumer);
+		
 		default:
 			break;
 		}

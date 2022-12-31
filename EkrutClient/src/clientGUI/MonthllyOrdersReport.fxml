@@ -80,12 +80,12 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="24.0" layoutY="184.0" prefHeight="26.0" prefWidth="126.0" text="Device:" textFill="#8d48e1" underline="true">
+      <Label layoutX="25.0" layoutY="184.0" prefHeight="26.0" prefWidth="126.0" text="Average orders:" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblDevice" layoutX="279.0" layoutY="184.0" prefHeight="26.0" prefWidth="97.0">
+      <Label fx:id="lblAvg" layoutX="279.0" layoutY="184.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -98,6 +98,11 @@
       <Label fx:id="lblDate" layoutX="279.0" layoutY="141.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblArea" layoutX="321.0" layoutY="70.0" prefHeight="26.0" prefWidth="192.0" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
    </children>

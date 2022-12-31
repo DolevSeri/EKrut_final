@@ -1,15 +1,11 @@
 package clientControllers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import client.ChatClient;
 import client.ClientUI;
-import entities.Message;
 import entities.OrderReport;
-import enums.Request;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,14 +39,20 @@ public class OrdersReportController {
     private Label lblPickUpCounter;
 
     @FXML
-    private Label lblDevice;
+    private Label lblAvg;
 
     @FXML
     private Label lblDate;
 
+    @FXML
+    private Label lblArea;
+
 	SetSceneController scene = new SetSceneController();
-	 
 	
+	
+	 /**
+	  * @author Inbar Mizrahi
+	  */
     public void initialize() {
     	OrderReport orderReport = ChatClient.orderReportController.getOrderReport();
     	HashMap<String, Integer> deviceAndAmountHashMap = orderReport.getDeviceAndAmountHashMap();
@@ -72,7 +74,9 @@ public class OrdersReportController {
         	pieChartData.add(new PieChart.Data(deviceName, ordersCount));
         	
         }
-        lblDevice.setText(area);
+        
+        lblArea.setText(area);
+        lblAvg.setText(ordersPerDayAvg+"");
         lblDate.setText(month+"/"+year);
         chrtOrderReport.setData(pieChartData);
         lblBestSaller.setText(mostSellingDevice);
