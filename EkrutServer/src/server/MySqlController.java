@@ -215,6 +215,7 @@ public class MySqlController {
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
 				numOfPickUpOrders = rs.getInt("totalPickUp");
 				mostSellingDevice = rs.getString("mostSelling");
+				
 			} else
 				return null;
 		} catch (SQLException e) {
