@@ -47,7 +47,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="442.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogOut" layoutX="442.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -58,14 +58,6 @@
       <Button fx:id="btnConfirmDelivery" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
-         </font>
-         <effect>
-            <Blend mode="BLUE" />
-         </effect>
-      </Button>
-      <Button fx:id="btnBack" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
-         <font>
-            <Font name="System Bold" size="13.0" />
          </font>
          <effect>
             <Blend mode="BLUE" />

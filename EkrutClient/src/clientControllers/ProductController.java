@@ -2,8 +2,6 @@ package clientControllers;
 
 import java.io.IOException;
 
-import client.ClientUI;
-import entities.Product;
 import entities.ProductInDevice;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +54,7 @@ public class ProductController {
 		lblSale.setText(sale);
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);
-		this.client_OrderScreenController = client_OrderScreenController;
+		ProductController.client_OrderScreenController = client_OrderScreenController;
 	}
 
 	@FXML
@@ -65,8 +63,8 @@ public class ProductController {
 			lblError.setText("Out of stock!");
 		} else {
 			product.setQuantity(product.getQuantity() - 1); // update the quantity in device.
-			client_OrderScreenController.selectedProducts.put(product, quantityInOrder++);
-			client_OrderScreenController.setCartGrid(product,this);
+			Client_OrderScreenController.selectedProducts.put(product, quantityInOrder++);
+			client_OrderScreenController.setCartGrid(product, this);
 		}
 	}
 
@@ -76,5 +74,10 @@ public class ProductController {
 
 	public ProductInDevice getProductInDevice() {
 		return product;
+	}
+
+	public void restChoise() {
+		lblError.setText(null);
+		quantityInOrder = 1;
 	}
 }
