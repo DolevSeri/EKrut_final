@@ -54,12 +54,12 @@ public class ChooseReportController {
 
 	@FXML
 	private Label lblRegion;
-	
+
 	@FXML
 	private Label lblDevice;
 
 	public static ArrayList<String> fields;
-	
+
 	boolean isCEO;
 
 	SetSceneController scene = new SetSceneController();
@@ -90,7 +90,7 @@ public class ChooseReportController {
 	 * to the device combo box.
 	 */
 	public void initialize() {
-		
+
 		ArrayList<String> years = new ArrayList<String>(
 				Arrays.asList("2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"));
 		cmbYear.getItems().addAll(years);
@@ -104,11 +104,10 @@ public class ChooseReportController {
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
 			isCEO = true;
 			cmbDevice.setDisable(true);
-			ArrayList<String> area = new ArrayList<String>(
-					Arrays.asList("NORTH", "SOUTH", "UAE"));
+			ArrayList<String> area = new ArrayList<String>(Arrays.asList("NORTH", "SOUTH", "UAE"));
 			cmbArea.getItems().addAll(area);
 			cmbDevice.setPromptText("Choose region first!");
-			
+
 		} else {
 			isCEO = false;
 			cmbArea.setVisible(false);
@@ -142,25 +141,22 @@ public class ChooseReportController {
 		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 		cmbDevice.setPromptText("Choose Device");
 
-
 	}
-	
+
 	@FXML
 	void clickTypeOfReport(ActionEvent event) {
 		String type = cmbType.getValue().toString();
-		if(type.equals("Orders report") || type.equals("Clients report") ) {
+		if (type.equals("Orders report") || type.equals("Clients report")) {
 			cmbDevice.setVisible(false);
-			lblDevice.setVisible(false);	
+			lblDevice.setVisible(false);
 			cmbDevice.setValue("Choose Device");
-		}
-		else {
+		} else {
 			cmbDevice.setValue(null);
 			cmbDevice.setVisible(true);
-			lblDevice.setVisible(true);	
-			
+			lblDevice.setVisible(true);
 
-		}	
-		
+		}
+
 	}
 
 	/**
@@ -175,48 +171,47 @@ public class ChooseReportController {
 		try {
 			fields = new ArrayList<String>(Arrays.asList(cmbArea.getValue(), cmbYear.getValue(), cmbMonth.getValue(),
 					cmbType.getValue(), cmbDevice.getValue()));
-			if(cmbType.getValue() == null) {
+			if (cmbType.getValue() == null) {
 				errorFieldsMsg.setVisible(true);
 			}
 			if (fields.contains(null)) {
 				errorFieldsMsg.setVisible(true);
 			} else {
 				switch (fields.get(3).toString()) {
-				
+
 				case "Inventory report":
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-				
+
 					scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
 					break;
-					
+
 				case "Orders report":
-			
+
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-					ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
-					System.out.println(ChatClient.orderReportController.getOrderReport().toString());
-				  if(ChatClient.orderReportController.getOrderReport() == null) {
-					  errorFieldsMsg.setText("No such report");
-					  errorFieldsMsg.setVisible(true);
-					 
-				  }
-				  else {
-					     
-					  ((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-	    			  scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
-				  }
+					try {
+						ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
+						System.out.println(ChatClient.orderReportController.getOrderReport().toString());
+					} catch (NullPointerException e) {
+						errorFieldsMsg.setText("No such report");
+						errorFieldsMsg.setVisible(true);
+					}
+
+					if (ChatClient.orderReportController.getOrderReport() != null) {
+						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+						scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
+					}
 					break;
-					
+
 				case "Clients report":
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
 					scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
 					break;
 				default:
-	
+
 				}
-	
+
 			}
-		}
-		catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			System.out.println("Null pointer exception - error msg shown in client GUI");
 		}
 
