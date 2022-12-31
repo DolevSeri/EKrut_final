@@ -6,11 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductController">
    <children>
       <ImageView fx:id="productLogo" fitHeight="136.0" fitWidth="173.0" layoutX="35.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblPrice" alignment="CENTER" layoutX="9.0" layoutY="189.0" prefHeight="19.0" prefWidth="50.0" text="price ">
+      <Label fx:id="lblPrice" alignment="CENTER" layoutX="10.0" layoutY="189.0" prefHeight="19.0" prefWidth="50.0" text="price ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -26,11 +25,14 @@
          </font>
       </Label>
       <Label fx:id="lblSale" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="42.0" />
-      <Label layoutX="58.0" layoutY="189.0" text="ILS">
+      <Label layoutX="50.0" layoutY="189.0" text="ILS">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblError" alignment="CENTER" layoutX="62.0" layoutY="144.0" prefHeight="18.0" prefWidth="118.0" textFill="#df0a0a" />
+      <Label fx:id="lblError" alignment="CENTER" layoutX="62.0" layoutY="144.0" prefHeight="18.0" prefWidth="118.0" textFill="#df0a0a">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

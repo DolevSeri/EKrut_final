@@ -1,60 +1,58 @@
 package clientControllers;
 
-import client.ChatClient;
-import client.ClientUI;
-import entities.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Client_EK_MainViewController {
+public class Client_OrderConfirmationController {
 	FXMLLoader loader = new FXMLLoader();
 	SetSceneController newScreen = new SetSceneController();
 	@FXML
-	private Button btnCollect;
+	private Button btnBack;
 
 	@FXML
-	private Button btnCreateOrder;
+	private Button btnCancel;
 
 	@FXML
-	private Button btnLogOut;
+	private Button btnConfirm;
 
 	@FXML
 	private Button btnExit;
 
 	@FXML
-	private ImageView logoImage;
+	private GridPane gpRecipte;
+
+	@FXML
+	private ImageView orderLogo;
+
+	@FXML
+	private TextField txtTotalPrice;
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
-
-	}
-
-	@FXML
-	void clickOnCollectPickUp(ActionEvent event) {
-		newScreen.setScreen(new Stage(), null);
-	}
-
-	@FXML
-	void clickOnCreateOrder(ActionEvent event) {
-		System.out.println("Costumer want to create order");
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
 	}
 
 	@FXML
-	void clickOnLogout(ActionEvent event) {
-		newScreen.exitOrLogOut(event, true);
+	void clickOnCancelOrder(ActionEvent event) {
+
+	}
+
+	@FXML
+	void clickOnConfirm(ActionEvent event) {
+
 	}
 
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		newScreen.exitOrLogOut(event, true);
 		System.out.println("exit ConnectForm");
 		System.exit(0);
 	}

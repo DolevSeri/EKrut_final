@@ -55,13 +55,5 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="10.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickOnBack" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-         <effect>
-            <Blend mode="BLUE" />
-         </effect>
-      </Button>
    </children>
 </AnchorPane>

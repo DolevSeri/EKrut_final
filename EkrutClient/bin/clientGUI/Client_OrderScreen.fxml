@@ -62,12 +62,12 @@
                   <Font name="System Bold Italic" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lblTotalPrice" layoutX="178.0" layoutY="520.0" text="0">
+            <Label fx:id="lblTotalPrice" layoutX="160.0" layoutY="520.0" text="0">
                <font>
                   <Font name="System Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="231.0" layoutY="521.0" prefHeight="18.0" prefWidth="64.0" text="ILS">
+            <Label layoutX="238.0" layoutY="521.0" prefHeight="18.0" prefWidth="64.0" text="ILS">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>

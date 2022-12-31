@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 
 public class Client_OL_MainVieController {
 	FXMLLoader loader = new FXMLLoader();
+	SetSceneController newScreen = new SetSceneController();
 	@FXML
 	Label lblWelcome = null;
 
@@ -29,9 +30,6 @@ public class Client_OL_MainVieController {
 	Button btnExit;
 
 	@FXML
-	Button btnBack;
-
-	@FXML
 	private ImageView imageLogo;
 
 	@FXML
@@ -40,4 +38,10 @@ public class Client_OL_MainVieController {
 		System.out.println("exit ConnectForm");
 		System.exit(0);
 	}
+
+	@FXML
+	void clickOnLogout(ActionEvent event) {
+		newScreen.exitOrLogOut(event, true);
+	}
+
 }
