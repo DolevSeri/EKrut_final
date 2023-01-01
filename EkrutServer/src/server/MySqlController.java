@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import entities.Costumer;
 import entities.Device;
+import entities.InventoryReport;
 import entities.OrderReport;
 import entities.Order;
 import entities.ProductInDevice;
@@ -204,7 +205,8 @@ public class MySqlController {
 		PreparedStatement ps = null;
 		try {
 			ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.orders_report " + "WHERE month = ? AND year = ? AND area = ?");
+					"SELECT * FROM ekrut.orders_report " 
+					+ "WHERE month = ? AND year = ? AND area = ?");
 			ps.setString(1, month);
 			ps.setString(2, year);
 			ps.setString(3, area);
@@ -230,6 +232,48 @@ public class MySqlController {
 		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
 				numOfPickUpOrders, area, month, year, mostSellingDevice);
 	
+		return report;
+	}
+	
+	public static InventoryReport getInventoryReportData(ArrayList<String> reportDetails) {
+		
+		String device = reportDetails.get(0), month = reportDetails.get(1), year = reportDetails.get(2);
+		HashMap<String, Integer> productsUnderThres = new HashMap<>();
+		String mexProductUnderThres=null, products=null;
+		String[] prList = null;
+		
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.inventoryreport WHERE "
+					+ "moth = ? AND year = ? AND deviceName = ?");
+			try {
+				ps.setString(1, month);
+				ps.setString(2, year);
+				ps.setString(3, device);
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("Set statement parameters failed on getInventoryReportData");
+			}
+			
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				products = rs.getString("products");
+				mexProductUnderThres = rs.getString("itemUnderThres");
+			}
+			else {
+				System.out.println("Import Monthly Inventory Report Data failed");
+				return null;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query failed on getInventoryReportData");
+		}
+		
+		System.out.println("Succefully imported Monthly Inventory Report Data");
+		prList = products.split(",");
+		for (int i = 0; i < prList.length; i+=2)
+			productsUnderThres.put(prList[i], (int)Integer.valueOf(prList[i+1]));
+		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres,mexProductUnderThres);
 		return report;
 	}
 
