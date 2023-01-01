@@ -53,10 +53,8 @@ public class AreaManager_SetTresholdController {
 	public void initialize() {
 		lblRegion.setText(ChatClient.userController.getUser().getRegion().toString());
 		tblDevice.setEditable(true);
-		
 		setColumns();
-		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
-		tblDevice.setItems(ChatClient.deviceController.getAreaDevices());
+		setTableItems();
 	}
 
 	@FXML
@@ -95,17 +93,20 @@ public class AreaManager_SetTresholdController {
 
 	@FXML
 	void clickBtnRefresh() {
-		tblDevice.getItems().clear();
-		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
-		tblDevice.setItems(ChatClient.deviceController.getAreaDevices());	
+		setTableItems();
 	}
 	
 	@FXML
-	public void setColumns() {
+	private void setColumns() {
 		myTable.setColumn(deviceName, "deviceName");
 		myTable.setColumn(threshold, "threshold");
 		threshold.setCellFactory((cell) -> {
 			return new TextFieldTableCell<>(new IntegerStringConverter());});
 		myTable.setCellEditable(threshold);
+	}
+	private void setTableItems() {
+		tblDevice.getItems().clear();
+		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
+		tblDevice.setItems(ChatClient.deviceController.getAreaDevices());
 	}
 }
