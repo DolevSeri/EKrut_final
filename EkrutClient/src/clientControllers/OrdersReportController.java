@@ -1,5 +1,6 @@
 package clientControllers;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -58,7 +59,10 @@ public class OrdersReportController {
     	HashMap<String, Integer> deviceAndAmountHashMap = orderReport.getDeviceAndAmountHashMap();
     	Integer totalOrdersCount = orderReport.getTotalOrdersCount();
     	Integer numOfPickUpOrders = orderReport.getNumOfPickUpOrders();
-    	float ordersPerDayAvg = orderReport.getOrdersPerDayAvg();
+  
+    	final DecimalFormat df = new DecimalFormat("0.00");
+    	String ordersPerDayAvg = df.format(orderReport.getOrdersPerDayAvg());
+
     	
     	String area = orderReport.getArea();
     	String month = orderReport.getMonth();
@@ -74,9 +78,10 @@ public class OrdersReportController {
         	pieChartData.add(new PieChart.Data(deviceName, ordersCount));
         	
         }
+        System.out.println("pick up- "+numOfPickUpOrders +" most selling "+mostSellingDevice+" total- "+totalOrdersCount);
         
         lblArea.setText(area);
-        lblAvg.setText(ordersPerDayAvg+"");
+        lblAvg.setText(ordersPerDayAvg);
         lblDate.setText(month+"/"+year);
         chrtOrderReport.setData(pieChartData);
         lblBestSaller.setText(mostSellingDevice);

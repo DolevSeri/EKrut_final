@@ -49,6 +49,7 @@ public class ChatClient extends AbstractClient {
 	public static CostumerController costumerController = new CostumerController();
 	public static OrderReportController orderReportController = new OrderReportController();
 	public static boolean awaitResponse = false;
+	public static Object lock = new Object();
 
 	// Constructors ****************************************************
 
@@ -76,7 +77,8 @@ public class ChatClient extends AbstractClient {
 
 	@SuppressWarnings({ "unchecked" })
 	public void handleMessageFromServer(Object msg) {
-		awaitResponse = false;
+		
+		
 		Message message = (Message) msg;
 		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from server");
 
@@ -103,26 +105,31 @@ public class ChatClient extends AbstractClient {
 		
 		case LoggedOut:
 			userController.setUser(null);
+			break;
 		
 		case Devices_Imported:
 			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
-		
+			break;
 		case OrdersReportData_Imported:
 			orderReportController.setOrderReport((OrderReport)message.getObject());
-		
+			break;
 		case Threshold_Updated:
 			break;
 		
 		case Products_Imported:
 			productCatalogController.setProductCatalog(
 					FXCollections.observableArrayList((ArrayList<ProductInDevice>) message.getObject()));
-		
+			break;
 		case Costumer_Imported:
 			Costumer costumer = (Costumer) message.getObject();
 			costumerController.setCostumer(costumer);
-		
+			break;
 		default:
 			break;
+		}
+		synchronized(lock) {
+			awaitResponse = false;
+			lock.notify();
 		}
 	}
 
@@ -138,20 +145,24 @@ public class ChatClient extends AbstractClient {
 			openConnection();// in order to send more than one message
 			awaitResponse = true;
 			sendToServer(message);
-
-			// wait for response
-			while (awaitResponse) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			synchronized(lock) {
+				// wait for response
+				while (awaitResponse) {
+					try {
+						lock.wait();
+					
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+	
 		} catch (IOException e) {
 			e.printStackTrace();
 			clientUI.display("Could not send message to server: Terminating client." + e);
 			quit();
 		}
+
 	}
 
 	public void handleMessageFromClientUI(Message message) {
@@ -160,11 +171,12 @@ public class ChatClient extends AbstractClient {
 			awaitResponse = true;
 			sendToServer(message);
 			// wait for response
-			while (awaitResponse) {
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			synchronized (lock) {
+				while (awaitResponse) {
+					try {
+						lock.wait();
+						
+					} catch (InterruptedException e) {}
 				}
 			}
 		} catch (IOException e) {
