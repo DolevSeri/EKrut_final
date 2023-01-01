@@ -127,6 +127,7 @@ public class EchoServer extends AbstractServer {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 		case Get_Devices_By_Area:
 			String area = (String) messageFromClient.getObject();
 			try {
@@ -134,6 +135,7 @@ public class EchoServer extends AbstractServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			break;
 		case GetOrdersReportData:
 			ArrayList<String> fields = (ArrayList<String>) messageFromClient.getObject();
 			try {
@@ -142,6 +144,7 @@ public class EchoServer extends AbstractServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			break;
 		case Threshold_Update_Request:
 			MySqlController.updateDeviceThreshold((ArrayList<Device>) messageFromClient.getObject());
 			try {
@@ -149,6 +152,7 @@ public class EchoServer extends AbstractServer {
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Get_Products:
 			String deviceName = (String) messageFromClient.getObject();
 			try {
@@ -157,6 +161,7 @@ public class EchoServer extends AbstractServer {
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Get_Costumer:
 			String userID = (String) messageFromClient.getObject();
 			try {
@@ -164,6 +169,7 @@ public class EchoServer extends AbstractServer {
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		default:
 			break;
 		}
