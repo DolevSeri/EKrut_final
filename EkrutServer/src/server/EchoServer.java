@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import common.ClientConnected;
+import entities.Costumer;
 import entities.Device;
 import entities.Message;
 import entities.User;
@@ -129,9 +130,10 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Get_Devices_By_Area:
-			String area = (String) messageFromClient.getObject();
+			String deviceArea = (String) messageFromClient.getObject();
 			try {
-				client.sendToClient(new Message(Request.Devices_Imported, MySqlController.getAllDevicesByArea(area)));
+				client.sendToClient(
+						new Message(Request.Devices_Imported, MySqlController.getAllDevicesByArea(deviceArea)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -170,13 +172,30 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+		case Get_Not_Approved_Costumers_By_Area:
+			String costumerArea = (String) messageFromClient.getObject(); //
+			try {
+				client.sendToClient(
+						new Message(Request.Costumers_Imported, 
+								MySqlController.getNotApprovedCostumersByArea(costumerArea)));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Costumer_Update_Status_Request:
+			MySqlController.updateCostumerStatus((ArrayList<Costumer>) messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Costumer_Status_Updated, null));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		default:
 			break;
 		}
 	}
 
 	private void updateClientList(ConnectionToClient client, String connectionStatus) {
-		// if (connectionStatus.equals("Disconnect")) {
 		for (int i = 0; i < clientList.size(); i++) {
 			if (clientList.get(i).getIP().equals(client.getInetAddress().getHostAddress()))
 				clientList.remove(i);
@@ -184,7 +203,6 @@ public class EchoServer extends AbstractServer {
 
 		clientList.add(new ClientConnected(client.getInetAddress().getHostAddress(),
 				client.getInetAddress().getHostAddress(), connectionStatus));
-		// System.out.println(clientList);
 	}
 
 	/**

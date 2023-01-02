@@ -108,7 +108,8 @@ public class ChatClient extends AbstractClient {
 			break;
 		
 		case Devices_Imported:
-			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
+			deviceController.setAreaDevices
+			(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
 			break;
 		case OrdersReportData_Imported:
 			orderReportController.setOrderReport((OrderReport)message.getObject());
@@ -123,6 +124,12 @@ public class ChatClient extends AbstractClient {
 		case Costumer_Imported:
 			Costumer costumer = (Costumer) message.getObject();
 			costumerController.setCostumer(costumer);
+			break;
+		case Costumers_Imported:
+			costumerController.setAreaCostumers
+			(FXCollections.observableArrayList((ArrayList<Costumer>)message.getObject()));
+			break;
+		case Costumer_Status_Updated:
 			break;
 		default:
 			break;

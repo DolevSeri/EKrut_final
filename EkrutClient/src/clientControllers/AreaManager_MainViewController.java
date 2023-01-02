@@ -59,7 +59,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickBtnUserManagement(ActionEvent event) {
-	    scene.setScreen(new Stage(), "/clientGUI/AreaManager_UsersConfirmationForm.fxml");
+	    scene.setScreen(new Stage(), "/clientGUI/AreaManager_CostumerApproval.fxml");
 	}
 
 	/**

@@ -62,7 +62,7 @@ public enum Request {
 	},
 	Get_Devices_By_Area {
 		public String toString() {
-			return "Request devices";
+			return "Request devices by area";
 		}
 	},
 	Devices_Imported {
@@ -109,6 +109,26 @@ public enum Request {
 	Costumer_Imported {
 		public String toString() {
 			return "Costumer imported succsesfuly!";
+		}
+	},
+	Get_Not_Approved_Costumers_By_Area {
+		public String toString() {
+			return "Request costumers by area";
+		}
+	},
+	Costumers_Imported {
+		public String toString() {
+			return "Costumers imported successfully!";
+		}
+	},
+	Costumer_Update_Status_Request {
+		public String toString() {
+			return "Request update customer status";
+		}
+	},
+	Costumer_Status_Updated {
+		public String toString() {
+			return "Customer status updated successfully!";
 		}
 	},
 }
