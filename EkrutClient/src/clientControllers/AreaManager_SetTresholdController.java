@@ -51,7 +51,6 @@ public class AreaManager_SetTresholdController {
 
 	@FXML
 	public void initialize() {
-		lblRegion.setText(ChatClient.userController.getUser().getRegion().toString());
 		tblDevice.setEditable(true);
 		setColumns();
 		setTableItems();
@@ -82,11 +81,12 @@ public class AreaManager_SetTresholdController {
 		}
 
 		if (allValuesValid) {
+			lblError.setVisible(false);
 			devicesToUpdate.addAll(tblDevice.getItems());
 			ClientUI.chat.accept(new Message(Request.Threshold_Update_Request,devicesToUpdate));
 
 		} else {
-			lblError.setText("Error: Threshold values must be positive integers.");
+			lblError.setText("Error: Threshold values must be positive integers");
 			lblError.setVisible(true);
 		}
 	}

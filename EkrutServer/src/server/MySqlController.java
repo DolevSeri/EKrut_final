@@ -205,8 +205,7 @@ public class MySqlController {
 		PreparedStatement ps = null;
 		try {
 			ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.orders_report " 
-					+ "WHERE month = ? AND year = ? AND area = ?");
+					"SELECT * FROM ekrut.orders_report " + "WHERE month = ? AND year = ? AND area = ?");
 			ps.setString(1, month);
 			ps.setString(2, year);
 			ps.setString(3, area);
@@ -216,7 +215,7 @@ public class MySqlController {
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
 				numOfPickUpOrders = rs.getInt("totalPickUp");
 				mostSellingDevice = rs.getString("mostSelling");
-				
+
 			} else
 				return null;
 		} catch (SQLException e) {
@@ -228,52 +227,50 @@ public class MySqlController {
 		for (int i = 0; i < (deviceList.length); i = i + 2) {
 			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
 		}
-		
+
 		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
 				numOfPickUpOrders, area, month, year, mostSellingDevice);
-	
+
 		return report;
 	}
-	
+
 	public static InventoryReport getInventoryReportData(ArrayList<String> reportDetails) {
-		
+
 		String device = reportDetails.get(0), month = reportDetails.get(1), year = reportDetails.get(2);
 		HashMap<String, Integer> productsUnderThres = new HashMap<>();
-		String mexProductUnderThres=null, products=null;
+		String mexProductUnderThres = null, products = null;
 		String[] prList = null;
-		
+
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE "
-					+ "moth = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventoryreport WHERE " + "moth = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
 				ps.setString(3, device);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Set statement parameters failed on getInventoryReportData");
 			}
-			
+
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				products = rs.getString("products");
 				mexProductUnderThres = rs.getString("itemUnderThres");
-			}
-			else {
+			} else {
 				System.out.println("Import Monthly Inventory Report Data failed");
 				return null;
 			}
-		}catch(Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Executing query failed on getInventoryReportData");
 		}
-		
+
 		System.out.println("Succefully imported Monthly Inventory Report Data");
 		prList = products.split(",");
-		for (int i = 0; i < prList.length; i+=2)
-			productsUnderThres.put(prList[i], (int)Integer.valueOf(prList[i+1]));
-		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres,mexProductUnderThres);
+		for (int i = 0; i < prList.length; i += 2)
+			productsUnderThres.put(prList[i], (int) Integer.valueOf(prList[i + 1]));
+		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres);
 		return report;
 	}
 
@@ -287,11 +284,33 @@ public class MySqlController {
 			while (res.next()) {
 				devices.add(new Device(res.getInt(1), Region.valueOf(res.getString(2)), res.getString(3)));
 			}
-			System.out.println("Import devices by area data suceeded");
-		} catch (Exception e) {
-			System.out.println("Import devices by area data failed");
+			System.out.println("Import devices by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import devices by region failed");
 		}
 		return devices;
+	}
+	
+	public static ArrayList<Costumer> getNotApprovedCostumersByArea(String region) {
+		PreparedStatement ps;
+		ArrayList<Costumer> costumers = new ArrayList<>();
+		try {
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers "
+					+ "INNER JOIN ekrut.users ON costumers.username = users.username "
+					+ "WHERE users.region = ? AND costumers.status = ?");
+			ps.setString(1, region);
+			ps.setString(2, CostumerStatus.NOTAPPROVED.toString());
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				costumers.add(new Costumer(res.getString("username"),res.getString("creditCard"),
+						res.getString("subscriberID"),CostumerStatus.valueOf(res.getString("status"))));
+			}
+			System.out.println("Import customer by region succeeded");
+
+		} catch (SQLException e) {
+			System.out.println("Import costumers by region failed");
+		}
+		return costumers;
 	}
 
 	public static void updateDeviceThreshold(ArrayList<Device> devicesToUpdate) {
@@ -305,10 +324,30 @@ public class MySqlController {
 				ps.setString(2, device.getDeviceName());
 				ps.executeUpdate();
 			}
-			System.out.println("Update threshold suceeded");
+			System.out.println("Update threshold succeeded");
 
 		} catch (SQLException e) {
 			System.out.println("Update threshold failed");
+		}
+
+	}
+	
+	
+	public static void updateCostumerStatus(ArrayList<Costumer> CostumerToUpdate) {
+		PreparedStatement ps;
+		try {
+			ps = dbConnector.prepareStatement("UPDATE ekrut.costumers SET status = ? WHERE username = ?");
+
+			// Update the records in the database
+			for (Costumer costumer : CostumerToUpdate) {
+				ps.setString(1, costumer.getStatus().toString());
+				ps.setString(2, costumer.getUsername());
+				ps.executeUpdate();
+			}
+			System.out.println("Update costumer status succeeded");
+
+		} catch (SQLException e) {
+			System.out.println("Update costumer status failed");
 		}
 
 	}
@@ -320,7 +359,7 @@ public class MySqlController {
 	 * the area and the number of orders for each device.
 	 * 
 	 * @param reportData a list containing the month, year, and area for which to
-	 *        create the report
+	 *                   create the report
 	 */
 
 	public static void createMonthlyOrdersReport(ArrayList<String> reportData) {

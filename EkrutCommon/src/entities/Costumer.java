@@ -35,6 +35,13 @@ public class Costumer extends User implements Serializable {
 		this.deviceName = deviceName;
 	}
 
+	public Costumer(String username, String creditCard, String subscriberID, CostumerStatus status) {
+		super(username);
+		this.creditCard = creditCard;
+		this.subscriberID = subscriberID;
+		this.status = status;
+		}
+
 	public String getCreditCard() {
 		return creditCard;
 	}
