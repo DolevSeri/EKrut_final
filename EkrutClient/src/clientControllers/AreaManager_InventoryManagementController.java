@@ -3,6 +3,7 @@ package clientControllers;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -36,11 +37,13 @@ public class AreaManager_InventoryManagementController {
 
     @FXML
     void clickBtnSetTreshold(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		scene.setScreen(new Stage(), "/clientGUI/AreaManager_TresholdSet.fxml");
     }
 
     @FXML
     void clickBtnStockCalls(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		scene.setScreen(new Stage(), "/clientGUI/AreaManager_InventoryCalls.fxml");
 
     }
