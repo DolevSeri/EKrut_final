@@ -1,14 +1,12 @@
 
 package clientControllers;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
 import client.ChatClient;
 import client.ClientUI;
 import entities.InventoryReport;
-import entities.OrderReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,7 +61,7 @@ public class InventoryReportController {
 		for (Entry<String, Integer> pr : producsUnderThreshold.entrySet()) {
 			String product = pr.getKey();
 			Integer underThresCount = pr.getValue();
-			pieChartData.add(new PieChart.Data(product, underThresCount));
+			pieChartData.add(new PieChart.Data(product + "-" + underThresCount, underThresCount));
 		}
 		
 		lblDeviceField.setText(device);

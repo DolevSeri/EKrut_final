@@ -273,7 +273,7 @@ public class MySqlController {
 
 	public static InventoryReport getInventoryReportData(ArrayList<String> reportDetails) {
 
-		String device = reportDetails.get(0), month = reportDetails.get(1), year = reportDetails.get(2);
+		String year = reportDetails.get(1), month = reportDetails.get(2),device = reportDetails.get(4);
 		HashMap<String, Integer> productsUnderThres = new HashMap<>();
 		String mexProductUnderThres = null, products = null;
 		String[] prList = null;

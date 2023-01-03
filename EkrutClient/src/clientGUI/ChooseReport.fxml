@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ChooseReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ChooseReportController">
    <children>
       <Pane layoutX="443.0" prefHeight="482.0" prefWidth="352.0" style="-fx-background-color: #D0A9F5;">
          <children>
             <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="279.0" layoutY="14.0">
                <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
+                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="262.0" fitWidth="303.0" layoutX="24.0" layoutY="110.0">
