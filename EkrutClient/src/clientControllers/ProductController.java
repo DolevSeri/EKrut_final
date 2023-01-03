@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ProductController {
-	private static Client_OrderScreenController client_OrderScreenController;
+	private Client_OrderScreenController client_OrderScreenController;
 
 	@FXML
 	private Button addToCart;
@@ -32,7 +32,7 @@ public class ProductController {
 	private ImageView productLogo;
 
 	private ProductInDevice product;
-	private int quantityInOrder = 1;
+	private int quantityInOrder = 0;
 
 	/**
 	 * SetData-a method that set the fxml of product in the product catalog screen
@@ -45,39 +45,63 @@ public class ProductController {
 	 * @param client_OrderScreenController - contain the main order screen
 	 *                                     controller/
 	 */
+	public void resetErrorLabel() {
+		lblError.setText(null);
+	}
 
 	public void setData(ProductInDevice product, String sale,
 			Client_OrderScreenController client_OrderScreenController) {
 		this.product = product;
-		lblName.setText(product.getProductName());
-		lblPrice.setText(String.valueOf(product.getPrice()));
-		lblSale.setText(sale);
+		lblName.setText(this.product.getProductName());
+		lblPrice.setText(String.valueOf(this.product.getPrice()));
+		// lblSale.setText(sale);
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);
-		ProductController.client_OrderScreenController = client_OrderScreenController;
+		this.client_OrderScreenController = client_OrderScreenController;
 	}
 
 	@FXML
 	void clickOnAdd(ActionEvent event) throws IOException {
+		addToCart();
+	}
+
+	public void addToCart() throws IOException {
 		if (product.getQuantity() == 0) {
 			lblError.setText("Out of stock!");
 		} else {
 			product.setQuantity(product.getQuantity() - 1); // update the quantity in device.
-			Client_OrderScreenController.selectedProducts.put(product, quantityInOrder++);
+			client_OrderScreenController.selectedProducts.put(product, ++quantityInOrder);
 			client_OrderScreenController.setCartGrid(product, this);
 		}
+	}
+
+	public void addToCartEdit() throws IOException {
+
+		quantityInOrder++;
+		client_OrderScreenController.selectedProducts.put(product, quantityInOrder);
+		client_OrderScreenController.setCartGrid(product, this);
 	}
 
 	public int getQuantityInOrder() {
 		return quantityInOrder;
 	}
 
-	public ProductInDevice getProductInDevice() {
-		return product;
+	public void setQuantityInOrder(int quantity) {
+		this.quantityInOrder = quantity;
 	}
 
-	public void restChoise() {
-		lblError.setText(null);
-		quantityInOrder = 1;
+	public ProductInDevice getProductInDevice() {
+		return this.product;
+	}
+
+	public void setProductInDevice(ProductInDevice product) {
+		this.product = product;
+	}
+
+	public void setProductController(ProductController p, Client_OrderScreenController screen) {
+		this.quantityInOrder = p.getQuantityInOrder();
+		this.product = getProductInDevice();
+		client_OrderScreenController = screen;
+
 	}
 }

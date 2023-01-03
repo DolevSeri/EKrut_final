@@ -1,23 +1,19 @@
 package clientControllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
-import entities.Product;
 import entities.ProductInDevice;
 import enums.Request;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -28,7 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-public class Client_OrderScreenController implements Initializable {
+public class Client_OrderScreenController {
 	FXMLLoader loader = new FXMLLoader();
 	SetSceneController newScreen = new SetSceneController();
 
@@ -57,10 +53,10 @@ public class Client_OrderScreenController implements Initializable {
 	private ImageView logoImage;
 	private int rowInCart = 3, indexForCart = 0;
 
-	public static HashMap<ProductInDevice, Integer> selectedProducts = new HashMap<>();
+	public HashMap<ProductInDevice, Integer> selectedProducts = new HashMap<>();
 	public static ObservableList<ProductInDevice> products;
-	public static List<ProductController> productControllers = new ArrayList<>();
-	public static ArrayList<ProductInCartController> productInCartControllers = new ArrayList<>();
+	public ObservableList<ProductController> productControllers = FXCollections.observableArrayList();
+	public List<ProductInCartController> productInCartControllers = FXCollections.observableArrayList();
 	public static double totalPrice = 0;
 
 	/**
@@ -68,6 +64,31 @@ public class Client_OrderScreenController implements Initializable {
 	 * 
 	 * @throws IOException
 	 */
+	public void initialize() throws IOException {
+		selectedProducts = ChatClient.cartController.getCart();
+		if (ChatClient.cartController.getCart().size() == 0) {
+			ClientUI.chat
+					.accept(new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice()));
+			products = ChatClient.productCatalogController.getProductCatalog();
+			setCatalog();
+			changeEndOrder(true);
+			btnCancel.setDisable(true);
+		} else {
+			products = ChatClient.productCatalogController.getProductCatalog();
+			setCatalog();
+			System.out.println(selectedProducts);
+			for (ProductController p : productControllers) {
+				for (ProductInDevice pid : ChatClient.cartController.getCart().keySet()) {
+					if (p.getProductInDevice().equals(pid)) {
+						int cnt = ChatClient.cartController.getCart().get(pid);
+						for (int i = 0; i < cnt; i++)
+							p.addToCartEdit();
+						break;
+					}
+				}
+			}
+		}
+	}
 
 	private void setCatalog() throws IOException {
 		int column = 0;
@@ -77,7 +98,6 @@ public class Client_OrderScreenController implements Initializable {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/clientGUI/Product.fxml"));
 			AnchorPane anchorPane = fxmlLoader.load();
-
 			ProductController productController = fxmlLoader.getController();
 			productControllers.add(productController);
 			productControllers.get(i++).setData(p, null, this);
@@ -86,46 +106,61 @@ public class Client_OrderScreenController implements Initializable {
 				row++;
 				column = 0;
 				// Set grid width
-
 			}
 			gpCatalog.setMinHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setPrefHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setMaxHeight(Region.USE_COMPUTED_SIZE);
 			GridPane.setMargin(anchorPane, new Insets(3));
 		}
+	}
 
+	public void removeFromCart(ProductInDevice product, ProductInCartController productInCartController) {
+		int i = 0;
+		for (ProductInCartController p : productInCartControllers) {
+			if (p.getProduct().equals(product)) {
+				productInCartControllers.remove(i);
+				break;
+			}
+			i++;
+		}
 	}
 
 	public void setCartGrid(ProductInDevice productInDevice, ProductController productController) throws IOException {
-		if (selectedProducts.containsKey(productInDevice) && selectedProducts.get(productInDevice) > 1) { // if product
-																											// already
-			// in cart
-			for (ProductInCartController p : productInCartControllers) {
-				if (p.getProductController().getProductInDevice().getProductName()
-						.equals(productController.getProductInDevice().getProductName())) {
-					productInCartControllers.get(p.getIndexInCart()).setData(productInDevice, this);
-				}
+		for (ProductInCartController p : productInCartControllers) {
+			if (p.getProduct().equals(productInDevice)) {
+				p.setData(productInDevice, this);
+				setTotalAmount();
+				return;
 			}
-		} else {
-			FXMLLoader fxmlLoader = new FXMLLoader();
-			fxmlLoader.setLocation(getClass().getResource("/clientGUI/ProductInCart.fxml"));
-			AnchorPane anchorPane = fxmlLoader.load();
-
-			ProductInCartController productInCartController = fxmlLoader.getController();
-			productInCartControllers.add(productInCartController);
-			productInCartController.setIndexInCart(indexForCart);
-			productInCartControllers.get(indexForCart++).setData(productInDevice, this);
-			gpCart.add(anchorPane, 0, rowInCart++);
-			GridPane.setMargin(anchorPane, new Insets(3));
-			// Set grid width
-			gpCart.setMinHeight(Region.USE_COMPUTED_SIZE);
-			gpCart.setPrefHeight(Region.USE_COMPUTED_SIZE);
-			gpCart.setMaxHeight(Region.USE_COMPUTED_SIZE);
 		}
+		changeEndOrder(false);
+		btnCancel.setDisable(false);
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setLocation(getClass().getResource("/clientGUI/ProductInCart.fxml"));
+		AnchorPane anchorPane = fxmlLoader.load();
+
+		ProductInCartController productInCartController = fxmlLoader.getController();
+		productInCartController.setIndexInCart(indexForCart);
+		productInCartController.setData(productInDevice, this);
+		productInCartControllers.add(productInCartController);
+
+		gpCart.add(anchorPane, 0, rowInCart++);
+		GridPane.setMargin(anchorPane, new Insets(3));
+		// Set grid width
+		gpCart.setMinHeight(Region.USE_COMPUTED_SIZE);
+		gpCart.setPrefHeight(Region.USE_COMPUTED_SIZE);
+		gpCart.setMaxHeight(Region.USE_COMPUTED_SIZE);
 		setTotalAmount();
 	}
 
-	private void setTotalAmount() {
+	public void changeEndOrder(boolean btn) {
+		if (btn)
+			btnEndOrder.setDisable(true);
+		else
+			btnEndOrder.setDisable(false);
+	}
+
+	public void setTotalAmount() {
 		double totalSum = 0;
 		if (selectedProducts.size() > 0) {
 			for (ProductInDevice p : selectedProducts.keySet()) {
@@ -134,11 +169,14 @@ public class Client_OrderScreenController implements Initializable {
 			}
 		}
 		totalPrice = totalSum;
-		lblTotalPrice.setText(String.valueOf(totalSum));
+		lblTotalPrice.setText(String.valueOf(totalPrice));
 	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
+		productInCartControllers.clear();
+		productControllers.clear();
+		selectedProducts.clear();
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")) {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
@@ -170,23 +208,13 @@ public class Client_OrderScreenController implements Initializable {
 
 	@FXML
 	void clickOnEndOrder(ActionEvent event) {
+		ChatClient.cartController.setCart(selectedProducts);
+		ChatClient.productCatalogController.setProductCatalog(products);
+		// saving the chosen products for client.
+
 		System.out.println(selectedProducts.toString());
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderConfirmation.fxml");
-	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		ClientUI.chat
-				.accept(new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice()));
-		products = ChatClient.productCatalogController.getProductCatalog();
-		try {
-			setCatalog();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 }
