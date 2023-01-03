@@ -20,6 +20,7 @@ import entities.Message;
 import entities.OrderReport;
 import entities.Subscriber;
 import entities.User;
+import entityControllers.CartController;
 import entityControllers.CostumerController;
 import entityControllers.DeliveryReportController;
 import entityControllers.CostumersReportController;
@@ -59,6 +60,7 @@ public class ChatClient extends AbstractClient {
 	public static CostumersReportController costumersReportController = new CostumersReportController();
 	public static boolean awaitResponse = false;
 	public static Object lock = new Object();
+	public static CartController cartController = new CartController();
 
 	// Constructors ****************************************************
 
@@ -86,59 +88,57 @@ public class ChatClient extends AbstractClient {
 
 	@SuppressWarnings({ "unchecked" })
 	public void handleMessageFromServer(Object msg) {
-		
-		
+
 		Message message = (Message) msg;
 		System.out.println("Message received: " + ((Message) msg).getRequest().toString() + " from server");
 
 		switch (message.getRequest()) {
-		
+
 		case Connected:
 			System.out.println("Client connected to Server!");
 			break;
-		
+
 		case Disconnected:
 			break;
-		
+
 		case LoggedIn_Succses:
 			userController.setUser((User) message.getObject());
 			break;
-		
+
 		case LoggedIn_UnsuccsesAlreadyLoggedIn:
 			userController.setUser((User) message.getObject());
 			break;
-		
+
 		case Unsuccsesful_LogIn:
 			userController.setUser(null);
 			break;
-		
+
 		case LoggedOut:
 			userController.setUser(null);
 			break;
-		
+
 		case Devices_Imported:
-			deviceController.setAreaDevices
-			(FXCollections.observableArrayList((ArrayList<Device>)message.getObject()));
+			deviceController.setAreaDevices(FXCollections.observableArrayList((ArrayList<Device>) message.getObject()));
 			break;
-			
+
 		case OrdersReportData_Imported:
-			orderReportController.setOrderReport((OrderReport)message.getObject());
+			orderReportController.setOrderReport((OrderReport) message.getObject());
 			break;
 
 		case DeliveryReportData_Imported:
-			deliveryReportController.setDeliveryReport((DeliveryReport)message.getObject());
+			deliveryReportController.setDeliveryReport((DeliveryReport) message.getObject());
 			break;
 
 		case InventoryReportData_Imported:
-			inventoryReportController.setInventoryReport((InventoryReport)message.getObject());
+			inventoryReportController.setInventoryReport((InventoryReport) message.getObject());
 			break;
 		case CostumersReportData_Imported:
-			costumersReportController.setCostumersReport((CostumersReport)message.getObject());
+			costumersReportController.setCostumersReport((CostumersReport) message.getObject());
 			break;
 
 		case Threshold_Updated:
 			break;
-		
+
 		case Products_Imported:
 			productCatalogController.setProductCatalog(
 					FXCollections.observableArrayList((ArrayList<ProductInDevice>) message.getObject()));
@@ -148,15 +148,15 @@ public class ChatClient extends AbstractClient {
 			costumerController.setCostumer(costumer);
 			break;
 		case Costumers_Imported:
-			costumerController.setAreaCostumers
-			(FXCollections.observableArrayList((ArrayList<Costumer>)message.getObject()));
+			costumerController
+					.setAreaCostumers(FXCollections.observableArrayList((ArrayList<Costumer>) message.getObject()));
 			break;
 		case Costumer_Status_Updated:
 			break;
 		default:
 			break;
 		}
-		synchronized(lock) {
+		synchronized (lock) {
 			awaitResponse = false;
 			lock.notify();
 		}
@@ -174,18 +174,18 @@ public class ChatClient extends AbstractClient {
 			openConnection();// in order to send more than one message
 			awaitResponse = true;
 			sendToServer(message);
-			synchronized(lock) {
+			synchronized (lock) {
 				// wait for response
 				while (awaitResponse) {
 					try {
 						lock.wait();
-					
+
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
 			}
-	
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			clientUI.display("Could not send message to server: Terminating client." + e);
@@ -204,8 +204,9 @@ public class ChatClient extends AbstractClient {
 				while (awaitResponse) {
 					try {
 						lock.wait();
-						
-					} catch (InterruptedException e) {}
+
+					} catch (InterruptedException e) {
+					}
 				}
 			}
 		} catch (IOException e) {
