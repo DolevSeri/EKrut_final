@@ -9,17 +9,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Costumer;
-import entities.DeliveryReport;
 import entities.CostumersReport;
+import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryReport;
-import entities.OrderReport;
 import entities.Order;
+import entities.OrderReport;
 import entities.ProductInDevice;
 import entities.User;
 import enums.Configuration;
 import enums.CostumerStatus;
-import enums.Devices;
 import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
@@ -321,7 +320,7 @@ public class MySqlController {
 		
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.costumersreport WHERE "
+					"SELECT * FROM ekrut.costumer_report WHERE "
 					+ "month = ? AND year = ? AND region = ?");
 			try {
 				ps.setString(1, month);
