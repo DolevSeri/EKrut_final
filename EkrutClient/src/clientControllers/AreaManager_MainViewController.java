@@ -6,6 +6,7 @@ import entities.Message;
 import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -49,6 +50,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickBtnLogOut(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 	    scene.exitOrLogOut(event, true);
 	}
 
@@ -59,6 +61,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickBtnUserManagement(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 	    scene.setScreen(new Stage(), "/clientGUI/AreaManager_CostumerApproval.fxml");
 	}
 
@@ -69,6 +72,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickBtnViewMonthlyReports(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 	    scene.setScreen(new Stage(), "/clientGUI/ChooseReport.fxml");
 	}
 
@@ -79,6 +83,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickBtnInventoryManagement(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 	    scene.setScreen(new Stage(), "/clientGUI/AreaManager_InventoryManagementForm.fxml");
 	}
 
@@ -89,6 +94,7 @@ public class AreaManager_MainViewController{
 	 */
 	@FXML
 	void clickExitBtn(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 	    scene.exitOrLogOut(event, false);
 	}
 

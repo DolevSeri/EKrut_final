@@ -100,9 +100,7 @@ public class ChooseReportController {
 		ArrayList<String> months = new ArrayList<String>(
 				Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"));
 		cmbMonth.getItems().addAll(months);
-		ArrayList<String> reportsType = new ArrayList<String>(
-				Arrays.asList("Inventory report", "Orders report", "Clients report","Delivery report"));
-		cmbType.getItems().addAll(reportsType);
+
 
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
 			isCEO = true;
@@ -122,7 +120,18 @@ public class ChooseReportController {
 			cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 
 		}
-
+		if(isCEO) {
+			ArrayList<String> reportsType = new ArrayList<String>(
+					Arrays.asList("Inventory report", "Orders report", "Clients report","Delivery report"));
+			cmbType.getItems().addAll(reportsType);
+			
+		}
+		else {
+			ArrayList<String> reportsType = new ArrayList<String>(
+					Arrays.asList("Inventory report", "Orders report", "Clients report"));
+			cmbType.getItems().addAll(reportsType);
+			
+		}
 		errorFieldsMsg.setVisible(false);
 
 	}
@@ -139,7 +148,10 @@ public class ChooseReportController {
 	void clickComboArea(ActionEvent event) {
 		cmbDevice.getItems().clear();
 		cmbDevice.setDisable(false);
-		String areaChosen = cmbArea.getValue().toString();
+		String areaChosen = null;
+		try {
+			areaChosen = cmbArea.getValue().toString();
+		}catch (NullPointerException e) {}
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChosen));
 		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 		cmbDevice.setPromptText("Choose Device");
@@ -149,20 +161,43 @@ public class ChooseReportController {
 	@FXML
 	void clickTypeOfReport(ActionEvent event) {
 		String type = cmbType.getValue().toString();
-		if (type.equals("Orders report") || type.equals("Clients report") || type.equals("Delivery report")) {
-			cmbDevice.setVisible(false);
-			lblDevice.setVisible(false);
-			cmbDevice.setValue("Choose Device");
-			if(type.equals("Delivery report")) {
-				cmbArea.setVisible(false);
-				lblArea.setVisible(false);
-				cmbArea.setValue("Delivery");
-			}
-		} else {
+		switch(type) {
+		
+		case "Inventory report":
 			cmbDevice.setValue(null);
 			cmbDevice.setVisible(true);
 			lblDevice.setVisible(true);
 
+			if(isCEO) {
+				cmbArea.setValue(null);
+				cmbArea.setVisible(true);
+				lblArea.setVisible(true);	
+			}
+
+	
+			break;
+		
+		case "Orders report":
+		case "Clients report":
+			cmbDevice.setVisible(false);
+			lblDevice.setVisible(false);
+			cmbDevice.setValue("Choose Device");
+			if(isCEO) {
+				cmbArea.setValue(null);
+				cmbArea.setVisible(true);
+				lblArea.setVisible(true);
+			}
+			break;
+			
+		case "Delivery report":
+			cmbDevice.setVisible(false);
+			lblDevice.setVisible(false);
+			cmbArea.setValue("Choose Area");
+			cmbArea.setVisible(false);
+			lblArea.setVisible(false);
+			cmbDevice.setValue("Choose Device");
+			break;	
+			
 		}
 
 	}

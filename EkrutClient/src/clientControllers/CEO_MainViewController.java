@@ -2,6 +2,7 @@ package clientControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -56,6 +57,7 @@ public class CEO_MainViewController {
      */
     @FXML
     void ViewMonthllyReport(ActionEvent event) throws Exception {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
     	scene.setScreen(new Stage(), "/clientGUI/ChooseReport.fxml");
     }
     
