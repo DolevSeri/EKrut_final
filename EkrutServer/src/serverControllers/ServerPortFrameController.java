@@ -210,11 +210,7 @@ public class ServerPortFrameController {
 	
 	@FXML
 	public void clickbtnImport(ActionEvent event) {
-		txtPort.setText("5555");
-		txtIP.setText(getLocalHost());
-		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
-		txtDbUser.setText("root");
-		txtDbPass.setText("Aa123456");
+		
 
 	}
 
