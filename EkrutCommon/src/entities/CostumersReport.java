@@ -70,8 +70,8 @@ public class CostumersReport implements Serializable {
 		this.year = year;
 	}
 
-	public Region getArea() {
-		return area;
+	public String getArea() {
+		return area.toString();
 	}
 
 	public void setArea(Region area) {
