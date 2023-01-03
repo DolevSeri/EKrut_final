@@ -57,6 +57,9 @@ public class ChooseReportController {
 
 	@FXML
 	private Label lblDevice;
+	
+	@FXML
+	private Label lblArea;
 
 	public static ArrayList<String> fields;
 
@@ -92,13 +95,13 @@ public class ChooseReportController {
 	public void initialize() {
 
 		ArrayList<String> years = new ArrayList<String>(
-				Arrays.asList("2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"));
+				Arrays.asList("2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023"));
 		cmbYear.getItems().addAll(years);
 		ArrayList<String> months = new ArrayList<String>(
 				Arrays.asList("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"));
 		cmbMonth.getItems().addAll(months);
 		ArrayList<String> reportsType = new ArrayList<String>(
-				Arrays.asList("Inventory report", "Orders report", "Clients report"));
+				Arrays.asList("Inventory report", "Orders report", "Clients report","Delivery report"));
 		cmbType.getItems().addAll(reportsType);
 
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
@@ -146,10 +149,15 @@ public class ChooseReportController {
 	@FXML
 	void clickTypeOfReport(ActionEvent event) {
 		String type = cmbType.getValue().toString();
-		if (type.equals("Orders report") || type.equals("Clients report")) {
+		if (type.equals("Orders report") || type.equals("Clients report") || type.equals("Delivery report")) {
 			cmbDevice.setVisible(false);
 			lblDevice.setVisible(false);
 			cmbDevice.setValue("Choose Device");
+			if(type.equals("Delivery report")) {
+				cmbArea.setVisible(false);
+				lblArea.setVisible(false);
+				cmbArea.setValue("Delivery");
+			}
 		} else {
 			cmbDevice.setValue(null);
 			cmbDevice.setVisible(true);
@@ -178,6 +186,22 @@ public class ChooseReportController {
 				errorFieldsMsg.setVisible(true);
 			} else {
 				switch (fields.get(3).toString()) {
+				
+				case "Delivery report":
+					try {
+						ClientUI.chat.accept(new Message(Request.GetDeliveryReportData, fields));
+						
+					}catch (NullPointerException e) {
+						errorFieldsMsg.setText("No such report");
+						errorFieldsMsg.setVisible(true);
+					}
+					if (ChatClient.deliveryReportController.getDeliveryReport() != null) {
+						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+						scene.setScreen(new Stage(), "/clientGUI/MonthlyDeliveryReport.fxml");
+					}
+					errorFieldsMsg.setText("No such report");
+					errorFieldsMsg.setVisible(true);
+					break;
 
 				case "Inventory report":
 
@@ -211,6 +235,8 @@ public class ChooseReportController {
 						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 						scene.setScreen(new Stage(), "/clientGUI/MonthllyOrdersReport.fxml");
 					}
+					errorFieldsMsg.setText("No such report");
+					errorFieldsMsg.setVisible(true);
 					break;
 
 				case "Clients report":

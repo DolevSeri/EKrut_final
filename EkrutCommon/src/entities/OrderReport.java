@@ -6,13 +6,17 @@ import java.util.HashMap;
 public class OrderReport implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private HashMap<String, Integer> deviceAndAmountHashMap = new HashMap<String, Integer>();
+	private HashMap<String, Float> deviceAndIncomeHashMap = new HashMap<String, Float>();
 	private int totalOrdersCount = 0, numOfPickUpOrders=0;
 	private float ordersPerDayAvg = 0;
 	
 	String area, month, year, mostSellingDevice;
 	
-	public OrderReport(HashMap<String, Integer> deviceAndAmountHashMap, int totalOrdersCount, float ordersPerDayAvg, int numOfPickUpOrders, String area, String month, String year, String mostSellingDevice) {
+	public OrderReport(HashMap<String, Integer> deviceAndAmountHashMap, 
+			int totalOrdersCount, float ordersPerDayAvg, int numOfPickUpOrders,
+			String area, String month, String year, String mostSellingDevice, HashMap<String, Float> deviceAndIncomeHashMap ) {
 		this.deviceAndAmountHashMap = deviceAndAmountHashMap;
+		this.deviceAndIncomeHashMap = deviceAndIncomeHashMap;
 		this.totalOrdersCount = totalOrdersCount;
 		this.ordersPerDayAvg = ordersPerDayAvg;
 		this.area = area;
@@ -20,6 +24,16 @@ public class OrderReport implements Serializable {
 		this.year = year;
 		this.mostSellingDevice = mostSellingDevice;
 		this.numOfPickUpOrders = numOfPickUpOrders;
+	}
+
+
+	public HashMap<String, Float> getDeviceAndIncomeHashMap() {
+		return deviceAndIncomeHashMap;
+	}
+
+
+	public void setDeviceAndIncomeHashMap(HashMap<String, Float> deviceAndIncomeHashMap) {
+		this.deviceAndIncomeHashMap = deviceAndIncomeHashMap;
 	}
 
 

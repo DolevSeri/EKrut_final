@@ -138,6 +138,17 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+			
+		case GetDeliveryReportData:
+			ArrayList<String> deliveryFields = (ArrayList<String>) messageFromClient.getObject();
+			try {
+				client.sendToClient(
+						new Message(Request.DeliveryReportData_Imported, MySqlController.getDeliveryReportData(deliveryFields)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+			
 		case GetOrdersReportData:
 			ArrayList<String> ordersFields = (ArrayList<String>) messageFromClient.getObject();
 			try {
