@@ -180,11 +180,22 @@ public class ChooseReportController {
 				switch (fields.get(3).toString()) {
 
 				case "Inventory report":
+
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
+					try {
+						ClientUI.chat.accept(new Message(Request.GetInventoryReportData, fields));
+						System.out.println(ChatClient.inventoryReportController.getInventoryReport().toString());
+					} catch (NullPointerException e) {
+						errorFieldsMsg.setText("No such report");
+						errorFieldsMsg.setVisible(true);
+					}
 
-					scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
+					if (ChatClient.inventoryReportController.getInventoryReport() != null) {
+						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+						scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
+					}
 					break;
-
+					
 				case "Orders report":
 
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
@@ -204,9 +215,23 @@ public class ChooseReportController {
 
 				case "Clients report":
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
-					scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
+					
+					try {
+						ClientUI.chat.accept(new Message(Request.GetCostumersReportData, fields));
+						System.out.println(ChatClient.costumersReportController.getCostumersReport().toString());
+					} catch (NullPointerException e) {
+						errorFieldsMsg.setText("No such report");
+						errorFieldsMsg.setVisible(true);
+					}
+
+					if (ChatClient.costumersReportController.getCostumersReport() != null) {
+						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+						scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
+					}
 					break;
+
 				default:
+					break;
 
 				}
 

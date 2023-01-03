@@ -67,7 +67,7 @@ public enum Request {
 	},
 	Devices_Imported {
 		public String toString() {
-			return "Devices imported successfully!";
+			return "Devices imported successfully";
 		}
 	},
 	GetOrdersReportData {
@@ -78,7 +78,28 @@ public enum Request {
 	},
 	OrdersReportData_Imported {
 		public String toString() {
-			return "Orders data imported successfully!";
+			return "Orders data imported successfully";
+		}
+	},
+	
+	GetInventoryReportData{
+		public String toString() {
+			return "Inventory report data imported successfully";
+		}
+	},
+	InventoryReportData_Imported {
+		public String toString() {
+			return "Inventory data imported successfully";
+		}
+	},
+	GetCostumersReportData{
+		public String toString() {
+			return "Costumers report data imported successfully";
+		}
+	},
+	CostumersReportData_Imported {
+		public String toString() {
+			return "Costumers data imported successfully";
 		}
 	},
 	Threshold_Update_Request {

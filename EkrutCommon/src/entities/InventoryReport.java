@@ -3,20 +3,32 @@ package entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import enums.Region;
+
 public class InventoryReport implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String month, year, deviceName;
 	private HashMap<String, Integer> producsUnderThreshold = new HashMap<>();
 	private String mexProductUnderThres;
+	private Integer deviceThres;
 	
 	public InventoryReport(String month, String year, String deviceName, HashMap<String, Integer> producsUnderThreshold,
-			String mexProductUnderThres) {
+			String mexProductUnderThres, Integer deviceThres) {
 		super();
 		this.month = month;
 		this.year = year;
 		this.deviceName = deviceName;
 		this.producsUnderThreshold = producsUnderThreshold;
 		this.mexProductUnderThres = mexProductUnderThres;
+		this.deviceThres = deviceThres;
+	}
+
+	public Integer getDeviceThres() {
+		return deviceThres;
+	}
+
+	public void setDeviceThres(Integer deviceThres) {
+		this.deviceThres = deviceThres;
 	}
 
 	public String getMonth() {
