@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import common.ChatIF;
 import entities.Costumer;
+import entities.CostumersReport;
 import entities.Device;
+import entities.InventoryReport;
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Message;
@@ -18,7 +20,9 @@ import entities.OrderReport;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.CostumerController;
+import entityControllers.CostumersReportController;
 import entityControllers.DeviceController;
+import entityControllers.InventoryReportController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
@@ -48,6 +52,8 @@ public class ChatClient extends AbstractClient {
 	public static ProductCatalogController productCatalogController = new ProductCatalogController();
 	public static CostumerController costumerController = new CostumerController();
 	public static OrderReportController orderReportController = new OrderReportController();
+	public static InventoryReportController inventoryReportController = new InventoryReportController();
+	public static CostumersReportController costumersReportController = new CostumersReportController();
 	public static boolean awaitResponse = false;
 	public static Object lock = new Object();
 
@@ -113,6 +119,12 @@ public class ChatClient extends AbstractClient {
 			break;
 		case OrdersReportData_Imported:
 			orderReportController.setOrderReport((OrderReport)message.getObject());
+			break;
+		case InventoryReportData_Imported:
+			inventoryReportController.setInventoryReport((InventoryReport)message.getObject());
+			break;
+		case CostumersReportData_Imported:
+			costumersReportController.setCostumersReport((CostumersReport)message.getObject());
 			break;
 		case Threshold_Updated:
 			break;

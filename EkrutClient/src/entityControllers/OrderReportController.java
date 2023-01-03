@@ -13,11 +13,6 @@ public class OrderReportController {
 	public void setOrderReport(OrderReport orderReport) {
 		this.orderReport = orderReport;
 	}
-	
-	
-	
-	
-	
-	
+
 
 }
