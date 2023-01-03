@@ -72,9 +72,21 @@ public enum Request {
 	},
 	GetOrdersReportData {
 		public String toString() {
-			return "Request orders";
+			return "Request orders report";
 		}
 
+	},
+	GetDeliveryReportData {
+		public String toString() {
+			return "Request delivery report";
+		}
+
+	},
+	DeliveryReportData_Imported{
+		public String toString() {
+			return "Delivery report imported successfully";
+		}
+		
 	},
 	OrdersReportData_Imported {
 		public String toString() {

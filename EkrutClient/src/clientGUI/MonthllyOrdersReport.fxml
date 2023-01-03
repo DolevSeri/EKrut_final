@@ -10,16 +10,27 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.OrdersReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="612.0" prefWidth="886.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.OrdersReportController">
    <children>
-      <Pane layoutX="397.0" layoutY="-1.0" prefHeight="482.0" prefWidth="398.0" style="-fx-background-color: #D0A9F5;">
+      <Pane layoutX="467.0" layoutY="-1.0" prefHeight="612.0" prefWidth="423.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="335.0" layoutY="14.0">
+            <PieChart fx:id="chrtOrderReport" layoutX="28.0" layoutY="22.0" prefHeight="270.0" prefWidth="370.0" />
+            <PieChart fx:id="chrtIncomes" layoutX="23.0" layoutY="315.0" prefHeight="270.0" prefWidth="378.0" />
+            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="367.0" layoutY="14.0">
                <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
+                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
-            <PieChart fx:id="chrtOrderReport" layoutX="13.0" layoutY="85.0" prefHeight="367.0" prefWidth="373.0" />
+            <Label layoutX="14.0" layoutY="7.0" prefHeight="59.0" prefWidth="182.0" text="Amount of orders" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="284.0" prefHeight="59.0" prefWidth="182.0" text="Incomes" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
@@ -27,7 +38,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnBack" layoutX="28.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickBackBtn" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="24.0" layoutY="540.0" mnemonicParsing="false" onAction="#clickBackBtn" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -40,17 +51,12 @@
             <Font name="Cooper Black" size="39.0" />
          </font>
       </Label>
-      <Label layoutX="24.0" layoutY="227.0" prefHeight="26.0" prefWidth="126.0" text="Total orders: " textFill="#8d48e1" underline="true">
+      <Label layoutX="24.0" layoutY="240.0" prefHeight="26.0" prefWidth="126.0" text="Total orders: " textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="24.0" layoutY="272.0" prefHeight="26.0" prefWidth="234.0" text="Most Selling Device" textFill="#8d48e1" underline="true">
-         <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="24.0" layoutY="317.0" prefHeight="26.0" prefWidth="234.0" text="Delivery Orders Counter: " textFill="#8d48e1" underline="true">
+      <Label layoutX="24.0" layoutY="305.0" prefHeight="26.0" prefWidth="234.0" text="Most Selling Device" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -60,17 +66,12 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalOrders" layoutX="279.0" layoutY="227.0" prefHeight="26.0" prefWidth="59.0">
+      <Label fx:id="lblTotalOrders" layoutX="279.0" layoutY="240.0" prefHeight="26.0" prefWidth="59.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblBestSaller" layoutX="279.0" layoutY="272.0" prefHeight="26.0" prefWidth="107.0">
-         <font>
-            <Font name="System Bold Italic" size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblDeliveryCounter" layoutX="279.0" layoutY="317.0" prefHeight="26.0" prefWidth="77.0">
+      <Label fx:id="lblBestSaller" layoutX="274.0" layoutY="305.0" prefHeight="26.0" prefWidth="107.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import entities.Costumer;
+import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryReport;
 import entities.OrderReport;
@@ -195,12 +196,44 @@ public class MySqlController {
 //		// TODO Auto-generated method stub
 //
 //	}
+	
+	public static DeliveryReport getDeliveryReportData(ArrayList<String> reportDetails) {
+		String year = reportDetails.get(1), month = reportDetails.get(2);
+		int numOfDeliveries=0;
+		float totalSumIncomes=0;
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.delivery_report WHERE month = ? AND year = ?");
+			ps.setString(1, month);
+			ps.setString(2, year);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				numOfDeliveries = rs.getInt("numOfDeliveries");
+				totalSumIncomes = rs.getFloat("totalSumIncomes");
+			}else
+				return null;
+		} catch (SQLException e) {
+			System.out.println("Statement for getting Monthly Delivery Report has failed!");
+			return null;
+		}
+		
+		System.out.println("Succefully imported Monthly Delivery Report Data");
+		
+		DeliveryReport report = new DeliveryReport(month,year,numOfDeliveries,totalSumIncomes);
+		return report;
+	}
+
 
 	public static OrderReport getOrdersReportData(ArrayList<String> reportDetails) {
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
 		String[] deviceList = null;
-		String devices = null, mostSellingDevice = null;
+		String[] incomesList = null;
+		String devices = null,incomes="", mostSellingDevice = null;
 		HashMap<String, Integer> mapOfDevices = new HashMap<String, Integer>();
+		HashMap<String, Float> mapOfIncomes = new HashMap<String, Float>();
+
 		int numOfTotalOrders = 0, numOfPickUpOrders = 0;
 		PreparedStatement ps = null;
 		try {
@@ -212,6 +245,7 @@ public class MySqlController {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				devices = rs.getString("devices");
+				incomes = rs.getString("Incomes");
 				numOfTotalOrders = rs.getInt("numOfTotalOrders");
 				numOfPickUpOrders = rs.getInt("totalPickUp");
 				mostSellingDevice = rs.getString("mostSelling");
@@ -222,14 +256,16 @@ public class MySqlController {
 			System.out.println("Statement for getting Monthly Orders Report has failed!");
 		}
 		System.out.println("Succefully imported Monthly Orders Report Data");
-
+		
 		deviceList = devices.split(",");
+		incomesList = incomes.split(",");
 		for (int i = 0; i < (deviceList.length); i = i + 2) {
 			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
+			mapOfIncomes.put(incomesList[i], (float) Float.valueOf(incomesList[i+1]));
 		}
 
 		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
-				numOfPickUpOrders, area, month, year, mostSellingDevice);
+				numOfPickUpOrders, area, month, year, mostSellingDevice, mapOfIncomes);
 
 		return report;
 	}
@@ -351,6 +387,41 @@ public class MySqlController {
 		}
 
 	}
+	public static void createMonthlyDeliveryReport(ArrayList<String> reportData) {
+		String month = reportData.get(0), year = reportData.get(1);
+		int numOfDeliveries=0;
+		float totalSumIncomes=0;
+		
+		ArrayList<Order> ordersOfDelivary = new ArrayList<>();
+		
+		ordersOfDelivary.addAll(getOrdersDataOfDevice("Delivery"));
+		numOfDeliveries = ordersOfDelivary.size();
+		for (Order order: ordersOfDelivary) {
+			totalSumIncomes+=order.getOrderPrice();
+		}
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.delivery_report "
+					+ "(month,year,numOfDeliveries,totalSumIncomes) VALUES(?, ?, ?, ?)");
+					try {
+						ps.setString(1, month);
+						ps.setString(2, year);
+						ps.setInt(3, numOfDeliveries);
+						ps.setFloat(4, totalSumIncomes);
+			
+					} catch (Exception e) {
+						System.out.println(e);
+						System.out.println("Enter data to deliveryReport on DB failed");
+						System.out.println("Error on createMonthlyDeliveryReport");
+					}
+				} catch (Exception e) {
+					System.out.println(e);
+					System.out.println("Exucute statement failed");
+					System.out.println("Error on createMonthlyDeliveryReport");
+				}
+				System.out.println("Insert data to delivery_report was successfull");	
+	}
+	
+
 
 	/**
 	 * Creates a monthly orders report and stores it in the database. The report
@@ -366,10 +437,12 @@ public class MySqlController {
 
 		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
 		ArrayList<Device> areaDevices = getAllDevicesByArea(area);
-		String mostSelling = null, devices = "";
+		String mostSelling = null, devices = "", incomes = "";
 		Integer max = 0, num;
+		Float sumPrice;
 		int totalOrders = 0, totalPickUpOrders = 0;
 		HashMap<String, Integer> deviceNumOfOrders = new HashMap<>();
+		HashMap<String, Float> deviceSumOfIncome = new HashMap<>();
 		ArrayList<Order> ordersOfDevice = new ArrayList<>();
 
 		for (Device device : areaDevices) {
@@ -383,9 +456,12 @@ public class MySqlController {
 
 				if (!deviceNumOfOrders.containsKey(order.getDeviceName())) {
 					deviceNumOfOrders.put(order.getDeviceName(), 1);
+					deviceSumOfIncome.put(order.getDeviceName(), order.getOrderPrice());
 				} else {
 					num = deviceNumOfOrders.get(order.getDeviceName()) + 1;
 					deviceNumOfOrders.replace(order.getDeviceName(), num);
+					sumPrice = deviceSumOfIncome.get(order.getDeviceName());
+					deviceSumOfIncome.replace(order.getDeviceName(), sumPrice+order.getOrderPrice());
 				}
 			}
 
@@ -397,11 +473,14 @@ public class MySqlController {
 				mostSelling = str;
 			}
 			devices += "," + str + "," + num;
+			incomes += "," + str + "," +deviceSumOfIncome.get(str);
 		}
 		devices.replaceFirst(",", "");
+		incomes.replaceFirst(",", "");
+		
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orderReport "
-					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices) VALUES(?, ?, ?, ?, ?, ?, ?)");
+					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices, incomes) VALUES(?, ?, ?, ?, ?, ?, ?,?)");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -410,6 +489,8 @@ public class MySqlController {
 				ps.setInt(5, totalPickUpOrders);
 				ps.setString(6, mostSelling);
 				ps.setString(7, devices);
+				ps.setString(8, incomes);
+				
 			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Enter data to ordersReport on DB failed");

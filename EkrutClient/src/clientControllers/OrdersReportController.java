@@ -20,6 +20,9 @@ public class OrdersReportController {
 
     @FXML
     private PieChart chrtOrderReport;
+    
+    @FXML
+    private PieChart chrtIncomes;
 
     @FXML
     private Button btnexit1;
@@ -57,6 +60,7 @@ public class OrdersReportController {
     public void initialize() {
     	OrderReport orderReport = ChatClient.orderReportController.getOrderReport();
     	HashMap<String, Integer> deviceAndAmountHashMap = orderReport.getDeviceAndAmountHashMap();
+    	HashMap<String,Float> deviceAndIncomesHashMap = orderReport.getDeviceAndIncomeHashMap();
     	Integer totalOrdersCount = orderReport.getTotalOrdersCount();
     	Integer numOfPickUpOrders = orderReport.getNumOfPickUpOrders();
   
@@ -71,11 +75,18 @@ public class OrdersReportController {
     	
     	
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> incomesPieChartData = FXCollections.observableArrayList();
         
         for(Entry<String, Integer> device: deviceAndAmountHashMap.entrySet()) {
         	String deviceName = device.getKey();
         	Integer ordersCount = device.getValue();
-        	pieChartData.add(new PieChart.Data(deviceName, ordersCount));
+        	pieChartData.add(new PieChart.Data(deviceName+"-"+ordersCount, ordersCount));
+        	
+        }
+        for(Entry<String, Float> deviceIncome: deviceAndIncomesHashMap.entrySet()) {
+        	String deviceName = deviceIncome.getKey();
+        	Float incomesSum = deviceIncome.getValue();
+        	incomesPieChartData.add(new PieChart.Data(deviceName+"-"+incomesSum+"$", incomesSum));
         	
         }
         System.out.println("pick up- "+numOfPickUpOrders +" most selling "+mostSellingDevice+" total- "+totalOrdersCount);
@@ -84,6 +95,7 @@ public class OrdersReportController {
         lblAvg.setText(ordersPerDayAvg);
         lblDate.setText(month+"/"+year);
         chrtOrderReport.setData(pieChartData);
+        chrtIncomes.setData(incomesPieChartData);
         lblBestSaller.setText(mostSellingDevice);
         lblPickUpCounter.setText(numOfPickUpOrders.toString());
         lblTotalOrders.setText(totalOrdersCount.toString());
