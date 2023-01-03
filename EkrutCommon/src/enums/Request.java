@@ -163,5 +163,9 @@ public enum Request {
 		public String toString() {
 			return "Customer status updated successfully!";
 		}
+	}, Send_msg_to_system{
+		public String toString() {
+			return "System set message for AreaManagers!";
+		}
 	},
 }

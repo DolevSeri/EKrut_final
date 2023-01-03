@@ -15,4 +15,8 @@ public class CartController {
 		return cart;
 	}
 
+	public void clearCart() {
+		this.cart.clear();
+	}
+
 }
