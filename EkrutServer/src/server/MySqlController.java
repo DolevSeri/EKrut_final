@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import entities.Costumer;
 import entities.DeliveryReport;
+import entities.CostumersReport;
 import entities.Device;
 import entities.InventoryReport;
 import entities.OrderReport;
@@ -276,10 +277,12 @@ public class MySqlController {
 		HashMap<String, Integer> productsUnderThres = new HashMap<>();
 		String mexProductUnderThres = null, products = null;
 		String[] prList = null;
+		Integer deviceThres = 0;
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE " + "moth = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventoryreport WHERE "
+					+ "month = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -293,6 +296,7 @@ public class MySqlController {
 			if (rs.next()) {
 				products = rs.getString("products");
 				mexProductUnderThres = rs.getString("itemUnderThres");
+				deviceThres = rs.getInt("deviceThres");
 			} else {
 				System.out.println("Import Monthly Inventory Report Data failed");
 				return null;
@@ -306,8 +310,47 @@ public class MySqlController {
 		prList = products.split(",");
 		for (int i = 0; i < prList.length; i += 2)
 			productsUnderThres.put(prList[i], (int) Integer.valueOf(prList[i + 1]));
-		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres);
+		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres, deviceThres);
 		return report;
+	}
+	
+	public static CostumersReport getCostumersReportData(ArrayList<String> reportDetails) {
+		
+		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
+		Integer lowActivity = 0, mediumActivity = 0, highActivity = 0, veryHighActivity = 0;
+		
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.costumersreport WHERE "
+					+ "month = ? AND year = ? AND region = ?");
+			try {
+				ps.setString(1, month);
+				ps.setString(2, year);
+				ps.setString(3, area);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Set statement parameters failed on getCostumersReportData");
+			}
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				lowActivity = rs.getInt("lowActivityCount");
+				mediumActivity = rs.getInt("mediumActivityCount");
+				highActivity = rs.getInt("highActivityCount");
+				veryHighActivity = rs.getInt("veryHighActivityCount");
+			} else {
+				System.out.println("Import Monthly Costumers Report Data failed");
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Executing query failed on getCostumersReportData");
+		}
+		
+		CostumersReport costumersReport = new CostumersReport(lowActivity, mediumActivity, highActivity, veryHighActivity, 
+				month, year, Region.valueOf(area));
+		
+		return costumersReport;
 	}
 
 	public static ArrayList<Device> getAllDevicesByArea(String region) {
@@ -548,6 +591,7 @@ public class MySqlController {
 		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
 		String itemUnderThres = null, itemsList = "";
 		Integer max = 0, num;
+		Integer deviceThres = getDeviceThreshold(device);
 		HashMap<String, Integer> producsUnderThreshold = getProductsUnderThresholdCount(reportData);
 
 		for (String str : producsUnderThreshold.keySet()) {
@@ -563,13 +607,14 @@ public class MySqlController {
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
-					+ "(month, year, deviceName, products, itemUnderThres) VALUES(?, ?, ?, ?, ?)");
+					+ "(month, year, deviceName, products, itemUnderThres, deviceThres) VALUES(?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
 				ps.setString(3, device);
 				ps.setString(4, itemsList);
 				ps.setString(5, itemUnderThres);
+				ps.setInt(6, deviceThres);
 
 			} catch (Exception e) {
 				System.out.println(e);
@@ -618,6 +663,33 @@ public class MySqlController {
 		}
 		return productsThres;
 	}
+	
+	public static Integer getDeviceThreshold(String device) {
+		Integer thres = 0;
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices "
+					+ "WHERE deviceName = ?");
+			try {
+				ps.setString(1, device);
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("Create statement failed on getDeviceThreshold");
+			}
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				thres = rs.getInt("threshold");
+			}
+			else {
+				System.out.println("Import device threshold failed");
+				return null;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed on getDeviceThreshold");
+		}
+		
+		return thres;
+	}
 
 	/**
 	 * Method that will import the product in device to the catalog screen
@@ -640,7 +712,7 @@ public class MySqlController {
 				ps.setString(1, deviceName);
 
 			} catch (Exception e) {
-				System.out.println("Executing statement failed!");
+				System.out.println("Executing statement failed");
 			}
 
 			ResultSet rs = ps.executeQuery();

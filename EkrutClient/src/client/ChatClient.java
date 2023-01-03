@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import common.ChatIF;
 import entities.Costumer;
 import entities.DeliveryReport;
+import entities.CostumersReport;
 import entities.Device;
+import entities.InventoryReport;
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Message;
@@ -20,7 +22,9 @@ import entities.Subscriber;
 import entities.User;
 import entityControllers.CostumerController;
 import entityControllers.DeliveryReportController;
+import entityControllers.CostumersReportController;
 import entityControllers.DeviceController;
+import entityControllers.InventoryReportController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
@@ -51,6 +55,8 @@ public class ChatClient extends AbstractClient {
 	public static CostumerController costumerController = new CostumerController();
 	public static OrderReportController orderReportController = new OrderReportController();
 	public static DeliveryReportController deliveryReportController = new DeliveryReportController();
+	public static InventoryReportController inventoryReportController = new InventoryReportController();
+	public static CostumersReportController costumersReportController = new CostumersReportController();
 	public static boolean awaitResponse = false;
 	public static Object lock = new Object();
 
@@ -118,11 +124,18 @@ public class ChatClient extends AbstractClient {
 		case OrdersReportData_Imported:
 			orderReportController.setOrderReport((OrderReport)message.getObject());
 			break;
-			
+
 		case DeliveryReportData_Imported:
 			deliveryReportController.setDeliveryReport((DeliveryReport)message.getObject());
 			break;
-			
+
+		case InventoryReportData_Imported:
+			inventoryReportController.setInventoryReport((InventoryReport)message.getObject());
+			break;
+		case CostumersReportData_Imported:
+			costumersReportController.setCostumersReport((CostumersReport)message.getObject());
+			break;
+
 		case Threshold_Updated:
 			break;
 		

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
@@ -21,14 +19,7 @@
                   <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
-            <BarChart fx:id="chrtInentory" layoutX="14.0" layoutY="80.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </BarChart>
+            <PieChart fx:id="chrtInventory" layoutX="14.0" layoutY="86.0" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
@@ -54,7 +45,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblDeviceField" layoutX="171.0" layoutY="252.0" prefHeight="26.0" prefWidth="97.0">
+      <Label fx:id="lblDeviceField" layoutX="230.0" layoutY="252.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -64,7 +55,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblAreaField" layoutX="171.0" layoutY="209.0" prefHeight="26.0" prefWidth="97.0">
+      <Label fx:id="lblAreaField" layoutX="230.0" layoutY="209.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -74,7 +65,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblTresholdField" layoutX="171.0" layoutY="293.0" prefHeight="26.0" prefWidth="97.0">
+      <Label fx:id="lblTresholdField" layoutX="230.0" layoutY="293.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -84,7 +75,17 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblReportDate" layoutX="171.0" layoutY="172.0" prefHeight="26.0" prefWidth="97.0">
+      <Label fx:id="lblReportDate" layoutX="230.0" layoutY="172.0" prefHeight="26.0" prefWidth="97.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="333.0" prefHeight="26.0" prefWidth="175.0" text="Most Threshold Crossed:" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblItemUnderTreshold" layoutX="230.0" layoutY="333.0" prefHeight="26.0" prefWidth="97.0">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
