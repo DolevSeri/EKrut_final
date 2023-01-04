@@ -921,7 +921,7 @@ public class MySqlController {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " 
-					+ "VALUES (?, ?, ?");
+					+ "VALUES (?, ?, ?)");
 			try {
 				ps.setString(1, "OPEN");
 				ps.setString(2, device);

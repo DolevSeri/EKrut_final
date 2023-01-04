@@ -53,10 +53,10 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <TableView layoutX="39.0" layoutY="121.0" prefHeight="372.0" prefWidth="675.0">
+      <TableView fx:id="tblCalls" layoutX="39.0" layoutY="121.0" prefHeight="372.0" prefWidth="675.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Call Number" />
-          <TableColumn prefWidth="75.0" text="Status" />
+          <TableColumn fx:id="clCallID" prefWidth="75.0" text="Call Number" />
+          <TableColumn fx:id="clStatus" prefWidth="75.0" text="Status" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
