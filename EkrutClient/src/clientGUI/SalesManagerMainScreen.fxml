@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.SalesWorkerMainScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.SalesManagerMainScreenController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
             <ImageView fx:id="logoIcon" fitHeight="402.0" fitWidth="248.0" layoutX="14.0" layoutY="46.0">
                <image>
-                  <Image url="@../../../EkrutCommon/src/images/SaleWOrkerImageMainScreen.png" />
+                  <Image url="@../../../EkrutCommon/src/images/SaleManagerMainScreen.png" />
                </image></ImageView>
          </children>
       </Pane>
@@ -29,15 +29,7 @@
             <Font name="Cooper Black" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreatePattern" layoutX="169.0" layoutY="172.0" mnemonicParsing="false" onAction="#ClickOnCreateSalePattern" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create New Sale Pattern" textFill="#8d48e1" underline="true">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-         <effect>
-            <Blend mode="BLUE" />
-         </effect>
-      </Button>
-      <Button fx:id="btnActivate" layoutX="169.0" layoutY="284.0" mnemonicParsing="false" onAction="#clickOnActivateSale" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Activate Sales" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreateSale" layoutX="122.0" layoutY="190.0" mnemonicParsing="false" onAction="#clickOnCreateSaleBtn" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create Sales" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
