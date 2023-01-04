@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -20,7 +22,13 @@ public class AreaManager_InventoryCallsController {
     private Button btnexit1;
 
     @FXML
-    private GridPane gpCallsList;
+    private TableColumn<?, ?> clCallID;
+
+    @FXML
+    private TableColumn<?, ?> clStatus;
+
+    @FXML
+    private TableView<?> tblCalls;
     
 	SetSceneController scene = new SetSceneController();
 

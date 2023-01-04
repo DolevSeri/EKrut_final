@@ -51,5 +51,10 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbProduct" accessibleRole="CHECK_BOX" layoutX="239.0" layoutY="195.0" prefHeight="38.0" prefWidth="174.0" promptText="Choose Product" />
+      <Label fx:id="lblCreated" layoutX="111.0" layoutY="259.0" text="Inventory call created successfully!" textFill="GREEN">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
