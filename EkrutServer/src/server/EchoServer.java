@@ -219,6 +219,16 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+			
+		case Create_Inventory_Call:
+			MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Inventory_Call_Created, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+
 		default:
 			break;
 		}

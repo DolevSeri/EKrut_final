@@ -164,4 +164,14 @@ public enum Request {
 			return "Customer status updated successfully!";
 		}
 	},
+	Create_Inventory_Call{
+		public String toString() {
+			return "Area Manager request to open inventory call";
+		}
+	},
+	Inventory_Call_Created{
+		public String toString() {
+			return "Inventory call created successfully";
+		}
+	}
 }
