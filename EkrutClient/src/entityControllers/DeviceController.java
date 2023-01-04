@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 public class DeviceController {
 	private ObservableList<Device> areaDevices = FXCollections.observableArrayList();
 	private ObservableList<String> areaDevicesNames = FXCollections.observableArrayList();
-
+	
 	public ObservableList<Device> getAreaDevices() {
 		return areaDevices;
 	}

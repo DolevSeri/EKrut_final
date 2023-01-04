@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_CostumerApprovalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_CostumerApprovalController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="322.0" layoutY="12.0">
+            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="339.0" layoutY="21.0">
                <image>
                   <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
@@ -32,7 +32,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="134.0" layoutY="14.0" prefHeight="107.0" prefWidth="450.0" text="Users Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="187.0" layoutY="22.0" prefHeight="88.0" prefWidth="347.0" text="Users Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="40.0" />
          </font>
@@ -45,7 +45,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <TableView fx:id="tblCostumers" layoutX="97.0" layoutY="144.0" prefHeight="351.0" prefWidth="466.0">
+      <TableView fx:id="tblCostumers" layoutX="51.0" layoutY="121.0" prefHeight="383.0" prefWidth="624.0">
         <columns>
           <TableColumn fx:id="userName" prefWidth="75.0" text="Username" />
           <TableColumn fx:id="creditCard" prefWidth="75.0" text="Credit Card" />
@@ -56,7 +56,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnApproveCostumer" layoutX="247.0" layoutY="530.0" mnemonicParsing="false" onAction="#clickbtnApproveCostumer" prefHeight="40.0" prefWidth="167.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Approve costumer" textFill="WHITE" underline="true">
+      <Button fx:id="btnApproveCostumer" layoutX="247.0" layoutY="530.0" mnemonicParsing="false" onAction="#clickbtnApproveCostumer" prefHeight="40.0" prefWidth="167.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Approve costumer" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

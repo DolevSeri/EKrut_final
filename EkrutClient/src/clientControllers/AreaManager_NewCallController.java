@@ -3,6 +3,10 @@ package clientControllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import client.ChatClient;
+import client.ClientUI;
+import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,6 +27,9 @@ public class AreaManager_NewCallController {
 
     @FXML
     private ComboBox<String> cmbDevice;
+    
+    @FXML
+    private ComboBox<String> cmbProduct;
 
     @FXML
     private Label lblErrorMsg;
@@ -40,9 +47,12 @@ public class AreaManager_NewCallController {
 	 */
 	@FXML
 	void clickBtnSend(ActionEvent event) {
-	    ArrayList<String> fields = new ArrayList<String>(Arrays.asList(cmbDevice.getValue()));
+	    ArrayList<String> fields = new ArrayList<String>(Arrays.asList(cmbDevice.getValue(), cmbProduct.getValue()));
 	    if(fields.contains(null)) {
 	        lblErrorMsg.setVisible(true);
+	    }
+	    else {
+	    	ClientUI.chat.accept(new Message(Request.Create_Inventory_Call, fields));
 	    }
 	}
 
@@ -51,6 +61,11 @@ public class AreaManager_NewCallController {
 	 */
 	public void initialize() {
 	    lblErrorMsg.setVisible(false);
+	    cmbProduct.setDisable(true);
+	    cmbProduct.setPromptText("Choose Device First");
+	    String area = ChatClient.userController.getUser().getRegion().toString();
+		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
+		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());
 	}
 
 	/**
@@ -60,8 +75,17 @@ public class AreaManager_NewCallController {
 	 */
 	@FXML
 	void clickComboDevice(ActionEvent event) {
-	    // ...
+		cmbProduct.getItems().clear();
+		cmbProduct.setDisable(false);
+		String deviceChosen = null;
+		try {
+			deviceChosen = cmbDevice.getValue().toString();
+		}catch (NullPointerException e) {}
+		ClientUI.chat.accept(new Message(Request.Get_Products, deviceChosen));
+		cmbProduct.getItems().addAll(ChatClient.productCatalogController.getProductsInDevicesNames());
+		cmbProduct.setPromptText("Choose Product");
 	}
+	
 
 	/**
 	 * Handles the exit button click event.

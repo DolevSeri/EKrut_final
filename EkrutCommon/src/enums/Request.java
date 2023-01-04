@@ -168,4 +168,14 @@ public enum Request {
 			return "System set message for AreaManagers!";
 		}
 	},
+	Create_Inventory_Call{
+		public String toString() {
+			return "Area Manager request to open inventory call";
+		}
+	},
+	Inventory_Call_Created{
+		public String toString() {
+			return "Inventory call created successfully";
+		}
+	}
 }

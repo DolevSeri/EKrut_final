@@ -30,7 +30,7 @@ public class AreaManager_SetTresholdController {
 	private TableView<Device> tblDevice;
 
 	@FXML
-	private TableColumn<Device, Devices>deviceName;
+	private TableColumn<Device, String>deviceName;
 
 	@FXML
 	private TableColumn<Device, Integer> threshold;

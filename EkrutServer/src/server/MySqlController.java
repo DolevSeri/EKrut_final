@@ -196,14 +196,14 @@ public class MySqlController {
 //		// TODO Auto-generated method stub
 //
 //	}
-	
+
 	public static DeliveryReport getDeliveryReportData(ArrayList<String> reportDetails) {
 		String year = reportDetails.get(1), month = reportDetails.get(2);
-		int numOfDeliveries=0;
-		float totalSumIncomes=0;
-		
+		int numOfDeliveries = 0;
+		float totalSumIncomes = 0;
+
 		PreparedStatement ps = null;
-		
+
 		try {
 			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.delivery_report WHERE month = ? AND year = ?");
 			ps.setString(1, month);
@@ -212,25 +212,24 @@ public class MySqlController {
 			if (rs.next()) {
 				numOfDeliveries = rs.getInt("numOfDeliveries");
 				totalSumIncomes = rs.getFloat("totalSumIncomes");
-			}else
+			} else
 				return null;
 		} catch (SQLException e) {
 			System.out.println("Statement for getting Monthly Delivery Report has failed!");
 			return null;
 		}
-		
+
 		System.out.println("Succefully imported Monthly Delivery Report Data");
-		
-		DeliveryReport report = new DeliveryReport(month,year,numOfDeliveries,totalSumIncomes);
+
+		DeliveryReport report = new DeliveryReport(month, year, numOfDeliveries, totalSumIncomes);
 		return report;
 	}
-
 
 	public static OrderReport getOrdersReportData(ArrayList<String> reportDetails) {
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
 		String[] deviceList = null;
 		String[] incomesList = null;
-		String devices = null,incomes="", mostSellingDevice = null;
+		String devices = null, incomes = "", mostSellingDevice = null;
 		HashMap<String, Integer> mapOfDevices = new HashMap<String, Integer>();
 		HashMap<String, Float> mapOfIncomes = new HashMap<String, Float>();
 
@@ -256,12 +255,12 @@ public class MySqlController {
 			System.out.println("Statement for getting Monthly Orders Report has failed!");
 		}
 		System.out.println("Succefully imported Monthly Orders Report Data");
-		
+
 		deviceList = devices.split(",");
 		incomesList = incomes.split(",");
 		for (int i = 0; i < (deviceList.length); i = i + 2) {
 			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
-			mapOfIncomes.put(incomesList[i], (float) Float.valueOf(incomesList[i+1]));
+			mapOfIncomes.put(incomesList[i], (float) Float.valueOf(incomesList[i + 1]));
 		}
 
 		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
@@ -272,7 +271,7 @@ public class MySqlController {
 
 	public static InventoryReport getInventoryReportData(ArrayList<String> reportDetails) {
 
-		String year = reportDetails.get(1), month = reportDetails.get(2),device = reportDetails.get(4);
+		String year = reportDetails.get(1), month = reportDetails.get(2), device = reportDetails.get(4);
 		HashMap<String, Integer> productsUnderThres = new HashMap<>();
 		String mexProductUnderThres = null, products = null;
 		String[] prList = null;
@@ -280,8 +279,7 @@ public class MySqlController {
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE "
-					+ "month = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventoryreport WHERE " + "month = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -309,19 +307,19 @@ public class MySqlController {
 		prList = products.split(",");
 		for (int i = 0; i < prList.length; i += 2)
 			productsUnderThres.put(prList[i], (int) Integer.valueOf(prList[i + 1]));
-		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres, deviceThres);
+		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres,
+				deviceThres);
 		return report;
 	}
-	
+
 	public static CostumersReport getCostumersReportData(ArrayList<String> reportDetails) {
-		
+
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
 		Integer lowActivity = 0, mediumActivity = 0, highActivity = 0, veryHighActivity = 0;
-		
+
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.costumer_report WHERE "
-					+ "month = ? AND year = ? AND region = ?");
+					"SELECT * FROM ekrut.costumer_report WHERE " + "month = ? AND year = ? AND region = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -345,10 +343,10 @@ public class MySqlController {
 			e.printStackTrace();
 			System.out.println("Executing query failed on getCostumersReportData");
 		}
-		
-		CostumersReport costumersReport = new CostumersReport(lowActivity, mediumActivity, highActivity, veryHighActivity, 
-				month, year, Region.valueOf(area));
-		
+
+		CostumersReport costumersReport = new CostumersReport(lowActivity, mediumActivity, highActivity,
+				veryHighActivity, month, year, Region.valueOf(area));
+
 		return costumersReport;
 	}
 
@@ -368,20 +366,20 @@ public class MySqlController {
 		}
 		return devices;
 	}
-	
+
 	public static ArrayList<Costumer> getNotApprovedCostumersByArea(String region) {
 		PreparedStatement ps;
 		ArrayList<Costumer> costumers = new ArrayList<>();
 		try {
-			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers "
-					+ "INNER JOIN ekrut.users ON costumers.username = users.username "
-					+ "WHERE users.region = ? AND costumers.status = ?");
+			ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.costumers " + "INNER JOIN ekrut.users ON costumers.username = users.username "
+							+ "WHERE users.region = ? AND costumers.status = ?");
 			ps.setString(1, region);
 			ps.setString(2, CostumerStatus.NOTAPPROVED.toString());
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				costumers.add(new Costumer(res.getString("username"),res.getString("creditCard"),
-						res.getString("subscriberID"),CostumerStatus.valueOf(res.getString("status"))));
+				costumers.add(new Costumer(res.getString("username"), res.getString("creditCard"),
+						res.getString("subscriberID"), CostumerStatus.valueOf(res.getString("status"))));
 			}
 			System.out.println("Import customer by region succeeded");
 
@@ -409,8 +407,7 @@ public class MySqlController {
 		}
 
 	}
-	
-	
+
 	public static void updateCostumerStatus(ArrayList<Costumer> CostumerToUpdate) {
 		PreparedStatement ps;
 		try {
@@ -429,41 +426,41 @@ public class MySqlController {
 		}
 
 	}
+
 	public static void createMonthlyDeliveryReport(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1);
-		int numOfDeliveries=0;
-		float totalSumIncomes=0;
-		
+		int numOfDeliveries = 0;
+		float totalSumIncomes = 0;
+
 		ArrayList<Order> ordersOfDelivary = new ArrayList<>();
-		
+
 		ordersOfDelivary.addAll(getOrdersDataOfDevice("Delivery"));
 		numOfDeliveries = ordersOfDelivary.size();
-		for (Order order: ordersOfDelivary) {
-			totalSumIncomes+=order.getOrderPrice();
+		for (Order order : ordersOfDelivary) {
+			totalSumIncomes += order.getOrderPrice();
 		}
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.delivery_report "
 					+ "(month,year,numOfDeliveries,totalSumIncomes) VALUES(?, ?, ?, ?)");
-					try {
-						ps.setString(1, month);
-						ps.setString(2, year);
-						ps.setInt(3, numOfDeliveries);
-						ps.setFloat(4, totalSumIncomes);
-			
-					} catch (Exception e) {
-						System.out.println(e);
-						System.out.println("Enter data to deliveryReport on DB failed");
-						System.out.println("Error on createMonthlyDeliveryReport");
-					}
-				} catch (Exception e) {
-					System.out.println(e);
-					System.out.println("Exucute statement failed");
-					System.out.println("Error on createMonthlyDeliveryReport");
-				}
-				System.out.println("Insert data to delivery_report was successfull");	
-	}
-	
+			try {
+				ps.setString(1, month);
+				ps.setString(2, year);
+				ps.setInt(3, numOfDeliveries);
+				ps.setFloat(4, totalSumIncomes);
 
+			} catch (Exception e) {
+				System.out.println(e);
+				System.out.println("Enter data to deliveryReport on DB failed");
+				System.out.println("Error on createMonthlyDeliveryReport");
+			}
+			ps.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println("Exucute statement failed");
+			System.out.println("Error on createMonthlyDeliveryReport");
+		}
+		System.out.println("Insert data to delivery_report was successfull");
+	}
 
 	/**
 	 * Creates a monthly orders report and stores it in the database. The report
@@ -503,7 +500,7 @@ public class MySqlController {
 					num = deviceNumOfOrders.get(order.getDeviceName()) + 1;
 					deviceNumOfOrders.replace(order.getDeviceName(), num);
 					sumPrice = deviceSumOfIncome.get(order.getDeviceName());
-					deviceSumOfIncome.replace(order.getDeviceName(), sumPrice+order.getOrderPrice());
+					deviceSumOfIncome.replace(order.getDeviceName(), sumPrice + order.getOrderPrice());
 				}
 			}
 
@@ -515,14 +512,15 @@ public class MySqlController {
 				mostSelling = str;
 			}
 			devices += "," + str + "," + num;
-			incomes += "," + str + "," +deviceSumOfIncome.get(str);
+			incomes += "," + str + "," + deviceSumOfIncome.get(str);
 		}
-		devices.replaceFirst(",", "");
-		incomes.replaceFirst(",", "");
-		
+		devices = devices.replaceFirst(",", "");
+		incomes = incomes.replaceFirst(",", "");
+
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orderReport "
-					+ "(month, year, area, numOfTotalOrders, totalPickUp, mostSelling, devices, incomes) VALUES(?, ?, ?, ?, ?, ?, ?,?)");
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orders_report "
+					+ "(month, year, area, numOfTotalOrders, "
+					+ "totalPickUp, mostSelling, devices, incomes) VALUES(?, ?, ?, ?, ?, ?, ?,?)");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -532,12 +530,14 @@ public class MySqlController {
 				ps.setString(6, mostSelling);
 				ps.setString(7, devices);
 				ps.setString(8, incomes);
-				
+
 			} catch (Exception e) {
 				System.out.println(e);
 				System.out.println("Enter data to ordersReport on DB failed");
 				System.out.println("Error on createMonthlyOrderReport");
 			}
+			ps.executeUpdate();
+
 		} catch (Exception e) {
 			System.out.println(e);
 			System.out.println("Exucute statement failed");
@@ -565,10 +565,12 @@ public class MySqlController {
 			}
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				orders.add(new Order(deviceName, rs.getInt(1), rs.getFloat(3), rs.getString(5), rs.getString(8),
-						rs.getString(9), rs.getString(10), SupplyMethod.valueOf(rs.getString(4)), rs.getString(7)));
+				orders.add(new Order(deviceName, rs.getInt("orderID"), rs.getFloat("orderPrice"),
+						rs.getString("username"), rs.getString("day"), rs.getString("month"), rs.getString("year"),
+						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Import orders data from orders table has failed");
 			System.out.println("Failed at getOrdersDataOfDevice method");
 		}
@@ -602,7 +604,7 @@ public class MySqlController {
 
 			}
 		}
-		itemsList.replaceFirst(",", "");
+		itemsList = itemsList.replaceFirst(",", "");
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
@@ -620,7 +622,7 @@ public class MySqlController {
 				System.out.println("Enter data to ordersReport on DB failed");
 				System.out.println("Error on createMonthlyInventoryReport");
 			}
-
+			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error on execute statement");
@@ -653,7 +655,7 @@ public class MySqlController {
 			}
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				productsThres.put(rs.getString("prCode"), rs.getInt("count"));
+				productsThres.put(rs.getString("prName"), rs.getInt("count"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -662,31 +664,30 @@ public class MySqlController {
 		}
 		return productsThres;
 	}
-	
+
 	public static Integer getDeviceThreshold(String device) {
 		Integer thres = 0;
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.devices "
-					+ "WHERE deviceName = ?");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.devices " + "WHERE deviceName = ?");
 			try {
 				ps.setString(1, device);
-			}catch(Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Create statement failed on getDeviceThreshold");
 			}
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				thres = rs.getInt("threshold");
-			}
-			else {
+			} else {
 				System.out.println("Import device threshold failed");
 				return null;
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing statement failed on getDeviceThreshold");
 		}
-		
+
 		return thres;
 	}
 
@@ -791,24 +792,36 @@ public class MySqlController {
 		}
 
 		for (Integer i : costumersOrdersCount) {
-			if (i >= 0 && i <= 5)
-				costumersActivity.replace("lowActivity", costumersActivity.get("lowActivity"),
-						costumersActivity.get("lowActivity") + 1);
-			if (i > 5 && i <= 12)
-				costumersActivity.replace("mediumActivity", costumersActivity.get("mediumActivity"),
-						costumersActivity.get("mediumActivity") + 1);
-			if (i > 12 && i <= 20)
-				costumersActivity.replace("highActivity", costumersActivity.get("highActivity"),
-						costumersActivity.get("highActivity") + 1);
-			else
-				costumersActivity.replace("veryHigh", costumersActivity.get("veryHigh"),
-						costumersActivity.get("veryHigh") + 1);
+			if (i >= 0 && i <= 5) {
+				Integer val = costumersActivity.get("lowActivity");
+				val++;
+				costumersActivity.replace("lowActivity", val);
+			}
+
+			else if (i > 5 && i <= 12) {
+				Integer val = costumersActivity.get("mediumActivity");
+				val++;
+				costumersActivity.replace("mediumActivity", val);
+			}
+
+			else if (i > 12 && i <= 20) {
+				Integer val = costumersActivity.get("highActivity");
+				val++;
+				costumersActivity.replace("highActivity", val);
+			}
+
+			else {
+				Integer val = costumersActivity.get("veryHigh");
+				val++;
+				costumersActivity.replace("veryHigh", val);
+			}
 		}
 
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.costumer_report "
-					+ "(region, month, year, lowActivityCount, "
-					+ "mediumActivityCount, highActivityCount, veryHighActivityCount) VALUES (?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("INSERT INTO ekrut.costumer_report " + "(region, month, year, lowActivityCount, "
+							+ "mediumActivityCount, highActivityCount, veryHighActivityCount) "
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setString(1, area);
 				ps.setString(2, month);
@@ -816,11 +829,13 @@ public class MySqlController {
 				ps.setInt(4, costumersActivity.get("lowActivity"));
 				ps.setInt(5, costumersActivity.get("mediumActivity"));
 				ps.setInt(6, costumersActivity.get("highActivity"));
-				ps.setInt(7, costumersActivity.get("veryHighActivity"));
+				ps.setInt(7, costumersActivity.get("veryHigh"));
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Enter costumer report details to DB failed");
 			}
+			ps.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing statement on createMonthlyCostumersReport failed");
@@ -840,7 +855,7 @@ public class MySqlController {
 		Integer cnt = 0;
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT COUNT(*) ekrut.orders " + "WHERE username = ? AND month = ? AND year = ?");
+					"SELECT COUNT(*) FROM ekrut.orders " + "WHERE username = ? AND month = ? AND year = ?");
 			try {
 				ps.setString(1, username);
 				ps.setString(2, month);
@@ -873,7 +888,7 @@ public class MySqlController {
 		try {
 			PreparedStatement ps = dbConnector
 					.prepareStatement("SELECT c.username, c.creditCard, c.subscriberID, c.status, c.deviceName, "
-							+ "u.firstName, u.lastName, u.email, u.phoneNumber, u.isLoggedIn, u.id, "
+							+ "u.firstName, u.password, u.lastName, u.email, u.phoneNumber, u.isLoggedIn, u.id, "
 							+ "u.role, u.region, u.configuration " + "FROM ekrut.costumers c "
 							+ "JOIN ekrut.users u ON c.username = u.username "
 							+ "WHERE u.region = ? AND c.status = 'APPROVED'");
@@ -899,6 +914,29 @@ public class MySqlController {
 		}
 
 		return areaCostumers;
+	}
+
+	public static void createInventoryCall(ArrayList<String> callData) {
+		String device = callData.get(0), product = callData.get(1);
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " 
+					+ "VALUES (?, ?, ?");
+			try {
+				ps.setString(1, "OPEN");
+				ps.setString(2, device);
+				ps.setString(3, product);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createInventoryCall failed");
+		}
+		System.out.println("Enter new inventory call successfully");
 	}
 
 }

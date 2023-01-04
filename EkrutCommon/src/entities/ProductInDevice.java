@@ -11,6 +11,7 @@ public class ProductInDevice extends Product {
 	private int quantity;
 	private ProductStatus status;
 	private String device;
+	private String productName;
 
 	public ProductInDevice(int productCode, String productName, double price, String imagePath, int quantity,
 			ProductStatus status, String device) {
@@ -18,6 +19,15 @@ public class ProductInDevice extends Product {
 		this.status = status;
 		this.device = device;
 		this.quantity = quantity;
+		this.productName = productName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public int getQuantity() {

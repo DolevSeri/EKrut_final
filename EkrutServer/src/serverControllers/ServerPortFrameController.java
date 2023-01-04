@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import common.ClientConnected;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import server.Console;
 import server.EchoServer;
+import server.MySqlController;
 import server.ServerUI;
 
 /**
@@ -77,6 +80,8 @@ public class ServerPortFrameController {
 	private ImageView ekrutLogo;
 
 	private PrintStream showConsole;
+	
+	
 	
 	/**
 	 * Handles the 'Connect' button click event.
@@ -146,7 +151,7 @@ public class ServerPortFrameController {
 		txtDbUser.setText("root");
 		txtDbPass.setText("Aa123456");
 		btnDisconnect.setDisable(true);
-		btnImport.setDisable(true);
+		btnImport.setDisable(false);
 
 	}
 	
@@ -209,7 +214,10 @@ public class ServerPortFrameController {
 	}
 	
 	@FXML
-	public void clickbtnImport(ActionEvent event) {
+	public void clickbtnImport(ActionEvent event) {		
+		MySqlController.createMonthlyCostumersReport(new ArrayList<String>(Arrays.asList("11", "2022", "NORTH")));
+		MySqlController.createMonthlyInventoryReport(new ArrayList<String>(Arrays.asList("12", "2022", "TelAviv")));
+		MySqlController.createMonthlyOrdersReport(new ArrayList<String>(Arrays.asList("11", "2022", "SOUTH")));
 		
 
 	}

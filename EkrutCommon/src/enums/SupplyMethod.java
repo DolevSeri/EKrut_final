@@ -8,7 +8,7 @@ public enum SupplyMethod {
 		}
 	},
 	
-	Standard{
+	Standart{
 		public String toString() {
 			return "Standard order";
 		}
