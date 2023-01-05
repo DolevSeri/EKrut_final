@@ -24,7 +24,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="55.0" prefHeight="154.0" prefWidth="504.0" text="Welcome Back Israel Israeli" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label fx:id="lblWelcome" layoutX="55.0" prefHeight="154.0" prefWidth="504.0" text="Welcome Back Israel Israeli" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="32.0" />
          </font>
@@ -53,7 +53,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Label layoutX="218.0" layoutY="128.0" text="Area:" textFill="#8d48e1" underline="true">
+      <Label fx:id="lblArea" layoutX="218.0" layoutY="128.0" text="Area:" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>

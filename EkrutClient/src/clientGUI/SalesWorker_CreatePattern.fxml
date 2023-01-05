@@ -47,7 +47,7 @@
             <Font name="Cooper Black" size="39.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="129.0" text="Discount Precent:" textFill="#8d48e1">
+      <Label layoutX="46.0" layoutY="129.0" text="Discount type:" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
@@ -59,12 +59,12 @@
          </font>
       </Label>
       <ComboBox fx:id="cmbStartHour" layoutX="213.0" layoutY="288.0" onAction="#clickOnStartHour" prefHeight="38.0" prefWidth="174.0" promptText=" Start hour" />
-      <Label layoutX="39.0" layoutY="343.0" prefHeight="30.0" prefWidth="174.0" text="Choose End  hour:" textFill="#8d48e1">
+      <Label layoutX="39.0" layoutY="343.0" prefHeight="30.0" prefWidth="174.0" text="Choose duration" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbEndHour" layoutX="213.0" layoutY="339.0" onAction="#clickOnEndHour" prefHeight="38.0" prefWidth="174.0" promptText="End hour" />
+      <ComboBox fx:id="cmbduration" layoutX="213.0" layoutY="339.0" onAction="#clickOnEndHour" prefHeight="38.0" prefWidth="174.0" promptText="duration" />
       <Label layoutX="39.0" layoutY="241.0" prefHeight="30.0" prefWidth="163.0" text="Choose end day:" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
