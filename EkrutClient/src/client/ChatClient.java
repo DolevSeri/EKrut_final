@@ -7,6 +7,7 @@ package client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import common.ChatIF;
 import entities.Costumer;
@@ -17,6 +18,7 @@ import entities.InventoryReport;
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Message;
+import entities.Order;
 import entities.OrderReport;
 import entities.Subscriber;
 import entities.User;
@@ -26,6 +28,7 @@ import entityControllers.DeliveryReportController;
 import entityControllers.CostumersReportController;
 import entityControllers.DeviceController;
 import entityControllers.InventoryReportController;
+import entityControllers.OrderController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
 import entityControllers.UserController;
@@ -61,7 +64,7 @@ public class ChatClient extends AbstractClient {
 	public static boolean awaitResponse = false;
 	public static Object lock = new Object();
 	public static CartController cartController = new CartController();
-
+	public static OrderController orderController = new OrderController();
 	// Constructors ****************************************************
 
 	/**
@@ -154,7 +157,14 @@ public class ChatClient extends AbstractClient {
 		case Costumer_Status_Updated:
 			break;
 		case Inventory_Call_Created:
-			
+			break;
+		case Orders_imported:
+			List<Order> orders = (ArrayList<Order>) message.getObject();
+			orderController.setOrderList(orders);
+			break;
+		case Order_Saved:
+			break;
+		case Products_updated_In_Device:
 			break;
 		default:
 			break;

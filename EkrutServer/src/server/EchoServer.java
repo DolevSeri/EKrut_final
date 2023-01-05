@@ -6,11 +6,14 @@ package server;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import common.ClientConnected;
 import entities.Costumer;
 import entities.Device;
 import entities.Message;
+import entities.Order;
+import entities.ProductInDevice;
 import entities.User;
 import enums.Request;
 import javafx.collections.FXCollections;
@@ -138,22 +141,22 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GetDeliveryReportData:
 			ArrayList<String> deliveryFields = (ArrayList<String>) messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.DeliveryReportData_Imported, MySqlController.getDeliveryReportData(deliveryFields)));
+				client.sendToClient(new Message(Request.DeliveryReportData_Imported,
+						MySqlController.getDeliveryReportData(deliveryFields)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
-			
+
 		case GetOrdersReportData:
 			ArrayList<String> ordersFields = (ArrayList<String>) messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.OrdersReportData_Imported, MySqlController.getOrdersReportData(ordersFields)));
+				client.sendToClient(new Message(Request.OrdersReportData_Imported,
+						MySqlController.getOrdersReportData(ordersFields)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -161,8 +164,8 @@ public class EchoServer extends AbstractServer {
 		case GetInventoryReportData:
 			ArrayList<String> inventoryFields = (ArrayList<String>) messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.InventoryReportData_Imported, MySqlController.getInventoryReportData(inventoryFields)));
+				client.sendToClient(new Message(Request.InventoryReportData_Imported,
+						MySqlController.getInventoryReportData(inventoryFields)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -170,8 +173,8 @@ public class EchoServer extends AbstractServer {
 		case GetCostumersReportData:
 			ArrayList<String> costumersFields = (ArrayList<String>) messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.CostumersReportData_Imported, MySqlController.getCostumersReportData(costumersFields)));
+				client.sendToClient(new Message(Request.CostumersReportData_Imported,
+						MySqlController.getCostumersReportData(costumersFields)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -204,9 +207,8 @@ public class EchoServer extends AbstractServer {
 		case Get_Not_Approved_Costumers_By_Area:
 			String costumerArea = (String) messageFromClient.getObject(); //
 			try {
-				client.sendToClient(
-						new Message(Request.Costumers_Imported, 
-								MySqlController.getNotApprovedCostumersByArea(costumerArea)));
+				client.sendToClient(new Message(Request.Costumers_Imported,
+						MySqlController.getNotApprovedCostumersByArea(costumerArea)));
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
@@ -219,7 +221,7 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
-			
+
 		case Create_Inventory_Call:
 			MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject());
 			try {
@@ -228,7 +230,41 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-
+		case getOrders:
+			try {
+				client.sendToClient(new Message(Request.Orders_imported, MySqlController.importOrders()));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+		case SaveOrder:
+			Order order = (Order) messageFromClient.getObject();
+			MySqlController.updateOrder(order);
+			try {
+				client.sendToClient(new Message(Request.Order_Saved, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_Products_In_Device:
+			List<ProductInDevice> productsInDevice = (List<ProductInDevice>) messageFromClient.getObject();
+			MySqlController.updateProductsInDevice(productsInDevice);
+			try {
+				client.sendToClient(new Message(Request.Products_updated_In_Device, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case get_Msg_In_System:
+			try {
+				client.sendToClient(new Message(Request.imported_Msg_In_System, MySqlController.getMessagesInSystem()));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		default:
 			break;
 		}

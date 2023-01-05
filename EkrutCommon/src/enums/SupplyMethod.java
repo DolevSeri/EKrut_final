@@ -4,19 +4,19 @@ public enum SupplyMethod {
 
 	PickUp{
 		public String toString() {
-			return "Pick Up order";
+			return "PickUp";
 		}
 	},
 	
 	Standart{
 		public String toString() {
-			return "Standard order";
+			return "Standart";
 		}
 	},
 	
 	Delivery{
 		public String toString() {
-			return "Delivery order";
+			return "Delivery";
 		}
 	},
 }
