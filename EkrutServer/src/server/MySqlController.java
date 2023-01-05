@@ -18,6 +18,7 @@ import entities.MessageInSystem;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
+import entities.SalesPattern;
 import entities.User;
 import enums.Configuration;
 import enums.CostumerStatus;
@@ -1027,4 +1028,34 @@ public class MySqlController {
 		}
 		return null;
 	}
+	/**salesPatternToDB-a method that will save a salesPattern in the DB
+	 * @param SalesPattern sp 
+	 * */
+	
+	public static void salesPatternToDB(SalesPattern sp) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.sales_patterns (patternID, discountType, startDay,endDay,startHour,duration) " 
+					+ "VALUES (?, ?, ?, ?, ?, ?)");
+			try {
+				ps.setInt(1, sp.getPatternID());
+				ps.setString(2, sp.getDiscountType());
+				ps.setString(3, sp.getStartDay());
+				ps.setString(4, sp.getEndDay());
+				ps.setString(5, sp.getStartHour());
+				ps.setString(6, sp.getDuration());
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createSalesPattern failed");
+		}
+		System.out.println("Enter new SalesPattern successfully");
+	}
+
 }

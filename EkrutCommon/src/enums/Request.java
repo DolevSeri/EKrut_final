@@ -219,4 +219,26 @@ public enum Request {
 			return "succsesfuly imported messages! ";
 		}
 	},
+	Update_SalesPattern {
+		public String toString() {
+			return "Request to update Sales pattern";
+		}
+	},
+	SalesPattern_Saved {
+		public String toString() {
+			return "Sales pattern succsesfuly saved!";
+		}
+	},
+	import_SalesPattern {
+		public String toString() {
+			return "Request to import SalesPattern from DB";
+		}
+	},
+	imported_SalesPattern {
+		public String toString() {
+			return "succsesfuly imported SalesPattern! ";
+		}
+	},
+	
+	
 }

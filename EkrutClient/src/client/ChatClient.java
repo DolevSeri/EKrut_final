@@ -31,6 +31,7 @@ import entityControllers.InventoryReportController;
 import entityControllers.OrderController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
+import entityControllers.SalesPatternController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
@@ -65,6 +66,8 @@ public class ChatClient extends AbstractClient {
 	public static Object lock = new Object();
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
+	public static SalesPatternController salesPatternController=new SalesPatternController();
+
 	// Constructors ****************************************************
 
 	/**
@@ -165,7 +168,8 @@ public class ChatClient extends AbstractClient {
 		case Order_Saved:
 			break;
 		case Products_updated_In_Device:
-
+			break;
+		case SalesPattern_Saved:
 			break;
 		default:
 			break;
