@@ -33,6 +33,9 @@ public class AreaManager_NewCallController {
 
     @FXML
     private Label lblErrorMsg;
+    
+    @FXML
+    private Label lblCreated;
 
     @FXML
     private TextArea txtaCallDetails;
@@ -47,12 +50,22 @@ public class AreaManager_NewCallController {
 	 */
 	@FXML
 	void clickBtnSend(ActionEvent event) {
+		lblErrorMsg.setVisible(false);
+		lblCreated.setVisible(false);
 	    ArrayList<String> fields = new ArrayList<String>(Arrays.asList(cmbDevice.getValue(), cmbProduct.getValue()));
 	    if(fields.contains(null)) {
 	        lblErrorMsg.setVisible(true);
 	    }
 	    else {
 	    	ClientUI.chat.accept(new Message(Request.Create_Inventory_Call, fields));
+	    	lblCreated.setVisible(true);
+	    	try {
+				Thread.sleep(1500);
+			    scene.back(event, "/clientGUI/AreaManager_InventoryCalls.fxml");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 	}
 
@@ -61,6 +74,7 @@ public class AreaManager_NewCallController {
 	 */
 	public void initialize() {
 	    lblErrorMsg.setVisible(false);
+	    lblCreated.setVisible(false);
 	    cmbProduct.setDisable(true);
 	    cmbProduct.setPromptText("Choose Device First");
 	    String area = ChatClient.userController.getUser().getRegion().toString();

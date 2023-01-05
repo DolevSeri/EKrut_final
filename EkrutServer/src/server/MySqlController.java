@@ -923,7 +923,8 @@ public class MySqlController {
 		String device = callData.get(0), product = callData.get(1);
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " + "VALUES (?, ?, ?");
+					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " 
+					+ "VALUES (?, ?, ?)");
 			try {
 				ps.setString(1, "OPEN");
 				ps.setString(2, device);

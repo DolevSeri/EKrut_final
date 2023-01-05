@@ -27,7 +27,7 @@ public class AreaManager_InventoryManagementController {
 
     @FXML
     private ImageView imgLogo;
-    
+        
     SetSceneController scene = new SetSceneController();
 
     @FXML

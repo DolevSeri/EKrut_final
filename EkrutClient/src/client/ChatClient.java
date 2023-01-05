@@ -165,6 +165,7 @@ public class ChatClient extends AbstractClient {
 		case Order_Saved:
 			break;
 		case Products_updated_In_Device:
+
 			break;
 		default:
 			break;
