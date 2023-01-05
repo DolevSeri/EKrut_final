@@ -1,16 +1,23 @@
 package clientControllers;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import client.ChatClient;
 import client.ClientUI;
 import entities.Device;
 import entities.Message;
 import entities.MessageInSystem;
+import entities.Order;
 import entities.ProductInDevice;
+import enums.ProductStatus;
 import enums.Request;
 import enums.Role;
+import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +63,7 @@ public class Client_OrderConfirmationController {
 	private int rowInCart = 3;
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
 			.observableArrayList();
-	private List<ProductInDevice> products = ChatClient.productCatalogController.getProductCatalog();
+	private List<ProductInDevice> products = new ArrayList<>();
 	private double totalPrice = 0;
 
 	public void setTotalPrice() {
@@ -103,29 +110,73 @@ public class Client_OrderConfirmationController {
 		// remove all products from cart
 		ChatClient.cartController.clearCart();
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderCanceled.fxml");
 	}
 
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
-		updateSystem();
+		// updateSystemProductsUnderThreshold();
 		updateProductsInDevice();
+		System.out.println(ChatClient.orderController.getOrdersList().toString());
+		updateOrderInDB();
+		ChatClient.cartController.clearCart();
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderCompleteMsg.fxml");
+
+	}
+
+	public void updateOrderInDB() {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		String strDate = sdf.format(date);
+		String[] time = strDate.split("-");
+
+		StringBuilder productsInOrder = new StringBuilder();
+		Map<ProductInDevice, Integer> selectedProducts = ChatClient.cartController.getCart();
+		for (Map.Entry<ProductInDevice, Integer> entery : selectedProducts.entrySet()) {
+			productsInOrder.append(entery.getKey().getProductName() + ",");
+			productsInOrder.append(entery.getValue() + ",");
+		}
+		productsInOrder.deleteCharAt(productsInOrder.lastIndexOf(","));
+		Order order = new Order(ChatClient.costumerController.getCostumer().getDevice(),
+				ChatClient.orderController.getOrdersList().size() + 1, (float) totalPrice,
+				ChatClient.userController.getUser().getUsername(), time[0], time[1], time[2], SupplyMethod.Standart,
+				productsInOrder.toString());
+		ClientUI.chat.accept(new Message(Request.SaveOrder, order));
 	}
 
 	public void updateProductsInDevice() {
-
+		for (ProductInDevice p : ChatClient.productCatalogController.getProductCatalog()) {
+			products.add(p);
+		}
+		for (ProductInDevice p : products) {
+			if (p.getQuantity() == 0)
+				p.setStatus(ProductStatus.NOTAVAILABLE);
+			else
+				p.setStatus(ProductStatus.AVAILABLE);
+		}
+		ClientUI.chat.accept(new Message(Request.Update_Products_In_Device, products));
 	}
 
-	public void updateSystem() {
+	/**
+	 * updateSystem - method that update in DB if there are products less then
+	 * threshold level in device.
+	 * 
+	 */
+	public void updateSystemProductsUnderThreshold() {
 		int tresholdLevel = 0;
 		ClientUI.chat.accept(
 				new Message(Request.Get_Devices_By_Area, ChatClient.userController.getUser().getRegion().toString()));
+		
+		
 		String deviceName = "";
 		for (Device device : ChatClient.deviceController.getAreaDevices()) {
 			if (ChatClient.costumerController.getCostumer().getDevice().equals(device.getDeviceName()))
 				deviceName = ChatClient.costumerController.getCostumer().getDevice();
 			tresholdLevel = device.getThreshold();
 		}
+		
+		
 		String productsUnderTreshold = "In Device: " + deviceName + " Product is under thershold level: ";
 		for (ProductInDevice product : products) {
 			if (product.getQuantity() <= tresholdLevel)

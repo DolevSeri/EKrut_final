@@ -82,19 +82,19 @@ public enum Request {
 		}
 
 	},
-	DeliveryReportData_Imported{
+	DeliveryReportData_Imported {
 		public String toString() {
 			return "Delivery report imported successfully";
 		}
-		
+
 	},
 	OrdersReportData_Imported {
 		public String toString() {
 			return "Orders data imported successfully";
 		}
 	},
-	
-	GetInventoryReportData{
+
+	GetInventoryReportData {
 		public String toString() {
 			return "Inventory report data imported successfully";
 		}
@@ -104,7 +104,7 @@ public enum Request {
 			return "Inventory data imported successfully";
 		}
 	},
-	GetCostumersReportData{
+	GetCostumersReportData {
 		public String toString() {
 			return "Costumers report data imported successfully";
 		}
@@ -163,19 +163,60 @@ public enum Request {
 		public String toString() {
 			return "Customer status updated successfully!";
 		}
-	}, Send_msg_to_system{
+	},
+	Send_msg_to_system {
 		public String toString() {
 			return "System set message for AreaManagers!";
 		}
 	},
-	Create_Inventory_Call{
+	Create_Inventory_Call {
 		public String toString() {
 			return "Area Manager request to open inventory call";
 		}
 	},
-	Inventory_Call_Created{
+	Inventory_Call_Created {
 		public String toString() {
 			return "Inventory call created successfully";
 		}
-	}
+	},
+	getOrders {
+		public String toString() {
+			return "Request to import orders";
+		}
+	},
+	Orders_imported {
+		public String toString() {
+			return "Orders imported succsesfuly!";
+		}
+	},
+	SaveOrder {
+		public String toString() {
+			return "Request to save Order";
+		}
+	},
+	Order_Saved {
+		public String toString() {
+			return "Orders succsesfuly saved!";
+		}
+	},
+	Update_Products_In_Device {
+		public String toString() {
+			return "Request to update products in device";
+		}
+	},
+	Products_updated_In_Device {
+		public String toString() {
+			return "Products succsesfuly updated in device!";
+		}
+	},
+	get_Msg_In_System {
+		public String toString() {
+			return "Request to import msg from DB";
+		}
+	},
+	imported_Msg_In_System {
+		public String toString() {
+			return "succsesfuly imported messages! ";
+		}
+	},
 }

@@ -114,17 +114,6 @@ public class Client_OrderScreenController {
 		}
 	}
 
-	public void removeFromCart(ProductInDevice product, ProductInCartController productInCartController) {
-		int i = 0;
-		for (ProductInCartController p : productInCartControllers) {
-			if (p.getProduct().equals(product)) {
-				productInCartControllers.remove(i);
-				break;
-			}
-			i++;
-		}
-	}
-
 	public void setCartGrid(ProductInDevice productInDevice, ProductController productController) throws IOException {
 		for (ProductInCartController p : productInCartControllers) {
 			if (p.getProduct().equals(productInDevice)) {

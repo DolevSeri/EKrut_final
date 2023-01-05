@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import entities.Costumer;
 import entities.CostumersReport;
 import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryReport;
+import entities.MessageInSystem;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
@@ -518,9 +520,9 @@ public class MySqlController {
 		incomes = incomes.replaceFirst(",", "");
 
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.orders_report "
-					+ "(month, year, area, numOfTotalOrders, "
-					+ "totalPickUp, mostSelling, devices, incomes) VALUES(?, ?, ?, ?, ?, ?, ?,?)");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("INSERT INTO ekrut.orders_report " + "(month, year, area, numOfTotalOrders, "
+							+ "totalPickUp, mostSelling, devices, incomes) VALUES(?, ?, ?, ?, ?, ?, ?,?)");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -705,11 +707,12 @@ public class MySqlController {
 					.prepareStatement("SELECT ekrut.products.*, ekrut.product_in_device.quantity , "
 							+ "ekrut.product_in_device.status, ekrut.product_in_device.deviceName "
 							+ "FROM ekrut.products,ekrut.product_in_device "
-							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode "
+							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.status = ? "
 							+ "and ekrut.product_in_device.deviceName = ?");
 
 			try {
-				ps.setString(1, deviceName);
+				ps.setString(1, "AVAILABLE");
+				ps.setString(2, deviceName);
 
 			} catch (Exception e) {
 				System.out.println("Executing statement failed");
@@ -939,4 +942,89 @@ public class MySqlController {
 		System.out.println("Enter new inventory call successfully");
 	}
 
+	public static List<Order> importOrders() {
+		List<Order> orders = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				orders.add(new Order(rs.getString("deviceName"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
+						rs.getString("username"), rs.getString("day"), rs.getString("month"), rs.getString("year"),
+						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return orders;
+	}
+
+	public static void updateOrder(Order order) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.orders (orderID,orderPrice,supplyMethod,username,deviceName,orderProducts,month,year,day) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?)");
+			try {
+				ps.setInt(1, order.getOrderID());
+				ps.setFloat(2, order.getOrderPrice());
+				;
+				ps.setString(3, order.getSupplyMethod().toString());
+				ps.setString(4, order.getCostumerUserName());
+				ps.setString(5, order.getDeviceName());
+				ps.setString(6, order.getOrderProducts());
+				ps.setString(7, order.getMonth());
+				ps.setString(8, order.getYear());
+				ps.setString(9, order.getDay());
+				ps.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("failed update order in DB");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("failed Statment updateOrder in DB");
+		}
+	}
+
+	public static void updateProductsInDevice(List<ProductInDevice> productsInDevice) {
+		PreparedStatement ps, ps2;
+		try {
+			ps = dbConnector.prepareStatement(
+					"UPDATE ekrut.product_in_device SET ekrut.product_in_device.status = ? WHERE ekrut.product_in_device.deviceName = ? and ekrut.product_in_device.productCode = ?");
+			ps2 = dbConnector.prepareStatement(
+					"UPDATE ekrut.product_in_device SET ekrut.product_in_device.quantity = ? WHERE ekrut.product_in_device.deviceName = ? and ekrut.product_in_device.productCode = ?");
+			// Update the records in the database
+			for (ProductInDevice product : productsInDevice) {
+				ps.setString(1, product.getStatus().toString());
+				ps.setString(2, product.getDevice());
+				ps.setInt(3, product.getProductCode());
+				ps.executeUpdate();
+
+				ps2.setInt(1, product.getQuantity());
+				ps2.setString(2, product.getDevice());
+				ps2.setInt(3, product.getProductCode());
+				ps2.executeUpdate();
+			}
+			System.out.println("Update products status succeeded");
+
+		} catch (SQLException e) {
+			System.out.println("Update products status failed");
+		}
+
+	}
+
+	public static ArrayList<MessageInSystem> getMessagesInSystem() {
+		ArrayList<MessageInSystem> msgList = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.message_in_system");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				msgList.add(new MessageInSystem(rs.getInt("msgID"),
+						Role.valueOf(rs.getString("role")), rs.getString("description")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+		return null;
+	}
 }

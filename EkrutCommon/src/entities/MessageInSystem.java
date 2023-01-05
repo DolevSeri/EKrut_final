@@ -19,7 +19,6 @@ public class MessageInSystem implements Serializable{
 	private String description;
 
 	public MessageInSystem(int msgID, Role role, String description) {
-		super();
 		this.msgID = msgID;
 		this.role = role;
 		this.description = description;

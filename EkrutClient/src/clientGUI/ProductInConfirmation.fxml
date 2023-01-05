@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -14,10 +15,11 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lblName" layoutX="14.0" layoutY="9.0" prefHeight="18.0" prefWidth="139.0" text="dd">
+      <Label fx:id="lblName" layoutX="59.0" layoutY="9.0" prefHeight="18.0" prefWidth="94.0" text="dd">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <ImageView fx:id="productLogo" fitHeight="37.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
