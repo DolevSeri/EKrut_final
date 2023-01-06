@@ -185,11 +185,12 @@ public enum Request {
 			return "Request to pull user data";
 		}
 	}, 
+	
 	User_Data_Imported{
 		public String toString() {
 			return "User data imported successfully";
 		}
-	}
+	},
 
 	getOrders {
 		public String toString() {
@@ -286,6 +287,7 @@ public enum Request {
 			return "Request to update Sales";
 		}
 	},
+	
 	Sales_Saved {
 		public String toString() {
 			return "Sales  succsesfuly saved!";
