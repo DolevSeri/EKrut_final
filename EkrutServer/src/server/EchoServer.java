@@ -14,6 +14,7 @@ import entities.Device;
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
+import entities.Sale;
 import entities.SalesPattern;
 import entities.User;
 import enums.Request;
@@ -271,6 +272,32 @@ public class EchoServer extends AbstractServer {
 			MySqlController.salesPatternToDB(sp);
 			try {
 				client.sendToClient(new Message(Request.SalesPattern_Saved, null));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case import_SalesPattern:
+			try {
+				client.sendToClient(new Message(Request.imported_SalesPattern, MySqlController.importSalesPattern()));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case import_Sales:
+			try {
+				client.sendToClient(new Message(Request.imported_Sales, MySqlController.importSales()));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_Sales:
+			Sale sale= (Sale) messageFromClient.getObject();
+			MySqlController.updateSaleInDB(sale);
+			try {
+				client.sendToClient(new Message(Request.Sales_Saved, null));
 			}catch(IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");

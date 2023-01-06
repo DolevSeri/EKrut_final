@@ -1,15 +1,19 @@
 package entityControllers;
 
+import java.util.ArrayList;
+
 import entities.SalesPattern;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class SalesPatternController {
-   private SalesPattern salespattern=null;
-
-public SalesPattern getSalespattern() {
+	private ObservableList<SalesPattern> salespattern = FXCollections.observableArrayList();
+  
+public ObservableList<SalesPattern> getSalespattern() {
 	return salespattern;
 }
 
-public void setSalespattern(SalesPattern salespattern) {
+public void setSalespattern(ObservableList<SalesPattern> salespattern) {
 	this.salespattern = salespattern;
 }
 

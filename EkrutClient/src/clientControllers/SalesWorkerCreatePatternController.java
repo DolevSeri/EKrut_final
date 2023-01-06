@@ -1,6 +1,6 @@
 package clientControllers;
 
-import java.awt.Label;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -56,11 +57,13 @@ public class SalesWorkerCreatePatternController {
 	@FXML
 	private ImageView saleImage;
 
+	@FXML
+	private Label lblError;
 	
 	
 	SetSceneController newScreen = new SetSceneController();
 	
-	SalesPattern sp=new SalesPattern(0,null,null,null,null,null);
+	SalesPattern sp;
 
 	public void initialize() {
 		ArrayList<String> discount = new ArrayList<String>();
@@ -77,8 +80,11 @@ public class SalesWorkerCreatePatternController {
 				"17:00", "18:00", "19:00", "20:00"));
 		cmbStartHour.getItems().addAll(hourStart);
 		ArrayList<String> duration = new ArrayList<String>();
-		duration.addAll(Arrays.asList("1", "2", "3", "4", "12"));
+		duration.addAll(Arrays.asList("1", "2", "3", "4", "24"));
 		cmbduration.getItems().addAll(duration); 
+		ClientUI.chat.accept(new Message(Request.import_SalesPattern,null));
+		sp=new SalesPattern(ChatClient.salesPatternController.getSalespattern().size()+1,null,null,null,null,null);
+		lblError.setVisible(false);
 		
 
 	}
@@ -90,7 +96,14 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	void clickOnActivateSale(ActionEvent event) {
-        ClientUI.chat.accept(new Message(Request.Update_SalesPattern,sp));
+		if(cmbDiscount.getValue()==null|| cmbEndDay.getValue()==null||cmbduration.getValue()==null||cmbStartDay.getValue()==null||cmbStartHour.getValue()==null) {
+			lblError.setVisible(true);
+		}
+		else {
+			lblError.setVisible(false);
+			 ClientUI.chat.accept(new Message(Request.Update_SalesPattern,sp));
+		}
+       
         //newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
 	}
 
@@ -127,28 +140,6 @@ public class SalesWorkerCreatePatternController {
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
-	/*
-	 * ArrayList<String> years = new ArrayList<String>( Arrays.asList("2015",
-	 * "2016", "2017", "2018", "2019", "2020", "2021", "2022","2023"));
-	 * cmbYear.getItems().addAll(years); ArrayList<String> months = new
-	 * ArrayList<String>( Arrays.asList("01", "02", "03", "04", "05", "06", "07",
-	 * "08", "09", "10", "11", "12")); cmbMonth.getItems().addAll(months);
-	 * 
-	 * 
-	 * if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) { isCEO =
-	 * true; cmbDevice.setDisable(true); ArrayList<String> area = new
-	 * ArrayList<String>(Arrays.asList("NORTH", "SOUTH", "UAE"));
-	 * cmbArea.getItems().addAll(area);
-	 * cmbDevice.setPromptText("Choose region first!");
-	 * 
-	 * } else { isCEO = false; cmbArea.setVisible(false); String area =
-	 * ChatClient.userController.getUser().getRegion().toString();
-	 * cmbArea.setValue(area); lblRegion.setText(area); lblRegion.setVisible(true);
-	 * ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));
-	 * cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames()
-	 * );
-	 * 
-	 * }
-	 */
+	
 
 }

@@ -34,7 +34,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnSendSale" ellipsisString="" layoutX="147.0" layoutY="241.0" mnemonicParsing="false" onAction="#ClickOnSendToAcrivate" prefHeight="38.0" prefWidth="156.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Send to Activate" textAlignment="CENTER" textFill="#8d48e1" textOverrun="CLIP" underline="true">
+      <Button fx:id="btnSendSale" ellipsisString="" layoutX="147.0" layoutY="433.0" mnemonicParsing="false" onAction="#ClickOnSendToAcrivate" prefHeight="38.0" prefWidth="156.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Send to Activate" textAlignment="CENTER" textFill="#8d48e1" textOverrun="CLIP" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -57,7 +57,72 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbArea" layoutX="225.0" layoutY="120.0" onAction="#chooseAreaComboBox" prefHeight="38.0" prefWidth="174.0" promptText="Choose Area" />
-      <ComboBox fx:id="cmbSale" layoutX="225.0" layoutY="180.0" onAction="#chooseSalePatternComboBox" prefHeight="38.0" prefWidth="174.0" promptText="Choose Sale" />
+      <ComboBox fx:id="cmbArea" layoutX="169.0" layoutY="120.0" onAction="#chooseAreaComboBox" prefHeight="38.0" prefWidth="230.0" promptText="Choose Area" />
+      <ComboBox fx:id="cmbSale" layoutX="169.0" layoutY="180.0" onAction="#chooseSalePatternComboBox" prefHeight="38.0" prefWidth="230.0" promptText="Choose Sale" />
+      <Label fx:id="txtpatternID" layoutX="67.0" layoutY="250.0" prefHeight="18.0" prefWidth="114.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtDiscuntType" layoutX="227.0" layoutY="249.0" prefHeight="18.0" prefWidth="114.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtStartDay" layoutX="67.0" layoutY="304.0" prefHeight="18.0" prefWidth="114.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtEndDay" layoutX="227.0" layoutY="304.0" prefHeight="18.0" prefWidth="114.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtStartHour" layoutX="67.0" layoutY="357.0" prefHeight="18.0" prefWidth="104.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="txtDuration" layoutX="226.0" layoutY="357.0" prefHeight="18.0" prefWidth="114.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPatternID" layoutX="67.0" layoutY="228.0" text="PatternID:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStartDay" layoutX="68.0" layoutY="278.0" text="Start Day:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEndDay" layoutX="227.0" layoutY="278.0" text="End Day:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblStartHour" layoutX="64.0" layoutY="331.0" text="Start Hour:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDuration" layoutX="225.0" layoutY="331.0" text="Duration:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDiscountType" layoutX="228.0" layoutY="228.0" text="Discount Type:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblError" alignment="CENTER" layoutY="406.0" prefHeight="19.0" prefWidth="430.0" text="One field is missing! please choose all fields for do this action(:" textFill="#dc1313">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
