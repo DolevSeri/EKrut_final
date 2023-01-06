@@ -16,6 +16,12 @@ import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
 import entities.InventoryReport;
+
+=======
+import entities.Product;
+import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.Message;
 import entities.Order;
 import entities.OrderReport;
@@ -32,6 +38,8 @@ import entityControllers.InventoryReportController;
 import entityControllers.OrderController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
+import entityControllers.SaleController;
+import entityControllers.SalesPatternController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
@@ -67,7 +75,11 @@ public class ChatClient extends AbstractClient {
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
 	public static InventoryCallController inventoryCallController = new InventoryCallController();
-	// Constructors ****************************************************
+	public static SalesPatternController salesPatternController=new SalesPatternController();
+	public static SaleController salesController=new SaleController();
+
+
+// Constructors ****************************************************
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -167,7 +179,16 @@ public class ChatClient extends AbstractClient {
 		case Order_Saved:
 			break;
 		case Products_updated_In_Device:
-
+			break;
+		case SalesPattern_Saved:
+			break;
+		case imported_SalesPattern :
+			salesPatternController.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>)message.getObject()));
+			break;
+		case imported_Sales:
+			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>)message.getObject()));
+			break;
+		case Sales_Saved:
 			break;
 		case Inventory_Calls_Imported:
 			inventoryCallController.setAreaCalls(

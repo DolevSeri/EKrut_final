@@ -19,6 +19,8 @@ import entities.MessageInSystem;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.User;
 import enums.CallStatus;
 import enums.Configuration;
@@ -26,6 +28,7 @@ import enums.CostumerStatus;
 import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
+import enums.SaleStatus;
 import enums.SupplyMethod;
 
 /**
@@ -925,8 +928,7 @@ public class MySqlController {
 		String device = callData.get(0), product = callData.get(1);
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " 
-					+ "VALUES (?, ?, ?)");
+					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " + "VALUES (?, ?, ?)");
 			try {
 				ps.setString(1, "OPEN");
 				ps.setString(2, device);
@@ -1021,8 +1023,8 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.message_in_system");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
-				msgList.add(new MessageInSystem(rs.getInt("msgID"),
-						Role.valueOf(rs.getString("role")), rs.getString("description")));
+				msgList.add(new MessageInSystem(rs.getInt("msgID"), Role.valueOf(rs.getString("role")),
+						rs.getString("description")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing statement failed");
@@ -1049,4 +1051,102 @@ public class MySqlController {
 		}
 		return calls;
 	}
+
+
+	/**
+	 * salesPatternToDB-a method that will save a salesPattern in the DB
+	 * 
+	 * @param SalesPattern sp
+	 */
+
+	public static void salesPatternToDB(SalesPattern sp) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.sales_patterns (patternID, discountType, startDay,endDay,startHour,duration) "
+							+ "VALUES (?, ?, ?, ?, ?, ?)");
+			try {
+				ps.setInt(1, sp.getPatternID());
+				ps.setString(2, sp.getDiscountType());
+				ps.setString(3, sp.getStartDay());
+				ps.setString(4, sp.getEndDay());
+				ps.setString(5, sp.getStartHour());
+				ps.setString(6, sp.getDuration());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createSalesPattern failed");
+		}
+		System.out.println("Enter new SalesPattern successfully");
+	}
+
+	public static ArrayList<SalesPattern> importSalesPattern() {
+		ArrayList<SalesPattern> salespatterns = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.sales_patterns");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				salespatterns.add(
+						new SalesPattern(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
+								rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return salespatterns;
+	}
+
+	public static ArrayList<Sale> importSales() {
+		ArrayList<Sale> sale = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
+						rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration"),
+						Region.valueOf(rs.getString("region")), rs.getInt("saleID"),
+						SaleStatus.valueOf(rs.getString("status"))));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return sale;
+	}
+
+	public static void updateSaleInDB(Sale sale) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.sales(region, saleID, patternID,status) "
+							+ "VALUES (?, ?, ?, ?)");
+			try {
+				ps.setString(1, sale.getRegion().toString());
+				ps.setInt(2, sale.getSaleID());
+				ps.setInt(3,sale.getPatternID());
+				ps.setString(4,sale.getStatus().toString());
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createSales failed");
+		}
+		System.out.println("Enter new Sales successfully");
+	}
+
+		
+	
+
 }

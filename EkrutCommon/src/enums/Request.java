@@ -239,4 +239,46 @@ public enum Request {
 			return "Inventory calls closed successfully";
 		}
 	}
+	Update_SalesPattern {
+		public String toString() {
+			return "Request to update Sales pattern";
+		}
+	},
+	SalesPattern_Saved {
+		public String toString() {
+			return "Sales pattern succsesfuly saved!";
+		}
+	},
+	import_SalesPattern {
+		public String toString() {
+			return "Request to import SalesPattern from DB";
+		}
+	},
+	imported_SalesPattern {
+		public String toString() {
+			return "succsesfuly imported SalesPattern! ";
+		}
+	},
+	import_Sales{
+		public String toString() {
+			return "Request to import Sales from DB";
+		}
+	},
+	imported_Sales {
+		public String toString() {
+			return "succsesfuly imported Sale! ";
+		}
+	},
+	Update_Sales {
+		public String toString() {
+			return "Request to update Sales";
+		}
+	},
+	Sales_Saved {
+		public String toString() {
+			return "Sales  succsesfuly saved!";
+		}
+	},
+	
+	
 }

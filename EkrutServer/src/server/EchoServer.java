@@ -14,6 +14,8 @@ import entities.Device;
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.User;
 import enums.Request;
 import javafx.collections.FXCollections;
@@ -265,6 +267,7 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+
 		case Get_Inventory_Calls_By_Area:
 			String callsArea = (String) messageFromClient.getObject();
 
@@ -272,6 +275,40 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message(Request.Inventory_Calls_Imported,
 						MySqlController.getAllCallsByArea(callsArea)));
 			} catch (IOException e) {
+
+		case Update_SalesPattern:
+			SalesPattern sp= (SalesPattern) messageFromClient.getObject();
+			MySqlController.salesPatternToDB(sp);
+			try {
+				client.sendToClient(new Message(Request.SalesPattern_Saved, null));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case import_SalesPattern:
+			try {
+				client.sendToClient(new Message(Request.imported_SalesPattern, MySqlController.importSalesPattern()));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case import_Sales:
+			try {
+				client.sendToClient(new Message(Request.imported_Sales, MySqlController.importSales()));
+			}catch(IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_Sales:
+			Sale sale= (Sale) messageFromClient.getObject();
+			MySqlController.updateSaleInDB(sale);
+			try {
+				client.sendToClient(new Message(Request.Sales_Saved, null));
+			}catch(IOException e) {
+				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
 			break;
