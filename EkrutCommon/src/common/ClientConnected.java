@@ -2,7 +2,6 @@ package common;
 
 public class ClientConnected {
 	private String IP,host,status;
-//da
 	public ClientConnected(String IP, String host, String status) {
 		this.IP = IP;
 		this.host = host;

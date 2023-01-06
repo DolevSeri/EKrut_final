@@ -11,6 +11,7 @@ import java.util.List;
 import common.ClientConnected;
 import entities.Costumer;
 import entities.Device;
+import entities.InventoryCall;
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
@@ -269,11 +270,11 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		case Get_Inventory_Calls_By_Area:
-			String callsArea = (String) messageFromClient.getObject();
+			ArrayList<String> callsAreaAndStatus = (ArrayList<String>) messageFromClient.getObject();
 
 			try {
 				client.sendToClient(new Message(Request.Inventory_Calls_Imported,
-						MySqlController.getAllCallsByArea(callsArea)));
+						MySqlController.getInventoryCallsByRegionAndStatus(callsAreaAndStatus)));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -313,6 +314,14 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message(Request.Sales_Saved, null));
 			}catch(IOException e) {
 				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Inventory_Calls_To_Close:
+			MySqlController.closeInventoryCalls((ArrayList<InventoryCall>)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Inventory_Calls_Closed, null));
+			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
 			break;

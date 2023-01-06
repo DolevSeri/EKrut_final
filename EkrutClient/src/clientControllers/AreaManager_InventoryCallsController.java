@@ -1,14 +1,13 @@
 package clientControllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import client.ChatClient;
 import client.ClientUI;
-import entities.Costumer;
 import entities.InventoryCall;
 import entities.Message;
 import enums.CallStatus;
-import enums.CostumerStatus;
 import enums.Request;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,9 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 
 public class AreaManager_InventoryCallsController {
 
@@ -58,7 +55,7 @@ public class AreaManager_InventoryCallsController {
 
 	private TableViewController myTable = new TableViewController();
 	private String area = ChatClient.userController.getUser().getRegion().toString();
-	SetSceneController scene = new SetSceneController();
+	private SetSceneController scene = new SetSceneController();
 
 	@FXML
 	public void initialize() {
@@ -81,18 +78,31 @@ public class AreaManager_InventoryCallsController {
 
 	@FXML
 	void clickCloseCallBtn(ActionEvent event) {
-		ObservableList<InventoryCall> selectedCalls = tblCalls.getSelectionModel().getSelectedItems();
-		if (selectedCalls.isEmpty()) {
-			lblError.setText(" Error: No calls selected");
-			lblError.setVisible(true);
-		} else {
-			lblError.setVisible(false);
-			ArrayList<InventoryCall> callsToDelete = new ArrayList<>(selectedCalls);
-			ClientUI.chat.accept(new Message(Request.Inventory_Calls_To_Close, callsToDelete));
-			setTableItems();
-
-		}
+	    ObservableList<InventoryCall> selectedCalls = tblCalls.getSelectionModel().getSelectedItems();
+	    if (selectedCalls.isEmpty()) {
+	        lblError.setText("Error: No calls selected");
+	        lblError.setVisible(true);
+	    } else {
+	        boolean allDone = true;
+	        for (InventoryCall call : selectedCalls) {
+	            if (call.getStatus() != CallStatus.DONE) {
+	                allDone = false;
+	                break;
+	            }
+	        }
+	        if (!allDone) {
+	            lblError.setText("Error: Cannot close calls with a status other than" 
+	        + CallStatus.DONE.toString());
+	            lblError.setVisible(true);
+	        } else {
+	            lblError.setVisible(false);
+	            ArrayList<InventoryCall> callsToClose = new ArrayList<>(selectedCalls);
+	            ClientUI.chat.accept(new Message(Request.Inventory_Calls_To_Close, callsToClose));
+	            setTableItems();
+	        }
+	    }
 	}
+
 
 	@FXML
 	void clickExitBtn(ActionEvent event) {
@@ -109,7 +119,9 @@ public class AreaManager_InventoryCallsController {
 
 	private void setTableItems() {
 		tblCalls.getItems().clear();
-		ClientUI.chat.accept(new Message(Request.Get_Inventory_Calls_By_Area, area));
+		ArrayList<String> areaAndStatus = new ArrayList<>();
+		areaAndStatus.addAll(Arrays.asList(area, null));
+		ClientUI.chat.accept(new Message(Request.Get_Inventory_Calls_By_Area, areaAndStatus));
 		tblCalls.setItems(ChatClient.inventoryCallController.getAreaCalls());
 	}
 
