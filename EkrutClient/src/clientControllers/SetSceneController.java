@@ -31,7 +31,7 @@ public class SetSceneController {
 
 	public void createOrUpdateClient(boolean isUpdate) {
 		new UserManagement_UserInformationController(isUpdate);
-		setScreen(new Stage(), "/clienGUI/UsersManagement_UsersDataView.fxml");
+		setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
 	}
 
 	public void back(ActionEvent event, String path) {
