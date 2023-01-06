@@ -51,7 +51,7 @@ public enum Role {
 			// the string will be the exact name of the FXML we would like to show
 			return "UserManagement_MainView.fxml";
 		}
-	}
+	},
 
 	SalesWorker{
 		public String toString() {
