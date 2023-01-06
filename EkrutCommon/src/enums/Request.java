@@ -219,6 +219,26 @@ public enum Request {
 			return "succsesfuly imported messages! ";
 		}
 	},
+	Get_Inventory_Calls_By_Area {
+		public String toString() {
+			return "Request inventory calls by area";
+		}
+	},
+	Inventory_Calls_Imported {
+		public String toString() {
+			return "Inventory calls imported successfully";
+		}
+	},
+	Inventory_Calls_To_Close {
+		public String toString() {
+			return "Request to close inventory calls";
+		}
+	},
+	Inventory_Calls_Closed {
+		public String toString() {
+			return "Inventory calls closed successfully";
+		}
+	}
 	Update_SalesPattern {
 		public String toString() {
 			return "Request to update Sales pattern";

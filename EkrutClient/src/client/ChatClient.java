@@ -11,10 +11,13 @@ import java.util.List;
 
 import common.ChatIF;
 import entities.Costumer;
-import entities.DeliveryReport;
 import entities.CostumersReport;
+import entities.DeliveryReport;
 import entities.Device;
+import entities.InventoryCall;
 import entities.InventoryReport;
+
+=======
 import entities.Product;
 import entities.ProductInDevice;
 import entities.Sale;
@@ -22,13 +25,15 @@ import entities.SalesPattern;
 import entities.Message;
 import entities.Order;
 import entities.OrderReport;
+import entities.ProductInDevice;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.CartController;
 import entityControllers.CostumerController;
-import entityControllers.DeliveryReportController;
 import entityControllers.CostumersReportController;
+import entityControllers.DeliveryReportController;
 import entityControllers.DeviceController;
+import entityControllers.InventoryCallController;
 import entityControllers.InventoryReportController;
 import entityControllers.OrderController;
 import entityControllers.OrderReportController;
@@ -69,11 +74,12 @@ public class ChatClient extends AbstractClient {
 	public static Object lock = new Object();
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
+	public static InventoryCallController inventoryCallController = new InventoryCallController();
 	public static SalesPatternController salesPatternController=new SalesPatternController();
 	public static SaleController salesController=new SaleController();
 
 
-	// Constructors ****************************************************
+// Constructors ****************************************************
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -184,7 +190,12 @@ public class ChatClient extends AbstractClient {
 			break;
 		case Sales_Saved:
 			break;
+		case Inventory_Calls_Imported:
+			inventoryCallController.setAreaCalls(
+					FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			break;
 		default:
+
 			break;
 		}
 		synchronized (lock) {

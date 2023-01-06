@@ -13,6 +13,7 @@ import entities.Costumer;
 import entities.CostumersReport;
 import entities.DeliveryReport;
 import entities.Device;
+import entities.InventoryCall;
 import entities.InventoryReport;
 import entities.MessageInSystem;
 import entities.Order;
@@ -21,6 +22,7 @@ import entities.ProductInDevice;
 import entities.Sale;
 import entities.SalesPattern;
 import entities.User;
+import enums.CallStatus;
 import enums.Configuration;
 import enums.CostumerStatus;
 import enums.ProductStatus;
@@ -1029,6 +1031,27 @@ public class MySqlController {
 		}
 		return null;
 	}
+	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
+		PreparedStatement ps;
+		ArrayList<InventoryCall> calls = new ArrayList<>();
+
+		try {
+			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls " +
+                    "JOIN devices ON inventory_calls.deviceName = devices.deviceName " +
+                    "WHERE devices.region = ?");
+			ps.setString(1, region);
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), 
+						res.getString(3), res.getString(4)));
+			}
+			System.out.println("Import inventory calls by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import inventory calls by region failed");
+		}
+		return calls;
+	}
+
 
 	/**
 	 * salesPatternToDB-a method that will save a salesPattern in the DB
