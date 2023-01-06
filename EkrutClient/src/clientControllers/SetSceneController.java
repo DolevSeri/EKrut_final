@@ -1,6 +1,7 @@
 package clientControllers;
 
 import client.ChatClient;
+
 import client.ClientUI;
 import entities.Message;
 import enums.Request;
@@ -23,6 +24,11 @@ public class SetSceneController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void createOrUpdateClient(boolean isUpdate) {
+		new UserManagement_UserInformationController(isUpdate);
+		setScreen(new Stage(), "/clienGUI/UsersManagement_UsersDataView.fxml");
 	}
 
 	public void back(ActionEvent event, String path) {

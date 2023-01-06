@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_EK_MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_MainViewController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -26,12 +26,12 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="136.0" layoutY="43.0" prefHeight="98.0" prefWidth="282.0" text="Choose Youre Option: " textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label fx:id="lblWelcome" layoutX="114.0" layoutY="46.0" prefHeight="98.0" prefWidth="345.0" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreateOrder" layoutX="153.0" layoutY="154.0" mnemonicParsing="false" onAction="#clickOnCreateOrder" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreateAccount" layoutX="153.0" layoutY="154.0" mnemonicParsing="false" onAction="#clickBtnCreateAccount" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create New Account" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -39,7 +39,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnCollect" layoutX="153.0" layoutY="266.0" mnemonicParsing="false" onAction="#clickOnCollectPickUp" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text=" Collect PickUp Order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnUpdate" layoutX="153.0" layoutY="266.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="79.0" prefWidth="248.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Update Membership" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -47,7 +47,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="23.0" layoutY="440.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogOut" layoutX="23.0" layoutY="433.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

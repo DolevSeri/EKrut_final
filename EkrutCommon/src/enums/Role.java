@@ -45,5 +45,11 @@ public enum Role {
 			return "ScreenForNotSignUpUser.fxml";
 		}
 	},
+	UserManagement{
+		public String toString() {
+			// the string will be the exact name of the FXML we would like to show
+			return "UserManagement_MainView.fxml";
+		}
+	}
 
 }

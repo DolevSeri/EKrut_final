@@ -2,9 +2,9 @@ package entities;
 
 import java.io.Serializable;
 
+
 import enums.Configuration;
 import enums.CostumerStatus;
-import enums.Devices;
 import enums.Region;
 import enums.Role;
 
