@@ -42,10 +42,10 @@
       </Button>
       <Label layoutX="88.0" layoutY="157.0" text="Area:" textFill="#8d48e1">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold Italic" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblRegion" layoutX="197.0" layoutY="150.0" prefHeight="38.0" prefWidth="183.0" text="Region" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label fx:id="lblRegion" layoutX="190.0" layoutY="163.0" prefHeight="38.0" prefWidth="100.0" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -67,7 +67,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnRefresh" layoutX="565.0" layoutY="291.0" mnemonicParsing="false" onAction="#clickBtnRefresh" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Refresh" textFill="WHITE" underline="true">
+      <Button fx:id="btnHelp" layoutX="565.0" layoutY="291.0" mnemonicParsing="false" onAction="#clickBtnHelp" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Help" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

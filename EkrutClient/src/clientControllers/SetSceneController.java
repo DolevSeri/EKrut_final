@@ -10,6 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -46,5 +49,18 @@ public class SetSceneController {
 			ClientUI.chat.accept(new Message(Request.Disconnect_request, null));
 			System.exit(0);
 		}
+	}
+	
+	public void popUpMessage(String message) {
+	    Alert alert = new Alert(AlertType.INFORMATION);
+	    alert.setTitle("Information");
+	    alert.setHeaderText(null);
+	    alert.setContentText(message);
+
+	    // Set the alert dialog style
+	    DialogPane dialogPane = alert.getDialogPane();
+	    dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
+
+	    alert.showAndWait();
 	}
 }

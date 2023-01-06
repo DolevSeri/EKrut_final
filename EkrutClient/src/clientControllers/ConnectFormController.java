@@ -57,7 +57,9 @@ public class ConnectFormController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		// get Orders from DB
+		ClientUI.chat.accept(new Message(Request.getOrders, null));
+		ClientUI.chat.accept(new Message(Request.get_Msg_In_System, null));
 	}
 
 	public boolean checkNull(String str) {

@@ -11,9 +11,6 @@ public class TableViewController {
 
 	}
 
-//	public <T, S> void setCell(TableColumn<T, S> column, TableCell<T, S> cellFactory) {
-//		column.setCellFactory((param) -> cellFactory);
-//	}
 	public <T, S> void setCellEditable(TableColumn<T, S> column) {
 		column.setOnEditCommit(event -> {
 			T rowValue = event.getRowValue();

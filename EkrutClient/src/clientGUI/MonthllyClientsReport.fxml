@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="868.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ClientReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="868.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ClientReportController">
    <children>
       <Pane layoutX="340.0" prefHeight="528.0" prefWidth="527.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -21,7 +21,7 @@
                   <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
-            <BarChart fx:id="chrtCustomers" layoutX="14.0" layoutY="73.0">
+            <BarChart fx:id="chrtCustomers" layoutX="14.0" layoutY="73.0" style="-fx-background-color: RGBA;">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>

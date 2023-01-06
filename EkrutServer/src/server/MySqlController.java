@@ -6,22 +6,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import entities.Costumer;
 import entities.CostumersReport;
 import entities.DeliveryReport;
 import entities.Device;
+import entities.InventoryCall;
 import entities.InventoryReport;
+import entities.MessageInSystem;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.User;
+import enums.CallStatus;
 import enums.Configuration;
 import enums.CostumerStatus;
 import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
+import enums.SaleStatus;
 import enums.SupplyMethod;
 
 /**
@@ -276,7 +284,7 @@ public class MySqlController {
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE " + "month = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventory_report WHERE " + "month = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -604,7 +612,7 @@ public class MySqlController {
 		itemsList = itemsList.replaceFirst(",", "");
 
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventory_report "
 					+ "(month, year, deviceName, products, itemUnderThres, deviceThres) VALUES(?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setString(1, month);
@@ -702,11 +710,12 @@ public class MySqlController {
 					.prepareStatement("SELECT ekrut.products.*, ekrut.product_in_device.quantity , "
 							+ "ekrut.product_in_device.status, ekrut.product_in_device.deviceName "
 							+ "FROM ekrut.products,ekrut.product_in_device "
-							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode "
+							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode and ekrut.product_in_device.status = ? "
 							+ "and ekrut.product_in_device.deviceName = ?");
 
 			try {
-				ps.setString(1, deviceName);
+				ps.setString(1, "AVAILABLE");
+				ps.setString(2, deviceName);
 
 			} catch (Exception e) {
 				System.out.println("Executing statement failed");
@@ -935,4 +944,229 @@ public class MySqlController {
 		System.out.println("Enter new inventory call successfully");
 	}
 
+	public static List<Order> importOrders() {
+		List<Order> orders = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				orders.add(new Order(rs.getString("deviceName"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
+						rs.getString("username"), rs.getString("day"), rs.getString("month"), rs.getString("year"),
+						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return orders;
+	}
+
+	public static void updateOrder(Order order) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.orders (orderID,orderPrice,supplyMethod,username,deviceName,orderProducts,month,year,day) "
+							+ "VALUES (?,?,?,?,?,?,?,?,?)");
+			try {
+				ps.setInt(1, order.getOrderID());
+				ps.setFloat(2, order.getOrderPrice());
+				;
+				ps.setString(3, order.getSupplyMethod().toString());
+				ps.setString(4, order.getCostumerUserName());
+				ps.setString(5, order.getDeviceName());
+				ps.setString(6, order.getOrderProducts());
+				ps.setString(7, order.getMonth());
+				ps.setString(8, order.getYear());
+				ps.setString(9, order.getDay());
+				ps.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("failed update order in DB");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("failed Statment updateOrder in DB");
+		}
+	}
+
+	public static void updateProductsInDevice(List<ProductInDevice> productsInDevice) {
+		PreparedStatement ps, ps2;
+		try {
+			ps = dbConnector.prepareStatement(
+					"UPDATE ekrut.product_in_device SET ekrut.product_in_device.status = ? WHERE ekrut.product_in_device.deviceName = ? and ekrut.product_in_device.productCode = ?");
+			ps2 = dbConnector.prepareStatement(
+					"UPDATE ekrut.product_in_device SET ekrut.product_in_device.quantity = ? WHERE ekrut.product_in_device.deviceName = ? and ekrut.product_in_device.productCode = ?");
+			// Update the records in the database
+			for (ProductInDevice product : productsInDevice) {
+				ps.setString(1, product.getStatus().toString());
+				ps.setString(2, product.getDevice());
+				ps.setInt(3, product.getProductCode());
+				ps.executeUpdate();
+
+				ps2.setInt(1, product.getQuantity());
+				ps2.setString(2, product.getDevice());
+				ps2.setInt(3, product.getProductCode());
+				ps2.executeUpdate();
+			}
+			System.out.println("Update products status succeeded");
+
+		} catch (SQLException e) {
+			System.out.println("Update products status failed");
+		}
+
+	}
+
+	public static ArrayList<MessageInSystem> getMessagesInSystem() {
+		ArrayList<MessageInSystem> msgList = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.message_in_system");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				msgList.add(new MessageInSystem(rs.getInt("msgID"), Role.valueOf(rs.getString("role")),
+						rs.getString("description")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+		return null;
+	}
+
+	public static ArrayList<InventoryCall> 
+	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
+		PreparedStatement ps;
+		ArrayList<InventoryCall> calls = new ArrayList<>();
+
+		try {
+			String query = "SELECT inventory_calls.* FROM inventory_calls "
+					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?";
+			if (regionAndStatus.get(1) != null) {
+				query += " AND inventory_calls.status = ?";
+			}
+			ps = dbConnector.prepareStatement(query);
+			ps.setString(1, regionAndStatus.get(0));
+			 if (regionAndStatus.get(1) != null) {
+		            ps.setString(2, regionAndStatus.get(1));
+		        }
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
+						res.getString(4)));
+			}
+			System.out.println("Import inventory calls by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import inventory calls by region failed");
+		}
+		return calls;
+	}
+
+	/**
+	 * salesPatternToDB-a method that will save a salesPattern in the DB
+	 * 
+	 * @param SalesPattern sp
+	 */
+
+	public static void salesPatternToDB(SalesPattern sp) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.sales_patterns (patternID, discountType, startDay,endDay,startHour,duration) "
+							+ "VALUES (?, ?, ?, ?, ?, ?)");
+			try {
+				ps.setInt(1, sp.getPatternID());
+				ps.setString(2, sp.getDiscountType());
+				ps.setString(3, sp.getStartDay());
+				ps.setString(4, sp.getEndDay());
+				ps.setString(5, sp.getStartHour());
+				ps.setString(6, sp.getDuration());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createSalesPattern failed");
+		}
+		System.out.println("Enter new SalesPattern successfully");
+	}
+
+	public static ArrayList<SalesPattern> importSalesPattern() {
+		ArrayList<SalesPattern> salespatterns = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.sales_patterns");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				salespatterns.add(
+						new SalesPattern(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
+								rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return salespatterns;
+	}
+
+	public static ArrayList<Sale> importSales() {
+		ArrayList<Sale> sale = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
+						rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration"),
+						Region.valueOf(rs.getString("region")), rs.getInt("saleID"),
+						SaleStatus.valueOf(rs.getString("status"))));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return sale;
+	}
+
+	public static void updateSaleInDB(Sale sale) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.sales(region, saleID, patternID,status) " + "VALUES (?, ?, ?, ?)");
+			try {
+				ps.setString(1, sale.getRegion().toString());
+				ps.setInt(2, sale.getSaleID());
+				ps.setInt(3, sale.getPatternID());
+				ps.setString(4, sale.getStatus().toString());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on createSales failed");
+		}
+		System.out.println("Enter new Sales successfully");
+	}
+
+	
+	
+	public static void closeInventoryCalls(ArrayList<InventoryCall> callsToDelete) {
+		try {
+			String inClause = String.join(", ", Collections.nCopies(callsToDelete.size(), "?"));
+
+			String deleteStatement = "DELETE FROM inventory_calls WHERE callID IN (" + inClause + ")";
+
+			PreparedStatement ps = dbConnector.prepareStatement(deleteStatement);
+			for (int i = 0; i < callsToDelete.size(); i++) {
+			    ps.setInt(i + 1, callsToDelete.get(i).getCallID());
+			}
+			ps.executeUpdate();
+
+			System.out.println("Delete inventory calls succeeded");
+			} catch (SQLException e) {
+				System.out.println("Delete inventory calls failed");
+			}
+	}
+	
 }

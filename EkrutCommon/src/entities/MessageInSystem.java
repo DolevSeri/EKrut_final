@@ -14,12 +14,11 @@ public class MessageInSystem implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 5325003775890494869L;
-	private int msgID;
+	private static int msgID;
 	private Role role;
 	private String description;
 
 	public MessageInSystem(int msgID, Role role, String description) {
-		super();
 		this.msgID = msgID;
 		this.role = role;
 		this.description = description;

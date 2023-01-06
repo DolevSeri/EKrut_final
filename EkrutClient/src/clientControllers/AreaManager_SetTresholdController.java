@@ -39,7 +39,7 @@ public class AreaManager_SetTresholdController {
 	private Button btnSave;
 
 	@FXML
-	private Button btnRefresh;
+	private Button btnHelp;
 
 	@FXML
 	private Button btnexit;
@@ -52,13 +52,14 @@ public class AreaManager_SetTresholdController {
 	@FXML
 	public void initialize() {
 		tblDevice.setEditable(true);
+		lblRegion.setText(area);
 		setColumns();
 		setTableItems();
 	}
 
 	@FXML
 	void clickBackBtn(ActionEvent event) {
-		scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
+		scene.back(event, "/clientGUI/AreaManager_InventoryManagementForm.fxml");
 
 	}
 
@@ -84,6 +85,7 @@ public class AreaManager_SetTresholdController {
 			lblError.setVisible(false);
 			devicesToUpdate.addAll(tblDevice.getItems());
 			ClientUI.chat.accept(new Message(Request.Threshold_Update_Request,devicesToUpdate));
+			setTableItems();
 
 		} else {
 			lblError.setText("Error: Threshold values must be positive integers");
@@ -92,8 +94,9 @@ public class AreaManager_SetTresholdController {
 	}
 
 	@FXML
-	void clickBtnRefresh() {
-		setTableItems();
+	void clickBtnHelp() {
+		scene.popUpMessage("How to update threshold:\n1. Double click the number you want to update\n2. Change the number to the new thresholds\n3. Press ENTER\n4. Click save ");
+		
 	}
 	
 	@FXML

@@ -82,19 +82,19 @@ public enum Request {
 		}
 
 	},
-	DeliveryReportData_Imported{
+	DeliveryReportData_Imported {
 		public String toString() {
 			return "Delivery report imported successfully";
 		}
-		
+
 	},
 	OrdersReportData_Imported {
 		public String toString() {
 			return "Orders data imported successfully";
 		}
 	},
-	
-	GetInventoryReportData{
+
+	GetInventoryReportData {
 		public String toString() {
 			return "Inventory report data imported successfully";
 		}
@@ -104,7 +104,7 @@ public enum Request {
 			return "Inventory data imported successfully";
 		}
 	},
-	GetCostumersReportData{
+	GetCostumersReportData {
 		public String toString() {
 			return "Costumers report data imported successfully";
 		}
@@ -164,21 +164,22 @@ public enum Request {
 			return "Customer status updated successfully!";
 		}
 	}, 
-	Send_msg_to_system{
+	Send_msg_to_system {
 		public String toString() {
 			return "System set message for AreaManagers!";
 		}
 	},
-	Create_Inventory_Call{
+	Create_Inventory_Call {
 		public String toString() {
 			return "Area Manager request to open inventory call";
 		}
 	},
-	Inventory_Call_Created{
+	Inventory_Call_Created {
 		public String toString() {
 			return "Inventory call created successfully";
 		}
 	},
+
 	Get_User_Data{
 		public String toString() {
 			return "Request to pull user data";
@@ -189,4 +190,106 @@ public enum Request {
 			return "User data imported successfully";
 		}
 	}
+
+	getOrders {
+		public String toString() {
+			return "Request to import orders";
+		}
+	},
+	Orders_imported {
+		public String toString() {
+			return "Orders imported succsesfuly!";
+		}
+	},
+	SaveOrder {
+		public String toString() {
+			return "Request to save Order";
+		}
+	},
+	Order_Saved {
+		public String toString() {
+			return "Orders succsesfuly saved!";
+		}
+	},
+	Update_Products_In_Device {
+		public String toString() {
+			return "Request to update products in device";
+		}
+	},
+	Products_updated_In_Device {
+		public String toString() {
+			return "Products succsesfuly updated in device!";
+		}
+	},
+	get_Msg_In_System {
+		public String toString() {
+			return "Request to import msg from DB";
+		}
+	},
+	imported_Msg_In_System {
+		public String toString() {
+			return "succsesfuly imported messages! ";
+		}
+	},
+	Get_Inventory_Calls_By_Area {
+		public String toString() {
+			return "Request inventory calls by area";
+		}
+	},
+	Inventory_Calls_Imported {
+		public String toString() {
+			return "Inventory calls imported successfully";
+		}
+	},
+	Inventory_Calls_To_Close {
+		public String toString() {
+			return "Request to close inventory calls";
+		}
+	},
+	Inventory_Calls_Closed {
+		public String toString() {
+			return "Inventory calls closed successfully";
+		}
+	},
+	Update_SalesPattern {
+		public String toString() {
+			return "Request to update Sales pattern";
+		}
+	},
+	SalesPattern_Saved {
+		public String toString() {
+			return "Sales pattern succsesfuly saved!";
+		}
+	},
+	import_SalesPattern {
+		public String toString() {
+			return "Request to import SalesPattern from DB";
+		}
+	},
+	imported_SalesPattern {
+		public String toString() {
+			return "succsesfuly imported SalesPattern! ";
+		}
+	},
+	import_Sales{
+		public String toString() {
+			return "Request to import Sales from DB";
+		}
+	},
+	imported_Sales {
+		public String toString() {
+			return "succsesfuly imported Sale! ";
+		}
+	},
+	Update_Sales {
+		public String toString() {
+			return "Request to update Sales";
+		}
+	},
+	Sales_Saved {
+		public String toString() {
+			return "Sales  succsesfuly saved!";
+		}
+	},
+
 }

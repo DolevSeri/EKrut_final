@@ -7,27 +7,35 @@ package client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import common.ChatIF;
 import entities.Costumer;
-import entities.DeliveryReport;
 import entities.CostumersReport;
+import entities.DeliveryReport;
 import entities.Device;
+import entities.InventoryCall;
 import entities.InventoryReport;
-import entities.Product;
-import entities.ProductInDevice;
 import entities.Message;
+import entities.Order;
 import entities.OrderReport;
+import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.CartController;
 import entityControllers.CostumerController;
-import entityControllers.DeliveryReportController;
 import entityControllers.CostumersReportController;
+import entityControllers.DeliveryReportController;
 import entityControllers.DeviceController;
+import entityControllers.InventoryCallController;
 import entityControllers.InventoryReportController;
+import entityControllers.OrderController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
+import entityControllers.SaleController;
+import entityControllers.SalesPatternController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
@@ -61,8 +69,13 @@ public class ChatClient extends AbstractClient {
 	public static boolean awaitResponse = false;
 	public static Object lock = new Object();
 	public static CartController cartController = new CartController();
+	public static OrderController orderController = new OrderController();
+	public static InventoryCallController inventoryCallController = new InventoryCallController();
+	public static SalesPatternController salesPatternController=new SalesPatternController();
+	public static SaleController salesController=new SaleController();
 
-	// Constructors ****************************************************
+
+// Constructors ****************************************************
 
 	/**
 	 * Constructs an instance of the chat client.
@@ -155,7 +168,30 @@ public class ChatClient extends AbstractClient {
 			break;
 		case Inventory_Call_Created:
 			break;
+		case Orders_imported:
+			List<Order> orders = (ArrayList<Order>) message.getObject();
+			orderController.setOrderList(orders);
+			break;
+		case Order_Saved:
+			break;
+		case Products_updated_In_Device:
+			break;
+		case SalesPattern_Saved:
+			break;
+		case imported_SalesPattern :
+			salesPatternController.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>)message.getObject()));
+			break;
+		case imported_Sales:
+			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>)message.getObject()));
+			break;
+		case Sales_Saved:
+			break;
+		case Inventory_Calls_Imported:
+			inventoryCallController.setAreaCalls(
+					FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			break;
 		default:
+
 			break;
 		}
 		synchronized (lock) {

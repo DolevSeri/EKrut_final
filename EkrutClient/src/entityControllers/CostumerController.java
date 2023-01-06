@@ -35,7 +35,6 @@ public class CostumerController {
 	}
 
 	public void setAreaCostumers(ObservableList<Costumer> areaCostumers) {
-		this.areaCostumers.clear();
 		this.areaCostumers = areaCostumers;
 	}
 }

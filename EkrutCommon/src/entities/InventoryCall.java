@@ -8,24 +8,31 @@ public class InventoryCall implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private String deviceNeme, productName;
+	private String deviceName, productName;
 	private int callID;
-	CallStatus isOpen;
+	CallStatus status;
 	
-	public InventoryCall(String deviceNeme, String productName, int callID, CallStatus isOpen) {
-		super();
-		this.deviceNeme = deviceNeme;
+	public InventoryCall(int callID, CallStatus status,  String deviceName, String productName) {
+		this.deviceName = deviceName;
 		this.productName = productName;
 		this.callID = callID;
-		this.isOpen = isOpen;
+		this.status = status;
 	}
 
-	public String getDeviceNeme() {
-		return deviceNeme;
+	public String getDeviceName() {
+		return deviceName;
 	}
 
-	public void setDeviceNeme(String deviceNeme) {
-		this.deviceNeme = deviceNeme;
+	public CallStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(CallStatus status) {
+		this.status = status;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
 	}
 
 	public String getProductName() {
@@ -36,12 +43,12 @@ public class InventoryCall implements Serializable{
 		this.productName = productName;
 	}
 
-	public CallStatus getIsOpen() {
-		return isOpen;
+	public int getCallID() {
+		return callID;
 	}
 
-	public void setIsOpen(CallStatus isOpen) {
-		this.isOpen = isOpen;
+	public void setCallID(int callID) {
+		this.callID = callID;
 	}
 	
 	

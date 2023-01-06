@@ -69,13 +69,13 @@ public class ProductInCartController {
 	void clickOnMinus(ActionEvent event) {
 		if (productController.getQuantityInOrder() == 0)
 			return;
-		if (product.getQuantity() == 0)
+		if (product.getQuantity() == 0  )
 			productController.resetErrorLabel();
 		productController.setQuantityInOrder(productController.getQuantityInOrder() - 1);
 		product.setQuantity(product.getQuantity() + 1);
 		if (productController.getQuantityInOrder() == 0) {
 			client_OrderScreenController.selectedProducts.remove(product);
-			client_OrderScreenController.removeFromCart(product, null);
+			// client_OrderScreenController.removeFromCart(product, null);
 			lblQuantity.setText(String.valueOf(0));
 			lblPrice.setText(String.valueOf(0));
 		} else {
