@@ -2,37 +2,42 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="221.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="231.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductController">
    <children>
-      <ImageView fx:id="productLogo" fitHeight="136.0" fitWidth="173.0" layoutX="35.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="lblPrice" alignment="CENTER" layoutX="10.0" layoutY="189.0" prefHeight="19.0" prefWidth="50.0" text="price ">
+      <ImageView fx:id="productLogo" fitHeight="124.0" fitWidth="162.0" layoutX="33.0" layoutY="35.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblPrice" alignment="CENTER" layoutX="2.0" layoutY="198.0" prefHeight="19.0" prefWidth="50.0" text="price ">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="addToCart" layoutX="87.0" layoutY="184.0" mnemonicParsing="false" onAction="#clickOnAdd" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #00FF00;" text="Add" textFill="#0000008c">
+      <Button fx:id="addToCart" layoutX="83.0" layoutY="193.0" mnemonicParsing="false" onAction="#clickOnAdd" prefHeight="26.0" prefWidth="50.0" style="-fx-background-color: #00FF00;" text="Add" textFill="#0000008c">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Label fx:id="lblName" alignment="CENTER" layoutX="50.0" layoutY="161.0" prefHeight="18.0" prefWidth="136.0" text="name">
+      <Label fx:id="lblName" alignment="CENTER" layoutX="37.0" layoutY="161.0" prefHeight="18.0" prefWidth="136.0" text="name">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblSale" alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="18.0" prefWidth="42.0" />
-      <Label layoutX="50.0" layoutY="189.0" text="ILS">
+      <Label layoutX="43.0" layoutY="198.0" text="ILS">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="lblError" alignment="CENTER" layoutX="62.0" layoutY="144.0" prefHeight="18.0" prefWidth="118.0" textFill="#df0a0a">
+      <Label fx:id="lblError" alignment="CENTER" layoutX="137.0" layoutY="181.0" prefHeight="42.0" prefWidth="67.0" textFill="#df0a0a">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
+      <ImageView fx:id="imageSale" fitHeight="39.0" fitWidth="44.0" layoutX="5.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../EkrutCommon/src/images/sale.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -92,51 +92,48 @@ public class IdentificationController {
 			// will be shown
 			lblErrorOnDetails.setVisible(true);
 			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
-		}
-		else {
+		} else {
 			if (ChatClient.userController.getUser().isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
-			} 
-			else {
-				
-				
+			} else {
+
 				// loading next screen for specific user.
-				 if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
+				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
 					ClientUI.chat
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-					
-					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")&&!(ChatClient.costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED"))) {
+
+					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")
+							&& !(ChatClient.costumerController.getCostumer().getStatus().toString()
+									.equals("NOTAPPROVED"))) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
-					} else if(ChatClient.userController.getUser().getConfiguration().toString().equals("EK")&&!(ChatClient.costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED"))){
+					} else if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")
+							&& !(ChatClient.costumerController.getCostumer().getStatus().toString()
+									.equals("NOTAPPROVED"))) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
-					if(ChatClient.costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED")) {
+					if (ChatClient.costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED")) {
 						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 						newScreen.setScreen(new Stage(), "/clientGUI/ScreenForNotApproveUserAfterLogin.fxml");
 					}
-					
 
-				} 
-				else {
-					
-					
-						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-						newScreen.setScreen(new Stage(),
-								"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
-					
-					
+				} else {
+
+					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
+					newScreen.setScreen(new Stage(),
+							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+
 				}
 			}
 		}
-		
+
 	}
 
 	/**
-	 * @author  clickOnQrImage-a method that gets an action:clicked on QR
-	 *         image to a subscriber,then client sends login request to server. usernameAndPsw - an
-	 *         ArrayList that keeps the user name and password and send it to
+	 * @author clickOnQrImage-a method that gets an action:clicked on QR image to a
+	 *         subscriber,then client sends login request to server. usernameAndPsw
+	 *         - an ArrayList that keeps the user name and password and send it to
 	 *         server.
 	 * @param event
 	 * @throws Exception
@@ -160,14 +157,13 @@ public class IdentificationController {
 				// loading next screen for specific user.
 				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
 					ClientUI.chat
-					.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
+							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 					} else {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
-					
 
 				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary

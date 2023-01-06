@@ -259,7 +259,7 @@ public enum Request {
 			return "succsesfuly imported SalesPattern! ";
 		}
 	},
-	import_Sales{
+	import_Sales {
 		public String toString() {
 			return "Request to import Sales from DB";
 		}
@@ -276,9 +276,13 @@ public enum Request {
 	},
 	Sales_Saved {
 		public String toString() {
-			return "Sales  succsesfuly saved!";
+			return "Sales  succsesfully saved!";
 		}
 	},
-	
-	
+	System_msg_updated {
+		public String toString() {
+			return "System msg updated succssesfully!";
+		}
+	},
+
 }

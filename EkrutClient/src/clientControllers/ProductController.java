@@ -1,6 +1,8 @@
 package clientControllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import entities.ProductInDevice;
 import javafx.event.ActionEvent;
@@ -26,7 +28,7 @@ public class ProductController {
 	private Label lblPrice;
 
 	@FXML
-	private Label lblSale;
+	private ImageView imageSale;
 
 	@FXML
 	private ImageView productLogo;
@@ -45,6 +47,10 @@ public class ProductController {
 	 * @param client_OrderScreenController - contain the main order screen
 	 *                                     controller/
 	 */
+	public void initialize() {
+		imageSale.setVisible(false);
+	}
+
 	public void resetErrorLabel() {
 		lblError.setText(null);
 	}
@@ -67,7 +73,7 @@ public class ProductController {
 
 	public void addToCart() throws IOException {
 		if (product.getQuantity() == 0) {
-			lblError.setText("Out of stock!");
+			lblError.setText("Out of\n stock!");
 		} else {
 			product.setQuantity(product.getQuantity() - 1); // update the quantity in device.
 			client_OrderScreenController.selectedProducts.put(product, ++quantityInOrder);

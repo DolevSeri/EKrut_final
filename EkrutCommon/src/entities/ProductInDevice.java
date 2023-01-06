@@ -1,6 +1,5 @@
 package entities;
 
-import enums.Devices;
 import enums.ProductStatus;
 
 public class ProductInDevice extends Product {
