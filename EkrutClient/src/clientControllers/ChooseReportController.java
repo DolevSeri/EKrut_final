@@ -173,15 +173,13 @@ public class ChooseReportController {
 				cmbArea.setVisible(true);
 				lblArea.setVisible(true);	
 			}
-
-	
 			break;
 		
-		case "Orders report":
+		case "Orders report":			
 		case "Clients report":
+			cmbDevice.setValue("Choose Device");
 			cmbDevice.setVisible(false);
 			lblDevice.setVisible(false);
-			cmbDevice.setValue("Choose Device");
 			if(isCEO) {
 				cmbArea.setValue(null);
 				cmbArea.setVisible(true);
@@ -197,7 +195,6 @@ public class ChooseReportController {
 			lblArea.setVisible(false);
 			cmbDevice.setValue("Choose Device");
 			break;	
-			
 		}
 
 	}
@@ -212,12 +209,16 @@ public class ChooseReportController {
 	@FXML
 	void clickBtnShowReports(ActionEvent event) {
 		try {
+			String reportType = cmbType.getValue().toString();
+
+			if(reportType.equals("Orders report") || reportType.equals("Clients report")) {
+				cmbDevice.setValue("Choose Device");
+			}
 			fields = new ArrayList<String>(Arrays.asList(cmbArea.getValue(), cmbYear.getValue(), cmbMonth.getValue(),
 					cmbType.getValue(), cmbDevice.getValue()));
-			if (cmbType.getValue() == null) {
-				errorFieldsMsg.setVisible(true);
-			}
+			
 			if (fields.contains(null)) {
+				errorFieldsMsg.setText("Not all fields were chosen");
 				errorFieldsMsg.setVisible(true);
 			} else {
 				switch (fields.get(3).toString()) {
@@ -243,7 +244,6 @@ public class ChooseReportController {
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
 					try {
 						ClientUI.chat.accept(new Message(Request.GetInventoryReportData, fields));
-						System.out.println(ChatClient.inventoryReportController.getInventoryReport().toString());
 					} catch (NullPointerException e) {
 						errorFieldsMsg.setText("No such report");
 						errorFieldsMsg.setVisible(true);
@@ -253,6 +253,8 @@ public class ChooseReportController {
 						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 						scene.setScreen(new Stage(), "/clientGUI/MonthllyInventoryReport.fxml");
 					}
+					errorFieldsMsg.setText("No such report");
+					errorFieldsMsg.setVisible(true);
 					break;
 					
 				case "Orders report":
@@ -260,7 +262,6 @@ public class ChooseReportController {
 					// NEED TO SEND THE VALUES TO SQL AND GENERATE REPORT
 					try {
 						ClientUI.chat.accept(new Message(Request.GetOrdersReportData, fields));
-						System.out.println(ChatClient.orderReportController.getOrderReport().toString());
 					} catch (NullPointerException e) {
 						errorFieldsMsg.setText("No such report");
 						errorFieldsMsg.setVisible(true);
@@ -289,6 +290,8 @@ public class ChooseReportController {
 						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 						scene.setScreen(new Stage(), "/clientGUI/MonthllyClientsReport.fxml");
 					}
+					errorFieldsMsg.setText("No such report");
+					errorFieldsMsg.setVisible(true);
 					break;
 
 				default:
@@ -298,7 +301,8 @@ public class ChooseReportController {
 
 			}
 		} catch (NullPointerException e) {
-			System.out.println("Null pointer exception - error msg shown in client GUI");
+			errorFieldsMsg.setText("Not all fields were chosen");
+			errorFieldsMsg.setVisible(true);
 		}
 
 	}

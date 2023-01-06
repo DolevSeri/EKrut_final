@@ -287,7 +287,7 @@ public class MySqlController {
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE " + "month = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventory_report WHERE " + "month = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -615,7 +615,7 @@ public class MySqlController {
 		itemsList = itemsList.replaceFirst(",", "");
 
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventory_report "
 					+ "(month, year, deviceName, products, itemUnderThres, deviceThres) VALUES(?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setString(1, month);
