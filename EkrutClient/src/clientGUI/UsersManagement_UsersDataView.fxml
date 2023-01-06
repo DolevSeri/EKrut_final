@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_UserInformationController">
+   <children>
+      <Pane layoutX="481.0" prefHeight="510.0" prefWidth="314.0" style="-fx-background-color: #D0A9F5;">
+         <children>
+            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="257.0" layoutY="13.0">
+               <image>
+                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="262.0" fitWidth="297.0" layoutX="8.0" layoutY="123.0">
+               <image>
+                  <Image url="@../../../EkrutCommon/src/images/usersInfoView.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnexit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBack" layoutX="15.0" layoutY="468.0" mnemonicParsing="false" onAction="#clickBtnBack" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label layoutX="98.0" layoutY="-1.0" prefHeight="89.0" prefWidth="292.0" text="User Information" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="39.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="138.0" text="First Name:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="45.0" layoutY="178.0" text="Last Name:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="255.0" prefHeight="30.0" prefWidth="123.0" text="Phone Number:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="47.0" layoutY="295.0" prefHeight="30.0" prefWidth="62.0" text="Email:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="47.0" layoutY="335.0" prefHeight="30.0" prefWidth="99.0" text="Credit Card:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="215.0" prefHeight="30.0" prefWidth="62.0" text="ID:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtUserName" editable="false" layoutX="195.0" layoutY="99.0" promptText="Enter Username" />
+      <Button fx:id="btnSend" layoutX="211.0" layoutY="442.0" mnemonicParsing="false" onAction="#clickBtnSend" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Send Request" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label layoutX="45.0" layoutY="99.0" text="User Name:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblFName" layoutX="195.0" layoutY="138.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblLName" layoutX="195.0" layoutY="178.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblID" layoutX="195.0" layoutY="215.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPhone" layoutX="195.0" layoutY="255.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblEmail" layoutX="195.0" layoutY="295.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCreditCard" layoutX="195.0" layoutY="335.0" prefHeight="20.0" prefWidth="162.0">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="chbMembership" layoutX="47.0" layoutY="375.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="153.0" text="Set As Member" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </CheckBox>
+      <Button fx:id="btnImport" layoutX="383.0" layoutY="98.0" mnemonicParsing="false" onAction="#clickBtnImport" prefHeight="28.0" prefWidth="88.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Import" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Button fx:id="btnUpdate" layoutX="210.0" layoutY="442.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Update" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <TextField fx:id="txtCreditCard" editable="false" layoutX="195.0" layoutY="335.0" promptText="enter Credit Card" />
+      <Label fx:id="lblErrorMsg" layoutX="155.0" layoutY="414.0" prefHeight="20.0" prefWidth="257.0" textFill="RED">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

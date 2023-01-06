@@ -40,8 +40,17 @@ public class User implements Serializable {
 		this.id = id;
 		this.role = role;
 		this.region = region;
-		this.configuration = configuration;
-		
+		this.configuration = configuration;	
+	}
+	public User(String username, String firstName, String lastName, String email, String phoneNumber,
+			String id) {
+		super();
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.id = id;
 	}
 	public User(String username) {
 		this.username = username;
