@@ -17,6 +17,8 @@ import entities.Device;
 import entities.InventoryReport;
 import entities.Product;
 import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.Message;
 import entities.Order;
 import entities.OrderReport;
@@ -31,6 +33,7 @@ import entityControllers.InventoryReportController;
 import entityControllers.OrderController;
 import entityControllers.OrderReportController;
 import entityControllers.ProductCatalogController;
+import entityControllers.SaleController;
 import entityControllers.SalesPatternController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
@@ -67,6 +70,8 @@ public class ChatClient extends AbstractClient {
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
 	public static SalesPatternController salesPatternController=new SalesPatternController();
+	public static SaleController salesController=new SaleController();
+
 
 	// Constructors ****************************************************
 
@@ -170,6 +175,14 @@ public class ChatClient extends AbstractClient {
 		case Products_updated_In_Device:
 			break;
 		case SalesPattern_Saved:
+			break;
+		case imported_SalesPattern :
+			salesPatternController.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>)message.getObject()));
+			break;
+		case imported_Sales:
+			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>)message.getObject()));
+			break;
+		case Sales_Saved:
 			break;
 		default:
 			break;
