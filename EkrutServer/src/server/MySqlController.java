@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1031,19 +1032,27 @@ public class MySqlController {
 		}
 		return null;
 	}
-	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
+
+	public static ArrayList<InventoryCall> 
+	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
 		ArrayList<InventoryCall> calls = new ArrayList<>();
 
 		try {
-			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls " +
-                    "JOIN devices ON inventory_calls.deviceName = devices.deviceName " +
-                    "WHERE devices.region = ?");
-			ps.setString(1, region);
+			String query = "SELECT inventory_calls.* FROM inventory_calls "
+					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?";
+			if (regionAndStatus.get(1) != null) {
+				query += " AND inventory_calls.status = ?";
+			}
+			ps = dbConnector.prepareStatement(query);
+			ps.setString(1, regionAndStatus.get(0));
+			 if (regionAndStatus.get(1) != null) {
+		            ps.setString(2, regionAndStatus.get(1));
+		        }
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
-				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), 
-						res.getString(3), res.getString(4)));
+				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
+						res.getString(4)));
 			}
 			System.out.println("Import inventory calls by region succeeded");
 		} catch (SQLException e) {
@@ -1051,7 +1060,6 @@ public class MySqlController {
 		}
 		return calls;
 	}
-
 
 	/**
 	 * salesPatternToDB-a method that will save a salesPattern in the DB
@@ -1124,14 +1132,12 @@ public class MySqlController {
 	public static void updateSaleInDB(Sale sale) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"INSERT INTO ekrut.sales(region, saleID, patternID,status) "
-							+ "VALUES (?, ?, ?, ?)");
+					"INSERT INTO ekrut.sales(region, saleID, patternID,status) " + "VALUES (?, ?, ?, ?)");
 			try {
 				ps.setString(1, sale.getRegion().toString());
 				ps.setInt(2, sale.getSaleID());
-				ps.setInt(3,sale.getPatternID());
-				ps.setString(4,sale.getStatus().toString());
-				
+				ps.setInt(3, sale.getPatternID());
+				ps.setString(4, sale.getStatus().toString());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1146,7 +1152,24 @@ public class MySqlController {
 		System.out.println("Enter new Sales successfully");
 	}
 
-		
 	
+	
+	public static void closeInventoryCalls(ArrayList<InventoryCall> callsToDelete) {
+		try {
+			String inClause = String.join(", ", Collections.nCopies(callsToDelete.size(), "?"));
 
+			String deleteStatement = "DELETE FROM inventory_calls WHERE callID IN (" + inClause + ")";
+
+			PreparedStatement ps = dbConnector.prepareStatement(deleteStatement);
+			for (int i = 0; i < callsToDelete.size(); i++) {
+			    ps.setInt(i + 1, callsToDelete.get(i).getCallID());
+			}
+			ps.executeUpdate();
+
+			System.out.println("Delete inventory calls succeeded");
+			} catch (SQLException e) {
+				System.out.println("Delete inventory calls failed");
+			}
+	}
+	
 }
