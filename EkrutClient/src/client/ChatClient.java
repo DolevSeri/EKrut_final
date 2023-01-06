@@ -16,16 +16,12 @@ import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
 import entities.InventoryReport;
-
-=======
-import entities.Product;
-import entities.ProductInDevice;
-import entities.Sale;
-import entities.SalesPattern;
 import entities.Message;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
+import entities.Sale;
+import entities.SalesPattern;
 import entities.Subscriber;
 import entities.User;
 import entityControllers.CartController;

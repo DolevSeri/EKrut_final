@@ -275,6 +275,10 @@ public class EchoServer extends AbstractServer {
 				client.sendToClient(new Message(Request.Inventory_Calls_Imported,
 						MySqlController.getAllCallsByArea(callsArea)));
 			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			
 
 		case Update_SalesPattern:
 			SalesPattern sp= (SalesPattern) messageFromClient.getObject();

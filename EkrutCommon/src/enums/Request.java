@@ -238,7 +238,7 @@ public enum Request {
 		public String toString() {
 			return "Inventory calls closed successfully";
 		}
-	}
+	},
 	Update_SalesPattern {
 		public String toString() {
 			return "Request to update Sales pattern";
