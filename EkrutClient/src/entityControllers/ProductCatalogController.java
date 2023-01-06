@@ -15,8 +15,9 @@ public class ProductCatalogController {
 	public void setProductCatalog(ObservableList<ProductInDevice> observableList) {
 		productsCatalog = observableList;
 	}
-	
-	public ObservableList<String> getProductsInDevicesNames(){
+
+	public ObservableList<String> getProductsInDevicesNames() {
+		productsInDevicesNames.clear();
 		for (ProductInDevice product : productsCatalog) {
 			productsInDevicesNames.add(product.getProductName());
 		}
