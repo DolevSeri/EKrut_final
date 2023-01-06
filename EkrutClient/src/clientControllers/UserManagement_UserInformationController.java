@@ -71,6 +71,7 @@ public class UserManagement_UserInformationController {
 	public UserManagement_UserInformationController(boolean isUpdate) {
 		this.isUpdate = isUpdate;
 	}
+	public UserManagement_UserInformationController() {}
 	
 	public void initialize() {
 		lblErrorMsg.setVisible(false);
