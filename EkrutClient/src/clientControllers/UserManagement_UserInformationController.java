@@ -75,6 +75,7 @@ public class UserManagement_UserInformationController {
 	
 	public void initialize() {
 		lblErrorMsg.setVisible(false);
+		txtUserName.setEditable(true);
 		if (isUpdate) {
 			txtCreditCard.setVisible(false);
 			lblCreditCard.setVisible(true);
@@ -100,9 +101,9 @@ public class UserManagement_UserInformationController {
 			lblErrorMsg.setText("You must enter username!");
 		}
 		else {
-			ClientUI.chat.accept(new Message(Request.Get_User_Data, userName));
-			userToApprove = ChatClient.userController.getUser();
-			if (!ChatClient.userController.isUserExist()) {
+			ClientUI.chat.accept(new Message(Request.Get_User_Data, userInfo));
+			userToApprove = ChatClient.userCreateUpdate.getUser();
+			if (!ChatClient.userCreateUpdate.isUserExist()) {
 				lblErrorMsg.setVisible(true);
 				lblErrorMsg.setText("Username not exist or already registered as customer");
 			}

@@ -335,6 +335,14 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+		case Get_User_Data:
+			User user1 = MySqlController.importUserData((ArrayList<String>)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.User_Data_Imported, user1));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
 		default:
 			break;
 		}
