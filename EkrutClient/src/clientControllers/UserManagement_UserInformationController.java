@@ -106,7 +106,7 @@ public class UserManagement_UserInformationController {
 			userToApprove = ChatClient.userCreateUpdate.getUser();
 			if (!ChatClient.userCreateUpdate.isUserExist()) {
 				lblErrorMsg.setVisible(true);
-				lblErrorMsg.setText("Username not exist or already registered as customer");
+				lblErrorMsg.setText("User name not exist or already registered as customer");
 			}
 			else {
 				lblFName.setText(userToApprove.getFirstName());
