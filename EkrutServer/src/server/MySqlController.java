@@ -1032,8 +1032,6 @@ public class MySqlController {
 	}
 
 	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
-	public static ArrayList<InventoryCall> 
-	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
 		ArrayList<InventoryCall> calls = new ArrayList<>();
 
@@ -1041,6 +1039,26 @@ public class MySqlController {
 			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls "
 					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?");
 			ps.setString(1, region);
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
+						res.getString(4)));
+			}
+			System.out.println("Import inventory calls by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import inventory calls by region failed");
+		}
+		return calls;
+	}
+	
+	
+	
+	public static ArrayList<InventoryCall> 
+	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
+		PreparedStatement ps;
+		ArrayList<InventoryCall> calls = new ArrayList<>();
+
+		try {
 			String query = "SELECT inventory_calls.* FROM inventory_calls "
 					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?";
 			if (regionAndStatus.get(1) != null) {
