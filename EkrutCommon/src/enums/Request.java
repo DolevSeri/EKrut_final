@@ -299,5 +299,15 @@ public enum Request {
 			return "System msg updated succssesfully!";
 		}
 	},
+	Create_Customer_Request{
+		public String toString() {
+			return "Request to create new custumer";
+		}
+	},
+	Customer_Created{
+		public String toString() {
+			return "Customer created successfully";
+		}
+	}
 
 }

@@ -79,10 +79,12 @@ public class UserManagement_UserInformationController {
 		if (isUpdate) {
 			txtCreditCard.setVisible(false);
 			lblCreditCard.setVisible(true);
+			btnSend.setVisible(false);
 		}
 		else {
 			txtCreditCard.setVisible(true);
 			lblCreditCard.setVisible(false);
+			btnUpdate.setVisible(false);
 		}
 	}
 
@@ -114,16 +116,25 @@ public class UserManagement_UserInformationController {
 				lblEmail.setText(userToApprove.getEmail());
 				lblID.setText(userToApprove.getId());
 				lblPhone.setText(userToApprove.getPhoneNumber());
+				txtCreditCard.setEditable(true);
 			}
-
-		
 		}
 		
 	}
 
 	@FXML
 	void clickBtnSend(ActionEvent event) {
-
+		ArrayList<String> details = new ArrayList<>(Arrays.asList(txtUserName.getText(), txtCreditCard.getText()));
+		if(chbMembership.isSelected()) {
+			details.add("1");
+		}
+		else
+			details.add("-1");
+		ClientUI.chat.accept(new Message(Request.Create_Customer_Request, details));
+		if (chbMembership.isSelected())
+			scene.popUpMessage("Customer created successfully!\nThe customer recived 20% discount for his first purchase");
+		else
+			scene.popUpMessage("Customer created successfully!");
 	}
 
 	@FXML
