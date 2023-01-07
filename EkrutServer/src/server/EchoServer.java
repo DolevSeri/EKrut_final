@@ -17,6 +17,7 @@ import entities.Order;
 import entities.ProductInDevice;
 import entities.Sale;
 import entities.SalesPattern;
+import entities.SystemMessage;
 import entities.User;
 import enums.Request;
 import javafx.collections.FXCollections;
@@ -317,6 +318,15 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+		case Send_msg_to_system:
+			SystemMessage systemMsg = (SystemMessage) messageFromClient.getObject();
+			MySqlController.updateSystemMessageTable(systemMsg);
+			try {
+				client.sendToClient(new Message(Request.System_msg_updated, null));
+			}catch(IOException e) {
+				e.printStackTrace();
+        }
+        break;
 		case Inventory_Calls_To_Close:
 			MySqlController.closeInventoryCalls((ArrayList<InventoryCall>)messageFromClient.getObject());
 			try {

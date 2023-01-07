@@ -71,9 +71,8 @@ public class ChatClient extends AbstractClient {
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
 	public static InventoryCallController inventoryCallController = new InventoryCallController();
-	public static SalesPatternController salesPatternController=new SalesPatternController();
-	public static SaleController salesController=new SaleController();
-
+	public static SalesPatternController salesPatternController = new SalesPatternController();
+	public static SaleController salesController = new SaleController();
 
 // Constructors ****************************************************
 
@@ -178,20 +177,22 @@ public class ChatClient extends AbstractClient {
 			break;
 		case SalesPattern_Saved:
 			break;
-		case imported_SalesPattern :
-			salesPatternController.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>)message.getObject()));
+		case imported_SalesPattern:
+			salesPatternController
+					.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>) message.getObject()));
 			break;
 		case imported_Sales:
-			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>)message.getObject()));
+			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>) message.getObject()));
 			break;
 		case Sales_Saved:
 			break;
 		case Inventory_Calls_Imported:
-			inventoryCallController.setAreaCalls(
-					FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			inventoryCallController
+					.setAreaCalls(FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			break;
+		case System_msg_updated:
 			break;
 		default:
-
 			break;
 		}
 		synchronized (lock) {

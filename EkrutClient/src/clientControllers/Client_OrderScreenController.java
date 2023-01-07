@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -107,10 +108,10 @@ public class Client_OrderScreenController {
 				column = 0;
 				// Set grid width
 			}
+			GridPane.setMargin(anchorPane, new Insets(3));
 			gpCatalog.setMinHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setPrefHeight(Region.USE_COMPUTED_SIZE);
 			gpCatalog.setMaxHeight(Region.USE_COMPUTED_SIZE);
-			GridPane.setMargin(anchorPane, new Insets(3));
 		}
 	}
 

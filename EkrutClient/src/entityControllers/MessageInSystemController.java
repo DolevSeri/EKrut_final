@@ -2,7 +2,7 @@ package entityControllers;
 
 import java.util.ArrayList;
 
-import entities.MessageInSystem;
+import entities.SystemMessage;
 
 /**
  * class that will manage messages from system and holds all of the messages
@@ -11,13 +11,13 @@ import entities.MessageInSystem;
  *
  */
 public class MessageInSystemController {
-	private ArrayList<MessageInSystem> msgList = new ArrayList<>();
+	private ArrayList<SystemMessage> msgList = new ArrayList<>();
 
-	public void setMsgList(ArrayList<MessageInSystem> msgList) {
+	public void setMsgList(ArrayList<SystemMessage> msgList) {
 		this.msgList = msgList;
 	}
 
-	public ArrayList<MessageInSystem> getMsgList() {
+	public ArrayList<SystemMessage> getMsgList() {
 		return this.msgList;
 	}
 }
