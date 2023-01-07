@@ -88,6 +88,7 @@ public class UserManagement_UserInformationController {
 
 	@FXML
 	void clickBtnImport(ActionEvent event) {
+		lblErrorMsg.setVisible(false);
 		String userName = txtUserName.getText();
 		ArrayList<String> userInfo = new ArrayList<>();
 		if(isUpdate) {
@@ -96,7 +97,7 @@ public class UserManagement_UserInformationController {
 		else {
 			userInfo.addAll(Arrays.asList(userName, "NotSignUp"));
 		}
-		if(userName.equals(null)) {
+		if(userName.equals("")) {
 			lblErrorMsg.setVisible(true);
 			lblErrorMsg.setText("You must enter username!");
 		}
@@ -119,7 +120,6 @@ public class UserManagement_UserInformationController {
 		}
 		
 	}
-
 
 	@FXML
 	void clickBtnSend(ActionEvent event) {
