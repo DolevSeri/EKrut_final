@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -135,7 +136,8 @@ public class MySqlController {
 	 * @author ron
 	 */
 	public static void UserLogoutAndUpdateDB(User user) throws SQLException {
-		PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
+		PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? "
+				+ "WHERE username = ?");
 		System.out.println("Update succsed");
 		try {
 			ps.setBoolean(1, false);
@@ -146,35 +148,31 @@ public class MySqlController {
 		}
 	}
 
-//	public static String viewUser(String ID) {
-//		String sub = "";
-//		// Subscriber sub = new Subscriber(null, null, null, null, null, null, null);
-//		PreparedStatement stmt;
-//		System.err.println(ID);
-//		try {
-//			stmt = dbConnector.prepareStatement("SELECT * FROM ekrutdb.subscriber WHERE ID=\"" + ID + "\";");
-//			ResultSet res = stmt.executeQuery();
-//			// System.out.println(res.getNString(0));
-//			while (res.next()) {
-//				sub += (res.getString(1)) + " ";
-//				sub += (res.getString(2)) + " ";
-//				sub += (res.getString(3)) + " ";
-//				sub += (res.getString(4) + " ");
-//				sub += (res.getString(5)) + " ";
-//				sub += (res.getString(6) + " ");
-//				sub += (res.getString(7));
-//				System.out.println("Import data suceeded");
-//
-//			}
-//		} catch (SQLException e) {
-//			System.out.println("Import data fail!!!");
-//
-//		}
-//		System.out.println("!" + sub.toString());
-//
-//		return sub;
-//
-//	}
+	public static User importUserData(ArrayList<String> userInfo) {
+		String username = userInfo.get(0), status = userInfo.get(1);
+		User user = null;
+		PreparedStatement ps;
+		try {
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? AND role = ?");
+			try {
+				ps.setString(1, username);
+				ps.setString(2, status);
+			}catch(SQLException e) {
+				e.printStackTrace();
+				System.out.println("Enter parameter to query fail on importUserData");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				user = new User(username, rs.getString("firstName"), rs.getString("lastName"), 
+						rs.getString("email"), rs.getString("phoneNumber"), rs.getString("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Import user data fail on importUserData");
+		}
+		System.out.println("User information imported successfully");
+		return user;
+	}
 //
 //	public static void updateSubscriberTable(String[] updatedSubscriber) {
 //		PreparedStatement ps = null;
@@ -287,7 +285,7 @@ public class MySqlController {
 
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.inventoryreport WHERE " + "month = ? AND year = ? AND deviceName = ?");
+					"SELECT * FROM ekrut.inventory_report WHERE " + "month = ? AND year = ? AND deviceName = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -615,7 +613,7 @@ public class MySqlController {
 		itemsList = itemsList.replaceFirst(",", "");
 
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventoryreport "
+			PreparedStatement ps = dbConnector.prepareStatement("INSERT INTO ekrut.inventory_report "
 					+ "(month, year, deviceName, products, itemUnderThres, deviceThres) VALUES(?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setString(1, month);
@@ -770,8 +768,8 @@ public class MySqlController {
 				return costumer;
 			}
 		} catch (Exception e) {
-			System.out.println("Import orders data from orders table has failed!");
-			System.out.println("Failed at getOrdersDataOfDevice method");
+			System.out.println("Import costumer data from user and costumer tables has failed!");
+			System.out.println("Failed at getCostumerData method");
 		}
 		return null;
 	}
@@ -1034,6 +1032,8 @@ public class MySqlController {
 	}
 
 	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
+	public static ArrayList<InventoryCall> 
+	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
 		ArrayList<InventoryCall> calls = new ArrayList<>();
 
@@ -1041,6 +1041,16 @@ public class MySqlController {
 			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls "
 					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?");
 			ps.setString(1, region);
+			String query = "SELECT inventory_calls.* FROM inventory_calls "
+					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?";
+			if (regionAndStatus.get(1) != null) {
+				query += " AND inventory_calls.status = ?";
+			}
+			ps = dbConnector.prepareStatement(query);
+			ps.setString(1, regionAndStatus.get(0));
+			 if (regionAndStatus.get(1) != null) {
+		            ps.setString(2, regionAndStatus.get(1));
+		        }
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
 				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
@@ -1166,4 +1176,24 @@ public class MySqlController {
 		System.out.println("Enter new msg to system_message successfully");
 	}
 
+	
+	
+	public static void closeInventoryCalls(ArrayList<InventoryCall> callsToDelete) {
+		try {
+			String inClause = String.join(", ", Collections.nCopies(callsToDelete.size(), "?"));
+
+			String deleteStatement = "DELETE FROM inventory_calls WHERE callID IN (" + inClause + ")";
+
+			PreparedStatement ps = dbConnector.prepareStatement(deleteStatement);
+			for (int i = 0; i < callsToDelete.size(); i++) {
+			    ps.setInt(i + 1, callsToDelete.get(i).getCallID());
+			}
+			ps.executeUpdate();
+
+			System.out.println("Delete inventory calls succeeded");
+			} catch (SQLException e) {
+				System.out.println("Delete inventory calls failed");
+			}
+	}
+	
 }

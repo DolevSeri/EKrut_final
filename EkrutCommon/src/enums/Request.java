@@ -163,7 +163,7 @@ public enum Request {
 		public String toString() {
 			return "Customer status updated successfully!";
 		}
-	},
+	}, 
 	Send_msg_to_system {
 		public String toString() {
 			return "System set message for AreaManagers!";
@@ -179,6 +179,19 @@ public enum Request {
 			return "Inventory call created successfully";
 		}
 	},
+
+	Get_User_Data{
+		public String toString() {
+			return "Request to pull user data";
+		}
+	}, 
+	
+	User_Data_Imported{
+		public String toString() {
+			return "User data imported successfully";
+		}
+	},
+
 	getOrders {
 		public String toString() {
 			return "Request to import orders";
@@ -274,11 +287,13 @@ public enum Request {
 			return "Request to update Sales";
 		}
 	},
+	
 	Sales_Saved {
 		public String toString() {
 			return "Sales  succsesfully saved!";
 		}
 	},
+
 	System_msg_updated {
 		public String toString() {
 			return "System msg updated succssesfully!";

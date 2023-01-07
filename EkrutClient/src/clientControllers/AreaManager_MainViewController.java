@@ -1,9 +1,6 @@
 package clientControllers;
 
 import client.ChatClient;
-import client.ClientUI;
-import entities.Message;
-import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
