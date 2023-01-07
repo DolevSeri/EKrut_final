@@ -3,7 +3,11 @@ package entities;
 import java.io.Serializable;
 
 public class SalesPattern implements Serializable{
-   private int patternID=0;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private int patternID=0;
    private String discountType;
    private String startDay;
    private String endDay;

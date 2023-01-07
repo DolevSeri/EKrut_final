@@ -61,32 +61,32 @@
       <ComboBox fx:id="cmbSale" layoutX="169.0" layoutY="180.0" onAction="#chooseSalePatternComboBox" prefHeight="38.0" prefWidth="230.0" promptText="Choose Sale" />
       <Label fx:id="txtpatternID" layoutX="67.0" layoutY="250.0" prefHeight="18.0" prefWidth="114.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="txtDiscuntType" layoutX="227.0" layoutY="249.0" prefHeight="18.0" prefWidth="114.0">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="txtStartDay" layoutX="67.0" layoutY="304.0" prefHeight="18.0" prefWidth="114.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="txtEndDay" layoutX="227.0" layoutY="304.0" prefHeight="18.0" prefWidth="114.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="txtStartHour" layoutX="67.0" layoutY="357.0" prefHeight="18.0" prefWidth="104.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="txtDuration" layoutX="226.0" layoutY="357.0" prefHeight="18.0" prefWidth="114.0">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="14.0" />
          </font>
       </Label>
       <Label fx:id="lblPatternID" layoutX="67.0" layoutY="228.0" text="PatternID:" textFill="#8d48e1">

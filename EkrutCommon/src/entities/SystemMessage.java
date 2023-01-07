@@ -2,34 +2,46 @@ package entities;
 
 import java.io.Serializable;
 
+import enums.MessageStatus;
 import enums.Role;
 
 /**
  * Class using for Messages for managers from system
+ * 
  * @author Ron
  *
  */
-public class MessageInSystem implements Serializable{
+public class SystemMessage implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5325003775890494869L;
 	private static int msgID;
-	private Role role;
+	private String username;
 	private String description;
+	private MessageStatus status;
 
-	public MessageInSystem(int msgID, Role role, String description) {
+	public SystemMessage(int msgID, String username, String description, MessageStatus status) {
 		this.msgID = msgID;
-		this.role = role;
+		this.username = username;
 		this.description = description;
+		this.status = status;
 	}
 
 	public int getMsgID() {
 		return msgID;
 	}
 
-	public Role getRole() {
-		return role;
+	public MessageStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(MessageStatus status) {
+		this.status = status;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	public String getDescription() {
@@ -40,8 +52,8 @@ public class MessageInSystem implements Serializable{
 		this.msgID = msgID;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRole(String username) {
+		this.username = username;
 	}
 
 	public void setDescription(String description) {

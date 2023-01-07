@@ -11,12 +11,12 @@ import client.ChatClient;
 import client.ClientUI;
 import entities.Device;
 import entities.Message;
-import entities.MessageInSystem;
 import entities.Order;
 import entities.ProductInDevice;
+import entities.SystemMessage;
+import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Request;
-import enums.Role;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -33,7 +33,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
- * Controller that responsible for Confirmation order.
+ * Controller class that responsible for handling with Confirmation order.
  * 
  * @author ron
  *
@@ -65,6 +65,9 @@ public class Client_OrderConfirmationController {
 			.observableArrayList();
 	private List<ProductInDevice> products = new ArrayList<>();
 	private double totalPrice = 0;
+	private int tresholdLevel = 0;
+	private int cntUnderTreshold = 0;
+	private String deviceName;
 
 	public void setTotalPrice() {
 		double totalSum = 0;
@@ -77,6 +80,16 @@ public class Client_OrderConfirmationController {
 	}
 
 	public void initialize() throws IOException {
+		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area,
+				ChatClient.costumerController.getCostumer().getRegion().toString()));
+		for (Device device : ChatClient.deviceController.getAreaDevices()) {
+			System.out.println(device.getDeviceName());
+			if (ChatClient.costumerController.getCostumer().getDevice().equals(device.getDeviceName())) {
+				deviceName = device.getDeviceName();
+				tresholdLevel = device.getThreshold();
+				break;
+			}
+		}
 		for (ProductInDevice p : ChatClient.cartController.getCart().keySet()) {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/clientGUI/ProductInConfirmation.fxml"));
@@ -115,14 +128,19 @@ public class Client_OrderConfirmationController {
 
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
-		// updateSystemProductsUnderThreshold();
 		updateProductsInDevice();
-		System.out.println(ChatClient.orderController.getOrdersList().toString());
 		updateOrderInDB();
+		System.out.println(cntUnderTreshold);
+		if (cntUnderTreshold > 0)
+			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
+		newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderCompleteMsg.fxml");
-
+		if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")) {
+			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
+		} else {
+			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
+		}
 	}
 
 	public void updateOrderInDB() {
@@ -147,13 +165,16 @@ public class Client_OrderConfirmationController {
 
 	public void updateProductsInDevice() {
 		for (ProductInDevice p : ChatClient.productCatalogController.getProductCatalog()) {
+			if (p.getQuantity() <= tresholdLevel)
+				cntUnderTreshold++;
 			products.add(p);
 		}
 		for (ProductInDevice p : products) {
-			if (p.getQuantity() == 0)
+			if (p.getQuantity() == 0) {
 				p.setStatus(ProductStatus.NOTAVAILABLE);
-			else
+			} else {
 				p.setStatus(ProductStatus.AVAILABLE);
+			}
 		}
 		ClientUI.chat.accept(new Message(Request.Update_Products_In_Device, products));
 	}
@@ -163,26 +184,18 @@ public class Client_OrderConfirmationController {
 	 * threshold level in device.
 	 * 
 	 */
-	public void updateSystemProductsUnderThreshold() {
-		int tresholdLevel = 0;
-		ClientUI.chat.accept(
-				new Message(Request.Get_Devices_By_Area, ChatClient.userController.getUser().getRegion().toString()));
-		
-		
-		String deviceName = "";
-		for (Device device : ChatClient.deviceController.getAreaDevices()) {
-			if (ChatClient.costumerController.getCostumer().getDevice().equals(device.getDeviceName()))
-				deviceName = ChatClient.costumerController.getCostumer().getDevice();
-			tresholdLevel = device.getThreshold();
-		}
-		
-		
-		String productsUnderTreshold = "In Device: " + deviceName + " Product is under thershold level: ";
+	public void updateSystemProductsUnderThreshold(int tresholdLevel, String deviceName) {
+		StringBuilder productsUnderTreshold = new StringBuilder();
+		productsUnderTreshold.append("In " + deviceName + "'s Device, Product's codes that under treshold:");
 		for (ProductInDevice product : products) {
 			if (product.getQuantity() <= tresholdLevel)
-				productsUnderTreshold = productsUnderTreshold + "," + String.valueOf(product.getProductCode());
+				productsUnderTreshold.append(product.getProductCode() + ",");
 		}
-		MessageInSystem msg = new MessageInSystem(1, Role.AreaManager, productsUnderTreshold);
+		// deleting the last char ","
+		productsUnderTreshold.deleteCharAt(productsUnderTreshold.lastIndexOf(","));
+		SystemMessage msg = new SystemMessage(0,
+				"am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
+				productsUnderTreshold.toString(), MessageStatus.UnRead);
 		ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
 	}
 

@@ -29,10 +29,7 @@ public class ConnectFormController {
 
 	@FXML
 	private Text lblEnterIP;
-
-	private String getIP() {
-		return IPText.getText();
-	}
+	SetSceneController newScreen = new SetSceneController();
 
 	@FXML
 	void getConnectBtn(ActionEvent event) throws IOException {
@@ -46,17 +43,9 @@ public class ConnectFormController {
 		}
 		ClientUI.setChat(ip, 5555);
 		ClientUI.chat.accept(new Message(Request.Connect_request, null)); // change later to Message OBJECT
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/clientGUI/Identification_Interface.fxml"));
-		try {
-			loader.load();
-			Parent root = loader.getRoot();
-			stage.getScene().setRoot(root);
-			stage.sizeToScene();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// set login screen
+		((Node) event.getSource()).getScene().getWindow().hide();
+		newScreen.setScreen(new Stage(), "/clientGUI/Identification_Interface.fxml");
 		// get Orders from DB
 		ClientUI.chat.accept(new Message(Request.getOrders, null));
 		ClientUI.chat.accept(new Message(Request.get_Msg_In_System, null));

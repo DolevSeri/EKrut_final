@@ -16,7 +16,7 @@ import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
 import entities.InventoryReport;
-import entities.MessageInSystem;
+import entities.SystemMessage;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
@@ -26,6 +26,7 @@ import entities.User;
 import enums.CallStatus;
 import enums.Configuration;
 import enums.CostumerStatus;
+import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
@@ -1015,14 +1016,14 @@ public class MySqlController {
 
 	}
 
-	public static ArrayList<MessageInSystem> getMessagesInSystem() {
-		ArrayList<MessageInSystem> msgList = new ArrayList<>();
+	public static ArrayList<SystemMessage> getMessagesInSystem() {
+		ArrayList<SystemMessage> msgList = new ArrayList<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.message_in_system");
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.system_message");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
-				msgList.add(new MessageInSystem(rs.getInt("msgID"), Role.valueOf(rs.getString("role")),
-						rs.getString("description")));
+				msgList.add(new SystemMessage(rs.getInt("msgID"), rs.getString("username"), rs.getString("description"),
+						MessageStatus.valueOf(rs.getString("status"))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing statement failed");
@@ -1030,6 +1031,28 @@ public class MySqlController {
 		return null;
 	}
 
+	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
+		PreparedStatement ps;
+		ArrayList<InventoryCall> calls = new ArrayList<>();
+
+		try {
+			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls "
+					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?");
+			ps.setString(1, region);
+			ResultSet res = ps.executeQuery();
+			while (res.next()) {
+				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
+						res.getString(4)));
+			}
+			System.out.println("Import inventory calls by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import inventory calls by region failed");
+		}
+		return calls;
+	}
+	
+	
+	
 	public static ArrayList<InventoryCall> 
 	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
@@ -1147,6 +1170,28 @@ public class MySqlController {
 			System.out.println("Executing query on createSales failed");
 		}
 		System.out.println("Enter new Sales successfully");
+	}
+
+	public static void updateSystemMessageTable(SystemMessage systemMsg) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("INSERT INTO ekrut.system_message(msg,userName,status) " + "VALUES (?,?,?)");
+			try {
+				ps.setString(1, systemMsg.getDescription());
+				ps.setString(2, systemMsg.getUsername());
+				ps.setString(3, systemMsg.getStatus().toString());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on update msg table failed");
+		}
+		System.out.println("Enter new msg to system_message successfully");
 	}
 
 	

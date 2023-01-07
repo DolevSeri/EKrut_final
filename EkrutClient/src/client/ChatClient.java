@@ -77,7 +77,6 @@ public class ChatClient extends AbstractClient {
 	public static UserController usersController = null;
 	public static UserCreateOrUpdateController userCreateUpdate= new UserCreateOrUpdateController();
 
-
 // Constructors ****************************************************
 
 	/**
@@ -181,23 +180,25 @@ public class ChatClient extends AbstractClient {
 			break;
 		case SalesPattern_Saved:
 			break;
-		case imported_SalesPattern :
-			salesPatternController.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>)message.getObject()));
+		case imported_SalesPattern:
+			salesPatternController
+					.setSalespattern(FXCollections.observableArrayList((ArrayList<SalesPattern>) message.getObject()));
 			break;
 		case imported_Sales:
-			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>)message.getObject()));
+			salesController.setSales(FXCollections.observableArrayList((ArrayList<Sale>) message.getObject()));
 			break;
 		case Sales_Saved:
 			break;
 		case Inventory_Calls_Imported:
-			inventoryCallController.setAreaCalls(
-					FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			inventoryCallController
+					.setAreaCalls(FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			break;
+		case System_msg_updated:
 			break;
 		case User_Data_Imported:
 			userCreateUpdate.setUser((User)message.getObject());
 			break;
 		default:
-
 			break;
 		}
 		synchronized (lock) {

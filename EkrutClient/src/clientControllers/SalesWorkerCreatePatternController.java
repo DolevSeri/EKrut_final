@@ -1,6 +1,5 @@
 package clientControllers;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,10 +58,9 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	private Label lblError;
-	
-	
+
 	SetSceneController newScreen = new SetSceneController();
-	
+
 	SalesPattern sp;
 
 	public void initialize() {
@@ -81,35 +79,35 @@ public class SalesWorkerCreatePatternController {
 		cmbStartHour.getItems().addAll(hourStart);
 		ArrayList<String> duration = new ArrayList<String>();
 		duration.addAll(Arrays.asList("1", "2", "3", "4", "24"));
-		cmbduration.getItems().addAll(duration); 
-		ClientUI.chat.accept(new Message(Request.import_SalesPattern,null));
-		sp=new SalesPattern(ChatClient.salesPatternController.getSalespattern().size()+1,null,null,null,null,null);
+		cmbduration.getItems().addAll(duration);
+		ClientUI.chat.accept(new Message(Request.import_SalesPattern, null));
+		sp = new SalesPattern(ChatClient.salesPatternController.getSalespattern().size() + 1, null, null, null, null,
+				null);
 		lblError.setVisible(false);
-		
 
 	}
 
 	@FXML
 	void ClickOnChooseDiscount(ActionEvent event) {
-          sp.setDiscountType(cmbDiscount.getValue().toString());
+		sp.setDiscountType(cmbDiscount.getValue().toString());
 	}
 
 	@FXML
 	void clickOnActivateSale(ActionEvent event) {
-		if(cmbDiscount.getValue()==null|| cmbEndDay.getValue()==null||cmbduration.getValue()==null||cmbStartDay.getValue()==null||cmbStartHour.getValue()==null) {
+		if (cmbDiscount.getValue() == null || cmbEndDay.getValue() == null || cmbduration.getValue() == null
+				|| cmbStartDay.getValue() == null || cmbStartHour.getValue() == null) {
 			lblError.setVisible(true);
-		}
-		else {
+		} else {
 			lblError.setVisible(false);
-			 ClientUI.chat.accept(new Message(Request.Update_SalesPattern,sp));
+			ClientUI.chat.accept(new Message(Request.Update_SalesPattern, sp));
+			newScreen.popUpMessage("Sale pattren successfully created!");
+			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+			newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
 		}
-       
-        //newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
 	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
-
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
 
@@ -117,29 +115,25 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	void clickOnEndDay(ActionEvent event) {
-         sp.setEndDay(cmbEndDay.getValue().toString());
+		sp.setEndDay(cmbEndDay.getValue().toString());
 	}
 
 	@FXML
 	void clickOnEndHour(ActionEvent event) {
-       sp.setDuration(cmbduration.getValue().toString());
+		sp.setDuration(cmbduration.getValue().toString());
 	}
 
 	@FXML
 	void clickOnStartDay(ActionEvent event) {
-     sp.setStartDay(cmbStartDay.getValue().toString());
+		sp.setStartDay(cmbStartDay.getValue().toString());
 	}
 
 	@FXML
 	void clickOnStartHour(ActionEvent event) {
 		sp.setStartHour(cmbStartHour.getValue().toString());
-
 	}
-
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
-	
-
 }
