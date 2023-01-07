@@ -224,15 +224,14 @@ public class MySqlController {
 				System.out.println("Find max subsciberID statement failed");
 			}
 		}
-		System.out.println("IS MEMBERR?? "+isMember);
 
 		try {
 			ps = dbConnector.prepareStatement(
 					"INSERT INTO ekrut.costumers (username, creditCard, subscriberID, status, deviceName) VALUES (?, ?, ?, ?, ?)");
 			try {
-				ps.setString(1, creditCard);
-				ps.setInt(2, isMember);
-				ps.setString(3, username);
+				ps.setString(1, username);
+				ps.setString(2, creditCard);
+				ps.setInt(3, isMember);
 				ps.setString(4, "NOTAPPROVED");
 				ps.setString(5, region);
 				
