@@ -37,6 +37,7 @@ import entityControllers.ProductCatalogController;
 import entityControllers.SaleController;
 import entityControllers.SalesPatternController;
 import entityControllers.UserController;
+import entityControllers.UserCreateOrUpdateController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
 
@@ -73,6 +74,8 @@ public class ChatClient extends AbstractClient {
 	public static InventoryCallController inventoryCallController = new InventoryCallController();
 	public static SalesPatternController salesPatternController=new SalesPatternController();
 	public static SaleController salesController=new SaleController();
+	public static UserController usersController = null;
+	public static UserCreateOrUpdateController userCreateUpdate= new UserCreateOrUpdateController();
 
 
 // Constructors ****************************************************
@@ -189,6 +192,9 @@ public class ChatClient extends AbstractClient {
 		case Inventory_Calls_Imported:
 			inventoryCallController.setAreaCalls(
 					FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
+			break;
+		case User_Data_Imported:
+			userCreateUpdate.setUser((User)message.getObject());
 			break;
 		default:
 
