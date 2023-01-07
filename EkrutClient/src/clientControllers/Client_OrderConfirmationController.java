@@ -11,13 +11,12 @@ import client.ChatClient;
 import client.ClientUI;
 import entities.Device;
 import entities.Message;
-import entities.SystemMessage;
 import entities.Order;
 import entities.ProductInDevice;
+import entities.SystemMessage;
 import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Request;
-import enums.Role;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -67,7 +66,7 @@ public class Client_OrderConfirmationController {
 	private List<ProductInDevice> products = new ArrayList<>();
 	private double totalPrice = 0;
 	private int tresholdLevel = 0;
-	private static int cntUnderTreshold = 0;
+	private int cntUnderTreshold = 0;
 	private String deviceName;
 
 	public void setTotalPrice() {
@@ -131,6 +130,7 @@ public class Client_OrderConfirmationController {
 	void clickOnConfirm(ActionEvent event) {
 		updateProductsInDevice();
 		updateOrderInDB();
+		System.out.println(cntUnderTreshold);
 		if (cntUnderTreshold > 0)
 			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
@@ -165,14 +165,14 @@ public class Client_OrderConfirmationController {
 
 	public void updateProductsInDevice() {
 		for (ProductInDevice p : ChatClient.productCatalogController.getProductCatalog()) {
+			if (p.getQuantity() <= tresholdLevel)
+				cntUnderTreshold++;
 			products.add(p);
 		}
 		for (ProductInDevice p : products) {
-			if (p.getQuantity() == 0)
+			if (p.getQuantity() == 0) {
 				p.setStatus(ProductStatus.NOTAVAILABLE);
-			else {
-				if (p.getQuantity() <= tresholdLevel)
-					cntUnderTreshold++;
+			} else {
 				p.setStatus(ProductStatus.AVAILABLE);
 			}
 		}
