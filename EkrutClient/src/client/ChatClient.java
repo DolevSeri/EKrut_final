@@ -198,6 +198,8 @@ public class ChatClient extends AbstractClient {
 		case User_Data_Imported:
 			userCreateUpdate.setUser((User)message.getObject());
 			break;
+		case Customer_Created:
+			break;
 		default:
 			break;
 		}
