@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_UserInformationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_UserInformationController">
    <children>
       <Pane layoutX="481.0" prefHeight="510.0" prefWidth="314.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -141,7 +141,7 @@
          </effect>
       </Button>
       <TextField fx:id="txtCreditCard" editable="false" layoutX="195.0" layoutY="335.0" promptText="enter Credit Card" />
-      <Label fx:id="lblErrorMsg" layoutX="155.0" layoutY="414.0" prefHeight="20.0" prefWidth="257.0" textFill="RED">
+      <Label fx:id="lblErrorMsg" layoutX="111.0" layoutY="414.0" prefHeight="20.0" prefWidth="358.0" textFill="RED">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
