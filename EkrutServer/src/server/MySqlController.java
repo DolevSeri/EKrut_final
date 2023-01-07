@@ -12,6 +12,7 @@ import java.util.List;
 
 import entities.Costumer;
 import entities.CostumersReport;
+import entities.Delivery;
 import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
@@ -104,8 +105,7 @@ public class MySqlController {
 				User user = new User(result.getString("username"), result.getString("password"),
 						result.getString("firstName"), result.getString("lastName"), result.getString("email"),
 						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"),
-						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")),
-						Configuration.valueOf(result.getString("configuration")));
+						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
 
 				// Set the login status to true so no one else can access it
 				try {
@@ -136,8 +136,8 @@ public class MySqlController {
 	 * @author ron
 	 */
 	public static void UserLogoutAndUpdateDB(User user) throws SQLException {
-		PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? "
-				+ "WHERE username = ?");
+		PreparedStatement ps = dbConnector
+				.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? " + "WHERE username = ?");
 		System.out.println("Update succsed");
 		try {
 			ps.setBoolean(1, false);
@@ -157,14 +157,14 @@ public class MySqlController {
 			try {
 				ps.setString(1, username);
 				ps.setString(2, status);
-			}catch(SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Enter parameter to query fail on importUserData");
 			}
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				user = new User(username, rs.getString("firstName"), rs.getString("lastName"), 
-						rs.getString("email"), rs.getString("phoneNumber"), rs.getString("id"));
+				user = new User(username, rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
+						rs.getString("phoneNumber"), rs.getString("id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -762,9 +762,8 @@ public class MySqlController {
 						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
 						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
 						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
-						Configuration.valueOf(rs.getString("configuration")), rs.getString("creditCard"),
-						rs.getString("subscriberID"), CostumerStatus.valueOf(rs.getString("status")),
-						rs.getString("deviceName"));
+						rs.getString("creditCard"), rs.getString("subscriberID"),
+						CostumerStatus.valueOf(rs.getString("status")), rs.getString("deviceName"));
 				return costumer;
 			}
 		} catch (Exception e) {
@@ -911,9 +910,8 @@ public class MySqlController {
 						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
 						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
 						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
-						Configuration.valueOf(rs.getString("configuration")), rs.getString("creditCard"),
-						rs.getString("subscriberID"), CostumerStatus.valueOf(rs.getString("status")),
-						rs.getString("deviceName")));
+						rs.getString("creditCard"), rs.getString("subscriberID"),
+						CostumerStatus.valueOf(rs.getString("status")), rs.getString("deviceName")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1050,11 +1048,8 @@ public class MySqlController {
 		}
 		return calls;
 	}
-	
-	
-	
-	public static ArrayList<InventoryCall> 
-	getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
+
+	public static ArrayList<InventoryCall> getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
 		ArrayList<InventoryCall> calls = new ArrayList<>();
 
@@ -1066,9 +1061,9 @@ public class MySqlController {
 			}
 			ps = dbConnector.prepareStatement(query);
 			ps.setString(1, regionAndStatus.get(0));
-			 if (regionAndStatus.get(1) != null) {
-		            ps.setString(2, regionAndStatus.get(1));
-		        }
+			if (regionAndStatus.get(1) != null) {
+				ps.setString(2, regionAndStatus.get(1));
+			}
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
 				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
@@ -1194,8 +1189,6 @@ public class MySqlController {
 		System.out.println("Enter new msg to system_message successfully");
 	}
 
-	
-	
 	public static void closeInventoryCalls(ArrayList<InventoryCall> callsToDelete) {
 		try {
 			String inClause = String.join(", ", Collections.nCopies(callsToDelete.size(), "?"));
@@ -1204,14 +1197,99 @@ public class MySqlController {
 
 			PreparedStatement ps = dbConnector.prepareStatement(deleteStatement);
 			for (int i = 0; i < callsToDelete.size(); i++) {
-			    ps.setInt(i + 1, callsToDelete.get(i).getCallID());
+				ps.setInt(i + 1, callsToDelete.get(i).getCallID());
 			}
 			ps.executeUpdate();
 
 			System.out.println("Delete inventory calls succeeded");
-			} catch (SQLException e) {
-				System.out.println("Delete inventory calls failed");
-			}
+		} catch (SQLException e) {
+			System.out.println("Delete inventory calls failed");
+		}
 	}
-	
+
+	public static void savePickUpOrderInDB(int orderID) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("INSERT INTO ekrut.takeaway(orderID,collected) " + "VALUES (?,?)");
+			try {
+				ps.setInt(1, orderID);
+				ps.setBoolean(2, false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on update msg table failed");
+		}
+		System.out.println("Enter new msg to system_message successfully");
+	}
+
+	public static ArrayList<Integer> importPickUpOrders(String username) {
+		ArrayList<Integer> pickUpOrders = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.orders.orderID FROM ekrut.orders,ekrut.takeaway WHERE ekrut.orders.username = ? AND ekrut.orders.orderID=ekrut.takeaway.orderID AND ekrut.takeaway.collected = ?");
+			try {
+				ps.setString(1, username);
+				ps.setBoolean(2, false);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				pickUpOrders.add(rs.getInt("orderID"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return pickUpOrders;
+	}
+
+	public static void updatePickUPasCollected(Integer orderToUpdate) {
+		PreparedStatement ps;
+		try {
+			ps = dbConnector.prepareStatement("UPDATE ekrut.takeaway SET collected = ? WHERE orderID = ?");
+
+			// Update the records in the database
+			ps.setBoolean(1, true);
+			ps.setInt(2, orderToUpdate);
+			ps.executeUpdate();
+			System.out.println("Update order status succeeded");
+
+		} catch (SQLException e) {
+			System.out.println("Update order status failed");
+		}
+
+	}
+
+	public static void saveDeliveryInOrders(Delivery delivery) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.delivery(costumerAdress,deliveryStatus,orderID,region) " + "VALUES (?,?,?,?)");
+			try {
+				ps.setString(1, delivery.getCostumerAdress());
+				ps.setString(2, delivery.getStatus().toString());
+				ps.setInt(3, delivery.getOrderID());
+				ps.setString(4, delivery.getRegion().toString());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on delivery table is failed");
+		}
+		System.out.println("Enter new delivery to delivery table successfully");
+
+	}
 }

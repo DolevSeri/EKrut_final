@@ -168,7 +168,7 @@ public class Client_OrderScreenController {
 		productControllers.clear();
 		selectedProducts.clear();
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")) {
+		if (ChatClient.configuration.equals("EK")) {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 		} else {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
@@ -202,9 +202,20 @@ public class Client_OrderScreenController {
 		ChatClient.productCatalogController.setProductCatalog(products);
 		// saving the chosen products for client.
 
-		System.out.println(selectedProducts.toString());
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderConfirmation.fxml");
+		switch (ChatClient.costumerController.getSuplyMethod()) {
+		case Standart:
+			newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderConfirmation.fxml");
+			break;
+		case Delivery:
+			newScreen.setScreen(new Stage(), "/clientGUI/Client_DeliveryConfirmation.fxml");
+			break;
+		case PickUp:
+			newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderConfirmation.fxml");
+			break;
+		default:
+			break;
+		}
 	}
 
 }

@@ -31,7 +31,7 @@
             <Font name="Cooper Black" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreatePickUp" layoutX="166.0" layoutY="136.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new PickUP order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreatePickUp" layoutX="166.0" layoutY="136.0" mnemonicParsing="false" onAction="#clickOnPickUpOrder" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new PickUP order" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -39,7 +39,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnCreateDelivery" layoutX="166.0" layoutY="226.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new Delivery Order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreateDelivery" layoutX="166.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickOnDeliveryOrder" prefHeight="66.0" prefWidth="249.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new Delivery Order" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -55,7 +55,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnConfirmDelivery" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="222.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnConfirmDelivery" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" onAction="#clickOnDeliveryConfirmation" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

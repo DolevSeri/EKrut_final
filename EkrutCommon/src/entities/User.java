@@ -24,11 +24,10 @@ public class User implements Serializable {
 	private String id;
 	private Role role;
 	private Region region;
-	private Configuration configuration;
 	
 
 	public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
-			boolean isLoggedIn, String id, Role role, Region region, Configuration configuration) {
+			boolean isLoggedIn, String id, Role role, Region region) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -40,7 +39,6 @@ public class User implements Serializable {
 		this.id = id;
 		this.role = role;
 		this.region = region;
-		this.configuration = configuration;	
 	}
 	public User(String username, String firstName, String lastName, String email, String phoneNumber,
 			String id) {
@@ -137,12 +135,5 @@ public class User implements Serializable {
 		this.region = region;
 	}
 
-	public Configuration getConfiguration() {
-		return configuration;
-	}
-
-	public void setConfiguration(Configuration configuration) {
-		this.configuration = configuration;
-	}
 
 }

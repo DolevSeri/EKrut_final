@@ -25,10 +25,10 @@ public class Costumer extends User implements Serializable {
 	private String deviceName;
 
 	public Costumer(String username, String password, String firstName, String lastName, String email,
-			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region, Configuration configuration,
+			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region,
 			String creditCard, String subscriberID, CostumerStatus status, String deviceName) {
 
-		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region, configuration);
+		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region);
 		this.creditCard = creditCard;
 		this.subscriberID = subscriberID;
 		this.status = status;

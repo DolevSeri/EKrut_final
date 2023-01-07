@@ -163,7 +163,7 @@ public enum Request {
 		public String toString() {
 			return "Customer status updated successfully!";
 		}
-	}, 
+	},
 	Send_msg_to_system {
 		public String toString() {
 			return "System set message for AreaManagers!";
@@ -180,13 +180,13 @@ public enum Request {
 		}
 	},
 
-	Get_User_Data{
+	Get_User_Data {
 		public String toString() {
 			return "Request to pull user data";
 		}
-	}, 
-	
-	User_Data_Imported{
+	},
+
+	User_Data_Imported {
 		public String toString() {
 			return "User data imported successfully";
 		}
@@ -287,7 +287,7 @@ public enum Request {
 			return "Request to update Sales";
 		}
 	},
-	
+
 	Sales_Saved {
 		public String toString() {
 			return "Sales  succsesfully saved!";
@@ -297,6 +297,47 @@ public enum Request {
 	System_msg_updated {
 		public String toString() {
 			return "System msg updated succssesfully!";
+		}
+	},
+	Save_TakeAway {
+		public String toString() {
+			return "Request to save Takeaway order";
+		}
+
+	},
+	TakeAway_Saved {
+		public String toString() {
+			return "Takeaway order saved succssesfully!";
+		}
+	},
+	Get_PickUp_Orders {
+		public String toString() {
+			return "Request to get Takeaway orders";
+		}
+	},
+	PickUp_Orders_imported {
+		public String toString() {
+			return "Takeaway order imported succssesfully!";
+		}
+	},
+	Update_PickUp_Status {
+		public String toString() {
+			return "Request to update Takeaway order as collected";
+		}
+	},
+	Updated_PickUp_Status {
+		public String toString() {
+			return "Updated  PickUp order succssesfully!";
+		}
+	},
+	Save_New_Delivery {
+		public String toString() {
+			return "Request to save delivery order in DB";
+		}
+	},
+	Delivery_Saved {
+		public String toString() {
+			return "Updated  Delivery order succssesfully!";
 		}
 	},
 
