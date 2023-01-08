@@ -17,15 +17,14 @@ import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
 import entities.InventoryReport;
-import entities.SystemMessage;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
 import entities.Sale;
 import entities.SalesPattern;
+import entities.SystemMessage;
 import entities.User;
 import enums.CallStatus;
-import enums.Configuration;
 import enums.CostumerStatus;
 import enums.MessageStatus;
 import enums.ProductStatus;
@@ -177,7 +176,7 @@ public class MySqlController {
 	public static void updateUserToCustomer(ArrayList<String> userData) {
 		String username = userData.get(0), creditCard = userData.get(1);
 		Integer isMember = Integer.valueOf(userData.get(2));
-		
+
 		String userArea = null, region = null;
 		PreparedStatement ps = null;
 
@@ -234,7 +233,7 @@ public class MySqlController {
 				ps.setInt(3, isMember);
 				ps.setString(4, "NOTAPPROVED");
 				ps.setString(5, region);
-				
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Set statement on updateUserToCustomer failed");
@@ -1381,7 +1380,6 @@ public class MySqlController {
 		}
 		System.out.println("Enter new delivery to delivery table successfully");
 
-	}
 	}
 
 }
