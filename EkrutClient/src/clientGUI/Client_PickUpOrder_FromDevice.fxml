@@ -10,23 +10,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="btnBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="btnBack" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_PickUpOrder_FromDeviceController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="212.0" layoutY="14.0">
+            <ImageView fx:id="imageLogo" fitHeight="130.0" fitWidth="275.0" layoutX="10.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="282.0" fitWidth="256.0" layoutX="9.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/PickUpCollect.jpeg" />
+                  <Image url="@../../../EkrutCommon/src/images/PickUpImage.jpeg" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -36,17 +31,9 @@
             <Font name="Cooper Black" size="38.0" />
          </font>
       </Label>
-      <Button fx:id="btnConfirm" layoutX="156.0" layoutY="316.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="202.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Confirm and Collect" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnConfirm" layoutX="156.0" layoutY="316.0" mnemonicParsing="false" onAction="#clickOnConfirm" prefHeight="38.0" prefWidth="202.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Confirm and Collect" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
-         </font>
-         <effect>
-            <Blend mode="BLUE" />
-         </effect>
-      </Button>
-      <Button fx:id="showSubscriberDetails11" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" onAction="#getbtnshowSubscriberDetails" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
-         <font>
-            <Font name="System Bold" size="13.0" />
          </font>
          <effect>
             <Blend mode="BLUE" />
@@ -57,6 +44,19 @@
             <Font name="System Bold Italic" size="19.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbOrderNum" layoutX="169.0" layoutY="199.0" prefHeight="38.0" prefWidth="176.0" promptText="choose order" />
+      <ComboBox fx:id="cmbOrderNum" layoutX="169.0" layoutY="199.0" onAction="#clickOnChooseOrder" prefHeight="38.0" prefWidth="170.0" promptText="choose order" />
+      <Label fx:id="lblError" alignment="CENTER" layoutX="98.0" layoutY="273.0" prefHeight="19.0" prefWidth="318.0" text="Please choose order before click on Confirm :)" textFill="#ea0e0e">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnBack1" layoutX="10.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickOnBack" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

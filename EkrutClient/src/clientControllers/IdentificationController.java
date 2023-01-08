@@ -1,6 +1,7 @@
 package clientControllers;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import client.ChatClient;
 import client.ClientUI;
@@ -62,7 +63,6 @@ public class IdentificationController {
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
 	}
-
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ClientUI.chat.accept(new Message(Request.Disconnect_request, null));
@@ -97,18 +97,19 @@ public class IdentificationController {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
-
 				// loading next screen for specific user.
 				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
 					ClientUI.chat
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 
-					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")
+					//if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")
+					if (ChatClient.configuration.equals("OL")
 							&& !(ChatClient.costumerController.getCostumer().getStatus().toString()
 									.equals("NOTAPPROVED"))) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
-					} else if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")
+					} //else if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")
+					else if (ChatClient.configuration.equals("EK")
 							&& !(ChatClient.costumerController.getCostumer().getStatus().toString()
 									.equals("NOTAPPROVED"))) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
@@ -119,7 +120,6 @@ public class IdentificationController {
 					}
 
 				} else {
-
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					newScreen.setScreen(new Stage(),
 							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
@@ -159,7 +159,7 @@ public class IdentificationController {
 					ClientUI.chat
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-					if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")) {
+					if (ChatClient.configuration.toString().equals("OL")) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 					} else {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");

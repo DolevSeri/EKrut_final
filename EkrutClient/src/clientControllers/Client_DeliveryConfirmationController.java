@@ -1,23 +1,23 @@
 package clientControllers;
 
+//import javafx.scene.layout.Region;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import enums.Region;
 import client.ChatClient;
 import client.ClientUI;
+import entities.Delivery;
 import entities.Device;
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
-import entities.SystemMessage;
-import enums.MessageStatus;
-import enums.ProductStatus;
+import enums.DeliveryStatus;
 import enums.Request;
-import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,23 +25,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
-/**
- * Controller class that responsible for handling with Confirmation order.
- * 
- * @author ron
- *
- */
-public class Client_OrderConfirmationController {
+public class Client_DeliveryConfirmationController {
 	FXMLLoader loader = new FXMLLoader();
 	SetSceneController newScreen = new SetSceneController();
-
 	@FXML
 	private Button btnBack;
 
@@ -58,38 +52,36 @@ public class Client_OrderConfirmationController {
 	private GridPane gpRecipte;
 
 	@FXML
+	private Label lblError;
+	@FXML
+	private ImageView imageDelivery;
+
+	@FXML
+	private ComboBox<String> cmbArea;
+	@FXML
+	private Label lblAddressConfirmation;
+
+	@FXML
 	private Label lblPrice;
 
-	private int rowInCart = 3;
+	@FXML
+	private TextField txtAddress;
+
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
 			.observableArrayList();
 	private List<ProductInDevice> products = new ArrayList<>();
+	private Delivery delivery;
+	private String areaName;
 	private double totalPrice = 0;
-	private int tresholdLevel = 0;
-	private int cntUnderTreshold = 0;
-	private String deviceName;
-
-	public void setTotalPrice() {
-		double totalSum = 0;
-		for (ProductInDevice p : ChatClient.cartController.getCart().keySet()) {
-			// calculate the total price
-			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
-		}
-		totalPrice = totalSum;
-		lblPrice.setText(String.valueOf(totalPrice) + "  ILS");
-	}
+	private int rowInCart = 3;
 
 	public void initialize() throws IOException {
-		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area,
-				ChatClient.costumerController.getCostumer().getRegion().toString()));
-		for (Device device : ChatClient.deviceController.getAreaDevices()) {
-			System.out.println(device.getDeviceName());
-			if (ChatClient.costumerController.getCostumer().getDevice().equals(device.getDeviceName())) {
-				deviceName = device.getDeviceName();
-				tresholdLevel = device.getThreshold();
-				break;
-			}
-		}
+		lblError.setVisible(false);
+		delivery = new Delivery(null, DeliveryStatus.NOTAPPROVED, 0, null);
+
+		ArrayList<String> areas = new ArrayList<String>();
+		areas.addAll(Arrays.asList("SOUTH", "NORTH", "UAE"));
+		cmbArea.getItems().addAll(areas);
 		for (ProductInDevice p : ChatClient.cartController.getCart().keySet()) {
 			FXMLLoader fxmlLoader = new FXMLLoader();
 			fxmlLoader.setLocation(getClass().getResource("/clientGUI/ProductInConfirmation.fxml"));
@@ -101,16 +93,19 @@ public class Client_OrderConfirmationController {
 
 			gpRecipte.add(anchorPane, 0, rowInCart++);
 			GridPane.setMargin(anchorPane, new Insets(3));
-			// Set grid width
-			gpRecipte.setMinHeight(Region.USE_COMPUTED_SIZE);
-			gpRecipte.setPrefHeight(Region.USE_COMPUTED_SIZE);
-			gpRecipte.setMaxHeight(Region.USE_COMPUTED_SIZE);
 		}
 		setTotalPrice();
 	}
 
-	@FXML
-	private ImageView orderLogo;
+	public void setTotalPrice() {
+		double totalSum = 0;
+		for (ProductInDevice p : ChatClient.cartController.getCart().keySet()) {
+			// calculate the total price
+			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
+		}
+		totalPrice = totalSum;
+		lblPrice.setText(String.valueOf(totalPrice) + "  ILS");
+	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
@@ -119,7 +114,7 @@ public class Client_OrderConfirmationController {
 	}
 
 	@FXML
-	void clickOnCancelOrder(ActionEvent event) {
+	void clickOnCancel(ActionEvent event) {
 		// remove all products from cart
 		ChatClient.cartController.clearCart();
 		newScreen.popUpMessage("Order Cancelled!");
@@ -128,17 +123,26 @@ public class Client_OrderConfirmationController {
 	}
 
 	@FXML
+	void clickOnChooseArea(ActionEvent event) {
+		areaName = cmbArea.getValue();
+		delivery.setRegion(Region.valueOf(areaName));
+	}
+
+	@FXML
 	void clickOnConfirm(ActionEvent event) {
-		updateProductsInDevice();
-		updateOrderInDB();
-		if (cntUnderTreshold > 0)
-			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
-		ChatClient.cartController.clearCart();
-		newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
-		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-		if (ChatClient.configuration.equals("EK")) {
-			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
+		if (cmbArea.getValue() == null || txtAddress.getText().isEmpty()) {
+			lblError.setVisible(true);
 		} else {
+			delivery.setCostumerAdress(txtAddress.getText());
+			updateOrderInDB();
+			// save delivery in DB
+			ClientUI.chat.accept(new Message(Request.Save_New_Delivery, delivery));
+			ChatClient.cartController.clearCart();
+
+			newScreen.popUpMessage(
+					"The Delivery's Payment confirmed!\n Order details will send to you via Email ans SMS!\nAnd your order code is: "
+							+ delivery.getOrderID());
+			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 		}
 	}
@@ -160,47 +164,12 @@ public class Client_OrderConfirmationController {
 				ChatClient.orderController.getOrdersList().size() + 1, (float) totalPrice,
 				ChatClient.userController.getUser().getUsername(), time[0], time[1], time[2],
 				ChatClient.costumerController.getSuplyMethod(), productsInOrder.toString());
+		delivery.setOrderID(order.getOrderID());
 		ClientUI.chat.accept(new Message(Request.SaveOrder, order));
 
 		if (ChatClient.costumerController.getSuplyMethod().toString().equals("PickUp")) {
 			ClientUI.chat.accept(new Message(Request.Save_TakeAway, order));
 		}
-	}
-
-	public void updateProductsInDevice() {
-		for (ProductInDevice p : ChatClient.productCatalogController.getProductCatalog()) {
-			if (p.getQuantity() <= tresholdLevel)
-				cntUnderTreshold++;
-			products.add(p);
-		}
-		for (ProductInDevice p : products) {
-			if (p.getQuantity() == 0) {
-				p.setStatus(ProductStatus.NOTAVAILABLE);
-			} else {
-				p.setStatus(ProductStatus.AVAILABLE);
-			}
-		}
-		ClientUI.chat.accept(new Message(Request.Update_Products_In_Device, products));
-	}
-
-	/**
-	 * updateSystem - method that update in DB if there are products less then
-	 * threshold level in device.
-	 * 
-	 */
-	public void updateSystemProductsUnderThreshold(int tresholdLevel, String deviceName) {
-		StringBuilder productsUnderTreshold = new StringBuilder();
-		productsUnderTreshold.append(deviceName + ",");
-		for (ProductInDevice product : products) {
-			if (product.getQuantity() <= tresholdLevel)
-				productsUnderTreshold.append(product.getProductCode() + ",");
-		}
-		// deleting the last char ","
-		productsUnderTreshold.deleteCharAt(productsUnderTreshold.lastIndexOf(","));
-		SystemMessage msg = new SystemMessage(0,
-				"am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
-				productsUnderTreshold.toString(), MessageStatus.UnRead);
-		ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
 	}
 
 	@FXML

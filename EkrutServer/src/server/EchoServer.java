@@ -10,6 +10,7 @@ import java.util.List;
 
 import common.ClientConnected;
 import entities.Costumer;
+import entities.Delivery;
 import entities.Device;
 import entities.InventoryCall;
 import entities.Message;
@@ -280,14 +281,13 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-			
 
 		case Update_SalesPattern:
-			SalesPattern sp= (SalesPattern) messageFromClient.getObject();
+			SalesPattern sp = (SalesPattern) messageFromClient.getObject();
 			MySqlController.salesPatternToDB(sp);
 			try {
 				client.sendToClient(new Message(Request.SalesPattern_Saved, null));
-			}catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
@@ -295,7 +295,7 @@ public class EchoServer extends AbstractServer {
 		case import_SalesPattern:
 			try {
 				client.sendToClient(new Message(Request.imported_SalesPattern, MySqlController.importSalesPattern()));
-			}catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
@@ -303,17 +303,17 @@ public class EchoServer extends AbstractServer {
 		case import_Sales:
 			try {
 				client.sendToClient(new Message(Request.imported_Sales, MySqlController.importSales()));
-			}catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
 			break;
 		case Update_Sales:
-			Sale sale= (Sale) messageFromClient.getObject();
+			Sale sale = (Sale) messageFromClient.getObject();
 			MySqlController.updateSaleInDB(sale);
 			try {
 				client.sendToClient(new Message(Request.Sales_Saved, null));
-			}catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
@@ -323,12 +323,12 @@ public class EchoServer extends AbstractServer {
 			MySqlController.updateSystemMessageTable(systemMsg);
 			try {
 				client.sendToClient(new Message(Request.System_msg_updated, null));
-			}catch(IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		case Inventory_Calls_To_Close:
-			MySqlController.closeInventoryCalls((ArrayList<InventoryCall>)messageFromClient.getObject());
+			MySqlController.closeInventoryCalls((ArrayList<InventoryCall>) messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.Inventory_Calls_Closed, null));
 			} catch (IOException e) {
@@ -336,13 +336,48 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Get_User_Data:
-			User user1 = MySqlController.importUserData((ArrayList<String>)messageFromClient.getObject());
+			User user1 = MySqlController.importUserData((ArrayList<String>) messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.User_Data_Imported, user1));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+		case Save_TakeAway:
+			Order pickUpOrder = (Order) messageFromClient.getObject();
+			MySqlController.savePickUpOrderInDB(pickUpOrder.getOrderID());
+			try {
+				client.sendToClient(new Message(Request.TakeAway_Saved, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Get_PickUp_Orders:
+			Costumer costumerPickUp = (Costumer) messageFromClient.getObject();
+			try {
+				client.sendToClient(new Message(Request.PickUp_Orders_imported,
+						MySqlController.importPickUpOrders(costumerPickUp.getUsername())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_PickUp_Status:
+			Integer orderToUpdate = (Integer) messageFromClient.getObject();
+			MySqlController.updatePickUPasCollected(orderToUpdate);
+			try {
+				client.sendToClient(new Message(Request.Updated_PickUp_Status, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Save_New_Delivery:
+			Delivery delivery = (Delivery) messageFromClient.getObject();
+			MySqlController.saveDeliveryInOrders(delivery);
+			try {
+				client.sendToClient(new Message(Request.Delivery_Saved, null));
 			break;
 		case Create_Customer_Request:
 			ArrayList<String> userData = (ArrayList<String>)messageFromClient.getObject();

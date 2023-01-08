@@ -1,5 +1,7 @@
 package clientControllers;
 
+import client.ChatClient;
+import enums.SupplyMethod;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,11 +35,13 @@ public class Client_EK_MainViewController {
 
 	@FXML
 	void clickOnCollectPickUp(ActionEvent event) {
-		newScreen.setScreen(new Stage(), null);
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_PickUpOrder_FromDevice.fxml");
 	}
 
 	@FXML
 	void clickOnCreateOrder(ActionEvent event) {
+		ChatClient.costumerController.setSuplyMethod(SupplyMethod.Standart);
 		System.out.println("Costumer want to create order");
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");

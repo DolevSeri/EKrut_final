@@ -72,11 +72,11 @@ public class ChatClient extends AbstractClient {
 	public static CartController cartController = new CartController();
 	public static OrderController orderController = new OrderController();
 	public static InventoryCallController inventoryCallController = new InventoryCallController();
-	public static SalesPatternController salesPatternController=new SalesPatternController();
-	public static SaleController salesController=new SaleController();
+	public static SalesPatternController salesPatternController = new SalesPatternController();
+	public static SaleController salesController = new SaleController();
 	public static UserController usersController = null;
-	public static UserCreateOrUpdateController userCreateUpdate= new UserCreateOrUpdateController();
-
+	public static UserCreateOrUpdateController userCreateUpdate = new UserCreateOrUpdateController();
+	public static String configuration;
 // Constructors ****************************************************
 
 	/**
@@ -196,7 +196,17 @@ public class ChatClient extends AbstractClient {
 		case System_msg_updated:
 			break;
 		case User_Data_Imported:
-			userCreateUpdate.setUser((User)message.getObject());
+			userCreateUpdate.setUser((User) message.getObject());
+			break;
+		case TakeAway_Saved:
+			break;
+		case PickUp_Orders_imported:
+			costumerController
+					.setPickUpOrders(FXCollections.observableArrayList((ArrayList<Integer>) message.getObject()));
+			break;
+		case Updated_PickUp_Status:
+			break;
+		case Delivery_Saved:
 			break;
 		case Customer_Created:
 			break;
