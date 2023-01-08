@@ -474,7 +474,7 @@ public class MySqlController {
 			ResultSet res = ps.executeQuery();
 			while (res.next()) {
 				costumers.add(new Costumer(res.getString("username"), res.getString("creditCard"),
-						res.getString("subscriberID"), CostumerStatus.valueOf(res.getString("status"))));
+						res.getInt("subscriberID"), CostumerStatus.valueOf(res.getString("status"))));
 			}
 			System.out.println("Import customer by region succeeded");
 
@@ -851,7 +851,7 @@ public class MySqlController {
 						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
 						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
 						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
-						rs.getString("creditCard"), rs.getString("subscriberID"),
+						rs.getString("creditCard"), rs.getInt("subscriberID"),
 						CostumerStatus.valueOf(rs.getString("status")), rs.getString("deviceName"));
 				return costumer;
 			}
@@ -999,7 +999,7 @@ public class MySqlController {
 						rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),
 						rs.getString("phoneNumber"), rs.getBoolean("isLoggedIn"), rs.getString("id"),
 						Role.valueOf(rs.getString("role")), Region.valueOf(rs.getString("region")),
-						rs.getString("creditCard"), rs.getString("subscriberID"),
+						rs.getString("creditCard"), rs.getInt("subscriberID"),
 						CostumerStatus.valueOf(rs.getString("status")), rs.getString("deviceName")));
 			}
 		} catch (Exception e) {
@@ -1218,7 +1218,7 @@ public class MySqlController {
 		ArrayList<Sale> sale = new ArrayList<>();
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns");
+					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns WHERE ekrut.sales.patternID=ekrut.sales_patterns.patternID ");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
@@ -1380,6 +1380,49 @@ public class MySqlController {
 		}
 		System.out.println("Enter new delivery to delivery table successfully");
 
+	}
+	public static void updateSaleStatusInDB(Sale sale) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
+			try {
+				ps.setString(1, "ACTIVATE");
+				ps.setInt(2, sale.getSaleID());
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on UPDATE Sales failed");
+		}
+		System.out.println("UPDATE Sales successfully");
+	}
+	public static ArrayList<Order> getOrdersDataOfUSER(String username) {
+		ArrayList<Order> orders = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.orders WHERE username = ? ");
+			try {
+				ps.setString(1, username);
+			} catch (Exception e) {
+				System.out.println("Executing statement failed!");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				orders.add(new Order(rs.getString("deviceName"), rs.getInt("orderID"), rs.getFloat("orderPrice"),
+						username, rs.getString("day"), rs.getString("month"), rs.getString("year"),
+						SupplyMethod.valueOf(rs.getString("supplyMethod")), rs.getString("orderProducts")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Import orders data from orders table has failed");
+			
+		}
+		return orders;
 	}
 
 }
