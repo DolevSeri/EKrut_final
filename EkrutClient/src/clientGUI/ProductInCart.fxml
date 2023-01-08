@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="345.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ProductInCartController">
    <children>
       <ImageView fx:id="imgProduct" fitHeight="76.0" fitWidth="81.0" layoutX="9.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
@@ -25,8 +24,8 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblPrice" layoutX="294.0" layoutY="63.0" prefHeight="18.0" prefWidth="42.0" />
-      <Label fx:id="lblQuantity" layoutX="215.0" layoutY="64.0" prefHeight="18.0" prefWidth="42.0" />
+      <Label fx:id="lblPrice" alignment="TOP_CENTER" layoutX="290.0" layoutY="63.0" prefHeight="18.0" prefWidth="51.0" />
+      <Label fx:id="lblQuantity" layoutX="207.0" layoutY="63.0" prefHeight="18.0" prefWidth="42.0" />
       <Label fx:id="lblName" layoutX="90.0" layoutY="64.0" prefHeight="18.0" prefWidth="115.0">
          <font>
             <Font name="System Bold" size="12.0" />

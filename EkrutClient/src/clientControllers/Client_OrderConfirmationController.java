@@ -76,7 +76,7 @@ public class Client_OrderConfirmationController {
 			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
 		}
 		totalPrice = totalSum;
-		lblPrice.setText(String.valueOf(totalPrice) + "  ILS");
+		lblPrice.setText(String.format("%.2f",totalPrice) + "  ILS");
 	}
 
 	public void initialize() throws IOException {
@@ -131,6 +131,7 @@ public class Client_OrderConfirmationController {
 	void clickOnConfirm(ActionEvent event) {
 		updateProductsInDevice();
 		updateOrderInDB();
+		// if there are any products under treshold
 		if (cntUnderTreshold > 0)
 			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
@@ -187,20 +188,20 @@ public class Client_OrderConfirmationController {
 	 * updateSystem - method that update in DB if there are products less then
 	 * threshold level in device.
 	 * 
+	 * @param tresholdLevel- the tresholdlevel of the device
+	 * @param deviceName-    the name of the device
 	 */
 	public void updateSystemProductsUnderThreshold(int tresholdLevel, String deviceName) {
-		StringBuilder productsUnderTreshold = new StringBuilder();
-		productsUnderTreshold.append(deviceName + ",");
+		SystemMessage msg;
 		for (ProductInDevice product : products) {
-			if (product.getQuantity() <= tresholdLevel)
-				productsUnderTreshold.append(product.getProductCode() + ",");
+			if (product.getQuantity() <= tresholdLevel) {
+				msg = new SystemMessage(0, "am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
+						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
+						MessageStatus.UnRead);
+				ClientUI.chat.accept(new Message(Request.Send_msg_to_system,msg));
+			}
+
 		}
-		// deleting the last char ","
-		productsUnderTreshold.deleteCharAt(productsUnderTreshold.lastIndexOf(","));
-		SystemMessage msg = new SystemMessage(0,
-				"am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
-				productsUnderTreshold.toString(), MessageStatus.UnRead);
-		ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
 	}
 
 	@FXML
