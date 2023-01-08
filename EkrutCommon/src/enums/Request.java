@@ -340,5 +340,15 @@ public enum Request {
 			return "Updated  Delivery order succssesfully!";
 		}
 	},
+	Create_Customer_Request{
+		public String toString() {
+			return "Request to create new custumer";
+		}
+	},
+	Customer_Created{
+		public String toString() {
+			return "Customer created successfully";
+		}
+	}
 
 }

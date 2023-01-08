@@ -173,35 +173,125 @@ public class MySqlController {
 		System.out.println("User information imported successfully");
 		return user;
 	}
-//
-//	public static void updateSubscriberTable(String[] updatedSubscriber) {
-//		PreparedStatement ps = null;
-//		try {
-//			ps = dbConnector.prepareStatement(
-//					"UPDATE ekrutdb.subscriber SET creditCardNumber = ?," + " subscriberNumber = ? WHERE ID = ?");
-//		} catch (SQLException e1) {
-//			System.out.println("Statement failure");
-//		}
-//		try {
-//			System.out.println(updatedSubscriber[1] + " " + updatedSubscriber[2] + " " + updatedSubscriber[3]);
-//			ps.setString(1, updatedSubscriber[2]);
-//
-//			ps.setString(2, updatedSubscriber[3]);
-//			System.out.println("2131");
-//			ps.setString(3, updatedSubscriber[1]);
-//			System.out.println("!#@!#");
-//			ps.executeUpdate();
-//
-//			System.out.println("Update data suceeded");
-//		} catch (Exception e) {
-//			System.out.println("Update data fail!!!");
-//		}
-//	}
-//
-//	public static void updateSubscriberTable(String messageFromClient) {
-//		// TODO Auto-generated method stub
-//
-//	}
+
+	public static void updateUserToCustomer(ArrayList<String> userData) {
+		String username = userData.get(0), creditCard = userData.get(1);
+		Integer isMember = Integer.valueOf(userData.get(2));
+		
+		String userArea = null, region = null;
+		PreparedStatement ps = null;
+
+		try {
+			ps = dbConnector.prepareStatement("SELECT region FROM ekrut.users WHERE username = ?");
+			try {
+				ps.setString(1, username);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Find user region statement failed");
+			}
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+				userArea = rs.getString(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Find user region statement failed");
+		}
+
+		switch (userArea) {
+		case "NORTH":
+			region = "Haifa";
+			break;
+		case "SOUTH":
+			region = "TelAviv";
+			break;
+		case "UAE":
+			region = "Dubai";
+			break;
+		default:
+			break;
+		}
+
+		if (isMember == 1) {
+			try {
+				ps = dbConnector.prepareStatement("SELECT MAX(subscriberID) FROM ekrut.costumers");
+				ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					isMember = rs.getInt(1);
+				}
+				isMember++;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Find max subsciberID statement failed");
+			}
+		}
+
+		try {
+			ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.costumers (username, creditCard, subscriberID, status, deviceName) VALUES (?, ?, ?, ?, ?)");
+			try {
+				ps.setString(1, username);
+				ps.setString(2, creditCard);
+				ps.setInt(3, isMember);
+				ps.setString(4, "NOTAPPROVED");
+				ps.setString(5, region);
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set statement on updateUserToCustomer failed");
+			}
+			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			System.out.println("Update user to costumer failure");
+		}
+		try {
+			ps = dbConnector.prepareStatement("UPDATE ekrut.users SET role = 'Costumer' WHERE username = ?");
+			try {
+				ps.setString(1, username);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set statement on updateUserToCustomer failed");
+			}
+			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			System.out.println("Update user to costumer failure");
+		}
+	}
+
+	public static void updateCostumerToMember(String username) {
+		PreparedStatement ps = null;
+		Integer isMember = 0;
+
+		try {
+			ps = dbConnector.prepareStatement("SELECT MAX(subscriberID) FROM ektut.costumers");
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				isMember = rs.getInt(1);
+			}
+			isMember++;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Find max subsciberID statement failed");
+		}
+
+		try
+
+		{
+			ps = dbConnector.prepareStatement("UPDATE ekrut.costumers SET subscriberID = ? WHERE username = ?");
+			try {
+				ps.setInt(1, isMember);
+				ps.setString(2, username);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set statement on updateUserToCustomer failed");
+			}
+			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			System.out.println("Update user to costumer failure");
+		}
+	}
 
 	public static DeliveryReport getDeliveryReportData(ArrayList<String> reportDetails) {
 		String year = reportDetails.get(1), month = reportDetails.get(2);
@@ -1292,4 +1382,6 @@ public class MySqlController {
 		System.out.println("Enter new delivery to delivery table successfully");
 
 	}
+	}
+
 }

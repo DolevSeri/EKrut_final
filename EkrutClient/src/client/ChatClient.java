@@ -208,6 +208,8 @@ public class ChatClient extends AbstractClient {
 			break;
 		case Delivery_Saved:
 			break;
+		case Customer_Created:
+			break;
 		default:
 			break;
 		}

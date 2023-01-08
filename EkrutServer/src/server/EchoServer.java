@@ -378,6 +378,12 @@ public class EchoServer extends AbstractServer {
 			MySqlController.saveDeliveryInOrders(delivery);
 			try {
 				client.sendToClient(new Message(Request.Delivery_Saved, null));
+			break;
+		case Create_Customer_Request:
+			ArrayList<String> userData = (ArrayList<String>)messageFromClient.getObject();
+			 MySqlController.updateUserToCustomer(userData);
+			try {
+				client.sendToClient(new Message(Request.Customer_Created,null));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
