@@ -71,10 +71,15 @@ public class AreaManager_CostumerApprovalController {
 			}
 			ClientUI.chat.accept(new Message(Request.Costumer_Update_Status_Request,costumersToUpdate));
 			setTableItems();
+			scene.popUpMessage("Costumer approved succesfully! ");
 			
 		}
 	}
 
+	@FXML
+	void clickBtnHelp(ActionEvent event) {
+		scene.popUpMessage("1. Click on the customer you want to approve\n2. You can choose multiple customers using CTRL button!\n3. Click Approve coustomer ");
+	}
 	@FXML
 	void clickBackBtn(ActionEvent event) {
 		scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
