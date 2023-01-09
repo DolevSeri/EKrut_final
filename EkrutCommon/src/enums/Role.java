@@ -36,30 +36,30 @@ public enum Role {
 	OpWorker {
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
-			return "AreaManager_MainView.fxml";
+			return "InventoryOperationWorker_MainView.fxml";
 		}
 	},
-	NotSignUp{
+	NotSignUp {
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
 			return "ScreenForNotSignUpUser.fxml";
 		}
 	},
 
-	UserManagement{
+	UserManagement {
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
 			return "UserManagement_MainView.fxml";
 		}
 	},
 
-	SalesWorker{
+	SalesWorker {
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
 			return "SalesWorker_MainView.fxml";
 		}
 	},
-	SalesManager{
+	SalesManager {
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
 			return "SalesManagerMainScreen.fxml";
