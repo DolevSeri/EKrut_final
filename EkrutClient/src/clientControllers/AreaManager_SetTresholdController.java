@@ -86,10 +86,11 @@ public class AreaManager_SetTresholdController {
 			devicesToUpdate.addAll(tblDevice.getItems());
 			ClientUI.chat.accept(new Message(Request.Threshold_Update_Request,devicesToUpdate));
 			setTableItems();
+			scene.popUpMessage("Threshold set succesfully! ");
+
 
 		} else {
-			lblError.setText("Error: Threshold values must be positive integers");
-			lblError.setVisible(true);
+			scene.popUpMessage("Error: Threshold values must be positive integers");
 		}
 	}
 
