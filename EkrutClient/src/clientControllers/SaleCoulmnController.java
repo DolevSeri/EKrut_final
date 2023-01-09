@@ -45,12 +45,14 @@ public class SaleCoulmnController {
     			this.sale.setStatus(SaleStatus.ACTIVATE);
     			ClientUI.chat.accept(new Message(Request.Update_sale_status,sale));
     			
+    			
     		}
     	}
     	
         newScreen.popUpMessage("Sale has been activate(:"); 
         ClientUI.chat.accept(new Message(Request.import_Sales, null));
         salesworkeractivate.clearSales();
+        salesworkeractivate.saleControllers.clear();
         salesworkeractivate.setSale();
     }
     public void setData(Sale sale,SalesWorkerActivateSaleController salesworkeractivate) {

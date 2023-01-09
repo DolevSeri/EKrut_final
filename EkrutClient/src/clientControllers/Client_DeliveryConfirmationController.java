@@ -104,7 +104,7 @@ public class Client_DeliveryConfirmationController {
 			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
 		}
 		totalPrice = totalSum;
-		lblPrice.setText(String.valueOf(totalPrice) + "  ILS");
+		lblPrice.setText(String.format("%.2f",totalPrice) + "  ILS");
 	}
 
 	@FXML
