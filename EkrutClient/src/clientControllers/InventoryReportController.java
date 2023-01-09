@@ -16,6 +16,11 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+/**
+ * Controller class for the Inventory Report scene.
+ * 
+ * @author Eden Bar
+ */
 public class InventoryReportController {
 
 	@FXML
@@ -45,7 +50,8 @@ public class InventoryReportController {
 	SetSceneController scene = new SetSceneController();
 
 	/**
-	 * @author Eden Bar
+	 * Initializes the fields in the Inventory Report scene with data from the
+	 * InventoryReport object.
 	 */
 	public void initialize() {
 		InventoryReport inventoryReport = ChatClient.inventoryReportController.getInventoryReport();
@@ -72,6 +78,12 @@ public class InventoryReportController {
 
 	}
 
+	/**
+	 * 
+	 * Navigates the user back to the previous screen.
+	 * 
+	 * @param event the action event that triggered the method call
+	 */
 	@FXML
 	void clickBackBtn(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
@@ -79,6 +91,11 @@ public class InventoryReportController {
 
 	}
 
+    /**
+     * Handles the event when the "Exit" button is clicked. Exits the application.
+     * 
+     * @param event the event triggered by clicking the button
+     */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		ClientUI.chat.accept("Disconnect");

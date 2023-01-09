@@ -158,6 +158,13 @@ public class ChooseReportController {
 
 	}
 
+	/**
+	 * Handles the action of the type of report combo box being clicked. It displays or hides the device 
+	 * and area combo boxes based on the type of report selected.
+	 * 
+	 * @param event the action event of the combo box being clicked
+	 *
+	 */
 	@FXML
 	void clickTypeOfReport(ActionEvent event) {
 		String type = cmbType.getValue().toString();
