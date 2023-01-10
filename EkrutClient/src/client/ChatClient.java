@@ -170,6 +170,7 @@ public class ChatClient extends AbstractClient {
 		case Costumer_Status_Updated:
 			break;
 		case Inventory_Call_Created:
+			inventoryCallController.setCreated((boolean) message.getObject());
 			break;
 		case Orders_imported:
 			List<Order> orders = (ArrayList<Order>) message.getObject();

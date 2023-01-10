@@ -60,14 +60,13 @@ public class AreaManager_NewCallController {
 			lblErrorMsg.setVisible(true);
 		} else {
 			ClientUI.chat.accept(new Message(Request.Create_Inventory_Call, fields));
-			lblCreated.setVisible(true);
-			try {
-				Thread.sleep(1500);
-				scene.back(event, "/clientGUI/AreaManager_InventoryCalls.fxml");
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(ChatClient.inventoryCallController.isCreated()) {
+				scene.popUpMessage("The call was created succesfully!");
 			}
+			else
+				scene.popUpMessage("The call is already exist for this item!");
+			lblCreated.setVisible(true);
+	
 		}
 	}
 
