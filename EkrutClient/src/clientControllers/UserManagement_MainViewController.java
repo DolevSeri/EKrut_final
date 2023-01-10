@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class UserManagement_MainViewController {
 
@@ -24,9 +25,20 @@ public class UserManagement_MainViewController {
     private Label lblWelcome;
     
 	SetSceneController scene = new SetSceneController();
+	private static boolean isUpdate = false;
 
 
-    @FXML
+    public boolean isUpdate() {
+		return isUpdate;
+	}
+
+
+	public void setUpdate(boolean isUpdate) {
+		UserManagement_MainViewController.isUpdate = isUpdate;
+	}
+
+
+	@FXML
 	public void initialize() {
 		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName()
 				+" "+ ChatClient.userController.getUser().getLastName()+"!");
@@ -35,12 +47,17 @@ public class UserManagement_MainViewController {
     
     @FXML
     void clickBtnCreateAccount(ActionEvent event) {
-    	scene.createOrUpdateClient(false);
+    	this.setUpdate(false);
+    	scene.setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
+    	//scene.createOrUpdateClient(false);
     }
 
     @FXML
     void clickBtnUpdate(ActionEvent event) {
-    	scene.createOrUpdateClient(true);
+    	this.setUpdate(true);
+    	scene.setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
+
+    	//scene.createOrUpdateClient(true);
 
     }
 

@@ -369,6 +369,25 @@ public enum Request {
 		public String toString() {
 			return "Customer created successfully";
 		}
-	}
-
+	},
+	Update_Customer_Request{
+		public String toString() {
+			return "Request to update customer to member";
+		}
+	},
+	Customer_Updated{
+		public String toString() {
+			return "Customer updated to member successfully";
+		}
+	},
+	Get_Customer_Data{
+		public String toString() {
+			return "Request to import customer data";
+		}
+	}, 
+	Customer_Data_Imported{
+		public String toString() {
+			return "Customer data imported successfully";
+		}
+	},
 }

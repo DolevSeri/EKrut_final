@@ -29,10 +29,10 @@ public class SetSceneController {
 		}
 	}
 
-	public void createOrUpdateClient(boolean isUpdate) {
-		new UserManagement_UserInformationController(isUpdate);
-		setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
-	}
+//	public void createOrUpdateClient(boolean isUpdate) {
+//		UserManagement_UserInformationController(isUpdate);
+//		setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
+//	}
 
 	public void back(ActionEvent event, String path) {
 		((Node) event.getSource()).getScene().getWindow().hide();

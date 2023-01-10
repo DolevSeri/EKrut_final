@@ -4,6 +4,15 @@ import entities.User;
 
 public class UserController {
 	private User user = null;
+	private User userToUpdate = null;
+
+	public User getUserToUpdate() {
+		return userToUpdate;
+	}
+
+	public void setUserToUpdate(User userToUpdate) {
+		this.userToUpdate = userToUpdate;
+	}
 
 	// Constructors
 	public UserController() {
@@ -23,6 +32,12 @@ public class UserController {
 
 	public boolean isUserExist() {
 		if(user == null)
+			return false;
+		return true;
+	}
+	
+	public boolean isUserToApproveExist() {
+		if(userToUpdate == null)
 			return false;
 		return true;
 	}

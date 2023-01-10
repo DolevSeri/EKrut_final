@@ -10,6 +10,16 @@ public class CostumerController {
 	private ObservableList<Costumer> areaCostumers = FXCollections.observableArrayList();
 	private SupplyMethod suplyMethod;
 	private ObservableList<Integer> pickUpOrders = FXCollections.observableArrayList();
+	private Costumer customerToUpdate = null;
+	
+	
+	public Costumer getCustomerToUpdate() {
+		return customerToUpdate;
+	}
+
+	public void setCustomerToUpdate(Costumer customerToUpdate) {
+		this.customerToUpdate = customerToUpdate;
+	}
 	private ObservableList<Order> ordersofcostumer = FXCollections.observableArrayList();
 
 	public ObservableList<Integer> getPickUpOrders() {
