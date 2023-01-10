@@ -201,6 +201,16 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+			
+		case Get_Products_under_thres:
+			String device = (String) messageFromClient.getObject();
+			try {
+				client.sendToClient(
+						new Message(Request.Products_Imported, MySqlController.getProductsUnderThresholdFromDevice(device)));
+			} catch (IOException e) {
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		case Get_Costumer:
 			String userID = (String) messageFromClient.getObject();
 			try {
@@ -228,13 +238,14 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		case Create_Inventory_Call:
-			MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject());
 			try {
-				client.sendToClient(new Message(Request.Inventory_Call_Created, null));
+				client.sendToClient(new Message(Request.Inventory_Call_Created, MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
+
 		case getOrders:
 			try {
 				client.sendToClient(new Message(Request.Orders_imported, MySqlController.importOrders()));
@@ -242,6 +253,8 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
+
 		case SaveOrder:
 			Order order = (Order) messageFromClient.getObject();
 			MySqlController.updateOrder(order);
@@ -281,6 +294,8 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
+			
 
 		case Update_SalesPattern:
 			SalesPattern sp = (SalesPattern) messageFromClient.getObject();

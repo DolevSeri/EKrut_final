@@ -76,13 +76,15 @@ public class AreaManager_InventoryCallsController {
 		} catch (NullPointerException e) {
 		}
 		
-		ClientUI.chat.accept(new Message(Request.Get_Products, deviceChosen));
+		ClientUI.chat.accept(new Message(Request.Get_Products_under_thres, deviceChosen));
 		cmbProduct.getItems().addAll(ChatClient.productCatalogController.getProductsInDevicesNames());
 		cmbProduct.setPromptText("Choose Product");
 	}
 	
 	/**
 	 * Handles the action of clicking the create new call button.
+	 * if the product that the manager wants to open call on
+	 * is already has an open call on it - an error message will pop.
 	 *
 	 * @param event the action event that triggered this method call
 	 */
@@ -93,6 +95,11 @@ public class AreaManager_InventoryCallsController {
 			scene.popUpMessage("You need to choose Device and Product!");
 		} else {
 			ClientUI.chat.accept(new Message(Request.Create_Inventory_Call, fields));
+			if(ChatClient.inventoryCallController.isCreated()) {
+				scene.popUpMessage("The call was created succesfully!");
+			}
+			else
+				scene.popUpMessage("NOTICE: The call is already exist for this product!");
 		}
 
 	}

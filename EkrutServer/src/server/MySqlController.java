@@ -818,8 +818,41 @@ public class MySqlController {
 			return products;
 
 		} catch (Exception e) {
-			System.out.println("Import orders data from orders table has failed!");
+			System.out.println("Import products data has failed!");
 			System.out.println("Failed at getOrdersDataOfDevice method");
+		}
+
+		return null;
+	}
+	public static ArrayList<ProductInDevice> getProductsUnderThresholdFromDevice (String deviceName) {
+		// Need to make the query to bring only products under threshold
+		ArrayList<ProductInDevice> products = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT ekrut.products.*, ekrut.product_in_device.quantity ,ekrut.product_in_device.status,"
+							+ " ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device,ekrut.devices "
+							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode "
+							+ "and ekrut.product_in_device.deviceName = ? and devices.deviceName = product_in_device.deviceName "
+							+ "and product_in_device.quantity < devices.threshold");
+
+			try {
+				ps.setString(1, deviceName);
+
+			} catch (Exception e) {
+				System.out.println("Executing statement failed");
+			}
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				products.add(new ProductInDevice(rs.getInt("productCode"), rs.getString("productName"),
+						rs.getDouble("price"), rs.getString("imagePath"), rs.getInt("quantity"),
+						ProductStatus.valueOf(rs.getString("status")), rs.getString("deviceName")));
+			}
+			return products;
+
+		} catch (Exception e) {
+			System.out.println("Import product has failed!");
+			System.out.println("Failed to get product method");
 		}
 
 		return null;
@@ -1008,9 +1041,28 @@ public class MySqlController {
 		return areaCostumers;
 	}
 
-	public static void createInventoryCall(ArrayList<String> callData) {
+	public static boolean createInventoryCall(ArrayList<String> callData) {
 		String device = callData.get(0), product = callData.get(1);
+		int isExist=0;
 		try {
+			PreparedStatement psExist = dbConnector.prepareStatement("SELECT COUNT(*) FROM ekrut.inventory_calls "
+					+ "WHERE status = 'OPEN' AND deviceName = ? AND productUpdate = ?");
+			try {
+				psExist.setString(1, device);
+				psExist.setString(2, product);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Executing statement failed on checking if product is in inventory call table");
+			}
+			ResultSet rs = psExist.executeQuery();
+			if(rs.next())
+				isExist = rs.getInt("COUNT(*)");
+			if(isExist > 0)
+				// if the product is already in the table - no need to create another row
+				// return false  - not created
+				return false;
+
+			
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " + "VALUES (?, ?, ?)");
 			try {
@@ -1028,6 +1080,7 @@ public class MySqlController {
 			System.out.println("Executing query on createInventoryCall failed");
 		}
 		System.out.println("Enter new inventory call successfully");
+		return true;
 	}
 
 	public static List<Order> importOrders() {
