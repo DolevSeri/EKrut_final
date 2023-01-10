@@ -12,15 +12,15 @@ private int patternID=0;
    private String startDay;
    private String endDay;
    private String startHour;
-   private String duration;
+   private String endHour;
    
-   public SalesPattern(int patternID,String discountType,String startDay,String endDay,String startHour,String duration) {
+   public SalesPattern(int patternID,String discountType,String startDay,String endDay,String startHour,String endHour) {
 	   this.patternID=patternID;
 	   this.discountType=discountType;
 	   this.startDay=startDay;
 	   this.endDay=endDay;
 	   this.startHour=startHour;
-	   this.duration=duration;
+	   this.endHour=endHour;
    }
 
 public  int getPatternID() {
@@ -63,12 +63,12 @@ public void setStartHour(String startHour) {
 	this.startHour = startHour;
 }
 
-public String getDuration() {
-	return duration;
+public String getEndHour() {
+	return endHour;
 }
 
-public void setDuration(String duration) {
-	this.duration = duration;
+public void setEndHour(String endHour) {
+	this.endHour = endHour;
 }
    
 	

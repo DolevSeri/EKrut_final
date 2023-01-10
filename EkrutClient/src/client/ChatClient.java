@@ -221,6 +221,8 @@ public class ChatClient extends AbstractClient {
 			costumerController
 					.setOrdersofcostumer((FXCollections.observableArrayList((ArrayList<Order>) message.getObject())));
 			break;
+		case SaleStatus_Updateddone:
+			break;
 		default:
 			break;
 		}
@@ -253,6 +255,7 @@ public class ChatClient extends AbstractClient {
 					}
 				}
 			}
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();

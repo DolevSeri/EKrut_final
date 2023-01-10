@@ -1172,7 +1172,7 @@ public class MySqlController {
 	public static void salesPatternToDB(SalesPattern sp) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"INSERT INTO ekrut.sales_patterns (patternID, discountType, startDay,endDay,startHour,duration) "
+					"INSERT INTO ekrut.sales_patterns (patternID, discountType, startDay,endDay,startHour,endHour) "
 							+ "VALUES (?, ?, ?, ?, ?, ?)");
 			try {
 				ps.setInt(1, sp.getPatternID());
@@ -1180,7 +1180,7 @@ public class MySqlController {
 				ps.setString(3, sp.getStartDay());
 				ps.setString(4, sp.getEndDay());
 				ps.setString(5, sp.getStartHour());
-				ps.setString(6, sp.getDuration());
+				ps.setString(6, sp.getEndHour());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1203,7 +1203,7 @@ public class MySqlController {
 			while (rs.next())
 				salespatterns.add(
 						new SalesPattern(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
-								rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration")));
+								rs.getString("endDay"), rs.getString("startHour"), rs.getString("endHour")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing statement failed");
@@ -1220,7 +1220,7 @@ public class MySqlController {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
-						rs.getString("endDay"), rs.getString("startHour"), rs.getString("duration"),
+						rs.getString("endDay"), rs.getString("startHour"), rs.getString("endHour"),
 						Region.valueOf(rs.getString("region")), rs.getInt("saleID"),
 						SaleStatus.valueOf(rs.getString("status"))));
 		} catch (Exception e) {
@@ -1442,5 +1442,26 @@ public class MySqlController {
 			System.out.println("Executing statement failed on importCustomerDataToUpdate");
 		}
 		return c;
+	}
+	public static void updateSaleStatusdoneInDB(Sale sale) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
+			try {
+				ps.setString(1, "DONE");
+				ps.setInt(2, sale.getSaleID());
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("");
+			}
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on UPDATE Sales failed");
+		}
+		System.out.println("UPDATE Sales successfully");
 	}
 }

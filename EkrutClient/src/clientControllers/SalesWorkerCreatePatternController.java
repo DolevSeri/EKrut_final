@@ -1,5 +1,6 @@
 package clientControllers;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +43,7 @@ public class SalesWorkerCreatePatternController {
 	private ComboBox<String> cmbEndDay;
 
 	@FXML
-	private ComboBox<String> cmbduration;
+	private ComboBox<String> cmbEndHour;
 
 	@FXML
 	private ComboBox<String> cmbStartDay;
@@ -65,7 +66,7 @@ public class SalesWorkerCreatePatternController {
 
 	public void initialize() {
 		ArrayList<String> discount = new ArrayList<String>();
-		discount.addAll(Arrays.asList("1+1","20%", "30","50%"));
+		discount.addAll(Arrays.asList( "20%", "30%", "50%"));
 		cmbDiscount.getItems().addAll(discount);
 		ArrayList<String> daysStart = new ArrayList<String>();
 		daysStart.addAll(Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
@@ -74,15 +75,18 @@ public class SalesWorkerCreatePatternController {
 		daysend.addAll(Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
 		cmbEndDay.getItems().addAll(daysend);
 		ArrayList<String> hourStart = new ArrayList<String>();
-		hourStart.addAll(Arrays.asList("08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00",
-				"17:00", "18:00", "19:00", "20:00"));
+		hourStart.addAll(Arrays.asList("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00",
+				"14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00"));
 		cmbStartHour.getItems().addAll(hourStart);
 		ArrayList<String> duration = new ArrayList<String>();
-		duration.addAll(Arrays.asList("1", "2", "3", "4", "24"));
-		cmbduration.getItems().addAll(duration);
+		duration.addAll(Arrays.asList("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00",
+				"14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00"));
+		
+		cmbEndHour.getItems().addAll(duration);
 		ClientUI.chat.accept(new Message(Request.import_SalesPattern, null));
 		sp = new SalesPattern(ChatClient.salesPatternController.getSalespattern().size() + 1, null, null, null, null,
 				null);
+		
 		lblError.setVisible(false);
 
 	}
@@ -94,16 +98,23 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	void clickOnActivateSale(ActionEvent event) {
-		if (cmbDiscount.getValue() == null || cmbEndDay.getValue() == null || cmbduration.getValue() == null
+		if (cmbDiscount.getValue() == null || cmbEndDay.getValue() == null || cmbEndHour.getValue() == null
 				|| cmbStartDay.getValue() == null || cmbStartHour.getValue() == null) {
 			lblError.setVisible(true);
 		} else {
+			if(!compareTimee(cmbStartHour.getValue(),cmbEndHour.getValue())) {
+				lblError.setText("You need to choose hours of one day only!!!");
+				lblError.setVisible(true);
+			}
+			else {
 			lblError.setVisible(false);
 			ClientUI.chat.accept(new Message(Request.Update_SalesPattern, sp));
 			newScreen.popUpMessage("Sale pattren successfully created!");
 			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 			newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
+			}
 		}
+
 	}
 
 	@FXML
@@ -120,7 +131,7 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	void clickOnEndHour(ActionEvent event) {
-		sp.setDuration(cmbduration.getValue().toString());
+		sp.setEndHour(cmbEndHour.getValue().toString());
 	}
 
 	@FXML
@@ -132,8 +143,19 @@ public class SalesWorkerCreatePatternController {
 	void clickOnStartHour(ActionEvent event) {
 		sp.setStartHour(cmbStartHour.getValue().toString());
 	}
+
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
+	public static boolean compareTimee(String starthour, String endhour) {
+		LocalTime start = LocalTime.parse(starthour);
+		LocalTime end = LocalTime.parse(endhour);
+		if (end.isBefore(start)) 
+			return false;
+		return true;
+
+	}
+
+	
 }

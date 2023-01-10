@@ -90,6 +90,7 @@ public class ProductInCartController {
 			client_OrderScreenController.changeEndOrder(true);
 		}
 	}
+	
 
 	public void setProductInCartController(ProductInDevice product, ProductController productController,
 			Client_OrderScreenController screen) {
