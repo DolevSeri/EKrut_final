@@ -11,14 +11,17 @@ import enums.CallStatus;
 import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 /**
- * This class is the controller for the InventoryOperationWorker_InventoryCallsView screen.
- * It allows an inventory operation worker to view and update inventory calls.
+ * This class is the controller for the
+ * InventoryOperationWorker_InventoryCallsView screen. It allows an inventory
+ * operation worker to view and update inventory calls.
  * 
  * @author Dolev Seri
  *
@@ -70,7 +73,16 @@ public class InventoryOperationWorker_InventoryCallsController {
 	 */
 	@FXML
 	void clickInventoryUpdateBtn(ActionEvent event) {
-
+		InventoryCall selectedCall = tblCalls.getSelectionModel().getSelectedItem();
+		if (selectedCall == null) {
+			scene.popUpMessage("You need to chose call!");
+		}
+		else {
+			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+			scene.setScreenWithData(new Stage(), 
+					"/clientGUI/InventoryOperationWorker_UpdateProductQuantity.fxml",
+					selectedCall);
+		}
 	}
 
 	/**
