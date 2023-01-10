@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_NewCallController">
+   <children>
+      <Button fx:id="btnexit" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="57.0" layoutY="29.0" prefHeight="107.0" prefWidth="356.0" text="Update Product Quantity" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="27.0" />
+         </font>
+      </Label>
+      <Label layoutX="43.0" layoutY="121.0" prefHeight="30.0" prefWidth="62.0" text="Device:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="157.0" prefHeight="30.0" prefWidth="193.0" text="Product under threshold:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSend" layoutX="165.0" layoutY="250.0" mnemonicParsing="false" onAction="#clickBtnSend" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Send" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
+      <Label layoutX="42.0" layoutY="194.0" prefHeight="30.0" prefWidth="174.0" text="New product quantity:" textFill="#8d48e1">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblDeviceName" layoutX="266.0" layoutY="121.0" prefHeight="30.0" prefWidth="145.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblProductName" layoutX="266.0" layoutY="157.0" prefHeight="30.0" prefWidth="145.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtPrQuantity" layoutX="266.0" layoutY="194.0" promptText="Enter new quantity" />
+      <ImageView fitHeight="51.0" fitWidth="42.0" layoutX="406.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

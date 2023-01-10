@@ -3,6 +3,7 @@ package clientControllers;
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
+import entityControllers.InactivityLogoutController;
 import enums.Request;
 import enums.SupplyMethod;
 import javafx.event.ActionEvent;
@@ -47,6 +48,9 @@ public class Client_OL_MainVieController {
 
 	@FXML
 	void clickOnDeliveryOrder(ActionEvent event) {
+		Thread t = new Thread(new InactivityLogoutController());
+		ChatClient.checkWindowTimeThread = t;
+		t.start();
 		ChatClient.costumerController.setSuplyMethod(SupplyMethod.Delivery);
 		ChatClient.costumerController.getCostumer().setDevice("Delivery");
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
@@ -55,6 +59,9 @@ public class Client_OL_MainVieController {
 
 	@FXML
 	void clickOnPickUpOrder(ActionEvent event) {
+		Thread t = new Thread(new InactivityLogoutController());
+		ChatClient.checkWindowTimeThread = t;
+		t.start();
 		ChatClient.costumerController.setSuplyMethod(SupplyMethod.PickUp);
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/ChooseDevice_PickUp.fxml");

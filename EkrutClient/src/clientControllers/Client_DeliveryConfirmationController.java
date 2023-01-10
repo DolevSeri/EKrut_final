@@ -104,7 +104,7 @@ public class Client_DeliveryConfirmationController {
 			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
 		}
 		totalPrice = totalSum;
-		lblPrice.setText(String.format("%.2f",totalPrice) + "  ILS");
+		lblPrice.setText(String.format("%.2f", totalPrice) + "  ILS");
 	}
 
 	@FXML
@@ -133,6 +133,7 @@ public class Client_DeliveryConfirmationController {
 		if (cmbArea.getValue() == null || txtAddress.getText().isEmpty()) {
 			lblError.setVisible(true);
 		} else {
+			ChatClient.checkWindowTimeThread.interrupt();
 			delivery.setCostumerAdress(txtAddress.getText());
 			updateOrderInDB();
 			// save delivery in DB

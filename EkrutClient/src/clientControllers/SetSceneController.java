@@ -19,6 +19,7 @@ import javafx.stage.StageStyle;
 public class SetSceneController {
 	public void setScreen(Stage primaryStage, String path) {
 		try {
+			ChatClient.primaryStage = primaryStage;
 			Parent root = FXMLLoader.load(getClass().getResource(path));
 			Scene scene = new Scene(root);
 			primaryStage.initStyle(StageStyle.UNDECORATED);
@@ -43,24 +44,24 @@ public class SetSceneController {
 		ClientUI.chat.accept(new Message(Request.Logout_request, ChatClient.userController.getUser()));
 		if (isLogOut) {
 			((Node) event.getSource()).getScene().getWindow().hide();
-			setScreen(new Stage(),"/clientGUI/Identification_Interface.fxml");
+			setScreen(new Stage(), "/clientGUI/Identification_Interface.fxml");
 
 		} else {
 			ClientUI.chat.accept(new Message(Request.Disconnect_request, null));
 			System.exit(0);
 		}
 	}
-	
+
 	public void popUpMessage(String message) {
-	    Alert alert = new Alert(AlertType.INFORMATION);
-	    alert.setTitle("Information");
-	    alert.setHeaderText(null);
-	    alert.setContentText(message);
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
 
-	    // Set the alert dialog style
-	    DialogPane dialogPane = alert.getDialogPane();
-	    dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
+		// Set the alert dialog style
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
 
-	    alert.showAndWait();
+		alert.showAndWait();
 	}
 }

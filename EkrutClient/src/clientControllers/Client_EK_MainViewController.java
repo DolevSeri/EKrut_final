@@ -1,6 +1,7 @@
 package clientControllers;
 
 import client.ChatClient;
+import entityControllers.InactivityLogoutController;
 import enums.SupplyMethod;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +42,9 @@ public class Client_EK_MainViewController {
 
 	@FXML
 	void clickOnCreateOrder(ActionEvent event) {
+		Thread t = new Thread(new InactivityLogoutController());
+		ChatClient.checkWindowTimeThread = t;
+		t.start();
 		ChatClient.costumerController.setSuplyMethod(SupplyMethod.Standart);
 		System.out.println("Costumer want to create order");
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window

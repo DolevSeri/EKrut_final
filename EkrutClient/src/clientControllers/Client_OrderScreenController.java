@@ -62,13 +62,14 @@ public class Client_OrderScreenController {
 	public static double totalPrice = 0;
     public Sale sale;
     public boolean flaghasSale;
+
 	/**
 	 * setCatalog-a method that will set the catalog for the catalgscreen
 	 * 
 	 * @throws IOException
 	 */
 	public void initialize() throws IOException {
-		String msg="";
+		String msg = "";
 		selectedProducts = ChatClient.cartController.getCart();
 		if (ChatClient.cartController.getCart().size() == 0) {
 			ClientUI.chat
@@ -92,6 +93,7 @@ public class Client_OrderScreenController {
 			
 			if(ChatClient.salesController.getSales().size()>0||ChatClient.costumerController.getOrdersofcostumer().size() == 0&&flaghasSale==true)
 			     newScreen.popUpMessage("The dicounts for this order:"+msg);
+
 		} else {
 			products = ChatClient.productCatalogController.getProductCatalog();
 			setCatalog();
@@ -107,7 +109,7 @@ public class Client_OrderScreenController {
 				}
 			}
 		}
-		
+
 	}
 
 	private void setCatalog() throws IOException {
@@ -179,11 +181,14 @@ public class Client_OrderScreenController {
 			}
 		}
 		totalPrice = totalSum;
-		lblTotalPrice.setText(String.format("%.2f",totalPrice)+" ILS");
+		lblTotalPrice.setText(String.format("%.2f", totalPrice) + " ILS");
 	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
+		// stop counting 15 minutes for order
+		ChatClient.checkWindowTimeThread.interrupt();
+
 		productInCartControllers.clear();
 		productControllers.clear();
 		selectedProducts.clear();

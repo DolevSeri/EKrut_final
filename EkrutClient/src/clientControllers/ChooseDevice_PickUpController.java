@@ -57,6 +57,8 @@ public class ChooseDevice_PickUpController {
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
+		// stop counting 15 minutes for order
+		ChatClient.checkWindowTimeThread.interrupt();
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 	}
