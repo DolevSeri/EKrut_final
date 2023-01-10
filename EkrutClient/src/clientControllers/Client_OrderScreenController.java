@@ -61,6 +61,7 @@ public class Client_OrderScreenController {
 	public List<ProductInCartController> productInCartControllers = FXCollections.observableArrayList();
 	public static double totalPrice = 0;
     public Sale sale;
+    public boolean flaghasSale;
 	/**
 	 * setCatalog-a method that will set the catalog for the catalgscreen
 	 * 
@@ -78,13 +79,18 @@ public class Client_OrderScreenController {
 			btnCancel.setDisable(true);
 			
 			for(Sale sale:ChatClient.salesController.getSales()) {
-				msg+=sale.getDiscountType()+" ";
+				if (sale.getRegion().toString().equals(ChatClient.userController.getUser().getRegion().toString())&&ProductController.compareTime(sale.getStartHour(),sale.getEndHour())&&ProductController.isCurrentDayInRange(sale.getStartDay(),sale.getEndDay())) {
+				        msg+=sale.getDiscountType()+" ";
+				        flaghasSale=true;
+				}
 			}
 			if(ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
-				msg+="\n for your first order you get more: 20% discount!!(:";
+				 
+					msg+="\n for your first order you get more: 20% discount!!(:";
+				
 			}
 			
-			if(ChatClient.salesController.getSales().size()>0||ChatClient.costumerController.getOrdersofcostumer().size() == 0)
+			if(ChatClient.salesController.getSales().size()>0||ChatClient.costumerController.getOrdersofcostumer().size() == 0&&flaghasSale==true)
 			     newScreen.popUpMessage("The dicounts for this order:"+msg);
 		} else {
 			products = ChatClient.productCatalogController.getProductCatalog();
@@ -162,6 +168,7 @@ public class Client_OrderScreenController {
 		else
 			btnEndOrder.setDisable(false);
 	}
+	
 
 	public void setTotalAmount() {
 		double totalSum = 0;
@@ -230,5 +237,6 @@ public class Client_OrderScreenController {
 			break;
 		}
 	}
+	
 
 }

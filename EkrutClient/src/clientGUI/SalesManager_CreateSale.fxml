@@ -84,7 +84,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="txtDuration" layoutX="226.0" layoutY="357.0" prefHeight="18.0" prefWidth="114.0">
+      <Label fx:id="txtEndHour" layoutX="226.0" layoutY="357.0" prefHeight="18.0" prefWidth="114.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -109,7 +109,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lblDuration" layoutX="225.0" layoutY="331.0" text="Duration:" textFill="#8d48e1">
+      <Label fx:id="lblDuration" layoutX="225.0" layoutY="331.0" text="End Hour:" textFill="#8d48e1">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>

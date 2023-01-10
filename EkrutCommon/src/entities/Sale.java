@@ -35,7 +35,7 @@ public class Sale extends SalesPattern implements Serializable{
 		this.status = status;
 	}
 	public String toString() {
-		return "Region:"+region.toString()+" discountType:"+this.getDiscountType()+"\nDays:"+this.getStartDay()+"-"+this.getEndDay()+" From:"+this.getStartHour()+" Douration:"+this.getDuration();
+		return "Region:"+region.toString()+" discountType:"+this.getDiscountType()+"\nDays:"+this.getStartDay()+"-"+this.getEndDay()+" From:"+this.getStartHour()+" endHour:"+this.getEndHour();
 	}
 	
 

@@ -1,6 +1,10 @@
 package clientControllers;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -80,6 +84,7 @@ public class ProductController {
 				}
 
 			}
+			
 		}
 		if (flag == true) {
 			product.setPrice(product.getPrice()-product.getPrice() * 0.2);
@@ -142,6 +147,7 @@ public class ProductController {
 	}
 
 	public boolean checkSale() {
+		
 		if (ChatClient.cartController.getCart().size() > 0)
 			return false;
 		String area = ChatClient.userController.getUser().getRegion().toString();
@@ -153,12 +159,17 @@ public class ProductController {
 		if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
 			flag = true;
 		}
-		ClientUI.chat.accept(new Message(Request.import_Sales, null));
-		for (Sale sale : ChatClient.salesController.getSales()) {
-			if (sale.getRegion().toString().equals(area)) {
-				sales.add(sale);
+		
+		   
+			ClientUI.chat.accept(new Message(Request.import_Sales, null));
+			for (Sale sale : ChatClient.salesController.getSales()) {
+				if (sale.getRegion().toString().equals(area)) {
+					if(compareTime(sale.getStartHour(),sale.getEndHour())&&isCurrentDayInRange(sale.getStartDay(),sale.getEndDay()))
+					    sales.add(sale);
+				}
 			}
-		}
+		
+		
 		if (sales.size() != 0)
 			return true;
 		return false;
@@ -176,5 +187,41 @@ public class ProductController {
 		}
 		return price;
 
+		
 	}
+	public static boolean compareTime(String starthour, String endhour) {
+		LocalTime currentTime = LocalTime.now();
+		LocalTime start = LocalTime.parse(starthour);
+		LocalTime end = LocalTime.parse(endhour);
+
+		if (currentTime.isBefore(start)) {
+			return false;
+		} else if (currentTime.isAfter(end)) {
+			return false;
+		}
+		return true;
+
+	}
+	public static boolean isCurrentDayInRange(String startDayName, String endDayName) {
+        DayOfWeek start = DayOfWeek.valueOf(startDayName.toUpperCase());
+        DayOfWeek end = DayOfWeek.valueOf(endDayName.toUpperCase());
+        DayOfWeek now = java.time.LocalDate.now().getDayOfWeek();
+        if(start.compareTo(end)>0){
+            return (start.compareTo(now)<=0 || now.compareTo(end)<=0);
+        }else {
+            return (start.compareTo(now)<=0 && now.compareTo(end)<=0);
+        }
+        
+    }
+	public static void saledone(String endDayName, String endHour,Sale sale) {
+		LocalTime endtime = LocalTime.parse(endHour);
+        DayOfWeek endDay= DayOfWeek.valueOf(endDayName.toUpperCase());
+        DayOfWeek now = java.time.LocalDate.now().getDayOfWeek();
+        LocalTime currentTime = LocalTime.now();
+        if(currentTime.isAfter(endtime)&&now.compareTo(endDay)>=0) {
+           ClientUI.chat.accept(new Message(Request.Update_SaleStatusdone,sale));
+        }
+        
+        
+    }
 }

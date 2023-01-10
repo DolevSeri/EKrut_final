@@ -271,6 +271,7 @@ public enum Request {
 		public String toString() {
 			return "succsesfuly imported SalesPattern! ";
 		}
+		
 	},
 	import_Sales {
 		public String toString() {
@@ -388,6 +389,16 @@ public enum Request {
 	Customer_Data_Imported{
 		public String toString() {
 			return "Customer data imported successfully";
+		}
+	},
+	Update_SaleStatusdone{
+		public String toString() {
+			return "Request to update sale data";
+		}
+	}, 
+	SaleStatus_Updateddone{
+		public String toString() {
+			return "sale status updated successfully";
 		}
 	},
 }

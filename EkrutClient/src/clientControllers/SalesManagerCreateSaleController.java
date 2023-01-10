@@ -69,7 +69,7 @@ public class SalesManagerCreateSaleController {
 	private Label txtDiscuntType;
 
 	@FXML
-	private Label txtDuration;
+	private Label txtEndHour;
 
 	@FXML
 	private Label txtEndDay;
@@ -110,9 +110,10 @@ public class SalesManagerCreateSaleController {
 			lblError.setVisible(true);
 
 		} else {
+			
 			lblError.setVisible(false);
 			sale = new Sale(Integer.valueOf(txtpatternID.getText()), txtDiscuntType.getText(), txtStartDay.getText(),
-					txtEndDay.getText(), txtStartHour.getText(), txtDuration.getText(),
+					txtEndDay.getText(), txtStartHour.getText(), txtEndHour.getText(),
 					Region.valueOf(cmbArea.getValue()), ChatClient.salesController.getSales().size() + 1,
 					SaleStatus.valueOf("NEEDTOACTIVATE"));
 			ClientUI.chat.accept(new Message(Request.Update_Sales, sale));
@@ -135,7 +136,7 @@ public class SalesManagerCreateSaleController {
 		for (SalesPattern sale : ChatClient.salesPatternController.getSalespattern()) {
 			if (String.valueOf(sale.getPatternID()).equals(id)) {
 				txtDiscuntType.setText(sale.getDiscountType());
-				txtDuration.setText(sale.getDuration() + " Hours");
+				txtEndHour.setText(sale.getEndHour());
 				txtEndDay.setText(sale.getEndDay());
 				txtStartDay.setText(sale.getStartDay());
 				txtStartHour.setText(sale.getStartHour());

@@ -2,6 +2,7 @@ package clientControllers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -202,11 +203,14 @@ public class Client_OrderConfirmationController {
 			}
 
 		}
+		
 	}
 
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
+	
+
 
 }
