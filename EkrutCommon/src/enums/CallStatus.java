@@ -3,12 +3,12 @@ package enums;
 public enum CallStatus {
 	OPEN{
 		public String toString() {
-			return "Call is open";
+			return "OPEN";
 		}
 	},
 	DONE{
 		public String toString() {
-			return "Call is done";
+			return "DONE";
 		}
 	},
 }

@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import client.ChatClient;
+import client.ClientUI;
+import entities.Message;
 import entities.ProductInDevice;
+import entities.Sale;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -35,6 +40,17 @@ public class ProductController {
 
 	private ProductInDevice product;
 	private int quantityInOrder = 0;
+	private ArrayList<Sale> sales = new ArrayList<>();
+	// if the order is the first order of the subscriber flag will be true
+	boolean flag = false;
+
+	public void initialize() {
+		imageSale.setVisible(false);
+	}
+
+	public void resetErrorLabel() {
+		lblError.setText(null);
+	}
 
 	/**
 	 * SetData-a method that set the fxml of product in the product catalog screen
@@ -47,20 +63,34 @@ public class ProductController {
 	 * @param client_OrderScreenController - contain the main order screen
 	 *                                     controller/
 	 */
-	public void initialize() {
-		imageSale.setVisible(false);
-	}
-
-	public void resetErrorLabel() {
-		lblError.setText(null);
-	}
 
 	public void setData(ProductInDevice product, String sale,
 			Client_OrderScreenController client_OrderScreenController) {
+		int price = 0;
 		this.product = product;
 		lblName.setText(this.product.getProductName());
+		if (checkSale() == true) {
+			imageSale.setVisible(true);
+			for (Sale s : sales) {
+				product.setPrice(salePrecent(product.getPrice(), s));
+				for (ProductInDevice pro : ChatClient.productCatalogController.getProductCatalog()) {
+					if (pro.equals(product)) {
+						pro.setPrice(product.getPrice());
+					}
+				}
+
+			}
+		}
+		if (flag == true) {
+			product.setPrice(product.getPrice()-product.getPrice() * 0.2);
+			for (ProductInDevice pro : ChatClient.productCatalogController.getProductCatalog()) {
+				if (pro.equals(product)) {
+					pro.setPrice(product.getPrice());
+				}
+			}
+		}
+
 		lblPrice.setText(String.valueOf(this.product.getPrice()));
-		// lblSale.setText(sale);
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);
 		this.client_OrderScreenController = client_OrderScreenController;
@@ -108,6 +138,43 @@ public class ProductController {
 		this.quantityInOrder = p.getQuantityInOrder();
 		this.product = getProductInDevice();
 		client_OrderScreenController = screen;
+
+	}
+
+	public boolean checkSale() {
+		if (ChatClient.cartController.getCart().size() > 0)
+			return false;
+		String area = ChatClient.userController.getUser().getRegion().toString();
+		ClientUI.chat.accept(
+				new Message(Request.Import_orderbyname, ChatClient.costumerController.getCostumer().getUsername()));
+		if (ChatClient.costumerController.getCostumer().getSubscriberID() == -1) {
+			return false;
+		}
+		if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
+			flag = true;
+		}
+		ClientUI.chat.accept(new Message(Request.import_Sales, null));
+		for (Sale sale : ChatClient.salesController.getSales()) {
+			if (sale.getRegion().toString().equals(area)) {
+				sales.add(sale);
+			}
+		}
+		if (sales.size() != 0)
+			return true;
+		return false;
+	}
+
+	public double salePrecent(double price, Sale sale) {
+		if (sale.getDiscountType().equals("20%")) {
+			return price - price * 0.20;
+		}
+		if (sale.getDiscountType().equals("30%")) {
+			return price - price * 0.30;
+		}
+		if (sale.getDiscountType().equals("50%")) {
+			return price - price * 0.50;
+		}
+		return price;
 
 	}
 }

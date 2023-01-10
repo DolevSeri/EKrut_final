@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_CostumerApprovalController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_CostumerApprovalController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -69,5 +69,13 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
+      <Button fx:id="btnHelp" layoutX="617.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickBtnHelp" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Help" textFill="WHITE" underline="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

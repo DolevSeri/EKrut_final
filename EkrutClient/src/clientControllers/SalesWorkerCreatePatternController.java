@@ -65,7 +65,7 @@ public class SalesWorkerCreatePatternController {
 
 	public void initialize() {
 		ArrayList<String> discount = new ArrayList<String>();
-		discount.addAll(Arrays.asList("1+1", "2+1", "50%", "60%", "70%"));
+		discount.addAll(Arrays.asList("1+1","20%", "30","50%"));
 		cmbDiscount.getItems().addAll(discount);
 		ArrayList<String> daysStart = new ArrayList<String>();
 		daysStart.addAll(Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));

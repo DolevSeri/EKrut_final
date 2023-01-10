@@ -1,6 +1,7 @@
 package entityControllers;
 
 import entities.Costumer;
+import entities.Order;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +20,7 @@ public class CostumerController {
 	public void setCustomerToUpdate(Costumer customerToUpdate) {
 		this.customerToUpdate = customerToUpdate;
 	}
+	private ObservableList<Order> ordersofcostumer = FXCollections.observableArrayList();
 
 	public ObservableList<Integer> getPickUpOrders() {
 		return pickUpOrders;
@@ -26,6 +28,14 @@ public class CostumerController {
 
 	public void setPickUpOrders(ObservableList<Integer> pickUpOrders) {
 		this.pickUpOrders = pickUpOrders;
+	}
+
+	public ObservableList<Order> getOrdersofcostumer() {
+		return ordersofcostumer;
+	}
+
+	public void setOrdersofcostumer(ObservableList<Order> ordersofcostumer) {
+		this.ordersofcostumer = ordersofcostumer;
 	}
 
 	public SupplyMethod getSuplyMethod() {

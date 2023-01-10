@@ -345,6 +345,26 @@ public enum Request {
 			return "Request to create new custumer";
 		}
 	},
+	Update_sale_status{
+		public String toString() {
+			return "Request to update sale status";
+		}
+	},
+	Updated_sale_status{
+		public String toString() {
+			return "Updated  sale status succssesfully!";
+		}
+	},
+	Import_orderbyname{
+		public String toString() {
+			return "request to import  order ";
+		}
+	},
+	Imported_orderbyname{
+		public String toString() {
+			return "import order succssesfully!";
+		}
+	},
 	Customer_Created{
 		public String toString() {
 			return "Customer created successfully";

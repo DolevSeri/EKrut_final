@@ -17,13 +17,15 @@ public class Costumer extends User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String creditCard;
-	private String subscriberID;
+	private int subscriberID;
 	private CostumerStatus status;
 	private String deviceName;
 
 	public Costumer(String username, String password, String firstName, String lastName, String email,
 			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region, String creditCard,
 			String subscriberID, CostumerStatus status, String deviceName) {
+			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region,
+			String creditCard, int subscriberID, CostumerStatus status, String deviceName) {
 
 		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region);
 		this.creditCard = creditCard;
@@ -32,7 +34,7 @@ public class Costumer extends User implements Serializable {
 		this.deviceName = deviceName;
 	}
 
-	public Costumer(String username, String creditCard, String subscriberID, CostumerStatus status) {
+	public Costumer(String username, String creditCard, int subscriberID, CostumerStatus status) {
 		super(username);
 		this.creditCard = creditCard;
 		this.subscriberID = subscriberID;
@@ -43,7 +45,7 @@ public class Costumer extends User implements Serializable {
 		return creditCard;
 	}
 
-	public String getSubscriberID() {
+	public int getSubscriberID() {
 		return subscriberID;
 	}
 
@@ -59,7 +61,7 @@ public class Costumer extends User implements Serializable {
 		this.creditCard = creditCard;
 	}
 
-	public void setSubscriberID(String subscriberID) {
+	public void setSubscriberID(int subscriberID) {
 		this.subscriberID = subscriberID;
 	}
 

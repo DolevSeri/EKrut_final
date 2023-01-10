@@ -36,6 +36,6 @@ public class ProductInConfirmationController {
 		int amountOfProduct = ChatClient.cartController.getCart().get(product);
 		double priceOfAmount = amountOfProduct * product.getPrice();
 		lblQuantity.setText(String.valueOf(amountOfProduct));
-		lblPrice.setText(String.valueOf(priceOfAmount));
+		lblPrice.setText(String.format("%.2f",priceOfAmount));
 	}
 }

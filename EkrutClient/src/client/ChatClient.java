@@ -212,6 +212,11 @@ public class ChatClient extends AbstractClient {
 			costumerController.setCustomerToUpdate((Costumer)message.getObject());
 			break;
 		case Customer_Updated:
+		case Updated_sale_status:
+			break;
+		case Imported_orderbyname:
+			costumerController.setOrdersofcostumer((FXCollections.observableArrayList((ArrayList<Order>) message.getObject())));
+			break;
 		default:
 			break;
 		}
