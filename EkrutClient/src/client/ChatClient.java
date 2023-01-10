@@ -38,6 +38,7 @@ import entityControllers.SaleController;
 import entityControllers.SalesPatternController;
 import entityControllers.UserController;
 import javafx.collections.FXCollections;
+import javafx.stage.Stage;
 import ocsf.client.AbstractClient;
 
 /**
@@ -75,6 +76,8 @@ public class ChatClient extends AbstractClient {
 	public static SaleController salesController = new SaleController();
 	public static UserController usersController = null;
 	public static String configuration;
+	public static Thread checkWindowTimeThread;
+	public static Stage primaryStage = null;
 // Constructors ****************************************************
 
 	/**
@@ -194,7 +197,7 @@ public class ChatClient extends AbstractClient {
 		case System_msg_updated:
 			break;
 		case User_Data_Imported:
-			userController.setUserToUpdate((User)message.getObject());
+			userController.setUserToUpdate((User) message.getObject());
 			break;
 		case TakeAway_Saved:
 			break;
@@ -209,13 +212,14 @@ public class ChatClient extends AbstractClient {
 		case Customer_Created:
 			break;
 		case Customer_Data_Imported:
-			costumerController.setCustomerToUpdate((Costumer)message.getObject());
+			costumerController.setCustomerToUpdate((Costumer) message.getObject());
 			break;
 		case Customer_Updated:
 		case Updated_sale_status:
 			break;
 		case Imported_orderbyname:
-			costumerController.setOrdersofcostumer((FXCollections.observableArrayList((ArrayList<Order>) message.getObject())));
+			costumerController
+					.setOrdersofcostumer((FXCollections.observableArrayList((ArrayList<Order>) message.getObject())));
 			break;
 		default:
 			break;

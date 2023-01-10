@@ -76,7 +76,7 @@ public class Client_OrderConfirmationController {
 			totalSum += (p.getPrice() * ChatClient.cartController.getCart().get(p));
 		}
 		totalPrice = totalSum;
-		lblPrice.setText(String.format("%.2f",totalPrice) + "  ILS");
+		lblPrice.setText(String.format("%.2f", totalPrice) + "  ILS");
 	}
 
 	public void initialize() throws IOException {
@@ -129,6 +129,9 @@ public class Client_OrderConfirmationController {
 
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
+		// stop counting 15 minutes for order
+		ChatClient.checkWindowTimeThread.interrupt();
+
 		updateProductsInDevice();
 		updateOrderInDB();
 		// if there are any products under treshold
@@ -198,7 +201,7 @@ public class Client_OrderConfirmationController {
 				msg = new SystemMessage(0, "am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
 						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
 						MessageStatus.UnRead);
-				ClientUI.chat.accept(new Message(Request.Send_msg_to_system,msg));
+				ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
 			}
 
 		}
