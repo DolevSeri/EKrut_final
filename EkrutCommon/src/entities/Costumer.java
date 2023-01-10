@@ -2,12 +2,9 @@ package entities;
 
 import java.io.Serializable;
 
-
-import enums.Configuration;
 import enums.CostumerStatus;
 import enums.Region;
 import enums.Role;
-
 
 /**
  * 
@@ -25,8 +22,8 @@ public class Costumer extends User implements Serializable {
 	private String deviceName;
 
 	public Costumer(String username, String password, String firstName, String lastName, String email,
-			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region,
-			String creditCard, String subscriberID, CostumerStatus status, String deviceName) {
+			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region, String creditCard,
+			String subscriberID, CostumerStatus status, String deviceName) {
 
 		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region);
 		this.creditCard = creditCard;
@@ -40,7 +37,7 @@ public class Costumer extends User implements Serializable {
 		this.creditCard = creditCard;
 		this.subscriberID = subscriberID;
 		this.status = status;
-		}
+	}
 
 	public String getCreditCard() {
 		return creditCard;

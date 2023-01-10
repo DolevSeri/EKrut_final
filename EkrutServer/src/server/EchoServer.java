@@ -343,6 +343,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Save_TakeAway:
 			Order pickUpOrder = (Order) messageFromClient.getObject();
 			MySqlController.savePickUpOrderInDB(pickUpOrder.getOrderID());
@@ -386,9 +387,27 @@ public class EchoServer extends AbstractServer {
 			break;
 		case Create_Customer_Request:
 			ArrayList<String> userData = (ArrayList<String>)messageFromClient.getObject();
-			 MySqlController.updateUserToCustomer(userData);
+			MySqlController.updateUserToCustomer(userData);
 			try {
 				client.sendToClient(new Message(Request.Customer_Created,null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_Customer_Request:
+			MySqlController.updateCostumerToMember((String)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Customer_Updated, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Get_Customer_Data:
+			try {
+				client.sendToClient(new Message(Request.Customer_Data_Imported, 
+						MySqlController.importCustomerDataToUpdate((String)messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");

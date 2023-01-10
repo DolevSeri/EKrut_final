@@ -175,7 +175,7 @@ public class MySqlController {
 
 	public static void updateUserToCustomer(ArrayList<String> userData) {
 		String username = userData.get(0), creditCard = userData.get(1);
-		Integer isMember = Integer.valueOf(userData.get(2));
+		int isMember = Integer.valueOf(userData.get(2));
 
 		String userArea = null, region = null;
 		PreparedStatement ps = null;
@@ -260,10 +260,10 @@ public class MySqlController {
 
 	public static void updateCostumerToMember(String username) {
 		PreparedStatement ps = null;
-		Integer isMember = 0;
+		int isMember = 0;
 
 		try {
-			ps = dbConnector.prepareStatement("SELECT MAX(subscriberID) FROM ektut.costumers");
+			ps = dbConnector.prepareStatement("SELECT MAX(subscriberID) FROM ekrut.costumers");
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				isMember = rs.getInt(1);
@@ -273,10 +273,7 @@ public class MySqlController {
 			e.printStackTrace();
 			System.out.println("Find max subsciberID statement failed");
 		}
-
-		try
-
-		{
+		try{
 			ps = dbConnector.prepareStatement("UPDATE ekrut.costumers SET subscriberID = ? WHERE username = ?");
 			try {
 				ps.setInt(1, isMember);
@@ -290,6 +287,7 @@ public class MySqlController {
 			e1.printStackTrace();
 			System.out.println("Update user to costumer failure");
 		}
+		System.out.println("Update customer to member succeed");
 	}
 
 	public static DeliveryReport getDeliveryReportData(ArrayList<String> reportDetails) {
@@ -1382,4 +1380,24 @@ public class MySqlController {
 
 	}
 
+	public static Costumer importCustomerDataToUpdate(String username) {
+		Costumer c = null;
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers WHERE username = ?");
+			try {
+				ps.setString(1, username);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Set statement failed on importCustomerDataToUpdate");
+			}
+			ResultSet rs = ps.executeQuery();
+			if(rs.next())
+				c = new Costumer(username, rs.getString("creditCard"), rs.getString("subscriberID"),
+						CostumerStatus.valueOf(rs.getString("status")));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed on importCustomerDataToUpdate");
+		}
+		return c;
+	}
 }

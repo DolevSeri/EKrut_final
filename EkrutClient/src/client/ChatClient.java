@@ -37,7 +37,6 @@ import entityControllers.ProductCatalogController;
 import entityControllers.SaleController;
 import entityControllers.SalesPatternController;
 import entityControllers.UserController;
-import entityControllers.UserCreateOrUpdateController;
 import javafx.collections.FXCollections;
 import ocsf.client.AbstractClient;
 
@@ -75,7 +74,6 @@ public class ChatClient extends AbstractClient {
 	public static SalesPatternController salesPatternController = new SalesPatternController();
 	public static SaleController salesController = new SaleController();
 	public static UserController usersController = null;
-	public static UserCreateOrUpdateController userCreateUpdate = new UserCreateOrUpdateController();
 	public static String configuration;
 // Constructors ****************************************************
 
@@ -196,7 +194,7 @@ public class ChatClient extends AbstractClient {
 		case System_msg_updated:
 			break;
 		case User_Data_Imported:
-			userCreateUpdate.setUser((User) message.getObject());
+			userController.setUserToUpdate((User)message.getObject());
 			break;
 		case TakeAway_Saved:
 			break;
@@ -210,6 +208,10 @@ public class ChatClient extends AbstractClient {
 			break;
 		case Customer_Created:
 			break;
+		case Customer_Data_Imported:
+			costumerController.setCustomerToUpdate((Costumer)message.getObject());
+			break;
+		case Customer_Updated:
 		default:
 			break;
 		}

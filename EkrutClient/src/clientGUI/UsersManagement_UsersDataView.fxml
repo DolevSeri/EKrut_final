@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_UserInformationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.UserManagement_UserInformationController">
    <children>
       <Pane layoutX="481.0" prefHeight="510.0" prefWidth="314.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -132,7 +132,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="210.0" layoutY="442.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Update" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnUpdate" layoutX="211.0" layoutY="442.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Update" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -140,10 +140,20 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <TextField fx:id="txtCreditCard" editable="false" layoutX="195.0" layoutY="335.0" promptText="enter Credit Card" />
-      <Label fx:id="lblErrorMsg" layoutX="111.0" layoutY="414.0" prefHeight="20.0" prefWidth="358.0" textFill="RED">
+      <TextField fx:id="txtCreditCard" editable="false" layoutX="195.0" layoutY="335.0" promptText="5555-5555-5555-5555" />
+      <Label fx:id="lblErrorMsg" layoutX="107.0" layoutY="414.0" prefHeight="20.0" prefWidth="358.0" textFill="RED">
          <font>
             <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblCredit" layoutX="29.0" layoutY="335.0" prefHeight="30.0" prefWidth="15.0" text="*" textFill="RED">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblMember" layoutX="29.0" layoutY="380.0" prefHeight="30.0" prefWidth="15.0" text="*" textFill="RED">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
          </font>
       </Label>
    </children>
