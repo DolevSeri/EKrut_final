@@ -23,9 +23,7 @@ public class Costumer extends User implements Serializable {
 
 	public Costumer(String username, String password, String firstName, String lastName, String email,
 			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region, String creditCard,
-			String subscriberID, CostumerStatus status, String deviceName) {
-			String phoneNumber, boolean isLoggedIn, String id, Role role, Region region,
-			String creditCard, int subscriberID, CostumerStatus status, String deviceName) {
+			int subscriberID, CostumerStatus status, String deviceName) {
 
 		super(username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region);
 		this.creditCard = creditCard;

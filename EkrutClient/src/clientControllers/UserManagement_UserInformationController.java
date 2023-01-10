@@ -106,6 +106,7 @@ public class UserManagement_UserInformationController {
 
 	@FXML
 	void clickBtnImport(ActionEvent event) {
+		
 		lblErrorMsg.setVisible(false);
 		ArrayList<String> userInfo = new ArrayList<>();
 		userInfo.clear();
@@ -139,8 +140,9 @@ public class UserManagement_UserInformationController {
 
 			// check if its update user case and if customer is already member
 			// if yes - show message
-			else if (controller.isUpdate() && !(customerToUpdate.getSubscriberID().equals("-1"))) {
+			else if (controller.isUpdate() && !(customerToUpdate.getSubscriberID() == -1)) {
 				scene.popUpMessage("Customer is already a member!");
+				
 			}
 
 			// check if its update user case and if customer not approved yet
@@ -148,7 +150,6 @@ public class UserManagement_UserInformationController {
 			else if (controller.isUpdate() && customerToUpdate.getStatus().toString().equals("NOTAPPROVED")) {
 				scene.popUpMessage(
 						"Costumer is not approved yet!\nPlease wait for area manager approval to set this user as a member");
-				chbMembership.setDisable(true);
 			}
 
 			else {
@@ -168,10 +169,12 @@ public class UserManagement_UserInformationController {
 
 	@FXML
 	void clickBtnSend(ActionEvent event) {
+		boolean flag = true;
 		String credit = txtCreditCard.getText();
 		if(credit.length() != 19 || 
 				!credit.matches("\\d{4}-\\d{4}-\\d{4}-\\d{4}")){
 			scene.popUpMessage("You must enter valid Credit Card number!");
+			flag = false;
 		}
 		else {
 		ArrayList<String> details = new ArrayList<>(Arrays.asList(txtUserName.getText(), txtCreditCard.getText()));
@@ -187,19 +190,41 @@ public class UserManagement_UserInformationController {
 			else
 				scene.popUpMessage("Customer created successfully!");
 		}
+		if(flag)
+			clearField();
 	}
 
 	@FXML
 	void clickBtnUpdate(ActionEvent event) {
 		String username = txtUserName.getText();
-		if (!chbMembership.isSelected())
+		boolean flag = true;
+		if (!chbMembership.isSelected()) {
 			scene.popUpMessage("There is no update to save");
+			flag = false;
+		}
 		else {
 			ClientUI.chat.accept(new Message(Request.Update_Customer_Request, username));
 			scene.popUpMessage(
 					"Customer created successfully!\nThe customer recived 20% discount for his first purchase");
 		}
+		if(flag)
+			clearField();
 
+
+	}
+	
+	void clearField() {
+		lblID.setText("");
+		lblEmail.setText("");
+		lblFName.setText("");
+		lblLName.setText("");
+		lblPhone.setText("");
+		chbMembership.setSelected(false);
+		txtUserName.clear();
+		if(controller.isUpdate()) 
+			lblCreditCard.setText("");
+		else
+			txtCreditCard.clear();
 	}
 
 	@FXML

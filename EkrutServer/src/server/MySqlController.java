@@ -1435,7 +1435,7 @@ public class MySqlController {
 			}
 			ResultSet rs = ps.executeQuery();
 			if(rs.next())
-				c = new Costumer(username, rs.getString("creditCard"), rs.getString("subscriberID"),
+				c = new Costumer(username, rs.getString("creditCard"), rs.getInt("subscriberID"),
 						CostumerStatus.valueOf(rs.getString("status")));
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -399,6 +399,11 @@ public class EchoServer extends AbstractServer {
 			MySqlController.updateCostumerToMember((String)messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.Customer_Updated, null));
+			}catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		case Update_sale_status:
 			Sale saleToUpdate = (Sale) messageFromClient.getObject();
 			MySqlController.updateSaleStatusInDB(saleToUpdate);
@@ -413,6 +418,11 @@ public class EchoServer extends AbstractServer {
 			try {
 				client.sendToClient(new Message(Request.Customer_Data_Imported, 
 						MySqlController.importCustomerDataToUpdate((String)messageFromClient.getObject())));
+			}catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		case Import_orderbyname:
 			String username=(String)messageFromClient.getObject();
 			try {
