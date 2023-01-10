@@ -1,7 +1,8 @@
 package clientControllers;
 
-import client.ChatClient;
+import java.lang.reflect.Method;
 
+import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
 import enums.Request;
@@ -30,10 +31,22 @@ public class SetSceneController {
 		}
 	}
 
-//	public void createOrUpdateClient(boolean isUpdate) {
-//		UserManagement_UserInformationController(isUpdate);
-//		setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
-//	}
+    public void setScreenWithData(Stage primaryStage, String path, Object data) {
+        try {
+            ChatClient.primaryStage = primaryStage;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+            primaryStage.setScene(scene);
+            Object controller = loader.getController();
+            Method initData = controller.getClass().getMethod("initData", data.getClass());
+            initData.invoke(controller, data);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	public void back(ActionEvent event, String path) {
 		((Node) event.getSource()).getScene().getWindow().hide();

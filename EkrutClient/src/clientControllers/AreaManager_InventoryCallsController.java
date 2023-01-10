@@ -5,19 +5,13 @@ import java.util.Arrays;
 
 import client.ChatClient;
 import client.ClientUI;
-import entities.InventoryCall;
 import entities.Message;
-import enums.CallStatus;
 import enums.Request;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.stage.Stage;
 
 public class AreaManager_InventoryCallsController {
 
