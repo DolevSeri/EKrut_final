@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -15,10 +14,7 @@
       <Pane layoutX="485.0" prefHeight="482.0" prefWidth="310.0" style="-fx-background-color: #D0A9F5;">
          <children>
             <ImageView fx:id="icon" fitHeight="59.0" fitWidth="49.0" layoutX="247.0" layoutY="14.0" />
-            <ImageView fx:id="saleImage" fitHeight="393.0" fitWidth="282.0" layoutX="14.0" layoutY="42.0">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/SalesDesignPatternSale.jpeg" />
-               </image></ImageView>
+            <ImageView fx:id="saleImage" fitHeight="393.0" fitWidth="282.0" layoutX="14.0" layoutY="42.0" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

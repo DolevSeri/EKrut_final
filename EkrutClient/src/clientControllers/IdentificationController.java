@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -41,7 +42,7 @@ public class IdentificationController {
 	private Button btnExit;
 
 	@FXML
-	private ImageView logoImage;
+	private ImageView ekrutLogo;
 
 	/**
 	 * QRimag - an image that will help us to connect the subscriber to system.
@@ -62,6 +63,11 @@ public class IdentificationController {
 
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		ekrutLogo.setImage(image);
+		
+		Image image2 = new Image("/images/QR_Code.png");
+		QRimage.setImage(image2);
 	}
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {

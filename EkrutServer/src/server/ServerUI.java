@@ -63,6 +63,7 @@ public class ServerUI extends Application {
 		}
 	        MySqlController.connectToDB(dbName,dbUserName,dbPwd);
 
+	        
 	}
 	
 	public static void stopServer() {

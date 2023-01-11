@@ -5,19 +5,13 @@ import java.util.Arrays;
 
 import client.ChatClient;
 import client.ClientUI;
-import entities.InventoryCall;
 import entities.Message;
-import enums.CallStatus;
 import enums.Request;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.stage.Stage;
 
 public class AreaManager_InventoryCallsController {
 
@@ -76,13 +70,15 @@ public class AreaManager_InventoryCallsController {
 		} catch (NullPointerException e) {
 		}
 		
-		ClientUI.chat.accept(new Message(Request.Get_Products, deviceChosen));
+		ClientUI.chat.accept(new Message(Request.Get_Products_under_thres, deviceChosen));
 		cmbProduct.getItems().addAll(ChatClient.productCatalogController.getProductsInDevicesNames());
 		cmbProduct.setPromptText("Choose Product");
 	}
 	
 	/**
 	 * Handles the action of clicking the create new call button.
+	 * if the product that the manager wants to open call on
+	 * is already has an open call on it - an error message will pop.
 	 *
 	 * @param event the action event that triggered this method call
 	 */
@@ -93,50 +89,14 @@ public class AreaManager_InventoryCallsController {
 			scene.popUpMessage("You need to choose Device and Product!");
 		} else {
 			ClientUI.chat.accept(new Message(Request.Create_Inventory_Call, fields));
+			if(ChatClient.inventoryCallController.isCreated()) {
+				scene.popUpMessage("The call was created succesfully!");
+			}
+			else
+				scene.popUpMessage("NOTICE: The call is already exist for this product!");
 		}
 
 	}
-
-	/**
-	 * Handles the action of clicking the close call button. If no calls are
-	 * selected or if any of the selected calls have a status other than DONE, an
-	 * error message is displayed. Otherwise, the selected calls are closed and the
-	 * table is updated.
-	 * 
-	 * @param selectedCalls -the list of selected calls in the table
-	 * @param allDone       -a flag indicating whether all selected calls have a
-	 *                       status of DONE
-	 * @param callsToClose  -the list of calls to be closed
-	 * 
-	 *
-	 * @param event         the action event that triggered this method call
-	 */
-
-//	@FXML
-//	void clickCloseCallBtn(ActionEvent event) {
-//		ObservableList<InventoryCall> selectedCalls = tblCalls.getSelectionModel().getSelectedItems();
-//		if (selectedCalls.isEmpty()) {
-//			lblError.setText("Error: No calls selected");
-//			lblError.setVisible(true);
-//		} else {
-//			boolean allDone = true;
-//			for (InventoryCall call : selectedCalls) {
-//				if (call.getStatus() != CallStatus.DONE) {
-//					allDone = false;
-//					break;
-//				}
-//			}
-//			if (!allDone) {
-//				lblError.setText("Error: Cannot close calls with a status other than" + CallStatus.DONE.toString());
-//				lblError.setVisible(true);
-//			} else {
-//				lblError.setVisible(false);
-//				ArrayList<InventoryCall> callsToClose = new ArrayList<>(selectedCalls);
-//				ClientUI.chat.accept(new Message(Request.Inventory_Calls_To_Close, callsToClose));
-//				setTableItems();
-//			}
-//		}
-//	}
 
 	/**
 	 * Handles the action of clicking the exit button.

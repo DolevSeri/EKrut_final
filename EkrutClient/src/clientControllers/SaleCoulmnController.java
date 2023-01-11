@@ -37,6 +37,7 @@ public class SaleCoulmnController {
      private Sale sale;
      SalesWorkerActivateSaleController salesworkeractivate;
      SetSceneController newScreen = new SetSceneController();
+     
     @FXML
     void clickOnActivate(ActionEvent event) throws IOException {
     	for(Sale sale:ChatClient.salesController.getSales()) {
@@ -44,7 +45,6 @@ public class SaleCoulmnController {
     			sale.setStatus(SaleStatus.ACTIVATE);
     			this.sale.setStatus(SaleStatus.ACTIVATE);
     			ClientUI.chat.accept(new Message(Request.Update_sale_status,sale));
-    			
     			
     		}
     	}

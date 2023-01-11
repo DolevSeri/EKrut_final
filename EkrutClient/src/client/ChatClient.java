@@ -173,6 +173,7 @@ public class ChatClient extends AbstractClient {
 		case Costumer_Status_Updated:
 			break;
 		case Inventory_Call_Created:
+			inventoryCallController.setCreated((boolean) message.getObject());
 			break;
 		case Orders_imported:
 			List<Order> orders = (ArrayList<Order>) message.getObject();
@@ -237,6 +238,9 @@ public class ChatClient extends AbstractClient {
 			deliveryController.setAreaDeliveriesToApprove((FXCollections.observableArrayList(b)));
 			break;
 		case Delivery_Status_Changed:
+
+		case Product_quantity_updated_succesfully_call_closed:
+
 			break;
 		default:
 			break;

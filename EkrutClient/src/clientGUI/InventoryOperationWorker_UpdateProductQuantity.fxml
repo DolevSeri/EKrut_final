@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.AreaManager_NewCallController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.InventoryOperationWorker_UpdateProductQuantityController">
    <children>
-      <Button fx:id="btnexit" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
+      <Button fx:id="btnexit" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -31,7 +31,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnSend" layoutX="165.0" layoutY="250.0" mnemonicParsing="false" onAction="#clickBtnSend" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Send" textFill="WHITE" underline="true">
+      <Button fx:id="btnUpdate" layoutX="165.0" layoutY="250.0" mnemonicParsing="false" onAction="#clickBtnUpdate" prefHeight="34.0" prefWidth="103.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Update" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

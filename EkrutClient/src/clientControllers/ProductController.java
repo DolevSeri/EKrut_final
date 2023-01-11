@@ -50,6 +50,7 @@ public class ProductController {
 
 	public void initialize() {
 		imageSale.setVisible(false);
+		
 	}
 
 	public void resetErrorLabel() {
@@ -58,24 +59,23 @@ public class ProductController {
 
 	/**
 	 * SetData-a method that set the fxml of product in the product catalog screen
-	 * 
-	 * @param name-will                    contain the name of the products
-	 * @param price-will                   contain the price of thr products
-	 * @param sale-will                    contain the sale that the region have
-	 * @param imagePath-                   will contain the path of the product
-	 *                                     image
+	 * @param product-contain the product that we want to set data for him.
 	 * @param client_OrderScreenController - contain the main order screen
 	 *                                     controller/
 	 */
 
-	public void setData(ProductInDevice product, String sale,
+	public void setData(ProductInDevice product,
 			Client_OrderScreenController client_OrderScreenController) {
 		int price = 0;
 		this.product = product;
 		lblName.setText(this.product.getProductName());
-		if (checkSale() == true) {
+		//if the cart is full thats means that the user press the back button in the confirmation screen so we dont want to do the same discounts twice
+		if (ChatClient.cartController.getCart().size() == 0) {
+			//if there are any sales
+		 if (checkSale() == true) {
 			imageSale.setVisible(true);
 			for (Sale s : sales) {
+				//initialize the product price after discount
 				product.setPrice(salePrecent(product.getPrice(), s));
 				for (ProductInDevice pro : ChatClient.productCatalogController.getProductCatalog()) {
 					if (pro.equals(product)) {
@@ -85,7 +85,8 @@ public class ProductController {
 
 			}
 			
-		}
+	     }
+		//if thats the first order of the subscriber
 		if (flag == true) {
 			product.setPrice(product.getPrice()-product.getPrice() * 0.2);
 			for (ProductInDevice pro : ChatClient.productCatalogController.getProductCatalog()) {
@@ -93,6 +94,12 @@ public class ProductController {
 					pro.setPrice(product.getPrice());
 				}
 			}
+		 }
+		}
+		if(sales.size()>0) {
+			Image image = new Image("/images/sale.png");
+			imageSale.setImage(image);
+			imageSale.setVisible(true);
 		}
 
 		lblPrice.setText(String.valueOf(this.product.getPrice()));
@@ -145,26 +152,30 @@ public class ProductController {
 		client_OrderScreenController = screen;
 
 	}
-
+	
+    /**chackSale- a method that check if there are any sales in the order
+     * @return true if there are any sales anf fals if there are not
+     * */
 	public boolean checkSale() {
-		
-		if (ChatClient.cartController.getCart().size() > 0)
-			return false;
+		//the area of the user that he order from
 		String area = ChatClient.userController.getUser().getRegion().toString();
 		ClientUI.chat.accept(
 				new Message(Request.Import_orderbyname, ChatClient.costumerController.getCostumer().getUsername()));
+		//if the user not a subscriber there is not sales
 		if (ChatClient.costumerController.getCostumer().getSubscriberID() == -1) {
 			return false;
 		}
+		//if there is the first order of the subscriber there is more 20% discount
 		if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
 			flag = true;
 		}
 		
 		   
-			ClientUI.chat.accept(new Message(Request.import_Sales, null));
+			//ClientUI.chat.accept(new Message(Request.import_Sales, null));
 			for (Sale sale : ChatClient.salesController.getSales()) {
 				if (sale.getRegion().toString().equals(area)) {
 					if(compareTime(sale.getStartHour(),sale.getEndHour())&&isCurrentDayInRange(sale.getStartDay(),sale.getEndDay()))
+						//if there are any sale in the area that valid adding to the sale list of this order
 					    sales.add(sale);
 				}
 			}
@@ -213,15 +224,5 @@ public class ProductController {
         }
         
     }
-	public static void saledone(String endDayName, String endHour,Sale sale) {
-		LocalTime endtime = LocalTime.parse(endHour);
-        DayOfWeek endDay= DayOfWeek.valueOf(endDayName.toUpperCase());
-        DayOfWeek now = java.time.LocalDate.now().getDayOfWeek();
-        LocalTime currentTime = LocalTime.now();
-        if(currentTime.isAfter(endtime)&&now.compareTo(endDay)>=0) {
-           ClientUI.chat.accept(new Message(Request.Update_SaleStatusdone,sale));
-        }
-        
-        
-    }
+
 }

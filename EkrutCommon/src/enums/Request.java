@@ -20,7 +20,7 @@ public enum Request {
 	Disconnected {
 
 		public String toString() {
-			return "Client Connected";
+			return "Client Disconnected";
 		}
 
 	},
@@ -242,16 +242,6 @@ public enum Request {
 			return "Inventory calls imported successfully";
 		}
 	},
-	Inventory_Calls_To_Close {
-		public String toString() {
-			return "Request to close inventory calls";
-		}
-	},
-	Inventory_Calls_Closed {
-		public String toString() {
-			return "Inventory calls closed successfully";
-		}
-	},
 	Update_SalesPattern {
 		public String toString() {
 			return "Request to update Sales pattern";
@@ -429,6 +419,21 @@ public enum Request {
 	Delivery_Status_Changed{
 		public String toString() {
 			return "Deliveries status changed successfully";
+
+	Get_Products_under_thres{
+		public String toString() {
+			return "Request for products under threshold";
+		}
+	},
+	UpdateProductQuantityAndCloseCall{
+		public String toString() {
+			return "Request to update product quantity and close the call";
+		}
+	},
+	Product_quantity_updated_succesfully_call_closed{
+		public String toString() {
+			return "Product quantity updated and the call is closed";
+
 		}
 	}
 }

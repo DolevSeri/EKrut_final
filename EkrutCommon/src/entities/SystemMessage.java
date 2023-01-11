@@ -59,4 +59,7 @@ public class SystemMessage implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public String toString() {
+		return description;
+	}
 }

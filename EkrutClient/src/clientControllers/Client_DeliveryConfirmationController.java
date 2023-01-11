@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -95,6 +96,8 @@ public class Client_DeliveryConfirmationController {
 			GridPane.setMargin(anchorPane, new Insets(3));
 		}
 		setTotalPrice();
+		Image image = new Image("/images/DeliveryConfirmation.png");
+		imageDelivery.setImage(image);
 	}
 
 	public void setTotalPrice() {

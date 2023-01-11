@@ -1,6 +1,8 @@
 package clientControllers;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,19 +64,23 @@ public class Client_OrderScreenController {
 	public static double totalPrice = 0;
     public Sale sale;
     public boolean flaghasSale;
-
 	/**
 	 * setCatalog-a method that will set the catalog for the catalgscreen
 	 * 
 	 * @throws IOException
 	 */
 	public void initialize() throws IOException {
-		String msg = "";
+		
+		String msg="";
 		selectedProducts = ChatClient.cartController.getCart();
 		if (ChatClient.cartController.getCart().size() == 0) {
 			ClientUI.chat
 					.accept(new Message(Request.Get_Products, ChatClient.costumerController.getCostumer().getDevice()));
 			products = ChatClient.productCatalogController.getProductCatalog();
+			ClientUI.chat.accept(new Message(Request.import_Sales, null));
+			for(Sale sales:ChatClient.salesController.getSales()) {
+				saledone(sales.getEndDay(),sales.getEndHour(),sales);
+			}
 			setCatalog();
 			changeEndOrder(true);
 			btnCancel.setDisable(true);
@@ -91,10 +97,10 @@ public class Client_OrderScreenController {
 				
 			}
 			
-			if(ChatClient.salesController.getSales().size()>0||ChatClient.costumerController.getOrdersofcostumer().size() == 0&&flaghasSale==true)
+			if(flaghasSale==true)
 			     newScreen.popUpMessage("The dicounts for this order:"+msg);
-
-		} else {
+		}
+		else {
 			products = ChatClient.productCatalogController.getProductCatalog();
 			setCatalog();
 			System.out.println(selectedProducts);
@@ -109,7 +115,10 @@ public class Client_OrderScreenController {
 				}
 			}
 		}
-
+		Image image = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logoImage.setImage(image);
+		
+		
 	}
 
 	private void setCatalog() throws IOException {
@@ -122,7 +131,7 @@ public class Client_OrderScreenController {
 			AnchorPane anchorPane = fxmlLoader.load();
 			ProductController productController = fxmlLoader.getController();
 			productControllers.add(productController);
-			productControllers.get(i++).setData(p, null, this);
+			productControllers.get(i++).setData(p, this);
 			gpCatalog.add(anchorPane, column++, row);// (child column,row)
 			if (column == 3) {
 				row++;
@@ -181,14 +190,11 @@ public class Client_OrderScreenController {
 			}
 		}
 		totalPrice = totalSum;
-		lblTotalPrice.setText(String.format("%.2f", totalPrice) + " ILS");
+		lblTotalPrice.setText(String.format("%.2f",totalPrice)+" ILS");
 	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {
-		// stop counting 15 minutes for order
-		ChatClient.checkWindowTimeThread.interrupt();
-
 		productInCartControllers.clear();
 		productControllers.clear();
 		selectedProducts.clear();
@@ -242,6 +248,17 @@ public class Client_OrderScreenController {
 			break;
 		}
 	}
+	public static void saledone(String endDayName, String endHour,Sale sale) {
+		LocalTime endtime = LocalTime.parse(endHour);
+        DayOfWeek endDay= DayOfWeek.valueOf(endDayName.toUpperCase());
+        DayOfWeek now = java.time.LocalDate.now().getDayOfWeek();
+        LocalTime currentTime = LocalTime.now();
+        if(currentTime.isAfter(endtime)&&now.compareTo(endDay)>=0) {
+           ClientUI.chat.accept(new Message(Request.Update_SaleStatusdone,sale));
+        }
+        
+        
+    }
 	
 
 }
