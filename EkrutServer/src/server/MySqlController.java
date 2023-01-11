@@ -54,6 +54,7 @@ public class MySqlController {
 			/* handle the error */
 			System.out.println("Driver definition failed");
 		}
+		
 
 		try {
 			dbConnector = DriverManager.getConnection(dbName, dbUserName, dbPwd);
@@ -1269,7 +1270,8 @@ public class MySqlController {
 		ArrayList<Sale> sale = new ArrayList<>();
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns WHERE ekrut.sales.patternID=ekrut.sales_patterns.patternID ");
+					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns WHERE ekrut.sales.patternID=ekrut.sales_patterns.patternID AND ekrut.sales.status=?");
+			ps.setString(1, "ACTIVATE");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next())
 				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
