@@ -1,5 +1,7 @@
 package clientControllers;
 
+import java.io.IOException;
+
 import client.ChatClient;
 import entityControllers.InactivityLogoutController;
 import enums.SupplyMethod;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -28,6 +31,10 @@ public class Client_EK_MainViewController {
 
 	@FXML
 	private ImageView logoImage;
+	public void initialize() throws IOException{
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		logoImage.setImage(image);
+	}
 
 	@FXML
 	void clickOnBack(ActionEvent event) {

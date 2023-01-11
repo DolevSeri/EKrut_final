@@ -22,10 +22,7 @@
                   <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="saleImage" fitHeight="483.0" fitWidth="355.0" layoutX="31.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/SalesMenagerScreenImage.png" />
-               </image></ImageView>
+            <ImageView fx:id="saleImage" fitHeight="483.0" fitWidth="355.0" layoutX="31.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

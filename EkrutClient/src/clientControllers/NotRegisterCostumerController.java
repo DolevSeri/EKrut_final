@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class NotRegisterCostumerController {
@@ -16,8 +17,6 @@ public class NotRegisterCostumerController {
     @FXML
     private Button btnLogOut;
 
-    @FXML
-    private Button btnSendRequest;
 
     @FXML
     private ImageView ekrutLogo;
@@ -25,10 +24,12 @@ public class NotRegisterCostumerController {
     @FXML
     private Label lblErrorOnDetails;
     SetSceneController newScreen = new SetSceneController();
-    @FXML
-    void clickOnBtnSendRequest(ActionEvent event) {
-
-    }
+     public void initialize() {
+		
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		ekrutLogo.setImage(image);
+	}
+  
 
     @FXML
     void clickOnLogout(ActionEvent event) {

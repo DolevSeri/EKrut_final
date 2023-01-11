@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -33,6 +34,8 @@ public class SalesManagerMainScreenController {
 		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName()
 				+" "+ ChatClient.userController.getUser().getLastName()+"!");
 		lblArea.setText(ChatClient.userController.getUser().getRegion().toString());
+		Image image = new Image("/images/SaleManagerMainScreen.png");
+		logoIcon.setImage(image);
 	}
     @FXML
     void clickOnCreateSaleBtn(ActionEvent event) {

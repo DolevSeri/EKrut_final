@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -14,10 +13,7 @@
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fx:id="ekrutLogo" fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
-               </image></ImageView>
+            <ImageView fx:id="ekrutLogo" fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0" />
          </children>
       </Pane>
       <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -152,6 +153,8 @@ public class ServerPortFrameController {
 		txtDbPass.setText("Aa123456");
 		btnDisconnect.setDisable(true);
 		btnImport.setDisable(false);
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		ekrutLogo.setImage(image);
 
 	}
 	
@@ -212,6 +215,7 @@ public class ServerPortFrameController {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	@FXML
 	public void clickbtnImport(ActionEvent event) {		

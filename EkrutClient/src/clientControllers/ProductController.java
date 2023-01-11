@@ -50,6 +50,7 @@ public class ProductController {
 
 	public void initialize() {
 		imageSale.setVisible(false);
+		
 	}
 
 	public void resetErrorLabel() {
@@ -96,6 +97,8 @@ public class ProductController {
 		 }
 		}
 		if(sales.size()>0) {
+			Image image = new Image("/images/sale.png");
+			imageSale.setImage(image);
 			imageSale.setVisible(true);
 		}
 

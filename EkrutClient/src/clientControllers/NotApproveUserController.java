@@ -1,11 +1,16 @@
 package clientControllers;
 
+import client.ChatClient;
+import client.ClientUI;
+import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 /** 
  * 
@@ -29,7 +34,11 @@ public class NotApproveUserController {
     @FXML
     private Label lblErrorOnDetails;
     
-   
+    public void initialize() {
+		
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		ekrutLogo.setImage(image);
+	}
 
     @FXML
     void getExitBtn(ActionEvent event) {

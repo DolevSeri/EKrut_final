@@ -27,6 +27,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -60,6 +61,9 @@ public class Client_OrderConfirmationController {
 
 	@FXML
 	private Label lblPrice;
+
+	@FXML
+	private ImageView orderLogo;
 
 	private int rowInCart = 3;
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
@@ -108,10 +112,10 @@ public class Client_OrderConfirmationController {
 			gpRecipte.setMaxHeight(Region.USE_COMPUTED_SIZE);
 		}
 		setTotalPrice();
+		Image image = new Image("/images/Confirmation.jpeg");
+		orderLogo.setImage(image);
 	}
 
-	@FXML
-	private ImageView orderLogo;
 
 	@FXML
 	void clickOnBack(ActionEvent event) {

@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -36,9 +37,15 @@ public class Client_OL_MainVieController {
 
 	@FXML
 	Button btnExit;
+	@FXML
+	private ImageView imageLogo;
+
+   
 
 	public void initialize() {
 		ClientUI.chat.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		imageLogo.setImage(image);
 	}
 
 	@FXML
@@ -67,9 +74,7 @@ public class Client_OL_MainVieController {
 		newScreen.setScreen(new Stage(), "/clientGUI/ChooseDevice_PickUp.fxml");
 	}
 
-	@FXML
-	private ImageView imageLogo;
-
+	
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
 		newScreen.exitOrLogOut(event, false);
