@@ -1329,23 +1329,6 @@ public class MySqlController {
 		System.out.println("Enter new msg to system_message successfully");
 	}
 
-	public static void closeInventoryCalls(ArrayList<InventoryCall> callsToDelete) {
-		try {
-			String inClause = String.join(", ", Collections.nCopies(callsToDelete.size(), "?"));
-
-			String deleteStatement = "DELETE FROM inventory_calls WHERE callID IN (" + inClause + ")";
-
-			PreparedStatement ps = dbConnector.prepareStatement(deleteStatement);
-			for (int i = 0; i < callsToDelete.size(); i++) {
-				ps.setInt(i + 1, callsToDelete.get(i).getCallID());
-			}
-			ps.executeUpdate();
-
-			System.out.println("Delete inventory calls succeeded");
-		} catch (SQLException e) {
-			System.out.println("Delete inventory calls failed");
-		}
-	}
 
 	public static void savePickUpOrderInDB(int orderID) {
 		try {

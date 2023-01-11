@@ -8,11 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import common.ClientConnected;
 import entities.Costumer;
 import entities.Delivery;
 import entities.Device;
-import entities.InventoryCall;
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
@@ -342,14 +340,6 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-		case Inventory_Calls_To_Close:
-			MySqlController.closeInventoryCalls((ArrayList<InventoryCall>) messageFromClient.getObject());
-			try {
-				client.sendToClient(new Message(Request.Inventory_Calls_Closed, null));
-			} catch (IOException e) {
-				System.out.println("Could not send message to client.");
-			}
-			break;
 		case Get_User_Data:
 			User user1 = MySqlController.importUserData((ArrayList<String>) messageFromClient.getObject());
 			try {
@@ -449,7 +439,7 @@ public class EchoServer extends AbstractServer {
 		}
 
 		clientList.add(new ClientConnected(client.getInetAddress().getHostAddress(),
-				client.getInetAddress().getHostAddress(), connectionStatus));
+				client.getInetAddress().getHostAddress(), connectionStatus, client));
 	}
 
 	/**

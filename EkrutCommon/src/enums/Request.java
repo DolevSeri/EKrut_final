@@ -20,7 +20,7 @@ public enum Request {
 	Disconnected {
 
 		public String toString() {
-			return "Client Connected";
+			return "Client Disconnected";
 		}
 
 	},
@@ -240,16 +240,6 @@ public enum Request {
 	Inventory_Calls_Imported {
 		public String toString() {
 			return "Inventory calls imported successfully";
-		}
-	},
-	Inventory_Calls_To_Close {
-		public String toString() {
-			return "Request to close inventory calls";
-		}
-	},
-	Inventory_Calls_Closed {
-		public String toString() {
-			return "Inventory calls closed successfully";
 		}
 	},
 	Update_SalesPattern {

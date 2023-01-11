@@ -99,47 +99,6 @@ public class AreaManager_InventoryCallsController {
 	}
 
 	/**
-	 * Handles the action of clicking the close call button. If no calls are
-	 * selected or if any of the selected calls have a status other than DONE, an
-	 * error message is displayed. Otherwise, the selected calls are closed and the
-	 * table is updated.
-	 * 
-	 * @param selectedCalls -the list of selected calls in the table
-	 * @param allDone       -a flag indicating whether all selected calls have a
-	 *                       status of DONE
-	 * @param callsToClose  -the list of calls to be closed
-	 * 
-	 *
-	 * @param event         the action event that triggered this method call
-	 */
-
-//	@FXML
-//	void clickCloseCallBtn(ActionEvent event) {
-//		ObservableList<InventoryCall> selectedCalls = tblCalls.getSelectionModel().getSelectedItems();
-//		if (selectedCalls.isEmpty()) {
-//			lblError.setText("Error: No calls selected");
-//			lblError.setVisible(true);
-//		} else {
-//			boolean allDone = true;
-//			for (InventoryCall call : selectedCalls) {
-//				if (call.getStatus() != CallStatus.DONE) {
-//					allDone = false;
-//					break;
-//				}
-//			}
-//			if (!allDone) {
-//				lblError.setText("Error: Cannot close calls with a status other than" + CallStatus.DONE.toString());
-//				lblError.setVisible(true);
-//			} else {
-//				lblError.setVisible(false);
-//				ArrayList<InventoryCall> callsToClose = new ArrayList<>(selectedCalls);
-//				ClientUI.chat.accept(new Message(Request.Inventory_Calls_To_Close, callsToClose));
-//				setTableItems();
-//			}
-//		}
-//	}
-
-	/**
 	 * Handles the action of clicking the exit button.
 	 *
 	 * @param event the action event that triggered this method call
