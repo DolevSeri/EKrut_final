@@ -13,8 +13,8 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 	private Button btnexit;
 
 	@FXML
-    private Button btnUpdate;
-	
+	private Button btnUpdate;
+
 	@FXML
 	private Label lblDeviceName;
 
@@ -25,7 +25,7 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 	private TextField txtPrQuantity;
 
 	private InventoryCall selectedCall;
-private  SetSceneController scene  = new SetSceneController();
+	private SetSceneController scene = new SetSceneController();
 
 	public void initData(InventoryCall call) {
 		selectedCall = call;
@@ -33,10 +33,38 @@ private  SetSceneController scene  = new SetSceneController();
 		lblProductName.setText(selectedCall.getProductName());
 	}
 
-	  @FXML
-	    void clickBtnUpdate(ActionEvent event) {
-		  
-	    }
+	@FXML
+	void clickBtnUpdate(ActionEvent event) {
+		String quantity = txtPrQuantity.getText();
+		boolean isNum = isNumeric(quantity);
+		if (quantity.equals("")) {
+			scene.popUpMessage("ERROR: You must insert value");
+			return;
+		}
+		else if (!isNum) {
+			scene.popUpMessage("You must insert a number!!");
+			return;
+		}
+		int val = Integer.valueOf(quantity);
+		if (val < 0) {
+			scene.popUpMessage("ERROR: You must insert a number larger than zero!");
+			return;
+		}
+
+	}
+
+	public static boolean isNumeric(String strNum) {
+		double d;
+		if (strNum == null) {
+			return false;
+		}
+		try {
+			d = Double.parseDouble(strNum);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
 
 	@FXML
 	void clickExitBtn(ActionEvent event) {
