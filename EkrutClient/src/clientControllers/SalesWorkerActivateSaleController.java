@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -42,6 +43,8 @@ public class SalesWorkerActivateSaleController {
 	public void initialize() throws IOException {
 			ClientUI.chat.accept(new Message(Request.import_Sales, null));
 			setSale();
+			Image image = new Image("/images/SalesMenagerScreenImage.png");
+			saleImage.setImage(image);
 			
 		
 	}

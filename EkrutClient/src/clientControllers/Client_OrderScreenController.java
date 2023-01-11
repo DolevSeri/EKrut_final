@@ -115,6 +115,8 @@ public class Client_OrderScreenController {
 				}
 			}
 		}
+		Image image = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logoImage.setImage(image);
 		
 		
 	}

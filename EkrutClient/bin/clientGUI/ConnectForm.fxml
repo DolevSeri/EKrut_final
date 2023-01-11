@@ -5,7 +5,6 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -37,11 +36,7 @@
             </Label>
             <Pane layoutX="365.0" layoutY="-1.0" prefHeight="400.0" prefWidth="233.0" style="-fx-background-color: #D0A9F5;">
                <children>
-                  <ImageView fitHeight="230.0" fitWidth="200.0" layoutX="17.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../EkrutCommon/src/images/FullLogo_Transparent_NoBuffer.png" />
-                     </image>
-                  </ImageView>
+                  <ImageView fx:id="ImageLogo" fitHeight="230.0" fitWidth="200.0" layoutX="17.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Button fx:id="btnExit" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED;" text="X" textFill="WHITE">
                <font>

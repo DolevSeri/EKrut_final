@@ -13,6 +13,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -29,7 +31,14 @@ public class ConnectFormController {
 
 	@FXML
 	private Text lblEnterIP;
+    @FXML
+    private ImageView ImageLogo;
 	SetSceneController newScreen = new SetSceneController();
+	
+	public void initialize() throws IOException{
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		ImageLogo.setImage(image);
+	}
 
 	@FXML
 	void getConnectBtn(ActionEvent event) throws IOException {

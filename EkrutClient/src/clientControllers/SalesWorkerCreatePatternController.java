@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -88,6 +89,9 @@ public class SalesWorkerCreatePatternController {
 				null);
 		
 		lblError.setVisible(false);
+		Image image = new Image("/images/SalesDesignPatternSale.jpeg");
+		saleImage.setImage(image);
+		
 
 	}
 

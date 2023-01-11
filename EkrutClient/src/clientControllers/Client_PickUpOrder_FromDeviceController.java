@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +44,8 @@ public class Client_PickUpOrder_FromDeviceController {
 		for (Integer orderID : ChatClient.costumerController.getPickUpOrders()) {
 			cmbOrderNum.getItems().add(String.valueOf(orderID));
 		}
+		Image image = new Image("/images/PickUpImage.jpeg");
+		imageLogo.setImage(image);
 	}
 
 	@FXML
