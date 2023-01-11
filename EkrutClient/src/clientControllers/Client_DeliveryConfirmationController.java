@@ -68,6 +68,15 @@ public class Client_DeliveryConfirmationController {
 	@FXML
 	private TextField txtAddress;
 
+	@FXML
+	private Button btnSubscriber;
+
+	@FXML
+	private Label lableSubscriber;
+	// a veriable that will help us to know if the user click on the "Deferred
+	// payment" button
+	private boolean clickonDeferredPayment = false;
+
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
 			.observableArrayList();
 	private List<ProductInDevice> products = new ArrayList<>();
@@ -98,6 +107,10 @@ public class Client_DeliveryConfirmationController {
 		setTotalPrice();
 		Image image = new Image("/images/DeliveryConfirmation.png");
 		imageDelivery.setImage(image);
+		if(ChatClient.costumerController.getCostumer().getSubscriberID()==-1) {
+			 btnSubscriber.setVisible(false);
+			 lableSubscriber.setVisible(false);
+		}
 	}
 
 	public void setTotalPrice() {
@@ -142,10 +155,17 @@ public class Client_DeliveryConfirmationController {
 			// save delivery in DB
 			ClientUI.chat.accept(new Message(Request.Save_New_Delivery, delivery));
 			ChatClient.cartController.clearCart();
-
-			newScreen.popUpMessage(
-					"The Delivery's Payment confirmed!\n Order details will send to you via Email ans SMS!\nAnd your order code is: "
-							+ delivery.getOrderID());
+			if(clickonDeferredPayment==true) {
+				newScreen.popUpMessage("The order has been placed!\n The payment will decrease next month (:\n"
+						+ "!\n Order details will send to you via Email ans SMS!\nAnd your order code is: \"\n"
+						+ delivery.getOrderID());
+			}
+			else {
+				newScreen.popUpMessage(
+						"The Delivery's Payment confirmed!\n Order details will send to you via Email ans SMS!\nAnd your order code is: "
+								+ delivery.getOrderID());
+			}
+			
 			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 		}
@@ -180,5 +200,14 @@ public class Client_DeliveryConfirmationController {
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
+    /**
+     *  clickOnDeferredPayment- will do the action aftar a subscriber will press the button of "Deferred payment"
+     * @param event-click on button "Deferred payment"
+     */
+    @FXML
+    void clickOnDeferredPayment(ActionEvent event) {
+    	clickonDeferredPayment=true;
+    	clickOnConfirm(event);
+    }
 
 }
