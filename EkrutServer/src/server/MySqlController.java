@@ -55,7 +55,6 @@ public class MySqlController {
 			/* handle the error */
 			System.out.println("Driver definition failed");
 		}
-		
 
 		try {
 			dbConnector = DriverManager.getConnection(dbName, dbUserName, dbPwd);
@@ -275,7 +274,7 @@ public class MySqlController {
 			e.printStackTrace();
 			System.out.println("Find max subsciberID statement failed");
 		}
-		try{
+		try {
 			ps = dbConnector.prepareStatement("UPDATE ekrut.costumers SET subscriberID = ? WHERE username = ?");
 			try {
 				ps.setInt(1, isMember);
@@ -826,12 +825,13 @@ public class MySqlController {
 
 		return null;
 	}
-	public static ArrayList<ProductInDevice> getProductsUnderThresholdFromDevice (String deviceName) {
+
+	public static ArrayList<ProductInDevice> getProductsUnderThresholdFromDevice(String deviceName) {
 		// Need to make the query to bring only products under threshold
 		ArrayList<ProductInDevice> products = new ArrayList<>();
 		try {
-			PreparedStatement ps = dbConnector
-					.prepareStatement("SELECT ekrut.products.*, ekrut.product_in_device.quantity ,ekrut.product_in_device.status,"
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"SELECT ekrut.products.*, ekrut.product_in_device.quantity ,ekrut.product_in_device.status,"
 							+ " ekrut.product_in_device.deviceName FROM ekrut.products,ekrut.product_in_device,ekrut.devices "
 							+ "WHERE ekrut.products.productCode = ekrut.product_in_device.productCode "
 							+ "and ekrut.product_in_device.deviceName = ? and devices.deviceName = product_in_device.deviceName "
@@ -1045,7 +1045,7 @@ public class MySqlController {
 
 	public static boolean createInventoryCall(ArrayList<String> callData) {
 		String device = callData.get(0), product = callData.get(1);
-		int isExist=0;
+		int isExist = 0;
 		try {
 			PreparedStatement psExist = dbConnector.prepareStatement("SELECT COUNT(*) FROM ekrut.inventory_calls "
 					+ "WHERE status = 'OPEN' AND deviceName = ? AND productUpdate = ?");
@@ -1057,14 +1057,13 @@ public class MySqlController {
 				System.out.println("Executing statement failed on checking if product is in inventory call table");
 			}
 			ResultSet rs = psExist.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				isExist = rs.getInt("COUNT(*)");
-			if(isExist > 0)
+			if (isExist > 0)
 				// if the product is already in the table - no need to create another row
-				// return false  - not created
+				// return false - not created
 				return false;
 
-			
 			PreparedStatement ps = dbConnector.prepareStatement(
 					"INSERT INTO ekrut.inventory_calls (status, deviceName, productUpdate) " + "VALUES (?, ?, ?)");
 			try {
@@ -1332,7 +1331,6 @@ public class MySqlController {
 		System.out.println("Enter new msg to system_message successfully");
 	}
 
-
 	public static void savePickUpOrderInDB(int orderID) {
 		try {
 			PreparedStatement ps = dbConnector
@@ -1418,14 +1416,13 @@ public class MySqlController {
 		System.out.println("Enter new delivery to delivery table successfully");
 
 	}
+
 	public static void updateSaleStatusInDB(Sale sale) {
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement(
-					"UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
+			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
 			try {
 				ps.setString(1, "ACTIVATE");
 				ps.setInt(2, sale.getSaleID());
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1439,6 +1436,7 @@ public class MySqlController {
 		}
 		System.out.println("UPDATE Sales successfully");
 	}
+
 	public static ArrayList<Order> getOrdersDataOfUSER(String username) {
 		ArrayList<Order> orders = new ArrayList<>();
 		try {
@@ -1457,7 +1455,7 @@ public class MySqlController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Import orders data from orders table has failed");
-			
+
 		}
 		return orders;
 	}
@@ -1473,7 +1471,7 @@ public class MySqlController {
 				System.out.println("Set statement failed on importCustomerDataToUpdate");
 			}
 			ResultSet rs = ps.executeQuery();
-			if(rs.next())
+			if (rs.next())
 				c = new Costumer(username, rs.getString("creditCard"), rs.getInt("subscriberID"),
 						CostumerStatus.valueOf(rs.getString("status")));
 		} catch (SQLException e) {
@@ -1482,15 +1480,13 @@ public class MySqlController {
 		}
 		return c;
 	}
-	
+
 	public static void updateSaleStatusdoneInDB(Sale sale) {
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement(
-					"UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
+			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
 			try {
 				ps.setString(1, "DONE");
 				ps.setInt(2, sale.getSaleID());
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1504,49 +1500,53 @@ public class MySqlController {
 		}
 		System.out.println("UPDATE Sales successfully");
 	}
-	
-	public static ArrayList<Delivery> getDeliveriesByArea(ArrayList<String> data){
+
+	public static ArrayList<Delivery> getDeliveriesByArea(ArrayList<String> data) {
 		ArrayList<Delivery> deliveries = new ArrayList<>();
 		String area = data.get(0), status = data.get(1);
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * From ekrut.delivery WHERE region = ?"
-					+ "AND deliveryStatus = ?");
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * From ekrut.delivery WHERE region = ?" + "AND deliveryStatus = ?");
 			try {
 				ps.setString(1, area);
 				ps.setString(2, status);
-			}catch(SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Set query failed on getDeliveriesByArea");
 			}
-			
+
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				deliveries.add(new Delivery(rs.getString("costumerAdress"), DeliveryStatus.valueOf(rs.getString("deliveryStatus")),
-						rs.getInt("orderID"), Region.valueOf(rs.getString("region"))));
+			while (rs.next()) {
+				deliveries.add(new Delivery(rs.getString("costumerAdress"),
+						DeliveryStatus.valueOf(rs.getString("deliveryStatus")), rs.getInt("orderID"),
+						Region.valueOf(rs.getString("region"))));
 			}
 			System.out.println("Deliveries importded successfully");
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Execute query failed on getDeliveriesByArea");
 		}
 		System.out.println(deliveries.size());
 		return deliveries;
 	}
-	
+
 	public static void updateDeliveryStatus(ArrayList<Delivery> deliveryToUpdate) {
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.delivery SET deliveryStatus = ? WHERE orderID = ? ");
-			for(Delivery delivery : deliveryToUpdate) {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("UPDATE ekrut.delivery SET deliveryStatus = ? WHERE orderID = ? ");
+			for (Delivery delivery : deliveryToUpdate) {
 				ps.setString(1, delivery.getStatus().toString());
 				ps.setInt(2, delivery.getOrderID());
 				ps.executeUpdate();
 			}
 			System.out.println("Update delivery status suceed");
 
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Execute query failed on updateDeliveryStatus");
 		}
+	}
+
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {
@@ -1561,8 +1561,9 @@ public class MySqlController {
 				System.out.println("Query to update quantity has Failed");
 			}
 			updatePs.executeUpdate();
-			
-			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.inventory_calls SET status = 'DONE' WHERE callID = ?");
+
+			PreparedStatement ps = dbConnector
+					.prepareStatement("UPDATE ekrut.inventory_calls SET status = 'DONE' WHERE callID = ?");
 			try {
 				ps.setInt(1, Integer.valueOf(callID));
 			} catch (Exception e) {
@@ -1570,7 +1571,7 @@ public class MySqlController {
 				System.out.println("Query to close call has Failed");
 			}
 			ps.executeUpdate();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Executing query on UPDATE Sales failed");
