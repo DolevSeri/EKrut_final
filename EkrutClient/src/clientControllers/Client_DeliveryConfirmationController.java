@@ -197,6 +197,7 @@ public class Client_DeliveryConfirmationController {
 	}
 
 	@FXML
+	
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
