@@ -26,6 +26,7 @@ import entities.SystemMessage;
 import entities.User;
 import enums.CallStatus;
 import enums.CostumerStatus;
+import enums.DeliveryStatus;
 import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Region;
@@ -1481,6 +1482,7 @@ public class MySqlController {
 		}
 		return c;
 	}
+	
 	public static void updateSaleStatusdoneInDB(Sale sale) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
@@ -1502,6 +1504,49 @@ public class MySqlController {
 		}
 		System.out.println("UPDATE Sales successfully");
 	}
+	
+	public static ArrayList<Delivery> getDeliveriesByArea(ArrayList<String> data){
+		ArrayList<Delivery> deliveries = new ArrayList<>();
+		String area = data.get(0), status = data.get(1);
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * From ekrut.delivery WHERE region = ?"
+					+ "AND deliveryStatus = ?");
+			try {
+				ps.setString(1, area);
+				ps.setString(2, status);
+			}catch(SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set query failed on getDeliveriesByArea");
+			}
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				deliveries.add(new Delivery(rs.getString("costumerAdress"), DeliveryStatus.valueOf(rs.getString("deliveryStatus")),
+						rs.getInt("orderID"), Region.valueOf(rs.getString("region"))));
+			}
+			System.out.println("Deliveries importded successfully");
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Execute query failed on getDeliveriesByArea");
+		}
+		System.out.println(deliveries.size());
+		return deliveries;
+	}
+	
+	public static void updateDeliveryStatus(ArrayList<Delivery> deliveryToUpdate) {
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.delivery SET deliveryStatus = ? WHERE orderID = ? ");
+			for(Delivery delivery : deliveryToUpdate) {
+				ps.setString(1, delivery.getStatus().toString());
+				ps.setInt(2, delivery.getOrderID());
+				ps.executeUpdate();
+			}
+			System.out.println("Update delivery status suceed");
+
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Execute query failed on updateDeliveryStatus");
+		}
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {

@@ -1,6 +1,7 @@
 package clientControllers;
 
 import entities.Device;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 

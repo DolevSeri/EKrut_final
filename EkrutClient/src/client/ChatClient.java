@@ -12,6 +12,7 @@ import java.util.List;
 import common.ChatIF;
 import entities.Costumer;
 import entities.CostumersReport;
+import entities.Delivery;
 import entities.DeliveryReport;
 import entities.Device;
 import entities.InventoryCall;
@@ -27,6 +28,7 @@ import entities.User;
 import entityControllers.CartController;
 import entityControllers.CostumerController;
 import entityControllers.CostumersReportController;
+import entityControllers.DeliveryController;
 import entityControllers.DeliveryReportController;
 import entityControllers.DeviceController;
 import entityControllers.InventoryCallController;
@@ -75,6 +77,7 @@ public class ChatClient extends AbstractClient {
 	public static SalesPatternController salesPatternController = new SalesPatternController();
 	public static SaleController salesController = new SaleController();
 	public static UserController usersController = null;
+	public static DeliveryController deliveryController = new DeliveryController();
 	public static String configuration;
 	public static Thread checkWindowTimeThread;
 	public static Stage primaryStage = null;
@@ -224,7 +227,20 @@ public class ChatClient extends AbstractClient {
 			break;
 		case SaleStatus_Updateddone:
 			break;
+		case Area_Deliveries_Imported:
+			ArrayList<Delivery> d = (ArrayList<Delivery>) message.getObject();
+			System.out.println("On the way" + d.size());
+			deliveryController.setAreaDeliveries((FXCollections.observableArrayList(d)));
+			break;
+		case Area_Deliveries_ToApprove_Imported:
+			ArrayList<Delivery> b = (ArrayList<Delivery>) message.getObject();
+			System.out.println("To Approve" + b.size());
+			deliveryController.setAreaDeliveriesToApprove((FXCollections.observableArrayList(b)));
+			break;
+		case Delivery_Status_Changed:
+
 		case Product_quantity_updated_succesfully_call_closed:
+
 			break;
 		default:
 			break;
