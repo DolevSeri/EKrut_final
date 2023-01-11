@@ -422,6 +422,33 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+		case Get_Deliveries_By_Area:
+			try {
+				client.sendToClient(new Message(Request.Area_Deliveries_Imported, 
+						MySqlController.getDeliveriesByArea((ArrayList<String>)messageFromClient.getObject())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Get_Deliveries_ToApprove_By_Area:
+			try {
+				client.sendToClient(new Message(Request.Area_Deliveries_ToApprove_Imported, 
+						MySqlController.getDeliveriesByArea((ArrayList<String>)messageFromClient.getObject())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Change_Delivery_Status:
+			MySqlController.updateDeliveryStatus((ArrayList<Delivery>)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Delivery_Status_Changed, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		default:
 			break;
 		}

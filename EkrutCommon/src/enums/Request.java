@@ -401,4 +401,34 @@ public enum Request {
 			return "sale status updated successfully";
 		}
 	},
+	Get_Deliveries_By_Area{
+		public String toString() {
+			return "Request to import deliveries of area";
+		}
+	},
+	Area_Deliveries_Imported{
+		public String toString() {
+			return "Area deliveries imported successfully";
+		}
+	},
+	Get_Deliveries_ToApprove_By_Area{
+		public String toString() {
+			return "Request to import deliveries to approve of area";
+		}
+	},
+	Area_Deliveries_ToApprove_Imported{
+		public String toString() {
+			return "Area deliveries to approve imported successfully";
+		}
+	},
+	Change_Delivery_Status{
+		public String toString() {
+			return "Request to change deliveries to approve";
+		}
+	},
+	Delivery_Status_Changed{
+		public String toString() {
+			return "Deliveries status changed successfully";
+		}
+	}
 }

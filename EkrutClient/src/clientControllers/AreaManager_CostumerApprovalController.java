@@ -105,7 +105,9 @@ public class AreaManager_CostumerApprovalController {
 	@FXML
 	void clickBtnHelp(ActionEvent event) {
 		scene.popUpMessage(
-				"1. Click on the customer you want to approve\n2. You can choose multiple customers using CTRL button!\n3. Click Approve coustomer ");
+				"1. Click on the customer you want to approve\n"
+				+ "2. You can choose multiple customers using CTRL button!\n"
+				+ "3. Click Approve coustomer ");
 	}
 
 	/**
