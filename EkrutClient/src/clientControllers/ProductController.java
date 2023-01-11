@@ -95,7 +95,7 @@ public class ProductController {
 			}
 		 }
 		}
-		if(ChatClient.salesController.getSales().size()>0) {
+		if(sales.size()>0) {
 			imageSale.setVisible(true);
 		}
 
