@@ -41,7 +41,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnBack" layoutX="10.0" layoutY="547.0" mnemonicParsing="false" onAction="#clickOnBack" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
+      <Button fx:id="btnBack" layoutX="11.0" layoutY="562.0" mnemonicParsing="false" onAction="#clickOnBack" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -126,5 +126,18 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
+      <Label fx:id="lableSubscriber" layoutX="117.0" layoutY="564.0" prefHeight="26.0" prefWidth="374.0" text="Want to pay next month? Click the button :" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold Italic" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSubscriber" layoutX="452.0" layoutY="554.0" mnemonicParsing="false" onAction="#clickOnDeferredPayment" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Deferred payment" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <Blend mode="BLUE" />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>

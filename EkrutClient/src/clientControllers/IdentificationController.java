@@ -1,7 +1,6 @@
 package clientControllers;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import client.ChatClient;
 import client.ClientUI;

@@ -2,7 +2,6 @@ package clientControllers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,6 @@ import entities.SystemMessage;
 import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Request;
-import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,6 +63,14 @@ public class Client_OrderConfirmationController {
 	@FXML
 	private ImageView orderLogo;
 
+	@FXML
+	private Button btnSubscriber;
+
+	@FXML
+	private Label lableSubscriber;
+	// a veriable that will help us to know if the user click on the "Deferred payment" button
+	private boolean clickonDeferredPayment = false;
+	    
 	private int rowInCart = 3;
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
 			.observableArrayList();
@@ -114,6 +120,10 @@ public class Client_OrderConfirmationController {
 		setTotalPrice();
 		Image image = new Image("/images/Confirmation.jpeg");
 		orderLogo.setImage(image);
+		if(ChatClient.costumerController.getCostumer().getSubscriberID()==-1) {
+			 btnSubscriber.setVisible(false);
+			 lableSubscriber.setVisible(false);
+		}
 	}
 
 
@@ -143,7 +153,14 @@ public class Client_OrderConfirmationController {
 		if (cntUnderTreshold > 0)
 			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
-		newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
+		if(clickonDeferredPayment==true) {
+			newScreen.popUpMessage("The order has been placed!\n The payment will decrease next month (:\n"
+					+ "!\n Order details will send to you via Email ans SMS!");
+		}
+		else {
+			newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
+		}
+		
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		if (ChatClient.configuration.equals("EK")) {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
@@ -217,6 +234,15 @@ public class Client_OrderConfirmationController {
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
+    /**
+     *  clickOnDeferredPayment- will do the action aftar a subscriber will press the button of "Deferred payment"
+     * @param event-click on button "Deferred payment"
+     */
+    @FXML
+    void clickOnDeferredPayment(ActionEvent event) {
+    	clickonDeferredPayment=true;
+    	clickOnConfirm(event);
+    }
 	
 
 

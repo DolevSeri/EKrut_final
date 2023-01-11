@@ -5,7 +5,6 @@ import java.io.IOException;
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
-import entities.ProductInDevice;
 import entities.Sale;
 import enums.Request;
 import enums.SaleStatus;
@@ -14,8 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SaleCoulmnController {
