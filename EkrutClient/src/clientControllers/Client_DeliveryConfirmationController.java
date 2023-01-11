@@ -12,7 +12,7 @@ import enums.Region;
 import client.ChatClient;
 import client.ClientUI;
 import entities.Delivery;
-import entities.Device;
+
 import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;

@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 import client.ChatClient;
 import client.ClientUI;
 import entities.DeliveryReport;
-import enums.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
