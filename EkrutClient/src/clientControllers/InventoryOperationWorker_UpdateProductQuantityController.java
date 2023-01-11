@@ -1,6 +1,11 @@
 package clientControllers;
 
+import java.util.ArrayList;
+
+import client.ClientUI;
 import entities.InventoryCall;
+import entities.Message;
+import enums.Request;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,7 +47,7 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 			return;
 		}
 		else if (!isNum) {
-			scene.popUpMessage("You must insert a number!!");
+			scene.popUpMessage("ERROR: You must insert a number!!");
 			return;
 		}
 		int val = Integer.valueOf(quantity);
@@ -50,6 +55,21 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 			scene.popUpMessage("ERROR: You must insert a number larger than zero!");
 			return;
 		}
+		
+		int callID = selectedCall.getCallID();
+		String deviceName = selectedCall.getDeviceName();
+		String productName = selectedCall.getProductName();
+		ArrayList<String> fields = new ArrayList<>();
+		fields.add(0,deviceName);
+		fields.add(1,productName);
+		fields.add(2, Integer.toString(val));
+		fields.add(3,Integer.toString(callID));
+		
+		ClientUI.chat.accept(new Message(Request.UpdateProductQuantityAndCloseCall, fields));
+		scene.popUpMessage("The product quantity was update succesfully!\nThe call marked as closed. ");
+		scene.back(event, "/clientGUI/InventoryOperationWorker_CallsListView.fxml");
+
+
 
 	}
 

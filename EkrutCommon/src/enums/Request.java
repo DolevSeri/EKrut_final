@@ -406,4 +406,14 @@ public enum Request {
 			return "Request for products under threshold";
 		}
 	},
+	UpdateProductQuantityAndCloseCall{
+		public String toString() {
+			return "Request to update product quantity and close the call";
+		}
+	},
+	Product_quantity_updated_succesfully_call_closed{
+		public String toString() {
+			return "Product quantity updated and the call is closed";
+		}
+	}
 }

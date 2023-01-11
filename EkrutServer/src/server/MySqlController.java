@@ -1517,4 +1517,34 @@ public class MySqlController {
 		}
 		System.out.println("UPDATE Sales successfully");
 	}
+	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
+		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
+		try {
+			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET quantity = ? "
+					+ "WHERE deviceName = ? AND productCode IN (SELECT productCode FROM products WHERE productName = ?)");
+			try {
+				updatePs.setInt(1, Integer.valueOf(newQuantity));
+				updatePs.setString(2, deviceName);
+				updatePs.setString(3, productName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Query to update quantity has Failed");
+			}
+			updatePs.executeUpdate();
+			
+			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.inventory_calls SET status = 'DONE' WHERE callID = ?");
+			try {
+				ps.setInt(1, Integer.valueOf(callID));
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Query to close call has Failed");
+			}
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing query on UPDATE Sales failed");
+		}
+		System.out.println("Update Product Quantity And Close Call success!");
+	}
 }

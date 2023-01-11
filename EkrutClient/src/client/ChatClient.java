@@ -224,6 +224,8 @@ public class ChatClient extends AbstractClient {
 			break;
 		case SaleStatus_Updateddone:
 			break;
+		case Product_quantity_updated_succesfully_call_closed:
+			break;
 		default:
 			break;
 		}
