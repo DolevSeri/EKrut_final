@@ -5,26 +5,17 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_ApproveDeliveryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_ApproveDeliveryController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fx:id="logo" fitHeight="59.0" fitWidth="49.0" layoutX="322.0" layoutY="12.0">
-               <image>
-                  <Image url="@../images/IconOnly_Transparent_NoBuffer.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="deliveryConfirm" fitHeight="361.0" fitWidth="369.0" layoutX="23.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/DeliveryConfirmation.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="logo" fitHeight="59.0" fitWidth="49.0" layoutX="322.0" layoutY="12.0" />
+            <ImageView fx:id="deliveryConfirm" fitHeight="361.0" fitWidth="369.0" layoutX="23.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickBtnExit" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
