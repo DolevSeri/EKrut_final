@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -57,6 +58,10 @@ public class Client_ApproveDeliveryController {
 	 */
 	@FXML
 	public void initialize() {
+		Image image = new Image("/images/DeliveryConfirmation.png");
+		deliveryConfirm.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		orders.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		setColumns();
 		setTableItems();

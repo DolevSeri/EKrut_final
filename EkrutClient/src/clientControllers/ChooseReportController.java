@@ -14,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -60,6 +62,12 @@ public class ChooseReportController {
 	
 	@FXML
 	private Label lblArea;
+	
+	@FXML
+	private ImageView picture;
+	
+	@FXML
+	private ImageView logo;
 
 	public static ArrayList<String> fields;
 
@@ -93,6 +101,10 @@ public class ChooseReportController {
 	 * to the device combo box.
 	 */
 	public void initialize() {
+		Image image = new Image("/images/reportViewImage.png");
+		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 
 		ArrayList<String> years = new ArrayList<String>(
 				Arrays.asList("2018", "2019", "2020", "2021", "2022","2023"));

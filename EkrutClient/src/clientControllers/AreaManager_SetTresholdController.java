@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.converter.IntegerStringConverter;
 
 /**
@@ -51,6 +53,10 @@ public class AreaManager_SetTresholdController {
 	@FXML
 	private Button btnexit;
 	@FXML
+	private ImageView picture;
+	@FXML
+	private ImageView logo;
+	@FXML
 	private Label lblError;
 	private TableViewController myTable = new TableViewController();
 	private String area = ChatClient.userController.getUser().getRegion().toString();
@@ -62,6 +68,11 @@ public class AreaManager_SetTresholdController {
 	 */
 	@FXML
 	public void initialize() {
+		Image image = new Image("/images/TresholdCut.jpg");
+		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
+		
 		tblDevice.setEditable(true);
 		lblRegion.setText(area);
 		setColumns();

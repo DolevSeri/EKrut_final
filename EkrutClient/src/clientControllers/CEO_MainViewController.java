@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -22,6 +24,10 @@ public class CEO_MainViewController {
 
     @FXML
     private Button btnLogOut;
+    
+	@FXML
+	private ImageView logo;
+	
 	SetSceneController scene = new SetSceneController();
 
 	/**
@@ -33,6 +39,10 @@ public class CEO_MainViewController {
 	 */
     @FXML
     void getExitBtn(ActionEvent event)  throws Exception  {
+
+
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
     	scene.exitOrLogOut(event, false);
     }
     
