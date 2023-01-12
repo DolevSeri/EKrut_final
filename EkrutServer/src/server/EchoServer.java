@@ -25,14 +25,10 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 /**
- * This class overrides some of the methods in the abstract superclass in order
- * to give more functionality to the server.
- *
- * @author Dr Timothy C. Lethbridge
- * @author Dr Robert Lagani&egrave;re
- * @author Fran&ccedil;ois B&eacute;langer
- * @author Paul Holden
- * @version July 2000
+* EchoServer is a class that extends the AbstractServer class from the Open Client-Server Framework (OCSF)
+ * and implements the Singleton pattern to ensure that only one instance of the EchoServer is created. 
+ * It is also thread-safe to create the instance in multi-thread environment.
+ *@author peleg
  */
 
 public class EchoServer extends AbstractServer {
@@ -52,15 +48,41 @@ public class EchoServer extends AbstractServer {
 	 * 
 	 */
 	private static ObservableList<ClientConnected> clientList = FXCollections.observableArrayList();
-
+	//instance-will help us to do singleton implementation for the EchoServer
+	private static EchoServer instance = null;
+	//an object that will help us to synchronized in case there are some threads
+    private static final Object lock = new Object();
+    /**
+     * Creates a new EchoServer object with the specified port.
+     *
+     * @param port the server port
+     */
+    protected EchoServer(int port) {
+    	 super(port);
+    }
 	public ObservableList<ClientConnected> getClientList() {
 
 		return clientList;
 	}
 
-	public EchoServer(int port) {
-		super(port);
-	}
+
+    /**
+     * Returns the singleton instance of the EchoServer class. If an instance does not exist,
+     * it creates a new one.
+     *
+     * @param port the server port
+     * @return the singleton instance of the EchoServer class
+     */
+    public static EchoServer getInstance(int port) {
+        if (instance == null) {
+            synchronized (lock) {
+                if (instance == null) {
+                    instance = new EchoServer(port);
+                }
+            }
+        }
+        return instance;
+    }
 
 	// Instance methods ************************************************
 
