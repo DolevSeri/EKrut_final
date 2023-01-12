@@ -13,7 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+/**
+*
 
+@author Ron Lahiani
+This class is used as the main view controller for the client side of the application.
+It handles the interactions with the FXML file that defines the user interface and the logic behind it.
+*/
 public class Client_EK_MainViewController {
 	FXMLLoader loader = new FXMLLoader();
 	SetSceneController newScreen = new SetSceneController();
@@ -31,6 +37,10 @@ public class Client_EK_MainViewController {
 
 	@FXML
 	private ImageView logoImage;
+	/**
+	 * Initialize the view by setting the logo image.
+	 * @throws IOException
+	 */
 	public void initialize() throws IOException{
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
 		logoImage.setImage(image);
@@ -40,13 +50,22 @@ public class Client_EK_MainViewController {
 	void clickOnBack(ActionEvent event) {
 
 	}
-
+	/**
+	 * Handles the event of clicking on the Collect Pick Up button. 
+	 * This method hides the primary window and opens the Client_PickUpOrder_FromDevice.fxml window.
+	 * @param event 
+	 */
 	@FXML
 	void clickOnCollectPickUp(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_PickUpOrder_FromDevice.fxml");
 	}
-
+	/**
+	 * Handles the event of clicking on the Create Order button. 
+	 * This method starts an InactivityLogoutController thread and changes the SupplyMethod to Standart.
+	 * Then it hides the primary window and opens the Client_OrderScreen.fxml window.
+	 * @param event 
+	 */
 	@FXML
 	void clickOnCreateOrder(ActionEvent event) {
 		Thread t = new Thread(new InactivityLogoutController());
@@ -57,12 +76,20 @@ public class Client_EK_MainViewController {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
 	}
-
+	/**
+	 * Handles the event of clicking on the Log Out button. 
+	 * This method calls exitOrLogOut method and passing true as parameter
+	 * @param event 
+	 */
 	@FXML
 	void clickOnLogout(ActionEvent event) {
 		newScreen.exitOrLogOut(event, true);
 	}
-
+	/**
+	 * Handles the event of clicking on the Exit button. 
+	 * This method hides the primary window, calls exitOrLogOut method and passing true as parameter, 
+	 * it also prints "exit ConnectForm
+	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
