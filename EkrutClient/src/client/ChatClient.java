@@ -228,19 +228,21 @@ public class ChatClient extends AbstractClient {
 		case SaleStatus_Updateddone:
 			break;
 		case Area_Deliveries_Imported:
-			ArrayList<Delivery> d = (ArrayList<Delivery>) message.getObject();
-			System.out.println("On the way" + d.size());
-			deliveryController.setAreaDeliveries((FXCollections.observableArrayList(d)));
+			ArrayList<Delivery> deliveries = (ArrayList<Delivery>) message.getObject();
+			deliveryController.setAreaDeliveries((FXCollections.observableArrayList(deliveries)));
 			break;
 		case Area_Deliveries_ToApprove_Imported:
-			ArrayList<Delivery> b = (ArrayList<Delivery>) message.getObject();
-			System.out.println("To Approve" + b.size());
-			deliveryController.setAreaDeliveriesToApprove((FXCollections.observableArrayList(b)));
+			ArrayList<Delivery> toApprove = (ArrayList<Delivery>) message.getObject();
+			deliveryController.setAreaDeliveriesToApprove((FXCollections.observableArrayList(toApprove)));
 			break;
 		case Delivery_Status_Changed:
-
+			break;
 		case Product_quantity_updated_succesfully_call_closed:
 
+			break;
+		case Customer_Deliveries_Imported:
+			ArrayList<Delivery> customerDeli = (ArrayList<Delivery>) message.getObject();
+			deliveryController.setUserDelivery((FXCollections.observableArrayList(customerDeli)));
 			break;
 		default:
 			break;

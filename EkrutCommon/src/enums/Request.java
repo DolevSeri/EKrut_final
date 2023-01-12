@@ -436,5 +436,15 @@ public enum Request {
 			return "Product quantity updated and the call is closed";
 
 		}
+	},
+	Get_Customer_Deliveries{
+		public String toString() {
+			return "Request to import user deliveries";
+		}
+	},
+	Customer_Deliveries_Imported{
+		public String toString() {
+			return "User deliveries imported";
+		}
 	}
 }
