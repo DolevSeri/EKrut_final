@@ -253,6 +253,9 @@ public class ChatClient extends AbstractClient {
 			ArrayList<Delivery> customerDeli = (ArrayList<Delivery>) message.getObject();
 			deliveryController.setUserDelivery((FXCollections.observableArrayList(customerDeli)));
 			break;
+		case Area_manager_UserName_Imported:
+			userController.setAreaManagerUserNAme((String)message.getObject());
+			break;
 		default:
 			break;
 		}
@@ -265,7 +268,7 @@ public class ChatClient extends AbstractClient {
 	private void showMsg(String txt) {
 	    Platform.runLater(() -> {
 	        Alert alert = new Alert(AlertType.INFORMATION);
-	        alert.setTitle("Information");
+	        alert.setTitle(null);
 	        alert.setHeaderText(null);
 	        alert.setContentText(txt);
 

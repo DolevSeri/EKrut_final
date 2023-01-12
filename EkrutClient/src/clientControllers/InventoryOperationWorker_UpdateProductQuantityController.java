@@ -75,7 +75,7 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 			return;
 		}
 		int val = Integer.valueOf(quantity);
-		if (val < 0) {
+		if (val <= 0) {
 			scene.popUpMessage("ERROR: You must insert a number larger than zero!");
 			return;
 		}

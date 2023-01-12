@@ -15,6 +15,7 @@ import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
 import entities.SystemMessage;
+import entityControllers.UserController;
 import enums.CallStatus;
 import enums.MessageStatus;
 import enums.ProductStatus;
@@ -277,16 +278,22 @@ public class Client_OrderConfirmationController {
 	 * @param deviceName-    the name of the device
 	 */
 	public void updateSystemProductsUnderThreshold(int tresholdLevel, String deviceName) {
-		SystemMessage msg;
+		// SystemMessage msg;
 		for (ProductInDevice product : products) {
 			if (product.getQuantity() <= tresholdLevel) {
-				msg = new SystemMessage(0, "am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
-						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
-						MessageStatus.UnRead);
-				ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
+//				msg = new SystemMessage(0, "am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
+//						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
+//						MessageStatus.UnRead);
+//				ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
+				ClientUI.chat.accept(new Message(Request.Get_Area_manager_UserName,
+						ChatClient.costumerController.getCostumer().getRegion().toString()));
+
 				ArrayList<String> nameAndMessage = new ArrayList<>();
-				 nameAndMessage.addAll(Arrays.asList(ChatClient.costumerController.getCostumer().getRegion().toString(),
-						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
+				nameAndMessage.addAll(Arrays.asList(
+						ChatClient.userController.getAreaManagerUserNAme() , "In " + deviceName
+								+ "'s device, product: " + product.getProductName() + " is under threshold!"));
+				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
+
 			}
 
 		}
