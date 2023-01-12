@@ -3,8 +3,6 @@ package client;
 import java.util.Scanner;
 
 import clientControllers.ConnectFormController;
-import entities.Message;
-import enums.Request;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

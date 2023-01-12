@@ -16,6 +16,16 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * 
+ * The UserManagement_UserInformationController class is responsible for
+ * handling the user information view. This class contains the functionality of
+ * the buttons and fields in the user information view, and is responsible for
+ * handling the import, update, and send actions of the user. The class is used
+ * to create new customer or update an existing one.
+ * 
+ * @author Eden Bar and Dolev Seri
+ */
 public class UserManagement_UserInformationController {
 
 	@FXML
@@ -53,12 +63,12 @@ public class UserManagement_UserInformationController {
 
 	@FXML
 	private Label lblPhone;
-	
+
 	@FXML
-    private Label lblCredit;
-	
-    @FXML
-    private Label lblMember;
+	private Label lblCredit;
+
+	@FXML
+	private Label lblMember;
 
 	@FXML
 	private TextField txtCreditCard;
@@ -69,18 +79,16 @@ public class UserManagement_UserInformationController {
 	@FXML
 	private Label lblErrorMsg;
 
-	// private boolean isUpdate;
-
 	UserManagement_MainViewController controller = new UserManagement_MainViewController();
 	SetSceneController scene = new SetSceneController();
 	User userToApprove = null;
 	Costumer customerToUpdate = null;
 
-//	public UserManagement_UserInformationController(boolean isUpdate) {
-//		this.isUpdate = isUpdate;
-//	}
-//	public UserManagement_UserInformationController() {}
-
+	/**
+	 * This method is called when the class is initialized. It initializes the view
+	 * by setting the visibility of certain elements based on whether the user is
+	 * updating or creating a new account.
+	 */
 	public void initialize() {
 
 		lblErrorMsg.setVisible(false);
@@ -104,15 +112,26 @@ public class UserManagement_UserInformationController {
 		}
 	}
 
+	/**
+	 * This method is triggered when the "Import" button is clicked. It retrieves
+	 * the user data by sending a message to the server with the user's name. If the
+	 * user is being updated, a new instance of the Costumer object is created, and
+	 * the customer's data is retrieved. The method then checks if the user's name
+	 * is valid, and if the user is already a member. If so, an error message is
+	 * displayed. If the user's data is valid, the fields are filled with the user's
+	 * data.
+	 *
+	 * @param event the event that triggers this method when the button is clicked
+	 */
 	@FXML
 	void clickBtnImport(ActionEvent event) {
-		
+
 		lblErrorMsg.setVisible(false);
 		ArrayList<String> userInfo = new ArrayList<>();
 		userInfo.clear();
 		String userName = txtUserName.getText();
-		
-		//if username to import did not entered
+
+		// if username to import did not entered
 		if (userName.equals("")) {
 			lblErrorMsg.setVisible(true);
 			lblErrorMsg.setText("You must enter username!");
@@ -124,13 +143,12 @@ public class UserManagement_UserInformationController {
 				userInfo.addAll(Arrays.asList(userName, "Costumer"));
 				ClientUI.chat.accept(new Message(Request.Get_Customer_Data, userName));
 				customerToUpdate = ChatClient.costumerController.getCustomerToUpdate();
-			} 
-			else {
+			} else {
 				userInfo.addAll(Arrays.asList(userName, "NotSignUp"));
 			}
 			ClientUI.chat.accept(new Message(Request.Get_User_Data, userInfo));
 			userToApprove = ChatClient.userController.getUserToUpdate();
-			
+
 			// check if create customer case and if username
 			// and his status exist on users table
 			if (!ChatClient.userController.isUserToApproveExist()) {
@@ -142,7 +160,7 @@ public class UserManagement_UserInformationController {
 			// if yes - show message
 			else if (controller.isUpdate() && !(customerToUpdate.getSubscriberID() == -1)) {
 				scene.popUpMessage("Customer is already a member!");
-				
+
 			}
 
 			// check if its update user case and if customer not approved yet
@@ -159,30 +177,38 @@ public class UserManagement_UserInformationController {
 				lblID.setText(userToApprove.getId());
 				lblPhone.setText(userToApprove.getPhoneNumber());
 				txtCreditCard.setEditable(true);
-				if(controller.isUpdate()) {
+				if (controller.isUpdate()) {
 					lblCreditCard.setText(customerToUpdate.getCreditCard());
-					
+
 				}
 			}
 		}
 	}
 
+	/**
+	 * 
+	 * This method is responsible for sending the customer's details to the server
+	 * for creating a new customer. It is triggered when the user clicks the "Send"
+	 * button. The method checks if the credit card number is valid and if the
+	 * "Membership" checkbox is selected. It then sends a message to the server with
+	 * the user's details and shows a confirmation message to the user.
+	 * 
+	 * @param event - The event that triggered the method.
+	 */
 	@FXML
 	void clickBtnSend(ActionEvent event) {
 		boolean flag = true;
 		String credit = txtCreditCard.getText();
-		if(credit.length() != 19 || 
-				!credit.matches("\\d{4}-\\d{4}-\\d{4}-\\d{4}")){
+		if (credit.length() != 19 || !credit.matches("\\d{4}-\\d{4}-\\d{4}-\\d{4}")) {
 			scene.popUpMessage("You must enter valid Credit Card number!");
 			flag = false;
-		}
-		else {
-		ArrayList<String> details = new ArrayList<>(Arrays.asList(txtUserName.getText(), txtCreditCard.getText()));
-		if (chbMembership.isSelected()) {
-			details.add("1");
-		} else
-			details.add("-1");
-		
+		} else {
+			ArrayList<String> details = new ArrayList<>(Arrays.asList(txtUserName.getText(), txtCreditCard.getText()));
+			if (chbMembership.isSelected()) {
+				details.add("1");
+			} else
+				details.add("-1");
+
 			ClientUI.chat.accept(new Message(Request.Create_Customer_Request, details));
 			if (chbMembership.isSelected())
 				scene.popUpMessage(
@@ -190,10 +216,23 @@ public class UserManagement_UserInformationController {
 			else
 				scene.popUpMessage("Customer created successfully!");
 		}
-		if(flag)
+		if (flag)
 			clearField();
 	}
 
+	/**
+	 * 
+	 * This method handles the event when the user clicks the "Update" button. If
+	 * the checkbox for membership is not selected, a message is displayed to the
+	 * user indicating that there is no update to save. Otherwise, the method sends
+	 * a request to the server to update the customer and displays a message to the
+	 * user indicating that the customer was updated successfully and will receive a
+	 * 20% discount for their first purchase. Finally, if the update was successful,
+	 * the method clears the fields.
+	 * 
+	 * @author Eden Bar and Dolev Seri
+	 * @param event - the event that triggered the method
+	 */
 	@FXML
 	void clickBtnUpdate(ActionEvent event) {
 		String username = txtUserName.getText();
@@ -201,18 +240,20 @@ public class UserManagement_UserInformationController {
 		if (!chbMembership.isSelected()) {
 			scene.popUpMessage("There is no update to save");
 			flag = false;
-		}
-		else {
+		} else {
 			ClientUI.chat.accept(new Message(Request.Update_Customer_Request, username));
 			scene.popUpMessage(
 					"Customer created successfully!\nThe customer recived 20% discount for his first purchase");
 		}
-		if(flag)
+		if (flag)
 			clearField();
 
-
 	}
-	
+
+	/**
+	 * 
+	 * This method clears all the fields in the view.
+	 */
 	void clearField() {
 		lblID.setText("");
 		lblEmail.setText("");
@@ -221,17 +262,31 @@ public class UserManagement_UserInformationController {
 		lblPhone.setText("");
 		chbMembership.setSelected(false);
 		txtUserName.clear();
-		if(controller.isUpdate()) 
+		if (controller.isUpdate())
 			lblCreditCard.setText("");
 		else
 			txtCreditCard.clear();
 	}
 
+	/**
+	 * 
+	 * This method handles the event when the back button is clicked. It navigates
+	 * back to the UserManagement_MainView.fxml view.
+	 * 
+	 * @param event The event that triggered the method.
+	 */
 	@FXML
 	void clickBtnBack(ActionEvent event) {
 		scene.back(event, "/clientGUI/UserManagement_MainView.fxml");
 	}
 
+	/**
+	 * 
+	 * This method handles the event when the exit button is clicked. It exits the
+	 * program or log out the user based on the given boolean value.
+	 * 
+	 * @param event The event that triggered the method.
+	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		scene.exitOrLogOut(event, false);

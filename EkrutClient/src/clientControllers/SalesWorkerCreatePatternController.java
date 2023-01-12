@@ -3,14 +3,13 @@ package clientControllers;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
 import entities.SalesPattern;
 import enums.Request;
-import enums.Role;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

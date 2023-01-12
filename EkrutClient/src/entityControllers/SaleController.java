@@ -1,7 +1,6 @@
 package entityControllers;
 
 import entities.Sale;
-import entities.SalesPattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

@@ -81,7 +81,7 @@ public class InventoryOperationWorker_InventoryCallsController {
 			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 			scene.setScreenWithData(new Stage(), 
 					"/clientGUI/InventoryOperationWorker_UpdateProductQuantity.fxml",
-					selectedCall);
+					selectedCall);	
 		}
 	}
 

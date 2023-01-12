@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -14,16 +13,8 @@
    <children>
       <Pane layoutX="614.0" layoutY="-7.0" prefHeight="476.0" prefWidth="327.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="264.0" layoutY="14.0">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="141.0" fitWidth="311.0" layoutX="8.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/inventory-management.jpeg" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="logo" fitHeight="59.0" fitWidth="49.0" layoutX="264.0" layoutY="14.0" />
+            <ImageView fx:id="picture" fitHeight="141.0" fitWidth="311.0" layoutX="8.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button fx:id="btnexit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

@@ -2,7 +2,6 @@ package clientControllers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +19,6 @@ import enums.CallStatus;
 import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Request;
-import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,6 +65,15 @@ public class Client_OrderConfirmationController {
 	@FXML
 	private ImageView orderLogo;
 
+	@FXML
+	private Button btnSubscriber;
+
+	@FXML
+	private Label lableSubscriber;
+	// a veriable that will help us to know if the user click on the "Deferred
+	// payment" button
+	private boolean clickonDeferredPayment = false;
+
 	private int rowInCart = 3;
 	private List<ProductInConfirmationController> productInConfirmationControllers = FXCollections
 			.observableArrayList();
@@ -76,6 +83,12 @@ public class Client_OrderConfirmationController {
 	private int cntUnderTreshold = 0;
 	private String deviceName;
 
+	/**
+	 * 
+	 * Sets the total price of the order by iterating over all the items in the cart
+	 * and adding their prices together
+	 * 
+	 */
 	public void setTotalPrice() {
 		double totalSum = 0;
 		for (ProductInDevice p : ChatClient.cartController.getCart().keySet()) {
@@ -86,6 +99,13 @@ public class Client_OrderConfirmationController {
 		lblPrice.setText(String.format("%.2f", totalPrice) + "  ILS");
 	}
 
+	/**
+	 * 
+	 * Initializes the confirmation GUI, by retrieving the devices from the server,
+	 * then locating the device that the order is going to be delivered to
+	 *
+	 * @throws IOException
+	 */
 	public void initialize() throws IOException {
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area,
 				ChatClient.costumerController.getCostumer().getRegion().toString()));
@@ -116,15 +136,32 @@ public class Client_OrderConfirmationController {
 		setTotalPrice();
 		Image image = new Image("/images/Confirmation.jpeg");
 		orderLogo.setImage(image);
+		if (ChatClient.costumerController.getCostumer().getSubscriberID() == -1) {
+			btnSubscriber.setVisible(false);
+			lableSubscriber.setVisible(false);
+		}
 	}
 
-
+	/**
+	 * 
+	 * Handles the back button press event, it closes the confirmation window and
+	 * opens the order screen
+	 * 
+	 * @param event - The event that fired the function
+	 */
 	@FXML
 	void clickOnBack(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
 	}
 
+	/**
+	 * 
+	 * Handles the cancel button press event, it removes all the items from the
+	 * cart, closes the confirmation window and opens the order screen
+	 * 
+	 * @param event - The event that fired the function
+	 */
 	@FXML
 	void clickOnCancelOrder(ActionEvent event) {
 		// remove all products from cart
@@ -134,6 +171,15 @@ public class Client_OrderConfirmationController {
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
 	}
 
+	/**
+	 * 
+	 * Handles the confirm button press event, it stop the thread that counts the 15
+	 * minutes for an order, updates the products and order in the database, display
+	 * a message to the user according to the payment method, and finally, it closes
+	 * the confirmation window and opens the main view screen
+	 * 
+	 * @param event - The event that fired the function
+	 */
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
 		// stop counting 15 minutes for order
@@ -145,7 +191,13 @@ public class Client_OrderConfirmationController {
 		if (cntUnderTreshold > 0)
 			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
-		newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
+		if (clickonDeferredPayment == true) {
+			newScreen.popUpMessage("The order has been placed!\n The payment will decrease next month (:\n"
+					+ "\n Order details will send to you via Email ans SMS!");
+		} else {
+			newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
+		}
+
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		if (ChatClient.configuration.equals("EK")) {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
@@ -154,6 +206,21 @@ public class Client_OrderConfirmationController {
 		}
 	}
 
+	/**
+	 * 
+	 * updateOrderInDB is a method that creates and saves an order.
+	 * 
+	 * When the customer confirms an order, the method is called.
+	 * 
+	 * The order is saved in the database through a message that is sent to the
+	 * server.
+	 * 
+	 * The order contains information about the device, the total price, username,
+	 * time, and products in the order.
+	 * 
+	 * An order can be either Delivery or PickUp and accordingly it is saved in the
+	 * correct table in the database.
+	 */
 	public void updateOrderInDB() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -178,6 +245,14 @@ public class Client_OrderConfirmationController {
 		}
 	}
 
+	/**
+	 * 
+	 * updateProductsInDevice is a method that updates the products in a device.
+	 * When the customer confirms an order, the method is called. The products'
+	 * availability status is updated through a message that is sent to the server.
+	 * If the quantity of the product is 0, the availability status is set to
+	 * NOTAVAILABLE, otherwise, the availability status is set to AVAILABLE.
+	 */
 	public void updateProductsInDevice() {
 		for (ProductInDevice p : ChatClient.productCatalogController.getProductCatalog()) {
 			if (p.getQuantity() <= tresholdLevel)
@@ -215,14 +290,24 @@ public class Client_OrderConfirmationController {
 			}
 
 		}
-		
+
 	}
 
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
-	
 
+	/**
+	 * clickOnDeferredPayment- will do the action aftar a subscriber will press the
+	 * button of "Deferred payment"
+	 * 
+	 * @param event-click on button "Deferred payment"
+	 */
+	@FXML
+	void clickOnDeferredPayment(ActionEvent event) {
+		clickonDeferredPayment = true;
+		clickOnConfirm(event);
+	}
 
 }
