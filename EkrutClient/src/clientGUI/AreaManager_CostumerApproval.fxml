@@ -20,11 +20,7 @@
                   <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="261.0" fitWidth="384.0" layoutX="14.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/newusers.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="picture" fitHeight="261.0" fitWidth="384.0" layoutX="14.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
       <Button fx:id="btnexit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
