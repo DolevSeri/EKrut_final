@@ -450,6 +450,8 @@ public enum Request {
 	New_Notification{
 		public String toString() {
 			return "Recieved new message";
+		}
+	},
 	Get_Customer_Deliveries{
 		public String toString() {
 			return "Request to import user deliveries";
