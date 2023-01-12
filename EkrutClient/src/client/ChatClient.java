@@ -39,7 +39,11 @@ import entityControllers.ProductCatalogController;
 import entityControllers.SaleController;
 import entityControllers.SalesPatternController;
 import entityControllers.UserController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import ocsf.client.AbstractClient;
 
@@ -242,6 +246,11 @@ public class ChatClient extends AbstractClient {
 		case Product_quantity_updated_succesfully_call_closed:
 
 			break;
+		case Msg_Notification:
+			break;
+		case New_Notification:
+			showMsg((String) message.getObject());
+			break;
 		default:
 			break;
 		}
@@ -250,6 +259,22 @@ public class ChatClient extends AbstractClient {
 			lock.notify();
 		}
 	}
+
+	private void showMsg(String txt) {
+	    Platform.runLater(() -> {
+	        Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.setTitle("Information");
+	        alert.setHeaderText(null);
+	        alert.setContentText(txt);
+
+	        // Set the alert dialog style
+	        DialogPane dialogPane = alert.getDialogPane();
+	        dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
+
+	        alert.showAndWait();
+	    });
+	}
+
 
 	/**
 	 * This method handles all data coming from the UI

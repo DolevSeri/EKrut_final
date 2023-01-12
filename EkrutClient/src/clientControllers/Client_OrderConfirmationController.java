@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import entities.Message;
 import entities.Order;
 import entities.ProductInDevice;
 import entities.SystemMessage;
+import enums.CallStatus;
 import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Request;
@@ -207,6 +209,9 @@ public class Client_OrderConfirmationController {
 						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
 						MessageStatus.UnRead);
 				ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
+				ArrayList<String> nameAndMessage = new ArrayList<>();
+				 nameAndMessage.addAll(Arrays.asList(ChatClient.costumerController.getCostumer().getRegion().toString(),
+						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
 			}
 
 		}
