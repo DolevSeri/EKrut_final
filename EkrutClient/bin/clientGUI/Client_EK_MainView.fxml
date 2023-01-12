@@ -21,7 +21,8 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="102.0" layoutY="46.0" prefHeight="98.0" prefWidth="370.0" text="Choose Youre Option: " textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="80.0" layoutY="39.0" prefHeight="98.0" prefWidth="360.0" text="Choose Youre Option: " textAlignment="CENTER" textFill="#8d48e1" underline="true">
+
          <font>
             <Font name="Cooper Black" size="29.0" />
          </font>
