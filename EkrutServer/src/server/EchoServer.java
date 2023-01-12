@@ -103,6 +103,7 @@ public class EchoServer extends AbstractServer {
 				if (user.isLoggedIn() == false) {
 					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
 					System.out.println("User details were imported successfully");
+			        setUserNameForClient(client, user.getUsername());
 					msgToClient = new Message(Request.LoggedIn_Succses, user);
 				} else {
 					System.out.println("User already logged in");
@@ -449,21 +450,55 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
+		case Send_Notification:
+			ArrayList<String> nameAndMessage = (ArrayList<String>) messageFromClient.getObject();
+			ConnectionToClient clientToSendMsg = getClientByUserName(nameAndMessage.get(0));
+			try {
+				clientToSendMsg.sendToClient(new Message(Request.New_Notification, nameAndMessage.get(1)));
+				client.sendToClient(new Message(Request.Msg_Notification, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		default:
 			break;
 		}
 	}
 
 	private void updateClientList(ConnectionToClient client, String connectionStatus) {
-		for (int i = 0; i < clientList.size(); i++) {
-			if (clientList.get(i).getIP().equals(client.getInetAddress().getHostAddress()))
-				clientList.remove(i);
-		}
-
-		clientList.add(new ClientConnected(client.getInetAddress().getHostAddress(),
-				client.getInetAddress().getHostAddress(), connectionStatus, client));
+	    //Create a new instance of the ClientConnected class
+	    ClientConnected newClient = new ClientConnected(client.getInetAddress().getHostAddress(),
+	            client.getInetAddress().getHostAddress(), connectionStatus, client);
+	    //Remove an existing client with the same IP address
+	    clientList.removeIf(c -> c.getIP().equals(newClient.getIP()));
+	    //Add the new client to the list
+	    clientList.add(newClient);
+	}
+	
+	private void setUserNameForClient(ConnectionToClient client, String userName) {
+	    ClientConnected matchedClientConnected = clientList.stream()
+	        .filter(cc -> cc.getClient().equals(client))
+	        .findFirst()
+	        .get();
+	    matchedClientConnected.setUserName(userName);
+	}
+	
+	
+	private ConnectionToClient getClientByUserName(String username) {
+	    ClientConnected matchedClientConnected = clientList.stream()
+	        .filter(cc -> cc.getUserName().equals(username))
+	        .findFirst()
+	        .orElse(null);
+	    if (matchedClientConnected == null) {
+	        return null;
+	    }
+	    return matchedClientConnected.getClient();
 	}
 
+
+	
+	
 	/**
 	 * This method overrides the one in the superclass. Called when the server
 	 * starts listening for connections.

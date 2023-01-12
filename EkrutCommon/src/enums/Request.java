@@ -261,7 +261,7 @@ public enum Request {
 		public String toString() {
 			return "succsesfuly imported SalesPattern! ";
 		}
-		
+
 	},
 	import_Sales {
 		public String toString() {
@@ -331,112 +331,125 @@ public enum Request {
 			return "Updated  Delivery order succssesfully!";
 		}
 	},
-	Create_Customer_Request{
+	Create_Customer_Request {
 		public String toString() {
 			return "Request to create new custumer";
 		}
 	},
-	Update_sale_status{
+	Update_sale_status {
 		public String toString() {
 			return "Request to update sale status";
 		}
 	},
-	Updated_sale_status{
+	Updated_sale_status {
 		public String toString() {
 			return "Updated  sale status succssesfully!";
 		}
 	},
-	Import_orderbyname{
+	Import_orderbyname {
 		public String toString() {
 			return "request to import  order ";
 		}
 	},
-	Imported_orderbyname{
+	Imported_orderbyname {
 		public String toString() {
 			return "import order succssesfully!";
 		}
 	},
-	Customer_Created{
+	Customer_Created {
 		public String toString() {
 			return "Customer created successfully";
 		}
 	},
-	Update_Customer_Request{
+	Update_Customer_Request {
 		public String toString() {
 			return "Request to update customer to member";
 		}
 	},
-	Customer_Updated{
+	Customer_Updated {
 		public String toString() {
 			return "Customer updated to member successfully";
 		}
 	},
-	Get_Customer_Data{
+	Get_Customer_Data {
 		public String toString() {
 			return "Request to import customer data";
 		}
-	}, 
-	Customer_Data_Imported{
+	},
+	Customer_Data_Imported {
 		public String toString() {
 			return "Customer data imported successfully";
 		}
 	},
-	Update_SaleStatusdone{
+	Update_SaleStatusdone {
 		public String toString() {
 			return "Request to update sale data";
 		}
-	}, 
-	SaleStatus_Updateddone{
+	},
+	SaleStatus_Updateddone {
 		public String toString() {
 			return "sale status updated successfully";
 		}
 	},
-	Get_Deliveries_By_Area{
+	Get_Deliveries_By_Area {
 		public String toString() {
 			return "Request to import deliveries of area";
 		}
 	},
-	Area_Deliveries_Imported{
+	Area_Deliveries_Imported {
 		public String toString() {
 			return "Area deliveries imported successfully";
 		}
 	},
-	Get_Deliveries_ToApprove_By_Area{
+	Get_Deliveries_ToApprove_By_Area {
 		public String toString() {
 			return "Request to import deliveries to approve of area";
 		}
 	},
-	Area_Deliveries_ToApprove_Imported{
+	Area_Deliveries_ToApprove_Imported {
 		public String toString() {
 			return "Area deliveries to approve imported successfully";
 		}
 	},
-	Change_Delivery_Status{
+	Change_Delivery_Status {
 		public String toString() {
 			return "Request to change deliveries to approve";
 		}
 	},
-	Delivery_Status_Changed{
+	Delivery_Status_Changed {
 		public String toString() {
 			return "Deliveries status changed successfully";
 		}
 	},
-	Get_Products_under_thres{
+	Get_Products_under_thres {
 		public String toString() {
 			return "Request for products under threshold";
 		}
 	},
-	UpdateProductQuantityAndCloseCall{
+	UpdateProductQuantityAndCloseCall {
 		public String toString() {
 			return "Request to update product quantity and close the call";
 		}
 	},
-	Product_quantity_updated_succesfully_call_closed{
+	Product_quantity_updated_succesfully_call_closed {
 		public String toString() {
 			return "Product quantity updated and the call is closed";
 
 		}
 	},
+	Send_Notification {
+		public String toString() {
+			return "Request to send message";
+		}
+	},
+	Msg_Notification{
+		public String toString() {
+			return "message has been sent successfully";
+		}
+	},
+	New_Notification{
+		public String toString() {
+			return "Recieved new message";
 	Get_Customer_Deliveries{
 		public String toString() {
 			return "Request to import user deliveries";
@@ -447,4 +460,5 @@ public enum Request {
 			return "User deliveries imported";
 		}
 	}
+	
 }
