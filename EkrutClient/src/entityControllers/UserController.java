@@ -5,6 +5,7 @@ import entities.User;
 public class UserController {
 	private User user = null;
 	private User userToUpdate = null;
+	private String areaManagerUserNAme;
 
 	public User getUserToUpdate() {
 		return userToUpdate;
@@ -40,5 +41,13 @@ public class UserController {
 		if(userToUpdate == null)
 			return false;
 		return true;
+	}
+
+	public String getAreaManagerUserNAme() {
+		return areaManagerUserNAme;
+	}
+
+	public void setAreaManagerUserNAme(String areaManagerUserNAme) {
+		this.areaManagerUserNAme = areaManagerUserNAme;
 	}
 }

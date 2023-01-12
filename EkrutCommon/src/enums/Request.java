@@ -461,6 +461,17 @@ public enum Request {
 		public String toString() {
 			return "User deliveries imported";
 		}
+	}, 
+	Get_Area_manager_UserName{
+			public String toString() {
+				return "Request to import area manager usrername";
+			}
+		},	
+	Area_manager_UserName_Imported{
+			public String toString() {
+				return "area manager usrername imported";
+			}
+		},
 	}
 	
-}
+

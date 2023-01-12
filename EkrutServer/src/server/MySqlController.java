@@ -1548,7 +1548,7 @@ public class MySqlController {
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {
-			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET quantity = ? "
+			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET status = 'AVAILABLE', quantity = ? "
 					+ "WHERE deviceName = ? AND productCode IN (SELECT productCode FROM products WHERE productName = ?)");
 			try {
 				updatePs.setInt(1, Integer.valueOf(newQuantity));
@@ -1603,4 +1603,22 @@ public class MySqlController {
 		}
 		return deliveries;
 	}
+	
+	public static String getAreaManagerUsername(String region) {
+	    PreparedStatement ps;
+	    String areaManagerUsername = null;
+	    try {
+	        ps = dbConnector.prepareStatement("SELECT username FROM ekrut.users WHERE region = ? AND Role = 'AreaManager'");
+	        ps.setString(1, region);
+	        ResultSet res = ps.executeQuery();
+	        if(res.next()) {
+	            areaManagerUsername = res.getString("username");
+	        }
+	        System.out.println("Import Area Manager Usernames by region succeeded");
+	    } catch (SQLException e) {
+	        System.out.println("Import Area Manager Usernames by region failed");
+	    }
+	    return areaManagerUsername;
+	}
+
 }
