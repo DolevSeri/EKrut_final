@@ -148,7 +148,7 @@ public class ServerPortFrameController {
 	    showConsoleStream();
 		txtPort.setText("5555");
 		txtIP.setText(getLocalHost());
-		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST&useSSL=false");
+		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
 		txtDbUser.setText("root");
 		txtDbPass.setText("Aa123456");
 		btnDisconnect.setDisable(true);

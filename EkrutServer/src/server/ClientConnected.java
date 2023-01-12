@@ -3,7 +3,7 @@ package server;
 import ocsf.server.ConnectionToClient;
 
 public class ClientConnected {
-	private String IP,host,status,username;
+	private String IP,host,status,userName;
     private ConnectionToClient client;
 
     public ClientConnected(String IP, String host, String status, ConnectionToClient client) {
@@ -13,12 +13,12 @@ public class ClientConnected {
         this.client = client;
     }
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public ConnectionToClient getClient() {

@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -46,6 +47,11 @@ public class AreaManager_InventoryManagementController {
      */
     @FXML
     void clickBtnBack(ActionEvent event) {
+    	
+		Image image = new Image("/images/inventory_dilemma.jpg");
+		imgInventory.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		imgLogo.setImage(imagelogo);
     	scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
     }
     

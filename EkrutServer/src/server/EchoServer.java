@@ -52,7 +52,7 @@ public class EchoServer extends AbstractServer {
 	 * 
 	 */
 	private static ObservableList<ClientConnected> clientList = FXCollections.observableArrayList();
-
+    
 	public ObservableList<ClientConnected> getClientList() {
 
 		return clientList;
@@ -103,6 +103,7 @@ public class EchoServer extends AbstractServer {
 				if (user.isLoggedIn() == false) {
 					System.out.println("Username: " + user.getUsername() + " Password: " + user.getPassword());
 					System.out.println("User details were imported successfully");
+			        setUserNameForClient(client, user.getUsername());
 					msgToClient = new Message(Request.LoggedIn_Succses, user);
 				} else {
 					System.out.println("User already logged in");
@@ -199,16 +200,6 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
-
-		case Get_Products_under_thres:
-			String device = (String) messageFromClient.getObject();
-			try {
-				client.sendToClient(new Message(Request.Products_Imported,
-						MySqlController.getProductsUnderThresholdFromDevice(device)));
-			} catch (IOException e) {
-				System.out.println("Could not send message to client.");
-			}
-			break;
 		case Get_Costumer:
 			String userID = (String) messageFromClient.getObject();
 			try {
@@ -236,15 +227,13 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		case Create_Inventory_Call:
+			MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject());
 			try {
-				client.sendToClient(new Message(Request.Inventory_Call_Created,
-						MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject())));
+				client.sendToClient(new Message(Request.Inventory_Call_Created, null));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-			break;
-
 		case getOrders:
 			try {
 				client.sendToClient(new Message(Request.Orders_imported, MySqlController.importOrders()));
@@ -252,8 +241,6 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-			break;
-
 		case SaveOrder:
 			Order order = (Order) messageFromClient.getObject();
 			MySqlController.updateOrder(order);
@@ -293,7 +280,6 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-			break;
 
 		case Update_SalesPattern:
 			SalesPattern sp = (SalesPattern) messageFromClient.getObject();
@@ -340,6 +326,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
+
 		case Get_User_Data:
 			User user1 = MySqlController.importUserData((ArrayList<String>) messageFromClient.getObject());
 			try {
@@ -383,16 +370,17 @@ public class EchoServer extends AbstractServer {
 			MySqlController.saveDeliveryInOrders(delivery);
 			try {
 				client.sendToClient(new Message(Request.Delivery_Saved, null));
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
 			break;
 		case Create_Customer_Request:
-			ArrayList<String> userData = (ArrayList<String>) messageFromClient.getObject();
-			MySqlController.updateUserToCustomer(userData);
+			ArrayList<String> userData = (ArrayList<String>)messageFromClient.getObject();
+			 MySqlController.updateUserToCustomer(userData);
 			try {
-				client.sendToClient(new Message(Request.Customer_Created, null));
+				client.sendToClient(new Message(Request.Customer_Created,null));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -409,10 +397,9 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Import_orderbyname:
-			String username = (String) messageFromClient.getObject();
+			String username=(String)messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.Imported_orderbyname, MySqlController.getOrdersDataOfUSER(username)));
+				client.sendToClient(new Message(Request.Imported_orderbyname, MySqlController. getOrdersDataOfUSER(username)));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -429,8 +416,8 @@ public class EchoServer extends AbstractServer {
 			break;
 		case Get_Deliveries_By_Area:
 			try {
-				client.sendToClient(new Message(Request.Area_Deliveries_Imported,
-						MySqlController.getDeliveriesByArea((ArrayList<String>) messageFromClient.getObject())));
+				client.sendToClient(new Message(Request.Area_Deliveries_Imported, 
+						MySqlController.getDeliveriesByArea((ArrayList<String>)messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -438,15 +425,15 @@ public class EchoServer extends AbstractServer {
 			break;
 		case Get_Deliveries_ToApprove_By_Area:
 			try {
-				client.sendToClient(new Message(Request.Area_Deliveries_ToApprove_Imported,
-						MySqlController.getDeliveriesByArea((ArrayList<String>) messageFromClient.getObject())));
+				client.sendToClient(new Message(Request.Area_Deliveries_ToApprove_Imported, 
+						MySqlController.getDeliveriesByArea((ArrayList<String>)messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
 			break;
 		case Change_Delivery_Status:
-			MySqlController.updateDeliveryStatus((ArrayList<Delivery>) messageFromClient.getObject());
+			MySqlController.updateDeliveryStatus((ArrayList<Delivery>)messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.Delivery_Status_Changed, null));
 			} catch (IOException e) {
@@ -454,11 +441,21 @@ public class EchoServer extends AbstractServer {
 				System.out.println("Could not send message to client.");
 			}
 			break;
-		case UpdateProductQuantityAndCloseCall:
-			ArrayList<String> data = (ArrayList<String>) messageFromClient.getObject();
-			MySqlController.UpdateProductQuantityAndCloseCall(data);
+		case Get_Customer_Deliveries:
 			try {
-				client.sendToClient(new Message(Request.Product_quantity_updated_succesfully_call_closed, null));
+				client.sendToClient(new Message(Request.Customer_Deliveries_Imported, 
+						MySqlController.getDeliveriesByCustomer((String)messageFromClient.getObject())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Send_Notification:
+			ArrayList<String> nameAndMessage = (ArrayList<String>) messageFromClient.getObject();
+			ConnectionToClient clientToSendMsg = getClientByUserName(nameAndMessage.get(0));
+			try {
+				clientToSendMsg.sendToClient(new Message(Request.New_Notification, nameAndMessage.get(1)));
+				client.sendToClient(new Message(Request.Msg_Notification, null));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -470,15 +467,38 @@ public class EchoServer extends AbstractServer {
 	}
 
 	private void updateClientList(ConnectionToClient client, String connectionStatus) {
-		for (int i = 0; i < clientList.size(); i++) {
-			if (clientList.get(i).getIP().equals(client.getInetAddress().getHostAddress()))
-				clientList.remove(i);
-		}
-
-		clientList.add(new ClientConnected(client.getInetAddress().getHostAddress(),
-				client.getInetAddress().getHostAddress(), connectionStatus, client));
+	    //Create a new instance of the ClientConnected class
+	    ClientConnected newClient = new ClientConnected(client.getInetAddress().getHostAddress(),
+	            client.getInetAddress().getHostAddress(), connectionStatus, client);
+	    //Remove an existing client with the same IP address
+	    clientList.removeIf(c -> c.getIP().equals(newClient.getIP()));
+	    //Add the new client to the list
+	    clientList.add(newClient);
+	}
+	
+	private void setUserNameForClient(ConnectionToClient client, String userName) {
+	    ClientConnected matchedClientConnected = clientList.stream()
+	        .filter(cc -> cc.getClient().equals(client))
+	        .findFirst()
+	        .get();
+	    matchedClientConnected.setUserName(userName);
+	}
+	
+	
+	private ConnectionToClient getClientByUserName(String username) {
+	    ClientConnected matchedClientConnected = clientList.stream()
+	        .filter(cc -> cc.getUserName().equals(username))
+	        .findFirst()
+	        .orElse(null);
+	    if (matchedClientConnected == null) {
+	        return null;
+	    }
+	    return matchedClientConnected.getClient();
 	}
 
+
+	
+	
 	/**
 	 * This method overrides the one in the superclass. Called when the server
 	 * starts listening for connections.

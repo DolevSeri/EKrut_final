@@ -2,7 +2,6 @@ package clientControllers;
 
 import client.ChatClient;
 import client.ClientUI;
-import entities.Device;
 import entities.Message;
 import enums.Request;
 import javafx.event.ActionEvent;
@@ -14,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.scene.layout.AnchorPane;
+
 
 public class Client_PickUpOrder_FromDeviceController {
 	SetSceneController newScreen = new SetSceneController();

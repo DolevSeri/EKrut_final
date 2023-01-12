@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -1526,7 +1525,6 @@ public class MySqlController {
 			e.printStackTrace();
 			System.out.println("Execute query failed on getDeliveriesByArea");
 		}
-		System.out.println(deliveries.size());
 		return deliveries;
 	}
 
@@ -1577,5 +1575,32 @@ public class MySqlController {
 			System.out.println("Executing query on UPDATE Sales failed");
 		}
 		System.out.println("Update Product Quantity And Close Call success!");
+	}
+	
+	public static ArrayList<Delivery> getDeliveriesByCustomer(String username) {
+		ArrayList<Delivery> deliveries = new ArrayList<>();
+		try {
+			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.delivery d "
+					+ "JOIN ekrut.orders o ON d.orderID=o.orderID "
+					+ "WHERE o.username = ? AND d.deliveryStatus IN('NOTAPPROVED', 'APPROVED')");
+		
+					
+			try {
+				ps.setString(1, username);
+			}catch(SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set query failed on getDeliveriesByCustomer");
+			}
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				deliveries.add(new Delivery(rs.getString("costumerAdress"),
+						DeliveryStatus.valueOf(rs.getString("deliveryStatus")), rs.getInt("orderID"),
+						Region.valueOf(rs.getString("region"))));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Execute query failed on getDeliveriesByCustomer");
+		}
+		return deliveries;
 	}
 }

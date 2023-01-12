@@ -12,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class AreaManager_InventoryCallsController {
 
@@ -33,6 +35,10 @@ public class AreaManager_InventoryCallsController {
     @FXML
     private ComboBox<String> cmbProduct;
 
+	@FXML
+	private ImageView picture;
+	@FXML
+	private ImageView logo;
 
 	private String area = ChatClient.userController.getUser().getRegion().toString();
 	private SetSceneController scene = new SetSceneController();
@@ -44,6 +50,10 @@ public class AreaManager_InventoryCallsController {
 	 * to populate the device combo box.
 	 */
 	public void initialize() {
+		Image image = new Image("/images/inventory-management.jpeg");
+		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		cmbProduct.setDisable(true);
 		cmbProduct.setPromptText("Choose Device First");
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, area));

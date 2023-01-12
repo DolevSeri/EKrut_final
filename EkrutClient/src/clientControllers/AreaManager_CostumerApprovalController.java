@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -53,6 +55,9 @@ public class AreaManager_CostumerApprovalController {
 	private Button btnApproveCostumer;
 
 	@FXML
+	private ImageView picture;
+	
+	@FXML
 	private Label lblError;
 
 	private TableViewController myTable = new TableViewController();
@@ -64,6 +69,8 @@ public class AreaManager_CostumerApprovalController {
 	 */
 	@FXML
 	public void initialize() {
+		Image image = new Image("images/newusers.png");
+		picture.setImage(image);
 		tblCostumers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		setColumns();
 		setTableItems();
