@@ -14,7 +14,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-
+/**
+ * 
+ * The Client_PickUpOrder_FromDeviceController class is a controller class for
+ * the "Client_PickUpOrder_FromDevice.fxml" GUI.
+ * 
+ * The class handles all the logic and events that occur in the GUI, such as
+ * button clicks and displaying the orders that can be picked up.
+ * 
+ * @author Ron Lahiani
+ * 
+ * @author Peleg Oanuno
+ */
 public class Client_PickUpOrder_FromDeviceController {
 	SetSceneController newScreen = new SetSceneController();
 
@@ -36,6 +47,12 @@ public class Client_PickUpOrder_FromDeviceController {
 	@FXML
 	private Label lblError;
 
+	/**
+	 * 
+	 * The initialize method is called when the scene is loaded. It initializes the
+	 * error label to be hidden, gets the pick-up orders from the server and adds
+	 * them to the combo box, and sets the logo image.
+	 */
 	@FXML
 	public void initialize() {
 		lblError.setVisible(false);
@@ -47,6 +64,15 @@ public class Client_PickUpOrder_FromDeviceController {
 		imageLogo.setImage(image);
 	}
 
+	/**
+	 * 
+	 * The clickOnBack method is an event handler for the "Back" button. When the
+	 * button is clicked, it hides the current window and opens the client's main
+	 * view.
+	 * 
+	 * @param event the event that triggers the method, in this case the click on
+	 *              the "Back" button.
+	 */
 	@FXML
 	void clickOnBack(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
@@ -58,6 +84,18 @@ public class Client_PickUpOrder_FromDeviceController {
 
 	}
 
+	/**
+	 * 
+	 * The clickOnConfirm method is an event handler for the "Confirm" button. When
+	 * the button is clicked, it checks if an order number has been selected in the
+	 * combo box. If an order number has been selected, it sends a request to the
+	 * server to update the pick-up status of the order. It then displays a message
+	 * to the user to wait for the order to come out. Finally, it hides the current
+	 * window and opens the client's main view.
+	 * 
+	 * @param event the event that triggers the method, in this case the click on
+	 *              the "Confirm" button.
+	 */
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
 		if (cmbOrderNum.getValue() == null) {
@@ -70,6 +108,14 @@ public class Client_PickUpOrder_FromDeviceController {
 		}
 	}
 
+	/**
+	 * 
+	 * The getExitBtn method is an event handler for the "Exit" button. When the
+	 * button is clicked, it closes the application.
+	 * 
+	 * @param event the event that triggers the method, in this case the click on
+	 *              the "Exit" button.
+	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
