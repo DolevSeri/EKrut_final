@@ -68,7 +68,7 @@ public class Client_OL_MainVieController {
 	*/
 	@FXML
 	void clickOnDeliveryConfirmation(ActionEvent event) {
-
+		newScreen.setScreen(new Stage(), "/clientGUI/Client_ApproveGettingDelivery.fxml");
 	}
 	/**
 

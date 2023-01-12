@@ -15,6 +15,23 @@ public class Delivery implements Serializable {
 	private DeliveryStatus status;
 	private int orderID;
 	private Region region;
+	private String arrivalDate, arrivalHour;
+
+	public String getArrivalDate() {
+		return arrivalDate;
+	}
+
+	public void setArrivalDate(String arrivalDate) {
+		this.arrivalDate = arrivalDate;
+	}
+
+	public String getArrivalHour() {
+		return arrivalHour;
+	}
+
+	public void setArrivalHour(String arrivalHour) {
+		this.arrivalHour = arrivalHour;
+	}
 
 	public Delivery(String costumerAdress, DeliveryStatus status, int orderID, Region region) {
 		super();

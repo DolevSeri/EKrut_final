@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OL_MainVieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OL_MainVieController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -42,7 +42,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="442.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogOut" layoutX="21.0" layoutY="440.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
