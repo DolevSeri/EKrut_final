@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -30,6 +32,9 @@ public class AreaManager_MainViewController {
 
 	@FXML
 	private Button btnUserManagement;
+	
+    @FXML
+    private ImageView logo;
 
 	@FXML
 	private Label lblWelcome;
@@ -42,6 +47,9 @@ public class AreaManager_MainViewController {
 	 */
 	@FXML
 	public void initialize() {
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		logo.setImage(image);
+		
 		lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
 				+ ChatClient.userController.getUser().getLastName() + "!");
 	}
