@@ -1,5 +1,6 @@
 package clientControllers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import client.ChatClient;
@@ -114,8 +115,26 @@ public class DeliveryOperator_ManageDeliveriesController {
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Status, deliveryToApprove));
 			setTableItems();
 			scene.popUpMessage("Deliveries approved succesfully! ");
-
 		}
+    }
+    
+    public long calculateFlightTime(String wareHouse, String clientAddress) {
+    	return 3L;
+    }
+    public long droneWaiting() {
+    	return 2L;
+    }
+    public long calculateShipmantLoad() {
+    	return 3L;
+    }
+    public long calTotalTotalTime(String cAddress) {
+    	return calculateFlightTime(null, cAddress)+droneWaiting()+calculateShipmantLoad();
+    }
+    public String estimatedArrival(LocalDateTime date, String cAddress) {
+    	long totalDeliveryHours = calTotalTotalTime(cAddress);
+    	LocalDateTime arrivalDate = date.plusHours(totalDeliveryHours);
+    	//return arrivalDate.format(null)
+    	return "hi";
     }
     
     @FXML
