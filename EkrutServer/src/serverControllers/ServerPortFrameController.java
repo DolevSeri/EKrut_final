@@ -81,7 +81,8 @@ public class ServerPortFrameController {
 	private ImageView ekrutLogo;
 
 	private PrintStream showConsole;
-	
+	 EndOfMonthChecker endOfMonthChecker = new EndOfMonthChecker();
+
 	
 	
 	/**
@@ -96,6 +97,7 @@ public class ServerPortFrameController {
 	 */
 	@FXML
 	public void clickBtnConnect(ActionEvent event) throws Exception {
+	    endOfMonthChecker.start();
 		String ekrutPort, dbName, dbUserName, dbPwd;
 		ekrutPort = txtPort.getText();
 		dbName = txtDbName.getText();
