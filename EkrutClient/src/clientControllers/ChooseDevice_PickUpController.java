@@ -13,6 +13,16 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * The ChooseDevice_PickUpController class is responsible for handling the
+ * pick-up device selection screen for the client.
+ * 
+ * It allows the client to choose a device from a list of devices in their area
+ * for pick-up.
+ * 
+ * @author peleg
+ */
 public class ChooseDevice_PickUpController {
 	SetSceneController newScreen = new SetSceneController();
 	@FXML
@@ -29,6 +39,12 @@ public class ChooseDevice_PickUpController {
 	@FXML
 	private Label lblError;
 
+	/**
+	 * 
+	 * The initialize method is called when the scene is loaded. It sets the error
+	 * label to be invisible and populates the device combo box with the devices in
+	 * the client's area.
+	 */
 	@FXML
 	public void initialize() {
 		lblError.setVisible(false);
@@ -39,6 +55,13 @@ public class ChooseDevice_PickUpController {
 		}
 	}
 
+	/**
+	 * 
+	 * The clickOnConfirm method is called when the "Confirm" button is clicked. It
+	 * sets the selected device as the customer's device and opens the
+	 * 
+	 * 
+	 */
 	@FXML
 	void clickOnConfirm(ActionEvent event) {
 		if (cmbDevice.getValue() == null) {
@@ -50,11 +73,22 @@ public class ChooseDevice_PickUpController {
 		}
 	}
 
+	/**
+	 * Handles the event of clicking on the Exit button. This method hides the
+	 * primary window, calls exitOrLogOut method and passing true as parameter, it
+	 * also prints "exit ConnectForm
+	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
 
+	/**
+	 * This method handles the click event on the "Back" button. It hides the
+	 * current window and opens the "Client_OL_MainView.fxml"" screen.
+	 *
+	 * @param event - the event that triggered this method.
+	 */
 	@FXML
 	void clickOnBack(ActionEvent event) {
 		// stop counting 15 minutes for order

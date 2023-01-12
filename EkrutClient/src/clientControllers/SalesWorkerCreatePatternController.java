@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
 import client.ChatClient;
 import client.ClientUI;
 import entities.Message;
@@ -21,8 +20,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- * @author peleg SalesWorkerCreatePatternController- a class controller that
- *         will help us to do the functionality at create pattern screen
+ * 
+ * SalesWorkerCreatePatternController is a class that responsible for the
+ * creation of new Sales patterns by the sales worker
+ * 
+ * @author Peleg
  */
 
 public class SalesWorkerCreatePatternController {
@@ -64,9 +66,16 @@ public class SalesWorkerCreatePatternController {
 
 	SalesPattern sp;
 
+	/**
+	 * 
+	 * The initialize method is called upon loading the screen, and is used to
+	 * populate the comboboxes with options for discounts, start and end days, and
+	 * start and end hours, as well as to import the existing sales patterns from
+	 * the server and create a new sales pattern instance.
+	 */
 	public void initialize() {
 		ArrayList<String> discount = new ArrayList<String>();
-		discount.addAll(Arrays.asList( "20%", "30%", "50%"));
+		discount.addAll(Arrays.asList("20%", "30%", "50%"));
 		cmbDiscount.getItems().addAll(discount);
 		ArrayList<String> daysStart = new ArrayList<String>();
 		daysStart.addAll(Arrays.asList("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
@@ -81,16 +90,15 @@ public class SalesWorkerCreatePatternController {
 		ArrayList<String> duration = new ArrayList<String>();
 		duration.addAll(Arrays.asList("08:00:00", "09:00:00", "10:00:00", "11:00:00", "12:00:00", "13:00:00",
 				"14:00:00", "15:00:00", "16:00:00", "17:00:00", "18:00:00", "19:00:00", "20:00:00"));
-		
+
 		cmbEndHour.getItems().addAll(duration);
 		ClientUI.chat.accept(new Message(Request.import_SalesPattern, null));
 		sp = new SalesPattern(ChatClient.salesPatternController.getSalespattern().size() + 1, null, null, null, null,
 				null);
-		
+
 		lblError.setVisible(false);
 		Image image = new Image("/images/SalesDesignPatternSale.jpeg");
 		saleImage.setImage(image);
-		
 
 	}
 
@@ -101,20 +109,21 @@ public class SalesWorkerCreatePatternController {
 
 	@FXML
 	void clickOnActivateSale(ActionEvent event) {
+		// if client didn't choose one of the comboboxes
 		if (cmbDiscount.getValue() == null || cmbEndDay.getValue() == null || cmbEndHour.getValue() == null
 				|| cmbStartDay.getValue() == null || cmbStartHour.getValue() == null) {
 			lblError.setVisible(true);
 		} else {
-			if(!compareTimee(cmbStartHour.getValue(),cmbEndHour.getValue())) {
-				lblError.setText("You need to choose hours of one day only!!!");
+			// if client chose illegal hours
+			if (!compareTimee(cmbStartHour.getValue(), cmbEndHour.getValue())) {
+				lblError.setText("You can't choose end hour earlier than star thour! try again.");
 				lblError.setVisible(true);
-			}
-			else {
-			lblError.setVisible(false);
-			ClientUI.chat.accept(new Message(Request.Update_SalesPattern, sp));
-			newScreen.popUpMessage("Sale pattren successfully created!");
-			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
-			newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
+			} else {
+				lblError.setVisible(false);
+				ClientUI.chat.accept(new Message(Request.Update_SalesPattern, sp));
+				newScreen.popUpMessage("Sale pattren successfully created!");
+				((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+				newScreen.setScreen(new Stage(), "/clientGUI/SalesWorker_MainView.fxml");
 			}
 		}
 
@@ -151,14 +160,14 @@ public class SalesWorkerCreatePatternController {
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);
 	}
+
 	public static boolean compareTimee(String starthour, String endhour) {
 		LocalTime start = LocalTime.parse(starthour);
 		LocalTime end = LocalTime.parse(endhour);
-		if (end.isBefore(start)) 
+		if (end.isBefore(start))
 			return false;
 		return true;
 
 	}
 
-	
 }
