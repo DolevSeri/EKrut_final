@@ -116,6 +116,8 @@ public class Client_OL_MainVieController {
 	 */
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
+		ChatClient.salesForSubscriber.clear();
+		ChatClient.firstOrderSubscriber=false;
 		newScreen.exitOrLogOut(event, false);
 	}
 
@@ -126,6 +128,8 @@ public class Client_OL_MainVieController {
 	 */
 	@FXML
 	void clickOnLogout(ActionEvent event) {
+		ChatClient.salesForSubscriber.clear();
+		ChatClient.firstOrderSubscriber=false;
 		newScreen.exitOrLogOut(event, true);
 	}
 

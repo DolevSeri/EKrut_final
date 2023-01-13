@@ -201,6 +201,8 @@ public class Client_OrderConfirmationController {
 		} else {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 		}
+		ChatClient.salesForSubscriber.clear();
+		ChatClient.firstOrderSubscriber=false;
 	}
 
 	/**
