@@ -64,6 +64,7 @@ public class ProductController {
 	}
 
 	/**
+	 * 
 	 * SetData-a method that set the fxml of product in the product catalog screen
 	 * 
 	 * @param product-contain              the product that we want to set data for
