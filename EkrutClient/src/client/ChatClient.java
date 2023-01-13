@@ -245,7 +245,7 @@ public class ChatClient extends AbstractClient {
 			break;
 		case New_Notification:
 			showMsg((String) message.getObject());
-      break;
+			break;
 		case Customer_Deliveries_Imported:
 			ArrayList<Delivery> customerDeli = (ArrayList<Delivery>) message.getObject();
 			deliveryController.setUserDelivery((FXCollections.observableArrayList(customerDeli)));

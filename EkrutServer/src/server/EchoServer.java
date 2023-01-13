@@ -277,6 +277,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case SaveOrder:
 			Order order = (Order) messageFromClient.getObject();
 			MySqlController.updateOrder(order);
@@ -316,7 +317,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-
+			break;
 		case Update_SalesPattern:
 			SalesPattern sp = (SalesPattern) messageFromClient.getObject();
 			MySqlController.salesPatternToDB(sp);
@@ -371,6 +372,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Save_TakeAway:
 			Order pickUpOrder = (Order) messageFromClient.getObject();
 			MySqlController.savePickUpOrderInDB(pickUpOrder.getOrderID());
@@ -440,6 +442,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Update_SaleStatusdone:
 			Sale saleToUpdatedone = (Sale) messageFromClient.getObject();
 			MySqlController.updateSaleStatusdoneInDB(saleToUpdatedone);
