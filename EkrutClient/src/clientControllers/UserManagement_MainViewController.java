@@ -3,6 +3,7 @@ package clientControllers;
 import client.ChatClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -81,6 +82,7 @@ public class UserManagement_MainViewController {
 	@FXML
 	void clickBtnCreateAccount(ActionEvent event) {
 		this.setUpdate(false);
+		((Node) event.getSource()).getScene().getWindow().hide();
 		scene.setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
 		// scene.createOrUpdateClient(false);
 	}
@@ -95,6 +97,7 @@ public class UserManagement_MainViewController {
 	@FXML
 	void clickBtnUpdate(ActionEvent event) {
 		this.setUpdate(true);
+		((Node) event.getSource()).getScene().getWindow().hide();
 		scene.setScreen(new Stage(), "/clientGUI/UsersManagement_UsersDataView.fxml");
 
 		// scene.createOrUpdateClient(true);
