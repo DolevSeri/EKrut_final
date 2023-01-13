@@ -65,8 +65,8 @@ public class Client_PickUpOrder_FromDeviceController {
 		}
 		Image image = new Image("/images/PickUpImage.jpeg");
 		imageLogo.setImage(image);
-		Image imagelogo = new Image("//images/IconOnly_Transparent_NoBuffer.png");
-		imageLogo.setImage(imagelogo);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 	}
 
 	/**
