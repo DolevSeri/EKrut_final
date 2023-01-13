@@ -164,11 +164,7 @@ public enum Request {
 			return "Customer status updated successfully!";
 		}
 	},
-	Send_msg_to_system {
-		public String toString() {
-			return "System set message for AreaManagers!";
-		}
-	},
+
 	Create_Inventory_Call {
 		public String toString() {
 			return "Area Manager request to open inventory call";
@@ -285,11 +281,6 @@ public enum Request {
 		}
 	},
 
-	System_msg_updated {
-		public String toString() {
-			return "System msg updated succssesfully!";
-		}
-	},
 	Save_TakeAway {
 		public String toString() {
 			return "Request to save Takeaway order";

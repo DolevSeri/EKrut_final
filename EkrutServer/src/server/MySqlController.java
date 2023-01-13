@@ -1016,7 +1016,7 @@ public class MySqlController {
 			PreparedStatement ps = dbConnector
 					.prepareStatement("SELECT c.username, c.creditCard, c.subscriberID, c.status, c.deviceName, "
 							+ "u.firstName, u.password, u.lastName, u.email, u.phoneNumber, u.isLoggedIn, u.id, "
-							+ "u.role, u.region, u.configuration " + "FROM ekrut.costumers c "
+							+ "u.role, u.region " + "FROM ekrut.costumers c "
 							+ "JOIN ekrut.users u ON c.username = u.username "
 							+ "WHERE u.region = ? AND c.status = 'APPROVED'");
 			try {
@@ -1306,28 +1306,6 @@ public class MySqlController {
 			System.out.println("Executing query on createSales failed");
 		}
 		System.out.println("Enter new Sales successfully");
-	}
-
-	public static void updateSystemMessageTable(SystemMessage systemMsg) {
-		try {
-			PreparedStatement ps = dbConnector
-					.prepareStatement("INSERT INTO ekrut.system_message(msg,userName,status) " + "VALUES (?,?,?)");
-			try {
-				ps.setString(1, systemMsg.getDescription());
-				ps.setString(2, systemMsg.getUsername());
-				ps.setString(3, systemMsg.getStatus().toString());
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("");
-			}
-			ps.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Executing query on update msg table failed");
-		}
-		System.out.println("Enter new msg to system_message successfully");
 	}
 
 	public static void savePickUpOrderInDB(int orderID) {
