@@ -15,6 +15,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -78,6 +80,12 @@ public class UserManagement_UserInformationController {
 
 	@FXML
 	private Label lblErrorMsg;
+	
+	@FXML
+	private ImageView picture;
+	
+	@FXML
+	private ImageView logo;
 
 	UserManagement_MainViewController controller = new UserManagement_MainViewController();
 	SetSceneController scene = new SetSceneController();
@@ -90,6 +98,10 @@ public class UserManagement_UserInformationController {
 	 * updating or creating a new account.
 	 */
 	public void initialize() {
+		Image image = new Image("/images/usersInfoView.jpg");
+		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 
 		lblErrorMsg.setVisible(false);
 		txtUserName.setEditable(true);

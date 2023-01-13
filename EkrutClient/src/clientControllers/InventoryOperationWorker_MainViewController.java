@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -27,6 +29,9 @@ public class InventoryOperationWorker_MainViewController {
 
     @FXML
     private Button btnLogOut;
+    
+	@FXML
+	private ImageView logo;
 
     private SetSceneController scene = new SetSceneController();
     
@@ -37,6 +42,8 @@ public class InventoryOperationWorker_MainViewController {
 	 */
 	@FXML
 	public void initialize() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		lblWelcome.setText("Welcome Back "+ ChatClient.userController.getUser().getFirstName()
 				+" "+ ChatClient.userController.getUser().getLastName()+"!");
 	}

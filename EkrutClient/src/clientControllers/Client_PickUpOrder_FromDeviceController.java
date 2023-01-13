@@ -43,6 +43,9 @@ public class Client_PickUpOrder_FromDeviceController {
 
 	@FXML
 	private ImageView imageLogo;
+	
+	@FXML
+	private ImageView logo;
 
 	@FXML
 	private Label lblError;
@@ -62,6 +65,8 @@ public class Client_PickUpOrder_FromDeviceController {
 		}
 		Image image = new Image("/images/PickUpImage.jpeg");
 		imageLogo.setImage(image);
+		Image imagelogo = new Image("//images/IconOnly_Transparent_NoBuffer.png");
+		imageLogo.setImage(imagelogo);
 	}
 
 	/**

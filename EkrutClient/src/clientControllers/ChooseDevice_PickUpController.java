@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -21,7 +23,7 @@ import javafx.stage.Stage;
  * It allows the client to choose a device from a list of devices in their area
  * for pick-up.
  * 
- * @author peleg
+ * @author Peleg
  */
 public class ChooseDevice_PickUpController {
 	SetSceneController newScreen = new SetSceneController();
@@ -38,6 +40,12 @@ public class ChooseDevice_PickUpController {
 	private ComboBox<String> cmbDevice;
 	@FXML
 	private Label lblError;
+	
+	@FXML
+	private ImageView picture;
+	
+	@FXML
+	private ImageView logo;
 
 	/**
 	 * 
@@ -47,6 +55,11 @@ public class ChooseDevice_PickUpController {
 	 */
 	@FXML
 	public void initialize() {
+		Image image = new Image("/images/PickUpImage.jpeg");
+		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
+		
 		lblError.setVisible(false);
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area,
 				ChatClient.costumerController.getCostumer().getRegion().toString()));

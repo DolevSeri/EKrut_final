@@ -12,7 +12,7 @@
    <children>
       <Pane layoutX="449.0" prefHeight="482.0" prefWidth="346.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fx:id="logo" fitHeight="309.0" fitWidth="307.0" layoutX="20.0" layoutY="79.0" />
+            <ImageView fx:id="logo" fitHeight="309.0" fitWidth="307.0" layoutX="20.0" layoutY="90.0" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

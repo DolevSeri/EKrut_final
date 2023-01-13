@@ -4,21 +4,16 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="868.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.InventoryReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="868.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.InventoryReportController">
    <children>
       <Pane layoutX="340.0" prefHeight="528.0" prefWidth="527.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <ImageView fitHeight="59.0" fitWidth="49.0" layoutX="464.0" layoutY="14.0">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/IconOnly_Transparent_NoBuffer.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="logo" fitHeight="59.0" fitWidth="49.0" layoutX="464.0" layoutY="14.0" />
             <PieChart fx:id="chrtInventory" layoutX="14.0" layoutY="86.0" />
          </children>
       </Pane>

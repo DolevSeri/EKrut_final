@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -34,12 +35,14 @@ public class MainOrderFrameController {
 	Button btnExit;
 
 	@FXML
-	private ImageView imgLogo;
+	private ImageView logo;
 
 	private SetSceneController newScreen = new SetSceneController();
 
 	@FXML
 	void getLogoutButton(ActionEvent event) {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		newScreen.exitOrLogOut(event, true);
 	}
 
