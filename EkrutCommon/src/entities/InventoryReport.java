@@ -3,8 +3,6 @@ package entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import enums.Region;
-
 public class InventoryReport implements Serializable {
 	private static final long serialVersionUID = 1L; 
 	private String month, year, deviceName;

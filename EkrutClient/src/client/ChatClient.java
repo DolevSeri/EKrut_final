@@ -256,6 +256,8 @@ public class ChatClient extends AbstractClient {
 		case Area_manager_UserName_Imported:
 			userController.setAreaManagerUserNAme((String)message.getObject());
 			break;
+		case Delivery_Arrival_Changed:
+			break;
 		default:
 			break;
 		}

@@ -472,6 +472,16 @@ public enum Request {
 				return "area manager usrername imported";
 			}
 		},
+	Change_Delivery_Arrival{
+			public String toString() {
+				return "Request to update delivery arrival time";
+			}
+		},
+	Delivery_Arrival_Changed{
+			public String toString() {
+				return "Delivery arrival time updated";
+			}
+		}
 	}
 	
 

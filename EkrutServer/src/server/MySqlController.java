@@ -1544,6 +1544,24 @@ public class MySqlController {
 			System.out.println("Execute query failed on updateDeliveryStatus");
 		}
 	}
+	
+	public static void updateDeliveryArrivalTime(ArrayList<Delivery> deliveryToUpdate) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("UPDATE ekrut.delivery SET supplyTimedate = ?, supplyTimehour = ? WHERE orderID = ?");
+			for (Delivery delivery : deliveryToUpdate) {
+				ps.setString(1, delivery.getArrivalDate());
+				ps.setString(2, delivery.getArrivalHour());
+				ps.setInt(3, delivery.getOrderID());
+				ps.executeUpdate();
+			}
+			System.out.println("Update delivery status suceed");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Execute query failed on updateDeliveryStatus");
+		}
+	}
 
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
