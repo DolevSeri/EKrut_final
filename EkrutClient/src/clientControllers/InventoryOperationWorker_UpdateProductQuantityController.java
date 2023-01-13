@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * 
@@ -38,6 +40,9 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 
 	@FXML
 	private TextField txtPrQuantity;
+	
+	@FXML
+	private ImageView logo;
 
 	/**
 	 * selectedCall - the selected call from the call list scene - a
@@ -52,6 +57,9 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 	 * @param call - the selected call from the call list
 	 */
 	public void initData(InventoryCall call) {
+		
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		selectedCall = call;
 		lblDeviceName.setText(selectedCall.getDeviceName());
 		lblProductName.setText(selectedCall.getProductName());

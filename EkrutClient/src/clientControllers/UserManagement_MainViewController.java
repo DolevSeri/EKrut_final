@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
@@ -31,6 +33,9 @@ public class UserManagement_MainViewController {
 
 	@FXML
 	private Label lblWelcome;
+	
+	@FXML
+	private ImageView logo;
 
 	SetSceneController scene = new SetSceneController();
 	private static boolean isUpdate = false;
@@ -61,6 +66,8 @@ public class UserManagement_MainViewController {
 	 */
 	@FXML
 	public void initialize() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
 				+ ChatClient.userController.getUser().getLastName() + "!");
 	}

@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OL_MainVieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_OL_MainVieController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
             <ImageView fx:id="imageLogo" fitHeight="264.0" fitWidth="202.0" layoutX="37.0" layoutY="109.0" />
-            <Label layoutX="170.0" layoutY="14.0" text="OL_Configuration" />
          </children>
       </Pane>
       <Button fx:id="btnExit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">
@@ -21,7 +20,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="118.0" layoutY="29.0" prefHeight="103.0" prefWidth="351.0" text="Please Take your pick:" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="118.0" layoutY="29.0" prefHeight="103.0" prefWidth="351.0" text="Please Make a Choice:" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="29.0" />
          </font>

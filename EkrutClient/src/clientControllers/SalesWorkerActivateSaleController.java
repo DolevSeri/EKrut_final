@@ -36,12 +36,17 @@ public class SalesWorkerActivateSaleController {
 	@FXML
 	private ImageView saleImage;
 	
+	@FXML
+	private ImageView logo;
+	
    public ArrayList<SaleCoulmnController> saleControllers=new ArrayList<>();
 	public void initialize() throws IOException {
 			ClientUI.chat.accept(new Message(Request.import_Sales, null));
 			setSale();
 			Image image = new Image("/images/SalesMenagerScreenImage.png");
 			saleImage.setImage(image);
+			Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+			logo.setImage(imagelogo);
 			
 		
 	}

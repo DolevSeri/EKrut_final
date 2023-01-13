@@ -4,22 +4,17 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ChooseDevice_PickUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.ChooseDevice_PickUpController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <Label layoutX="149.0" layoutY="14.0" text="OL_Configuration" />
-            <ImageView fitHeight="261.0" fitWidth="265.0" layoutX="5.0" layoutY="93.0">
-               <image>
-                  <Image url="@../../../EkrutCommon/src/images/PickUpImage.jpeg" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="picture" fitHeight="261.0" fitWidth="265.0" layoutX="5.0" layoutY="93.0" />
+            <ImageView fx:id="logo" fitHeight="59.0" fitWidth="49.0" layoutX="217.0" layoutY="5.0" />
          </children>
       </Pane>
       <Button fx:id="btnexit1" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#getExitBtn" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

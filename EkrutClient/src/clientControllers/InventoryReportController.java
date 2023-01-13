@@ -15,6 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Controller class for the Inventory Report scene.
@@ -46,6 +48,9 @@ public class InventoryReportController {
 
 	@FXML
 	private Label lblItemUnderTreshold;
+	
+	@FXML
+	private ImageView logo;
 
 	SetSceneController scene = new SetSceneController();
 
@@ -54,6 +59,8 @@ public class InventoryReportController {
 	 * InventoryReport object.
 	 */
 	public void initialize() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		InventoryReport inventoryReport = ChatClient.inventoryReportController.getInventoryReport();
 		HashMap<String, Integer> producsUnderThreshold = inventoryReport.getProducsUnderThreshold();
 		String mexProductUnderThres = inventoryReport.getMexProductUnderThres();

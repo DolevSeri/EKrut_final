@@ -58,6 +58,8 @@ public class AreaManager_CostumerApprovalController {
 	private ImageView picture;
 	
 	@FXML
+	private ImageView logo;
+	@FXML
 	private Label lblError;
 
 	private TableViewController myTable = new TableViewController();
@@ -71,6 +73,9 @@ public class AreaManager_CostumerApprovalController {
 	public void initialize() {
 		Image image = new Image("images/newusers.png");
 		picture.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
+		
 		tblCostumers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		setColumns();
 		setTableItems();

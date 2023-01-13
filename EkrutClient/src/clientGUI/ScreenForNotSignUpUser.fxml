@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.NotRegisterCostumerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.NotRegisterCostumerController">
    <children>
       <Pane layoutX="520.0" prefHeight="482.0" prefWidth="275.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -26,7 +26,7 @@
             <Font name="Cooper Black" size="32.0" />
          </font>
       </Label>
-      <Button fx:id="btnLogOut" layoutX="441.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
+      <Button fx:id="btnLogOut" layoutX="29.0" layoutY="432.0" mnemonicParsing="false" onAction="#clickOnLogout" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="LogOut" textFill="WHITE" underline="true">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextArea layoutX="6.0" layoutY="140.0" prefHeight="229.0" prefWidth="504.0" text="Hi, if you want to use Our machine&#10; you need to register as a customer,&#10; submit a request to our user management &#10;representative through the button&#10; below to register!">
+      <TextArea layoutX="6.0" layoutY="140.0" prefHeight="229.0" prefWidth="504.0" text="Hi, if you want to use Our machine&#10; you need to register as a customer,&#10; submit a request to our user management &#10;via Email or SMS!">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
