@@ -35,11 +35,9 @@ import javafx.stage.Stage;
 public class IdentificationController {
 
 	FXMLLoader loader = new FXMLLoader();
-	@FXML
-	private TextField txtUsername = null;
+	@FXML TextField txtUsername = null;
 
-	@FXML
-	private PasswordField txtPswd = null;
+	@FXML PasswordField txtPswd = null;
 
 	@FXML
 	private Button btnLogin;
@@ -62,8 +60,7 @@ public class IdentificationController {
 	@FXML
 	private Label lblPswd;
 
-	@FXML
-	private Label lblErrorOnDetails;
+	@FXML Label lblErrorOnDetails;
 
 	private SetSceneController newScreen = new SetSceneController();
 	
@@ -128,7 +125,7 @@ public class IdentificationController {
 			lblErrorOnDetails.setVisible(true);
 			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
 		} else {
-			if (ChatClient.userController.getUser().isLoggedIn() == true) {
+			if (chatClient.isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
@@ -138,23 +135,24 @@ public class IdentificationController {
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 
-					//if (ChatClient.userController.getUser().getConfiguration().toString().equals("OL")
+					
 					if (chatClient.getConfiguration().equals("OL")
 							&& !(chatClient.getStatus().equals("NOTAPPROVED"))) {
-						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
-					} //else if (ChatClient.userController.getUser().getConfiguration().toString().equals("EK")
+						screenInterface.changeScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
+					} 
 					else if (chatClient.getConfiguration().equals("EK")
 							&& !(chatClient.getStatus().equals("NOTAPPROVED"))) {
-						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
+						screenInterface.changeScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
 					if (chatClient.getStatus().equals("NOTAPPROVED")) {
 						((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-						newScreen.setScreen(new Stage(), "/clientGUI/ScreenForNotApproveUserAfterLogin.fxml");
+						screenInterface.changeScreen(new Stage(), "/clientGUI/ScreenForNotApproveUserAfterLogin.fxml");
 					}
 
-				} else {
+				} 
+				else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-					newScreen.setScreen(new Stage(),
+					screenInterface.changeScreen(new Stage(),
 							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
 
 				}
@@ -349,6 +347,12 @@ public class IdentificationController {
 		public String getTxtPswd() {
 			// TODO Auto-generated method stub
 			return txtPswd.getText();
+		}
+
+		@Override
+		public void changeScreen(Stage stage,String path) {
+			newScreen.setScreen(stage,path);
+			
 		}
 		
 	}
