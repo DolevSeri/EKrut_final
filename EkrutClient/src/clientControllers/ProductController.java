@@ -93,7 +93,8 @@ public class ProductController {
 			}
 		 }
 		}
-		if(sales.size()>0) {
+		
+		if(checkSale() == true) {
 			Image image = new Image("/images/sale.png");
 			imageSale.setImage(image);
 			imageSale.setVisible(true);
