@@ -22,8 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 /**
- * @author peleg a class that will do the functionality of create sale screen of
- *         Sales Manager
+ * @author peleg SalesManagerCreateSaleController class that will do the
+ *         functionality of create sale screen of Sales Manager
  */
 public class SalesManagerCreateSaleController {
 
@@ -89,6 +89,16 @@ public class SalesManagerCreateSaleController {
 	SetSceneController newScreen = new SetSceneController();
 	Sale sale;
 
+	/**
+	 * Initializes the necessary elements for the SalesManagerCreateSaleController
+	 * class.
+	 * 
+	 * This method is called automatically when the corresponding FXML file is
+	 * loaded. It initializes the area and sales pattern ComboBoxes, imports sales
+	 * patterns and sales from the server, sets visibility of certain elements, and
+	 * sets the background image.
+	 * 
+	 */
 	public void initialize() {
 		ArrayList<String> patternsID = new ArrayList<>();
 		ArrayList<String> area = new ArrayList<String>();
@@ -107,13 +117,23 @@ public class SalesManagerCreateSaleController {
 
 	}
 
+	/**
+	 * Handles the button click for sending a sale for activation.
+	 *
+	 * If the area or sale pattern ComboBoxes are not selected, an error label is
+	 * displayed. Otherwise, the sale is created with the inputted details and sent
+	 * to the server for activation. The user is then notified of the successful
+	 * activation and navigated back to the main screen.
+	 *
+	 * @param event the event that triggers the button click
+	 */
 	@FXML
 	void ClickOnSendToAcrivate(ActionEvent event) {
 		if (cmbArea.getValue() == null || cmbSale.getValue() == null) {
 			lblError.setVisible(true);
 
 		} else {
-			
+
 			lblError.setVisible(false);
 			sale = new Sale(Integer.valueOf(txtpatternID.getText()), txtDiscuntType.getText(), txtStartDay.getText(),
 					txtEndDay.getText(), txtStartHour.getText(), txtEndHour.getText(),
@@ -132,6 +152,14 @@ public class SalesManagerCreateSaleController {
 
 	}
 
+	/**
+	 * Handles the selection of a sale pattern in the sale pattern ComboBox.
+	 *
+	 * When a sale pattern is selected, the details of the pattern are displayed in
+	 * the corresponding labels.
+	 * 
+	 * @param event the event that triggers the selection of a sale pattern
+	 */
 	@FXML
 	void chooseSalePatternComboBox(ActionEvent event) {
 		String id = cmbSale.getValue().toString();
@@ -149,12 +177,22 @@ public class SalesManagerCreateSaleController {
 
 	}
 
+	/**
+	 * Handles the button click for navigating back to the main screen.
+	 *
+	 * @param event the event that triggers the button click
+	 */
 	@FXML
 	void clickOnBack(ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/SalesManagerMainScreen.fxml");
 	}
 
+	/**
+	 * Handles the button click for exiting the application or logging out.
+	 *
+	 * @param event the event that triggers the button click
+	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
 		newScreen.exitOrLogOut(event, false);

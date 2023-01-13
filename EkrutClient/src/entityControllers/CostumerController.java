@@ -5,7 +5,11 @@ import entities.Order;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+/**
 
+@author Ron Lahiani and Peleg Oanuno
+The class CostumerController is responsible for handling the costumers data.
+*/
 public class CostumerController {
 	private ObservableList<Costumer> areaCostumers = FXCollections.observableArrayList();
 	private SupplyMethod suplyMethod;
