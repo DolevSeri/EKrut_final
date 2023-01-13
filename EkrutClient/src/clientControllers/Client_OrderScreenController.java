@@ -81,6 +81,8 @@ public class Client_OrderScreenController {
 	 * @throws IOException
 	 */
 	public void initialize() throws IOException {
+		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
+		logoImage.setImage(image);
 
 		String msg = "";
 		selectedProducts = ChatClient.cartController.getCart();
@@ -129,8 +131,7 @@ public class Client_OrderScreenController {
 				}
 			}
 		}
-		Image image = new Image("/images/IconOnly_Transparent_NoBuffer.png");
-		logoImage.setImage(image);
+
 
 	}
 
