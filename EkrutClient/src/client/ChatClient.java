@@ -48,13 +48,7 @@ import javafx.stage.Stage;
 import ocsf.client.AbstractClient;
 
 /**
- * This class overrides some of the methods defined in the abstract superclass
- * in order to give more functionality to the client.
- *
- * @author Dr Timothy C. Lethbridge
- * @author Dr Robert Lagani&egrave;
- * @author Fran&ccedil;ois B&eacute;langer
- * @version July 2000
+ChatClient is a class that extends the AbstractClient class from the Open Client-Server Framework (OCSF)
  */
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
@@ -94,7 +88,8 @@ public class ChatClient extends AbstractClient {
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
 	 */
-
+      
+	
 	public ChatClient(String ip, int port, ChatIF clientUI) throws IOException {
 		super(ip, port); // Call the superclass constructor
 		this.clientUI = clientUI;
@@ -102,6 +97,8 @@ public class ChatClient extends AbstractClient {
 	}
 
 	// Instance methods ************************************************
+
+
 
 	/**
 	 * This method handles all data that comes in from the server.
