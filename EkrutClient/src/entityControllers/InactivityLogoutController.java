@@ -14,8 +14,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * 
+ * InactivityLogoutController is a class that implements the runnable interface,
+ * it is responsible for controlling the user's inactivity. If the user is
+ * inactive for 15 minutes, the program will automatically log out the user and
+ * return to the login screen.
+ * 
+ * @author Ron
+ */
 public class InactivityLogoutController implements Runnable {
-	public static int countMinitues = 0;
 	SetSceneController newScreen = new SetSceneController();
 
 	public InactivityLogoutController() {

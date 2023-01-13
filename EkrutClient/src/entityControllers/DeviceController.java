@@ -5,10 +5,17 @@ import entities.Device;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * 
+ * DeviceController class is responsible for holding and managing the
+ * areaDevices and areaDevicesNames ObservableList.
+ * 
+ * @author Peleg
+ */
 public class DeviceController {
 	private ObservableList<Device> areaDevices = FXCollections.observableArrayList();
 	private ObservableList<String> areaDevicesNames = FXCollections.observableArrayList();
-	
+
 	public ObservableList<Device> getAreaDevices() {
 		return areaDevices;
 	}
