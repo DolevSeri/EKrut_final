@@ -35,7 +35,7 @@ public class DeliveryOperation_MainViewController {
 	 *
 	 */
     public void initialize() {
-		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		Image imagelogo = new Image("/images/FullLogo_Transparent_NoBuffer.png");
 		logo.setImage(imagelogo);
 		
     	lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
@@ -49,6 +49,7 @@ public class DeliveryOperation_MainViewController {
 	 */
     @FXML
     void clickBtnDelivery(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
     	scene.setScreen(new Stage(), "/clientGUI/DeliveryOperator_ManageDeliveries.fxml");
     }
     

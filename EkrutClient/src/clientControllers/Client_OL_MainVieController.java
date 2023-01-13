@@ -61,20 +61,25 @@ public class Client_OL_MainVieController {
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
 		imageLogo.setImage(image);
 	}
-	/**
 
-	Handles the user clicking on the delivery confirmation button
-	@param event the ActionEvent that triggered the method call
-	*/
+	/**
+	 * 
+	 * Handles the user clicking on the delivery confirmation button
+	 * 
+	 * @param event the ActionEvent that triggered the method call
+	 */
 	@FXML
 	void clickOnDeliveryConfirmation(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_ApproveGettingDelivery.fxml");
 	}
-	/**
 
-	Handles the user clicking on the delivery order button
-	@param event the ActionEvent that triggered the method call
-	*/
+	/**
+	 * 
+	 * Handles the user clicking on the delivery order button
+	 * 
+	 * @param event the ActionEvent that triggered the method call
+	 */
 
 	@FXML
 	void clickOnDeliveryOrder(ActionEvent event) {
@@ -86,11 +91,13 @@ public class Client_OL_MainVieController {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/Client_OrderScreen.fxml");
 	}
-	/**
 
-	Handles the user clicking on the pickup order button
-	@param event the ActionEvent that triggered the method call
-	*/
+	/**
+	 * 
+	 * Handles the user clicking on the pickup order button
+	 * 
+	 * @param event the ActionEvent that triggered the method call
+	 */
 	@FXML
 	void clickOnPickUpOrder(ActionEvent event) {
 		Thread t = new Thread(new InactivityLogoutController());
@@ -100,19 +107,23 @@ public class Client_OL_MainVieController {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.setScreen(new Stage(), "/clientGUI/ChooseDevice_PickUp.fxml");
 	}
-/**
- * exit the client
- * @param event
- * @throws Exception
- */
+
+	/**
+	 * exit the client
+	 * 
+	 * @param event
+	 * @throws Exception
+	 */
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
 		newScreen.exitOrLogOut(event, false);
 	}
-/**
- * Handle click on logout , client logout and move to login screen
- * @param event
- */
+
+	/**
+	 * Handle click on logout , client logout and move to login screen
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void clickOnLogout(ActionEvent event) {
 		newScreen.exitOrLogOut(event, true);
