@@ -56,6 +56,5 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Label layoutX="68.0" layoutY="20.0" text="Area Manager Screen" />
    </children>
 </AnchorPane>
