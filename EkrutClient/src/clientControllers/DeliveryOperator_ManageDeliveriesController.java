@@ -17,6 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * The class DeliveryOperator_ManageDeliveriesController is responsible for
@@ -57,6 +59,9 @@ public class DeliveryOperator_ManageDeliveriesController {
 
 	@FXML
 	private TableColumn<Delivery, String> deliveryAddress;
+	
+	@FXML
+	private ImageView logo;
 
 	private SetSceneController scene = new SetSceneController();
 
@@ -70,6 +75,8 @@ public class DeliveryOperator_ManageDeliveriesController {
 	 */
 	@FXML
 	public void initialize() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		tblStatus.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		tblToApprove.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		setColumns();

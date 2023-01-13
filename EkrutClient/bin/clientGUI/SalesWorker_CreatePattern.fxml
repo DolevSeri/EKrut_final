@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.SalesWorkerCreatePatternController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="795.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.SalesWorkerCreatePatternController">
    <children>
       <Pane layoutX="485.0" prefHeight="482.0" prefWidth="310.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -73,7 +73,7 @@
       </Label>
       <ComboBox fx:id="cmbStartDay" layoutX="213.0" layoutY="180.0" onAction="#clickOnStartDay" prefHeight="38.0" prefWidth="174.0" promptText="Start day" />
       <ComboBox fx:id="cmbEndDay" layoutX="213.0" layoutY="237.0" onAction="#clickOnEndDay" prefHeight="38.0" prefWidth="174.0" promptText="End day" />
-      <Label fx:id="lblError" alignment="CENTER" layoutX="14.0" layoutY="398.0" prefHeight="19.0" prefWidth="430.0" text="Some fields is missing! please choose all fields for do this action(:" textFill="#dc1313">
+      <Label fx:id="lblError" alignment="CENTER" layoutX="14.0" layoutY="398.0" prefHeight="19.0" prefWidth="430.0" text="Some fields is missing! please choose all fields for do this action" textFill="#dc1313">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

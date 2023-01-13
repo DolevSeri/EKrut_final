@@ -15,11 +15,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_DeliveryConfirmationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="604.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_DeliveryConfirmationController">
    <children>
       <Pane layoutX="614.0" prefHeight="604.0" prefWidth="290.0" style="-fx-background-color: #D0A9F5;">
          <children>
-            <Label layoutX="149.0" layoutY="14.0" text="OL_Configuration" />
             <ImageView fx:id="imageDelivery" fitHeight="282.0" fitWidth="251.0" layoutX="16.0" layoutY="90.0" />
          </children>
       </Pane>
@@ -131,7 +130,7 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnSubscriber" layoutX="452.0" layoutY="554.0" mnemonicParsing="false" onAction="#clickOnDeferredPayment" prefHeight="46.0" prefWidth="183.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Deferred payment" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnSubscriber" layoutX="452.0" layoutY="554.0" mnemonicParsing="false" onAction="#clickOnDeferredPayment" prefHeight="46.0" prefWidth="158.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Deferred payment" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

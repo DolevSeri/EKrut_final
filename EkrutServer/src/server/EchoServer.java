@@ -25,10 +25,12 @@ import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
 
 /**
-* EchoServer is a class that extends the AbstractServer class from the Open Client-Server Framework (OCSF)
- * and implements the Singleton pattern to ensure that only one instance of the EchoServer is created. 
- * It is also thread-safe to create the instance in multi-thread environment.
- *@author peleg
+ * EchoServer is a class that extends the AbstractServer class from the Open
+ * Client-Server Framework (OCSF) and implements the Singleton pattern to ensure
+ * that only one instance of the EchoServer is created. It is also thread-safe
+ * to create the instance in multi-thread environment.
+ * 
+ * @author peleg
  */
 
 public class EchoServer extends AbstractServer {
@@ -48,41 +50,42 @@ public class EchoServer extends AbstractServer {
 	 * 
 	 */
 	private static ObservableList<ClientConnected> clientList = FXCollections.observableArrayList();
-	//instance-will help us to do singleton implementation for the EchoServer
+	// instance-will help us to do singleton implementation for the EchoServer
 	private static EchoServer instance = null;
-	//an object that will help us to synchronized in case there are some threads
-    private static final Object lock = new Object();
-    /**
-     * Creates a new EchoServer object with the specified port.
-     *
-     * @param port the server port
-     */
-    protected EchoServer(int port) {
-    	 super(port);
-    }
+	// an object that will help us to synchronized in case there are some threads
+	private static final Object lock = new Object();
+
+	/**
+	 * Creates a new EchoServer object with the specified port.
+	 *
+	 * @param port the server port
+	 */
+	protected EchoServer(int port) {
+		super(port);
+	}
+
 	public ObservableList<ClientConnected> getClientList() {
 
 		return clientList;
 	}
 
-
-    /**
-     * Returns the singleton instance of the EchoServer class. If an instance does not exist,
-     * it creates a new one.
-     *
-     * @param port the server port
-     * @return the singleton instance of the EchoServer class
-     */
-    public static EchoServer getInstance(int port) {
-        if (instance == null) {
-            synchronized (lock) {
-                if (instance == null) {
-                    instance = new EchoServer(port);
-                }
-            }
-        }
-        return instance;
-    }
+	/**
+	 * Returns the singleton instance of the EchoServer class. If an instance does
+	 * not exist, it creates a new one.
+	 *
+	 * @param port the server port
+	 * @return the singleton instance of the EchoServer class
+	 */
+	public static EchoServer getInstance(int port) {
+		if (instance == null) {
+			synchronized (lock) {
+				if (instance == null) {
+					instance = new EchoServer(port);
+				}
+			}
+		}
+		return instance;
+	}
 
 	// Instance methods ************************************************
 
@@ -225,8 +228,8 @@ public class EchoServer extends AbstractServer {
 		case Get_Products_under_thres:
 			String device = (String) messageFromClient.getObject();
 			try {
-				client.sendToClient(
-						new Message(Request.Products_Imported, MySqlController.getProductsUnderThresholdFromDevice(device)));
+				client.sendToClient(new Message(Request.Products_Imported,
+						MySqlController.getProductsUnderThresholdFromDevice(device)));
 			} catch (IOException e) {
 				System.out.println("Could not send message to client.");
 			}
@@ -261,8 +264,7 @@ public class EchoServer extends AbstractServer {
 			MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.Inventory_Call_Created,
-						MySqlController.createInventoryCall((ArrayList<String>) 
-								messageFromClient.getObject())));
+						MySqlController.createInventoryCall((ArrayList<String>) messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -275,6 +277,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case SaveOrder:
 			Order order = (Order) messageFromClient.getObject();
 			MySqlController.updateOrder(order);
@@ -314,7 +317,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
-
+			break;
 		case Update_SalesPattern:
 			SalesPattern sp = (SalesPattern) messageFromClient.getObject();
 			MySqlController.salesPatternToDB(sp);
@@ -360,7 +363,24 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 			}
 			break;
-
+		case Update_Customer_Request:
+			MySqlController.updateCostumerToMember((String)messageFromClient.getObject());
+			try {
+				client.sendToClient(new Message(Request.Customer_Updated, null));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Get_Customer_Data:
+			try {
+				client.sendToClient(new Message(Request.Customer_Data_Imported, 
+						MySqlController.importCustomerDataToUpdate((String)messageFromClient.getObject())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
 		case Get_User_Data:
 			User user1 = MySqlController.importUserData((ArrayList<String>) messageFromClient.getObject());
 			try {
@@ -369,6 +389,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Save_TakeAway:
 			Order pickUpOrder = (Order) messageFromClient.getObject();
 			MySqlController.savePickUpOrderInDB(pickUpOrder.getOrderID());
@@ -438,6 +459,7 @@ public class EchoServer extends AbstractServer {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
 			}
+			break;
 		case Update_SaleStatusdone:
 			Sale saleToUpdatedone = (Sale) messageFromClient.getObject();
 			MySqlController.updateSaleStatusdoneInDB(saleToUpdatedone);
@@ -508,7 +530,7 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case UpdateProductQuantityAndCloseCall:
-			ArrayList<String> data = (ArrayList<String>)messageFromClient.getObject();
+			ArrayList<String> data = (ArrayList<String>) messageFromClient.getObject();
 			MySqlController.UpdateProductQuantityAndCloseCall(data);
 			try {
 				client.sendToClient(new Message(Request.Product_quantity_updated_succesfully_call_closed, null));

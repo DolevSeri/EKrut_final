@@ -106,11 +106,13 @@ public class ProductController {
 			}
 		}
 		if (sales.size() > 0) {
+		
+		if(checkSale() == true) {
 			Image image = new Image("/images/sale.png");
 			imageSale.setImage(image);
 			imageSale.setVisible(true);
 		}
-
+}
 		lblPrice.setText(String.valueOf(this.product.getPrice()));
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);

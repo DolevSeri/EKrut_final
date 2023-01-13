@@ -10,6 +10,8 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ClientReportController {
 
@@ -27,6 +29,9 @@ public class ClientReportController {
 
 	@FXML
 	private BarChart<String, Number> chrtCustomers;
+	
+	@FXML
+	private ImageView logo;
 
 	SetSceneController scene = new SetSceneController();
 
@@ -34,6 +39,8 @@ public class ClientReportController {
 	 * @author Eden Bar
 	 */
 	public void initialize() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 		CostumersReport costumersReport = ChatClient.costumersReportController.getCostumersReport();
 		Integer lowActivity = costumersReport.getLowActivity(), medActivity = costumersReport.getMediumActivity(),
 				highActivity = costumersReport.getHighActivity(),
