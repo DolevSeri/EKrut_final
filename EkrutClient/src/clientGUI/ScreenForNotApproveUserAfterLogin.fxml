@@ -39,7 +39,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextArea layoutX="21.0" layoutY="144.0" prefHeight="200.0" prefWidth="474.0" text="Hi, unfortunately you are not approved &#10;yet,&#10; we apologize for the wait time&#10; and hope you will be approved soon!">
+      <TextArea layoutX="21.0" layoutY="144.0" prefHeight="131.0" prefWidth="474.0" text="Hi, unfortunately you are not approved  yet,&#10;we apologize for the waiting time.&#10;&#10;Hope you will be approved soon!">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

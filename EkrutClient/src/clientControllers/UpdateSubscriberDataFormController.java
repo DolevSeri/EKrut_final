@@ -47,8 +47,6 @@ public class UpdateSubscriberDataFormController {
 	private Button btnupdate=null;
 		
 	
-		
-	
 	ObservableList<String> list;
 		
 	public void loadSubscriberUpdate(Subscriber s1) {
