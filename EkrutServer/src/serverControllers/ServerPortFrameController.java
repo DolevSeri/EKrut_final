@@ -97,6 +97,7 @@ public class ServerPortFrameController {
 	 */
 	@FXML
 	public void clickBtnConnect(ActionEvent event) throws Exception {
+		
 	    endOfMonthChecker.start();
 		String ekrutPort, dbName, dbUserName, dbPwd;
 		ekrutPort = txtPort.getText();
@@ -135,6 +136,7 @@ public class ServerPortFrameController {
 	 */
 	@FXML
 	public void clickbtnDisconnect(ActionEvent event) {
+		
 		ServerUI.stopServer();
 		btnDisconnect.setDisable(true);
 		btnConnect.setDisable(false);

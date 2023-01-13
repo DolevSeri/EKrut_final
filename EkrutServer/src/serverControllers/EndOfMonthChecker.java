@@ -33,8 +33,8 @@ public class EndOfMonthChecker {
 		Calendar now = Calendar.getInstance();
 		int currentMonth = now.get(Calendar.MONTH) + 1; // add 1 because Calendar.MONTH starts at 0
 		int currentYear = now.get(Calendar.YEAR);
+		System.out.println("Creating monthly reports");
 		for (Region region : Region.values()) {
-			System.out.println("Creating monthly reports");
 			MySqlController.createMonthlyCostumersReport(new ArrayList<String>(
 					Arrays.asList(Integer.toString(currentMonth), 
 							Integer.toString(currentYear), region.toString())));

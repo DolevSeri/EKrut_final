@@ -199,8 +199,6 @@ public class ChatClient extends AbstractClient {
 			inventoryCallController
 					.setAreaCalls(FXCollections.observableArrayList((ArrayList<InventoryCall>) message.getObject()));
 			break;
-		case System_msg_updated:
-			break;
 		case User_Data_Imported:
 			userController.setUserToUpdate((User) message.getObject());
 			break;

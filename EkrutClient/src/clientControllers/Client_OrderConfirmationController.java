@@ -277,10 +277,6 @@ public class Client_OrderConfirmationController {
 		// SystemMessage msg;
 		for (ProductInDevice product : products) {
 			if (product.getQuantity() <= tresholdLevel) {
-//				msg = new SystemMessage(0, "am" + ChatClient.costumerController.getCostumer().getRegion().toString(),
-//						"In " + deviceName + "'s device, product: " + product.getProductName() + " is under threshold!",
-//						MessageStatus.UnRead);
-//				ClientUI.chat.accept(new Message(Request.Send_msg_to_system, msg));
 				ClientUI.chat.accept(new Message(Request.Get_Area_manager_UserName,
 						ChatClient.costumerController.getCostumer().getRegion().toString()));
 
