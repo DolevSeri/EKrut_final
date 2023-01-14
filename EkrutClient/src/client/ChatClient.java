@@ -258,6 +258,10 @@ public class ChatClient extends AbstractClient {
 		case Customer_Username_Imported:
 			costumerController.setGetNameByOrderID((Costumer)message.getObject());
 			break;
+		case Arrived_Deliveries_Imported:
+			ArrayList<Delivery> arrivedDeliveries = (ArrayList<Delivery>) message.getObject();
+			deliveryController.addDeliveriesToAreaDeliv((FXCollections.observableArrayList(arrivedDeliveries)));
+			break;
 		default:
 			break;
 		}

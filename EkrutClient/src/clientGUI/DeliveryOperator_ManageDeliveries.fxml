@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.DeliveryOperator_ManageDeliveriesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.DeliveryOperator_ManageDeliveriesController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -20,7 +20,7 @@
                   <Font name="Cooper Black" size="31.0" />
                </font>
             </Label>
-            <TableView fx:id="tblStatus" layoutX="42.0" layoutY="118.0" prefHeight="458.0" prefWidth="328.0">
+            <TableView fx:id="tblStatus" layoutX="42.0" layoutY="118.0" prefHeight="431.0" prefWidth="328.0">
               <columns>
                 <TableColumn fx:id="orderNum" prefWidth="75.0" text="Order Num" />
                 <TableColumn fx:id="status" prefWidth="75.0" text="Status" />
@@ -29,6 +29,14 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <Button fx:id="btnCloseDelivery" layoutX="126.0" layoutY="561.0" mnemonicParsing="false" onAction="#clickbtnCloseDelivery" prefHeight="40.0" prefWidth="167.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Close Delivery" textFill="#8d48e1" underline="true">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <effect>
+                  <Blend mode="BLUE" />
+               </effect>
+            </Button>
          </children>
       </Pane>
       <Button fx:id="btnexit" layoutX="13.0" layoutY="12.0" mnemonicParsing="false" onAction="#clickBtnExit" style="-fx-background-color: RED; -fx-border-color: GREY;" text="X" textFill="WHITE">

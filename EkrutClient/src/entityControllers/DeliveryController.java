@@ -37,6 +37,11 @@ public class DeliveryController {
 	public ObservableList<Delivery> getAreaDeliveriesToApprove() {
 		return areaDeliveriesToApprove;
 	}
+	
+	public ObservableList<Delivery> addDeliveriesToAreaDeliv(ObservableList<Delivery> arrivedDeliveries){
+		 areaDeliveries.addAll(arrivedDeliveries);
+		 return areaDeliveries;
+	}
 
 	/**
 	 * Set the list of deliveries that are waiting for approval.
