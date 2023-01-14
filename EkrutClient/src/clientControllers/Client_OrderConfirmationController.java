@@ -107,7 +107,6 @@ public class Client_OrderConfirmationController {
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area,
 				ChatClient.costumerController.getCostumer().getRegion().toString()));
 		for (Device device : ChatClient.deviceController.getAreaDevices()) {
-			System.out.println(device.getDeviceName());
 			if (ChatClient.costumerController.getCostumer().getDevice().equals(device.getDeviceName())) {
 				deviceName = device.getDeviceName();
 				tresholdLevel = device.getThreshold();
@@ -202,7 +201,7 @@ public class Client_OrderConfirmationController {
 			newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 		}
 		ChatClient.salesForSubscriber.clear();
-		ChatClient.firstOrderSubscriber=false;
+		ChatClient.firstOrderSubscriber = false;
 	}
 
 	/**
@@ -283,9 +282,8 @@ public class Client_OrderConfirmationController {
 						ChatClient.costumerController.getCostumer().getRegion().toString()));
 
 				ArrayList<String> nameAndMessage = new ArrayList<>();
-				nameAndMessage.addAll(Arrays.asList(
-						ChatClient.userController.getAreaManagerUserNAme() , "In " + deviceName
-								+ "'s device, product: " + product.getProductName() + " is under threshold!"));
+				nameAndMessage.addAll(Arrays.asList(ChatClient.userController.getAreaManagerUserNAme(), "In "
+						+ deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
 				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
 
 			}

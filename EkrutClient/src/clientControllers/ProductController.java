@@ -58,7 +58,6 @@ public class ProductController {
 		Image image = new Image("/images/sale.png");
 		imageSale.setImage(image);
 		imageSale.setVisible(false);
-		
 
 	}
 
@@ -109,15 +108,14 @@ public class ProductController {
 				imageSale.setVisible(true);
 			}
 		}
-		
-		
-		if(ChatClient.salesForSubscriber.size()!=0||ChatClient.firstOrderSubscriber==true) {
+
+		if (ChatClient.salesForSubscriber.size() != 0 || ChatClient.firstOrderSubscriber == true) {
 			Image image = new Image("/images/sale.png");
 			imageSale.setImage(image);
 			imageSale.setVisible(true);
 		}
 
-		lblPrice.setText(String.format("%.2f",this.product.getPrice()));
+		lblPrice.setText(String.format("%.2f", this.product.getPrice()));
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);
 		this.client_OrderScreenController = client_OrderScreenController;
@@ -132,6 +130,7 @@ public class ProductController {
 		if (product.getQuantity() == 0) {
 			lblError.setText("Out of\n stock!");
 		} else {
+			client_OrderScreenController.changeEndOrder(false);
 			product.setQuantity(product.getQuantity() - 1); // update the quantity in device.
 			client_OrderScreenController.selectedProducts.put(product, ++quantityInOrder);
 			client_OrderScreenController.setCartGrid(product, this);
@@ -139,7 +138,7 @@ public class ProductController {
 	}
 
 	public void addToCartEdit() throws IOException {
-
+		client_OrderScreenController.changeEndOrder(false);
 		quantityInOrder++;
 		client_OrderScreenController.selectedProducts.put(product, quantityInOrder);
 		client_OrderScreenController.setCartGrid(product, this);
@@ -185,7 +184,7 @@ public class ProductController {
 		// if there is the first order of the subscriber there is more 20% discount
 		if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
 			flag = true;
-			ChatClient.firstOrderSubscriber=true;
+			ChatClient.firstOrderSubscriber = true;
 		}
 
 		// ClientUI.chat.accept(new Message(Request.import_Sales, null));
@@ -196,7 +195,7 @@ public class ProductController {
 					// if there are any sale in the area that valid adding to the sale list of this
 					// order
 					sales.add(sale);
-				   ChatClient.salesForSubscriber.add(sale);
+					ChatClient.salesForSubscriber.add(sale);
 				}
 			}
 		}
