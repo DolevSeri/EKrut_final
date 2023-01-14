@@ -482,6 +482,16 @@ public enum Request {
 			public String toString() {
 				return "Username imported by orderID";
 			}
+		},
+	Get_Arrived_Deliveries{
+			public String toString() {
+				return "Request to import arrived deliveries";
+			}
+		},
+	Arrived_Deliveries_Imported{
+			public String toString() {
+				return "Arrived deliveries imported";
+			}
 		}
 	}
 	

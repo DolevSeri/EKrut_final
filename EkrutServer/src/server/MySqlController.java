@@ -1624,9 +1624,8 @@ public class MySqlController {
 		 PreparedStatement ps;
 		 Costumer c = null;
 		 try {
-			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers"+
-					" WHERE username IN (SELECT username FROM ekrut.orders"+
-						"WHERE orderID IN (SELECT orderID FROM ekrut.delivery WHERE orderID = ?))");
+			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers WHERE username "
+			 		+ "IN(SELECT username FROM ekrut.orders WHERE orderID = ?)");
 			 try {
 				 ps.setInt(1, orderID);
 			 }catch(SQLException e) {

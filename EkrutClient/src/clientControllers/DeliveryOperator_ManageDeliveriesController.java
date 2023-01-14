@@ -41,6 +41,9 @@ public class DeliveryOperator_ManageDeliveriesController {
 	private Button btnApproveDelivery;
 
 	@FXML
+	private Button btnCloseDelivery;
+
+	@FXML
 	private TableView<Delivery> tblStatus;
 
 	@FXML
@@ -60,7 +63,7 @@ public class DeliveryOperator_ManageDeliveriesController {
 
 	@FXML
 	private TableColumn<Delivery, String> deliveryAddress;
-	
+
 	@FXML
 	private ImageView logo;
 
@@ -115,63 +118,132 @@ public class DeliveryOperator_ManageDeliveriesController {
 		tblStatus.getItems().clear();
 		data.add("APPROVED");
 		ClientUI.chat.accept(new Message(Request.Get_Deliveries_By_Area, data));
+		data.remove("APPROVED");
+		data.add("ARRIVED");
+		ClientUI.chat.accept(new Message(Request.Get_Arrived_Deliveries, data));
+
 		tblStatus.setItems(ChatClient.deliveryController.getAreaDeliveries());
 
 	}
 
 	/**
-	 * Approve the selected deliveries from the table view tblToApprove
-	 * @param event the event that triggered the method call
+	 * Method that handles the approve delivery action. Updates the status of
+	 * selected deliveries to "APPROVED" and sends a notification to the customer
+	 * with the estimated arrival time.
+	 * @param event - the ActionEvent that triggered the method
+	 * @FXML void clickbtnApproveDelivery(ActionEvent event)
 	 */
 	@FXML
 	void clickbtnApproveDelivery(ActionEvent event) {
 		ObservableList<Delivery> selectedDeliveriees = tblToApprove.getSelectionModel().getSelectedItems();
 		String[] arrival = null;
-		ArrayList<String> nameAndMessage = new ArrayList<>();
 		if (selectedDeliveriees.isEmpty()) {
 			scene.popUpMessage("ERROR: No deliveries selected to approve!");
 		} else {
 			ArrayList<Delivery> deliveryToApprove = new ArrayList<>(selectedDeliveriees);
 			for (Delivery delivery : deliveryToApprove) {
+				ArrayList<String> nameAndMessage = new ArrayList<>();
 				delivery.setStatus(DeliveryStatus.APPROVED);
 				arrival = estimatedArrival(LocalDateTime.now(), delivery.getCostumerAdress());
 				delivery.setArrivalDate(arrival[0]);
 				delivery.setArrivalHour(arrival[1]);
 				ClientUI.chat.accept(new Message(Request.Get_Customer_Username, delivery.getOrderID()));
-				
+
 				nameAndMessage.addAll(Arrays.asList(ChatClient.costumerController.getGetNameByOrderID().getUsername(),
-						"Your delivery has been approved!\nEsstimated arrival time is:" 
-								+ delivery.getArrivalDate() + " " + delivery.getArrivalHour()));
+						"Your delivery has been approved!\nEsstimated arrival time is:" + delivery.getArrivalDate()
+								+ " " + delivery.getArrivalHour()));
 				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
 			}
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Status, deliveryToApprove));
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Arrival, deliveryToApprove));
 			setTableItems();
-			scene.popUpMessage("Deliveries approved succesfully! ");
-			
+			scene.popUpMessage(
+					"Deliveries approved succesfully!\nSMS and Email with estimated arrival time sent to customer");
+
 		}
 	}
 
+	/**
+	 * Method that handles the close delivery action. Updates the status of selected
+	 * deliveries to "DONE" only if the delivery status is "ARRIVED".
+	 * @param event - the ActionEvent that triggered the method
+	 * @FXML void clickbtnCloseDelivery(ActionEvent event)
+	 */
+	@FXML
+	void clickbtnCloseDelivery(ActionEvent event) {
+		ObservableList<Delivery> selectedDeliveriees = tblStatus.getSelectionModel().getSelectedItems();
+		if (selectedDeliveriees.isEmpty()) {
+			scene.popUpMessage("ERROR: No deliveries selected to approve!");
+		} else {
+			ArrayList<Delivery> deliveryToApprove = new ArrayList<>(selectedDeliveriees);
+			for (Delivery delivery : deliveryToApprove) {
+				if (delivery.getStatus().toString().equals("APPROVED")) {
+					scene.popUpMessage(
+							"You can't close deliveries that not arrived to customer yet!\nPlease choose 'ARRIVED' deliveries only");
+					return;
+				}
+				delivery.setStatus(DeliveryStatus.DONE);
+			}
+			ClientUI.chat.accept(new Message(Request.Change_Delivery_Status, deliveryToApprove));
+			setTableItems();
+			scene.popUpMessage("Deliveries closed succesfully!");
+		}
+	}
+
+	/**
+	 * 
+	 * Method that calculates the flight time of a delivery. 
+	 * For now - return constant
+	 * @param wareHouse - the warehouse location
+	 * @param clientAddress - the customer delivery address
+	 * @return long - the flight time of the delivery long
+	 */
 	public long calculateFlightTime(String wareHouse, String clientAddress) {
 		return 3L;
 	}
 
+	/**
+	 * Method that calculates the waiting time for the drone
+	 * @return long - the drone waiting time long droneWaiting() 
+	 * For now - return constant
+	 */
 	public long droneWaiting() {
 		return 2L;
 	}
 
+	/**
+	 * 
+	 * Method that calculates the time required to load the shipment
+	 * 
+	 * @return long - the shipment load time long calculateShipmantLoad() 
+	 * For now - return constant
+	 */
 	public long calculateShipmantLoad() {
 		return 3L;
 	}
 
+	/**
+	 * 
+	 * Method that calculates the total delivery time from warehouse to customer
+	 * 
+	 * @param cAddress - the customer delivery address
+	 * @return long - the total delivery time long calTotalTotalTime(String cAddress)
+	 */
 	public long calTotalTotalTime(String cAddress) {
 		return calculateFlightTime(null, cAddress) + droneWaiting() + calculateShipmantLoad();
 	}
 
+	/**
+	 * Method that calculates the estimated arrival time for a delivery
+	 * @param date - the current date and time
+	 * @param cAddress - the customer delivery address
+	 * @return String[] - the estimated arrival date and hour in format "dd-MM-yyyy"
+	 * and "HH:mm:ss" respectively String[] estimatedArrival(LocalDateTimedate, String cAddress)
+	 */
 	public String[] estimatedArrival(LocalDateTime date, String cAddress) {
 		long totalDeliveryHours = calTotalTotalTime(cAddress);
 		LocalDateTime estDate = date.plusHours(totalDeliveryHours);
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 		String[] arrivalDate = new String[2];
@@ -183,6 +255,7 @@ public class DeliveryOperator_ManageDeliveriesController {
 
 	/**
 	 * Go back to the previous scene
+	 * 
 	 * @param event the event that triggered the method call
 	 */
 	@FXML

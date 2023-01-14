@@ -1,7 +1,9 @@
 package clientControllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import client.ChatClient;
 import client.ClientUI;
 import entities.InventoryCall;
 import entities.Message;
@@ -98,7 +100,16 @@ public class InventoryOperationWorker_UpdateProductQuantityController {
 		fields.add(3, Integer.toString(callID));
 
 		ClientUI.chat.accept(new Message(Request.UpdateProductQuantityAndCloseCall, fields));
-		scene.popUpMessage("The product quantity was update succesfully!\nThe call marked as closed. ");
+		scene.popUpMessage("The product quantity was update succesfully!\nSMS and Email sent to area manager and the call marked as closed.");
+		
+		
+	ClientUI.chat.accept(new Message(Request.Get_Area_manager_UserName,
+				ChatClient.userController.getUser().getRegion().toString()));
+		ArrayList<String> nameAndMessage = new ArrayList<>();
+		nameAndMessage.addAll(Arrays.asList(ChatClient.userController.getAreaManagerUserNAme(), "In "
+				+ deviceName + "'s device, product: " + productName + " has been filled!"));
+		ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
+
 		scene.back(event, "/clientGUI/InventoryOperationWorker_CallsListView.fxml");
 
 	}
