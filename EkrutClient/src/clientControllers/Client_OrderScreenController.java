@@ -112,7 +112,7 @@ public class Client_OrderScreenController {
 			if (ChatClient.costumerController.getOrdersofcostumer().size() == 0
 					&& ChatClient.costumerController.getCostumer().getSubscriberID() != -1) {
 
-				msg += "\n for your first order you get more: 20% discount!!(:";
+				msg += "\n for your first order you get more: 20% discount!\n\nNOTICE: *The prices that are shown are after discount*";
 				flaghasSale = true;
 
 			}
