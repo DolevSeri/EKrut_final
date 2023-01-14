@@ -4,15 +4,23 @@ import java.io.Serializable;
 
 import enums.CallStatus;
 
-public class InventoryCall implements Serializable{
-	
+/**
+ * 
+ * @author Eden Bar
+ * 
+ *         The InventoryCall class represents a Inventory Calls in the system.
+ *         It implements the Serializable interface.
+ * 
+ */
+public class InventoryCall implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	private String deviceName, productName;
 	private int callID;
 	CallStatus status;
-	
-	public InventoryCall(int callID, CallStatus status,  String deviceName, String productName) {
+
+	public InventoryCall(int callID, CallStatus status, String deviceName, String productName) {
 		this.deviceName = deviceName;
 		this.productName = productName;
 		this.callID = callID;
@@ -50,6 +58,5 @@ public class InventoryCall implements Serializable{
 	public void setCallID(int callID) {
 		this.callID = callID;
 	}
-	
-	
+
 }

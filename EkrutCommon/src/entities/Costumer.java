@@ -8,7 +8,9 @@ import enums.Role;
 
 /**
  * 
- * @author ron and peleg Class that will save costumer data
+ * @author Ron Lahiani
+ * @author Peleg Oanuno The Costumer class represents a customer in the system.
+ *         It extends the User class and implements the Serializable interface.
  */
 public class Costumer extends User implements Serializable {
 

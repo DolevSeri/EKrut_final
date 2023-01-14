@@ -2,6 +2,13 @@ package entities;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * Product class that implements Serializable. this class will contain product
+ * details.
+ * 
+ * @author Ron Lahiani
+ */
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -5,11 +5,18 @@ import java.io.Serializable;
 import enums.DeliveryStatus;
 import enums.Region;
 
+/**
+ * 
+ * @author Ron Lahiani
+ * 
+ * @author Peleg Oanuno
+ * 
+ *         The Delivery class represents a delivery in the system. It implements
+ *         the Serializable interface.
+ * 
+ */
 public class Delivery implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String costumerAdress;
 	private DeliveryStatus status;

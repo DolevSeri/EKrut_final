@@ -4,7 +4,13 @@ import java.io.Serializable;
 
 import enums.SupplyMethod;
 
-public class Order implements Serializable{
+/**
+ * Order class that implements Serializable. this class hold the order when
+ * client is making order, and use for import orders from DB
+ * 
+ * @author Peleg Oanuno
+ */
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String deviceName;
 	private int orderID;
@@ -15,11 +21,9 @@ public class Order implements Serializable{
 	private String year;
 	private SupplyMethod supplyMethod;
 	private String orderProducts;
-	
 
-	
-	public Order(String deviceName, int orderID, float orderPrice, String username,
-			String day, String month, String year, SupplyMethod supplyMethod, String orderProducts) {
+	public Order(String deviceName, int orderID, float orderPrice, String username, String day, String month,
+			String year, SupplyMethod supplyMethod, String orderProducts) {
 		this.deviceName = deviceName;
 		this.orderID = orderID;
 		this.orderPrice = orderPrice;
@@ -30,47 +34,38 @@ public class Order implements Serializable{
 		this.supplyMethod = supplyMethod;
 		this.orderProducts = orderProducts;
 	}
-	
 
 	public String getDay() {
 		return day;
 	}
 
-
 	public void setDay(String day) {
 		this.day = day;
 	}
-
 
 	public String getMonth() {
 		return month;
 	}
 
-
 	public void setMonth(String month) {
 		this.month = month;
 	}
-
 
 	public String getYear() {
 		return year;
 	}
 
-
 	public void setYear(String year) {
 		this.year = year;
 	}
-
 
 	public String getOrderProducts() {
 		return orderProducts;
 	}
 
-
 	public void setOrderProducts(String orderProducts) {
 		this.orderProducts = orderProducts;
 	}
-
 
 	public String getDeviceName() {
 		return deviceName;
@@ -104,7 +99,6 @@ public class Order implements Serializable{
 		this.username = username;
 	}
 
-
 	public SupplyMethod getSupplyMethod() {
 		return supplyMethod;
 	}
@@ -112,9 +106,5 @@ public class Order implements Serializable{
 	public void setSupplyMethod(SupplyMethod supplyMethod) {
 		this.supplyMethod = supplyMethod;
 	}
-	
-	
-	
-	
 
 }

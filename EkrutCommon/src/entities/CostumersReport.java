@@ -4,12 +4,24 @@ import java.io.Serializable;
 
 import enums.Region;
 
+/**
+ * 
+ * @author Dolev Seri
+ * 
+ * @author Inbar Mizrahi
+ * 
+ *         The CostumersReport class represents a report of customer activity,
+ *         grouped by level of activity and by region.
+ * 
+ *         It implements the Serializable interface.
+ * 
+ */
 public class CostumersReport implements Serializable {
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
 	private int lowActivity, mediumActivity, highActivity, veryHighActivity;
 	private String month, year;
 	private Region area;
-	
+
 	public CostumersReport(int lowActivity, int mediumActivity, int highActivity, int veryHighActivity, String month,
 			String year, Region area) {
 		super();
