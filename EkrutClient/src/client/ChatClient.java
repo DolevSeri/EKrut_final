@@ -48,7 +48,8 @@ import javafx.stage.Stage;
 import ocsf.client.AbstractClient;
 
 /**
-ChatClient is a class that extends the AbstractClient class from the Open Client-Server Framework (OCSF)
+ * ChatClient is a class that extends the AbstractClient class from the Open
+ * Client-Server Framework (OCSF)
  */
 public class ChatClient extends AbstractClient {
 	// Instance variables **********************************************
@@ -79,8 +80,8 @@ public class ChatClient extends AbstractClient {
 	public static String configuration;
 	public static Thread checkWindowTimeThread;
 	public static Stage primaryStage = null;
-	public static ArrayList<Sale> salesForSubscriber=new ArrayList<>();
-	public static boolean firstOrderSubscriber=false;
+	public static ArrayList<Sale> salesForSubscriber = new ArrayList<>();
+	public static boolean firstOrderSubscriber = false;
 // Constructors ****************************************************
 
 	/**
@@ -90,8 +91,7 @@ public class ChatClient extends AbstractClient {
 	 * @param port     The port number to connect on.
 	 * @param clientUI The interface type variable.
 	 */
-      
-	
+
 	public ChatClient(String ip, int port, ChatIF clientUI) throws IOException {
 		super(ip, port); // Call the superclass constructor
 		this.clientUI = clientUI;
@@ -99,8 +99,6 @@ public class ChatClient extends AbstractClient {
 	}
 
 	// Instance methods ************************************************
-
-
 
 	/**
 	 * This method handles all data that comes in from the server.
@@ -251,12 +249,14 @@ public class ChatClient extends AbstractClient {
 			deliveryController.setUserDelivery((FXCollections.observableArrayList(customerDeli)));
 			break;
 		case Area_manager_UserName_Imported:
-			userController.setAreaManagerUserNAme((String)message.getObject());
+			userController.setAreaManagerUserNAme((String) message.getObject());
 			break;
 		case Delivery_Arrival_Changed:
 			break;
 		case Customer_Username_Imported:
-			costumerController.setGetNameByOrderID((Costumer)message.getObject());
+			costumerController.setGetNameByOrderID((Costumer) message.getObject());
+			break;
+		case ThresholdTable_Updated:
 			break;
 		case Arrived_Deliveries_Imported:
 			ArrayList<Delivery> arrivedDeliveries = (ArrayList<Delivery>) message.getObject();
@@ -272,20 +272,19 @@ public class ChatClient extends AbstractClient {
 	}
 
 	private void showMsg(String txt) {
-	    Platform.runLater(() -> {
-	        Alert alert = new Alert(AlertType.INFORMATION);
-	        alert.setTitle(null);
-	        alert.setHeaderText(null);
-	        alert.setContentText(txt);
+		Platform.runLater(() -> {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle(null);
+			alert.setHeaderText(null);
+			alert.setContentText(txt);
 
-	        // Set the alert dialog style
-	        DialogPane dialogPane = alert.getDialogPane();
-	        dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
+			// Set the alert dialog style
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.setStyle("-fx-background-color:  #D0A9F5;");
 
-	        alert.showAndWait();
-	    });
+			alert.showAndWait();
+		});
 	}
-
 
 	/**
 	 * This method handles all data coming from the UI
@@ -310,7 +309,6 @@ public class ChatClient extends AbstractClient {
 					}
 				}
 			}
-			
 
 		} catch (IOException e) {
 			e.printStackTrace();

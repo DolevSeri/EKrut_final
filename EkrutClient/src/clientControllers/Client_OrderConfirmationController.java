@@ -2,12 +2,14 @@ package clientControllers;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import client.ChatClient;
 import client.ClientUI;
 import entities.Device;
@@ -282,12 +284,14 @@ public class Client_OrderConfirmationController {
 						ChatClient.costumerController.getCostumer().getRegion().toString()));
 
 				ArrayList<String> nameAndMessage = new ArrayList<>();
+
 				nameAndMessage.addAll(Arrays.asList(ChatClient.userController.getAreaManagerUserNAme(), "In "
 						+ deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
 				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
-
+				if (ChatClient.cartController.getCart().containsKey(product)) {
+					ClientUI.chat.accept(new Message(Request.Update_ThresholdTable, product));
+				}
 			}
-
 		}
 
 	}
