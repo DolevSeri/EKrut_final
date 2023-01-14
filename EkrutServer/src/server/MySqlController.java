@@ -1545,8 +1545,10 @@ public class MySqlController {
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {
-			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET status = 'AVAILABLE', quantity = ? "
-					+ "WHERE deviceName = ? AND productCode IN (SELECT productCode FROM products WHERE productName = ?)");
+			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET "
+					+ "status = 'AVAILABLE', quantity = ? "
+					+ "WHERE deviceName = ? AND productCode "
+					+ "IN (SELECT productCode FROM products WHERE productName = ?)");
 			try {
 				updatePs.setInt(1, Integer.valueOf(newQuantity));
 				updatePs.setString(2, deviceName);
@@ -1617,5 +1619,30 @@ public class MySqlController {
 	    }
 	    return areaManagerUsername;
 	}
-
+	
+	public static Costumer getCustomerByOrderID(int orderID) {
+		 PreparedStatement ps;
+		 Costumer c = null;
+		 try {
+			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers"+
+					" WHERE username IN (SELECT username FROM ekrut.orders"+
+						"WHERE orderID IN (SELECT orderID FROM ekrut.delivery WHERE orderID = ?))");
+			 try {
+				 ps.setInt(1, orderID);
+			 }catch(SQLException e) {
+				 e.printStackTrace();
+				 System.out.println("Set query failed on getCustomerByOrderID");
+			 }
+			 ResultSet rs = ps.executeQuery();
+			 while(rs.next()) {
+				 c = new Costumer(rs.getString("username"), rs.getString("creditCard"),
+						 rs.getInt("subscriberID"), CostumerStatus.valueOf(rs.getString("status")));
+			 }
+			 
+		 }catch(SQLException e) {
+			 e.printStackTrace();
+			 System.out.println("Exceute query failed on getCustomerByOrderID");
+		 }
+		 return c;
+	}
 }

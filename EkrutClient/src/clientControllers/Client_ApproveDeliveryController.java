@@ -116,7 +116,7 @@ public class Client_ApproveDeliveryController {
 							"You can't confirm deliveries that not approved yet!\nPlease choose 'APPROVED' deliveries only");
 					return;
 				}
-				delivery.setStatus(DeliveryStatus.DONE);
+				delivery.setStatus(DeliveryStatus.ARRIVED);
 			}
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Status, deliveryToApprove));
 			setTableItems();

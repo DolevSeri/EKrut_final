@@ -255,6 +255,9 @@ public class ChatClient extends AbstractClient {
 			break;
 		case Delivery_Arrival_Changed:
 			break;
+		case Customer_Username_Imported:
+			costumerController.setGetNameByOrderID((Costumer)message.getObject());
+			break;
 		default:
 			break;
 		}

@@ -3,6 +3,7 @@ package clientControllers;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import client.ChatClient;
 import client.ClientUI;
@@ -126,6 +127,7 @@ public class DeliveryOperator_ManageDeliveriesController {
 	void clickbtnApproveDelivery(ActionEvent event) {
 		ObservableList<Delivery> selectedDeliveriees = tblToApprove.getSelectionModel().getSelectedItems();
 		String[] arrival = null;
+		ArrayList<String> nameAndMessage = new ArrayList<>();
 		if (selectedDeliveriees.isEmpty()) {
 			scene.popUpMessage("ERROR: No deliveries selected to approve!");
 		} else {
@@ -135,11 +137,18 @@ public class DeliveryOperator_ManageDeliveriesController {
 				arrival = estimatedArrival(LocalDateTime.now(), delivery.getCostumerAdress());
 				delivery.setArrivalDate(arrival[0]);
 				delivery.setArrivalHour(arrival[1]);
+				ClientUI.chat.accept(new Message(Request.Get_Customer_Username, delivery.getOrderID()));
+				
+				nameAndMessage.addAll(Arrays.asList(ChatClient.costumerController.getGetNameByOrderID().getUsername(),
+						"Your delivery has been approved!\nEsstimated arrival time is:" 
+								+ delivery.getArrivalDate() + " " + delivery.getArrivalHour()));
+				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
 			}
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Status, deliveryToApprove));
 			ClientUI.chat.accept(new Message(Request.Change_Delivery_Arrival, deliveryToApprove));
 			setTableItems();
 			scene.popUpMessage("Deliveries approved succesfully! ");
+			
 		}
 	}
 

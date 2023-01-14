@@ -12,9 +12,14 @@ public enum DeliveryStatus {
 			return "NOTAPPROVED";
 		}
 	},
+	ARRIVED{
+		public String toString() {
+			return "ARRIVED";
+		}
+	},
 	DONE {
 		public String toString() {
 			return "DONE";
 		}
-	},
+	}
 }

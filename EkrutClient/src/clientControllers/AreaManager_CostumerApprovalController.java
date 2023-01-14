@@ -1,6 +1,7 @@
 package clientControllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import client.ChatClient;
 import client.ClientUI;
@@ -103,8 +104,22 @@ public class AreaManager_CostumerApprovalController {
 			}
 			ClientUI.chat.accept(new Message(Request.Costumer_Update_Status_Request, costumersToUpdate));
 			setTableItems();
-			scene.popUpMessage("Costumer approved succesfully! ");
+			scene.popUpMessage("Costumer approved succesfully!\nMessage sent to relevant customers");
+			
+			ArrayList<String> nameAndMessage = new ArrayList<>();
+			ArrayList<String> nameAndMessageMember = new ArrayList<>();
+			for(Costumer c : costumersToUpdate) {
+				if(c.getSubscriberID() == -1) {
+					nameAndMessage.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a customer at EKrut!"));
+					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
+				}
+				else {
+					nameAndMessageMember.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a member at EKrut!\n"
+							+ "You have 20% discount on your first purchase"));
+					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessageMember));
 
+				}
+			}
 		}
 	}
 
