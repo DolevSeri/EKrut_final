@@ -40,6 +40,13 @@ public class AreaManager_InventoryManagementController {
         
     SetSceneController scene = new SetSceneController();
     
+    
+	public void initialize() {
+    	Image image = new Image("/images/inventory_dilemma.jpg");
+		imgInventory.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		imgLogo.setImage(imagelogo);
+	}
     /**
      * Changes the scene to the previous view when the back button is clicked.
      * 
@@ -47,11 +54,8 @@ public class AreaManager_InventoryManagementController {
      */
     @FXML
     void clickBtnBack(ActionEvent event) {
-    	
-		Image image = new Image("/images/inventory_dilemma.jpg");
-		imgInventory.setImage(image);
-		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
-		imgLogo.setImage(imagelogo);
+
+		
     	scene.back(event, "/clientGUI/AreaManager_MainView.fxml");
     }
     
