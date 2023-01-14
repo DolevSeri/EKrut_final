@@ -5,10 +5,10 @@ import java.io.Serializable;
 import enums.Region;
 import enums.Role;
 
-
 /**
+ * Class that describe user object and contain it details.
  * 
- * @author peleg Class that describe user object
+ * @author Peleg Oanuno
  */
 public class User implements Serializable {
 
@@ -23,7 +23,6 @@ public class User implements Serializable {
 	private String id;
 	private Role role;
 	private Region region;
-	
 
 	public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
 			boolean isLoggedIn, String id, Role role, Region region) {
@@ -39,8 +38,8 @@ public class User implements Serializable {
 		this.role = role;
 		this.region = region;
 	}
-	public User(String username, String firstName, String lastName, String email, String phoneNumber,
-			String id) {
+
+	public User(String username, String firstName, String lastName, String email, String phoneNumber, String id) {
 		super();
 		this.username = username;
 		this.firstName = firstName;
@@ -49,9 +48,11 @@ public class User implements Serializable {
 		this.phoneNumber = phoneNumber;
 		this.id = id;
 	}
+
 	public User(String username) {
 		this.username = username;
 	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -67,8 +68,6 @@ public class User implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
-
-
 
 	public String getEmail() {
 		return email;
@@ -133,6 +132,5 @@ public class User implements Serializable {
 	public void setRegion(Region region) {
 		this.region = region;
 	}
-
 
 }

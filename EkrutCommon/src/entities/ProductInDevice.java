@@ -2,6 +2,13 @@ package entities;
 
 import enums.ProductStatus;
 
+/**
+ * 
+ * ProductInDevice class that implements Serializable. this class will contain
+ * product details in specific device.
+ * 
+ * @author Ron Lahiani
+ */
 public class ProductInDevice extends Product {
 	/**
 	 * 

@@ -2,74 +2,78 @@ package entities;
 
 import java.io.Serializable;
 
-public class SalesPattern implements Serializable{
-   /**
-	 * 
-	 */
+/**
+ * SalesPattren is class that contain details of potential sale that manager can
+ * create using this pattern. 
+ * implements Serializable.
+ * 
+ * @author Peleg Oanuno
+ */
+public class SalesPattern implements Serializable {
 	private static final long serialVersionUID = 1L;
-private int patternID=0;
-   private String discountType;
-   private String startDay;
-   private String endDay;
-   private String startHour;
-   private String endHour;
-   
-   public SalesPattern(int patternID,String discountType,String startDay,String endDay,String startHour,String endHour) {
-	   this.patternID=patternID;
-	   this.discountType=discountType;
-	   this.startDay=startDay;
-	   this.endDay=endDay;
-	   this.startHour=startHour;
-	   this.endHour=endHour;
-   }
+	private int patternID = 0;
+	private String discountType;
+	private String startDay;
+	private String endDay;
+	private String startHour;
+	private String endHour;
 
-public  int getPatternID() {
-	return patternID;
-}
+	public SalesPattern(int patternID, String discountType, String startDay, String endDay, String startHour,
+			String endHour) {
+		this.patternID = patternID;
+		this.discountType = discountType;
+		this.startDay = startDay;
+		this.endDay = endDay;
+		this.startHour = startHour;
+		this.endHour = endHour;
+	}
 
-public void setPatternID(int patternID) {
-	this.patternID= patternID;
-}
+	public int getPatternID() {
+		return patternID;
+	}
 
-public String getDiscountType() {
-	return discountType;
-}
+	public void setPatternID(int patternID) {
+		this.patternID = patternID;
+	}
 
-public void setDiscountType(String discountType) {
-	this.discountType = discountType;
-}
+	public String getDiscountType() {
+		return discountType;
+	}
 
-public String getStartDay() {
-	return startDay;
-}
+	public void setDiscountType(String discountType) {
+		this.discountType = discountType;
+	}
 
-public void setStartDay(String startDay) {
-	this.startDay = startDay;
-}
+	public String getStartDay() {
+		return startDay;
+	}
 
-public String getEndDay() {
-	return endDay;
-}
+	public void setStartDay(String startDay) {
+		this.startDay = startDay;
+	}
 
-public void setEndDay(String endDay) {
-	this.endDay = endDay;
-}
+	public String getEndDay() {
+		return endDay;
+	}
 
-public String getStartHour() {
-	return startHour;
-}
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
 
-public void setStartHour(String startHour) {
-	this.startHour = startHour;
-}
+	public String getStartHour() {
+		return startHour;
+	}
 
-public String getEndHour() {
-	return endHour;
-}
+	public void setStartHour(String startHour) {
+		this.startHour = startHour;
+	}
 
-public void setEndHour(String endHour) {
-	this.endHour = endHour;
-}
-   
-	
+	public String getEndHour() {
+		return endHour;
+	}
+
+	public void setEndHour(String endHour) {
+		this.endHour = endHour;
+	}
+
 }

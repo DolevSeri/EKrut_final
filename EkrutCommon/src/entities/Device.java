@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 import enums.Region;
 
+/**
+ * 
+ * @author Eden Bar
+ * 
+ *         The Device class represents a device in the system. It implements the
+ *         Serializable interface.
+ * 
+ */
 public class Device implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +49,5 @@ public class Device implements Serializable {
 	public void setRegion(Region region) {
 		this.region = region;
 	}
-
 
 }

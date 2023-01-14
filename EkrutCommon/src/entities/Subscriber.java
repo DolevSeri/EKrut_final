@@ -2,10 +2,16 @@ package entities;
 
 import java.io.Serializable;
 
-public class Subscriber implements Serializable{
-	private String ID, firstName, lastName , phoneNumber, emailAddress
-	, creditCardNumber, subscriberNumber; 
-		
+/**
+ * Subscriber is class that contain costumers that registered as subscribers and
+ * have their own details
+ * 
+ * @author Ron Lahiani
+ *
+ */
+public class Subscriber implements Serializable {
+	private String ID, firstName, lastName, phoneNumber, emailAddress, creditCardNumber, subscriberNumber;
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -62,17 +68,16 @@ public class Subscriber implements Serializable{
 		return ID;
 	}
 
-	public Subscriber(String ID, String firstName, String lastName
-			, String phoneNumber, String emailAddress, String creditCardNumber,
-			String subscriberNumber) {
+	public Subscriber(String ID, String firstName, String lastName, String phoneNumber, String emailAddress,
+			String creditCardNumber, String subscriberNumber) {
 		this.ID = ID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.emailAddress = emailAddress;
 		this.creditCardNumber = creditCardNumber;
-		this.subscriberNumber =subscriberNumber;
-		
+		this.subscriberNumber = subscriberNumber;
+
 	}
 
 }
