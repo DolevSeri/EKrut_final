@@ -15,8 +15,17 @@ public class CostumerController {
 	private SupplyMethod suplyMethod;
 	private ObservableList<Integer> pickUpOrders = FXCollections.observableArrayList();
 	private Costumer customerToUpdate = null;
+	private Costumer getNameByOrderID = null;
 	
 	
+	public Costumer getGetNameByOrderID() {
+		return getNameByOrderID;
+	}
+
+	public void setGetNameByOrderID(Costumer getNameByOrderID) {
+		this.getNameByOrderID = getNameByOrderID;
+	}
+
 	public Costumer getCustomerToUpdate() {
 		return customerToUpdate;
 	}

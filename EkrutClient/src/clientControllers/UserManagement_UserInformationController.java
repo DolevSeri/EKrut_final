@@ -249,6 +249,7 @@ public class UserManagement_UserInformationController {
 	void clickBtnUpdate(ActionEvent event) {
 		String username = txtUserName.getText();
 		boolean flag = true;
+		ArrayList<String>nameAndMessageMember = new ArrayList<>();
 		if (!chbMembership.isSelected()) {
 			scene.popUpMessage("There is no update to save");
 			flag = false;
@@ -256,10 +257,13 @@ public class UserManagement_UserInformationController {
 			ClientUI.chat.accept(new Message(Request.Update_Customer_Request, username));
 			scene.popUpMessage(
 					"Customer created successfully!\nThe customer recived 20% discount for his first purchase");
+			nameAndMessageMember.addAll(Arrays.asList(username, "Congragulation!\nYou are finally a member at EKrut!\n"
+					+ "You have 20% discount on your first purchase"));
+			ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessageMember));
+
 		}
 		if (flag)
 			clearField();
-
 	}
 
 	/**

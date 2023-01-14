@@ -107,6 +107,9 @@ public class AreaManager_InventoryCallsController {
 		}
 
 	}
+	
+	
+	
 
 	/**
 	 * Handles the action of clicking the exit button.

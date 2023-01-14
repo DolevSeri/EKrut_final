@@ -472,6 +472,16 @@ public enum Request {
 			public String toString() {
 				return "Delivery arrival time updated";
 			}
+		},
+	Get_Customer_Username{
+			public String toString() {
+				return "Request to import username by orderID";
+			}
+		},
+	Customer_Username_Imported{
+			public String toString() {
+				return "Username imported by orderID";
+			}
 		}
 	}
 	
