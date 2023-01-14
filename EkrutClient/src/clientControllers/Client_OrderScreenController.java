@@ -103,14 +103,17 @@ public class Client_OrderScreenController {
 			for (Sale sale : ChatClient.salesController.getSales()) {
 				if (sale.getRegion().toString().equals(ChatClient.userController.getUser().getRegion().toString())
 						&& ProductController.compareTime(sale.getStartHour(), sale.getEndHour())
-						&& ProductController.isCurrentDayInRange(sale.getStartDay(), sale.getEndDay())) {
+						&& ProductController.isCurrentDayInRange(sale.getStartDay(), sale.getEndDay())
+						&& ChatClient.costumerController.getCostumer().getSubscriberID() != -1) {
 					msg += sale.getDiscountType() + " ";
 					flaghasSale = true;
 				}
 			}
-			if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
+			if (ChatClient.costumerController.getOrdersofcostumer().size() == 0
+					&& ChatClient.costumerController.getCostumer().getSubscriberID() != -1) {
 
 				msg += "\n for your first order you get more: 20% discount!!(:";
+				flaghasSale = true;
 
 			}
 
@@ -131,7 +134,6 @@ public class Client_OrderScreenController {
 				}
 			}
 		}
-
 
 	}
 

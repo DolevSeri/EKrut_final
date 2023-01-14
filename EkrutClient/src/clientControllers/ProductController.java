@@ -55,7 +55,10 @@ public class ProductController {
 	boolean flag = false;
 
 	public void initialize() {
+		Image image = new Image("/images/sale.png");
+		imageSale.setImage(image);
 		imageSale.setVisible(false);
+		
 
 	}
 
@@ -103,17 +106,18 @@ public class ProductController {
 						pro.setPrice(product.getPrice());
 					}
 				}
+				imageSale.setVisible(true);
 			}
 		}
-		if (sales.size() > 0) {
 		
-		if(checkSale() == true) {
+		
+		if(ChatClient.salesForSubscriber.size()!=0||ChatClient.firstOrderSubscriber==true) {
 			Image image = new Image("/images/sale.png");
 			imageSale.setImage(image);
 			imageSale.setVisible(true);
 		}
-}
-		lblPrice.setText(String.valueOf(this.product.getPrice()));
+
+		lblPrice.setText(String.format("%.2f",this.product.getPrice()));
 		Image image = new Image(product.getImagePath());
 		productLogo.setImage(image);
 		this.client_OrderScreenController = client_OrderScreenController;
@@ -181,16 +185,19 @@ public class ProductController {
 		// if there is the first order of the subscriber there is more 20% discount
 		if (ChatClient.costumerController.getOrdersofcostumer().size() == 0) {
 			flag = true;
+			ChatClient.firstOrderSubscriber=true;
 		}
 
 		// ClientUI.chat.accept(new Message(Request.import_Sales, null));
 		for (Sale sale : ChatClient.salesController.getSales()) {
 			if (sale.getRegion().toString().equals(area)) {
 				if (compareTime(sale.getStartHour(), sale.getEndHour())
-						&& isCurrentDayInRange(sale.getStartDay(), sale.getEndDay()))
+						&& isCurrentDayInRange(sale.getStartDay(), sale.getEndDay())) {
 					// if there are any sale in the area that valid adding to the sale list of this
 					// order
 					sales.add(sale);
+				   ChatClient.salesForSubscriber.add(sale);
+				}
 			}
 		}
 

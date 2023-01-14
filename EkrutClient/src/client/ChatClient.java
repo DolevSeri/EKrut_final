@@ -79,6 +79,8 @@ public class ChatClient extends AbstractClient {
 	public static String configuration;
 	public static Thread checkWindowTimeThread;
 	public static Stage primaryStage = null;
+	public static ArrayList<Sale> salesForSubscriber=new ArrayList<>();
+	public static boolean firstOrderSubscriber=false;
 // Constructors ****************************************************
 
 	/**

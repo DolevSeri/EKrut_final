@@ -69,7 +69,7 @@ public class ProductInCartController {
 		double priceOfAmount = amountOfProduct * product.getPrice();
 		lblQuantity.setText(String.valueOf(amountOfProduct));
 		// set price of products in cart
-		lblPrice.setText(String.format("%.2f", priceOfAmount));
+		lblPrice.setText(String.format("%.1f", priceOfAmount));
 		Image image = new Image(product.getImagePath());
 		imgProduct.setImage(image);
 		this.client_OrderScreenController = client_OrderScreenController;

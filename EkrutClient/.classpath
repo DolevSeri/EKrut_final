@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="src" path="UnitTestClient"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EkrutCommon">
 		<attributes>
@@ -19,6 +20,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="lib/mockito-all-2.0.2-beta.jar"/>
-	<classpathentry kind="lib" path="mockito-all-2.0.2-beta.jar"/>
+	<classpathentry kind="lib" path="C:/Users/peleg/Desktop/מעבדות מבוא לבדיקות תוכנה סמסטר 5/מעבדה 8 Mockito מבוא לבדיקות תוכנה/Testing with Mockito/bin/mockito-all-2.0.2-beta.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

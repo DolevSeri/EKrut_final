@@ -83,7 +83,10 @@ public class Client_EK_MainViewController {
 	 */
 	@FXML
 	void clickOnLogout(ActionEvent event) {
+		ChatClient.salesForSubscriber.clear();
+		ChatClient.firstOrderSubscriber=false;
 		newScreen.exitOrLogOut(event, true);
+	
 	}
 	/**
 	 * Handles the event of clicking on the Exit button. 
@@ -92,6 +95,8 @@ public class Client_EK_MainViewController {
 	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
+		ChatClient.salesForSubscriber.clear();
+		ChatClient.firstOrderSubscriber=false;
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		newScreen.exitOrLogOut(event, true);
 		System.out.println("exit ConnectForm");
