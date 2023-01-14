@@ -127,7 +127,7 @@ public class ProductInCartController {
 			int amountOfProduct = ChatClient.cartController.getCart().get(product);
 			double priceOfAmount = amountOfProduct * product.getPrice();
 			lblQuantity.setText(String.valueOf(amountOfProduct));
-			lblPrice.setText(String.valueOf(priceOfAmount));
+			lblPrice.setText(String.format("%.1f", priceOfAmount));
 		}
 		client_OrderScreenController.setTotalAmount();
 		// if there are no products in cart anymore
