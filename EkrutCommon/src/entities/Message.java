@@ -4,11 +4,17 @@ import java.io.Serializable;
 
 import enums.Request;
 
+/**
+ * 
+ * @author Peleg Oanuno
+ * 
+ *         The Message class represents a message that contains a request and an
+ *         object. It implements the Serializable interface.
+ * 
+ * @version 1.0
+ */
 public class Message implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Request request;
 	private Object object;

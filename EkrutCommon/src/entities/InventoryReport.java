@@ -3,13 +3,25 @@ package entities;
 import java.io.Serializable;
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Ron Lahiani
+ * 
+ *         The InventoryReport class represents a report of the inventory of a
+ *         certain device for a certain month and year. It includes information
+ * 
+ *         about products that are below the threshold and the most extreme
+ *         product that is below the threshold. It implements the Serializable
+ *         interface.
+ * 
+ */
 public class InventoryReport implements Serializable {
-	private static final long serialVersionUID = 1L; 
+	private static final long serialVersionUID = 1L;
 	private String month, year, deviceName;
 	private HashMap<String, Integer> producsUnderThreshold = new HashMap<>();
 	private String mexProductUnderThres;
 	private Integer deviceThres;
-	
+
 	public InventoryReport(String month, String year, String deviceName, HashMap<String, Integer> producsUnderThreshold,
 			String mexProductUnderThres, Integer deviceThres) {
 		super();
@@ -67,6 +79,6 @@ public class InventoryReport implements Serializable {
 
 	public void setMexProductUnderThres(String mexProductUnderThres) {
 		this.mexProductUnderThres = mexProductUnderThres;
-	}	
+	}
 
 }

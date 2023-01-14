@@ -1623,29 +1623,28 @@ public class MySqlController {
 	}
 
 	public static Costumer getCustomerByOrderID(int orderID) {
-		PreparedStatement ps;
-		Costumer c = null;
-		try {
-			ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.costumers" + " WHERE username IN (SELECT username FROM ekrut.orders"
-							+ "WHERE orderID IN (SELECT orderID FROM ekrut.delivery WHERE orderID = ?))");
-			try {
-				ps.setInt(1, orderID);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("Set query failed on getCustomerByOrderID");
-			}
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				c = new Costumer(rs.getString("username"), rs.getString("creditCard"), rs.getInt("subscriberID"),
-						CostumerStatus.valueOf(rs.getString("status")));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Exceute query failed on getCustomerByOrderID");
-		}
-		return c;
+		 PreparedStatement ps;
+		 Costumer c = null;
+		 try {
+			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers WHERE username "
+			 		+ "IN(SELECT username FROM ekrut.orders WHERE orderID = ?)");
+			 try {
+				 ps.setInt(1, orderID);
+			 }catch(SQLException e) {
+				 e.printStackTrace();
+				 System.out.println("Set query failed on getCustomerByOrderID");
+			 }
+			 ResultSet rs = ps.executeQuery();
+			 while(rs.next()) {
+				 c = new Costumer(rs.getString("username"), rs.getString("creditCard"),
+						 rs.getInt("subscriberID"), CostumerStatus.valueOf(rs.getString("status")));
+			 }
+			 
+		 }catch(SQLException e) {
+			 e.printStackTrace();
+			 System.out.println("Exceute query failed on getCustomerByOrderID");
+		 }
+		 return c;
 	}
 
 	public static void updateProductInProductsUnderThreshold(ProductInDevice product) {

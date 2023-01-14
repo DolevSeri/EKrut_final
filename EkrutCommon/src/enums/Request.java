@@ -493,4 +493,18 @@ public enum Request {
 			return "products under threshold table is updated! ";
 		}
 	},
-}
+
+
+	Get_Arrived_Deliveries{
+			public String toString() {
+				return "Request to import arrived deliveries";
+			}
+		},
+	Arrived_Deliveries_Imported{
+			public String toString() {
+				return "Arrived deliveries imported";
+			}
+		}
+	}
+	
+

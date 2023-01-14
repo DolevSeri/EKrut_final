@@ -106,9 +106,10 @@ public class AreaManager_CostumerApprovalController {
 			setTableItems();
 			scene.popUpMessage("Costumer approved succesfully!\nMessage sent to relevant customers");
 			
-			ArrayList<String> nameAndMessage = new ArrayList<>();
-			ArrayList<String> nameAndMessageMember = new ArrayList<>();
+
 			for(Costumer c : costumersToUpdate) {
+				ArrayList<String> nameAndMessage = new ArrayList<>();
+				ArrayList<String> nameAndMessageMember = new ArrayList<>();
 				if(c.getSubscriberID() == -1) {
 					nameAndMessage.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a customer at EKrut!"));
 					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
