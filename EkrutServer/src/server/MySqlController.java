@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +22,7 @@ import entities.InventoryReport;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
+import entities.ProductUnderThreshold;
 import entities.Sale;
 import entities.SalesPattern;
 import entities.SystemMessage;
@@ -412,8 +416,7 @@ public class MySqlController {
 		PreparedStatement ps;
 		try {
 			ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.costumer_report WHERE " + 
-					"month = ? AND year = ? AND region = ?");
+					"SELECT * FROM ekrut.costumer_report WHERE " + "month = ? AND year = ? AND region = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);
@@ -1523,11 +1526,11 @@ public class MySqlController {
 			System.out.println("Execute query failed on updateDeliveryStatus");
 		}
 	}
-	
+
 	public static void updateDeliveryArrivalTime(ArrayList<Delivery> deliveryToUpdate) {
 		try {
-			PreparedStatement ps = dbConnector
-					.prepareStatement("UPDATE ekrut.delivery SET supplyTimedate = ?, supplyTimehour = ? WHERE orderID = ?");
+			PreparedStatement ps = dbConnector.prepareStatement(
+					"UPDATE ekrut.delivery SET supplyTimedate = ?, supplyTimehour = ? WHERE orderID = ?");
 			for (Delivery delivery : deliveryToUpdate) {
 				ps.setString(1, delivery.getArrivalDate());
 				ps.setString(2, delivery.getArrivalHour());
@@ -1546,8 +1549,7 @@ public class MySqlController {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {
 			PreparedStatement updatePs = dbConnector.prepareStatement("UPDATE ekrut.product_in_device SET "
-					+ "status = 'AVAILABLE', quantity = ? "
-					+ "WHERE deviceName = ? AND productCode "
+					+ "status = 'AVAILABLE', quantity = ? " + "WHERE deviceName = ? AND productCode "
 					+ "IN (SELECT productCode FROM products WHERE productName = ?)");
 			try {
 				updatePs.setInt(1, Integer.valueOf(newQuantity));
@@ -1575,74 +1577,94 @@ public class MySqlController {
 		}
 		System.out.println("Update Product Quantity And Close Call success!");
 	}
-	
+
 	public static ArrayList<Delivery> getDeliveriesByCustomer(String username) {
 		ArrayList<Delivery> deliveries = new ArrayList<>();
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.delivery d "
-					+ "JOIN ekrut.orders o ON d.orderID=o.orderID "
-					+ "WHERE o.username = ? AND d.deliveryStatus IN('NOTAPPROVED', 'APPROVED')");
-		
-					
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.delivery d " + "JOIN ekrut.orders o ON d.orderID=o.orderID "
+							+ "WHERE o.username = ? AND d.deliveryStatus IN('NOTAPPROVED', 'APPROVED')");
+
 			try {
 				ps.setString(1, username);
-			}catch(SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Set query failed on getDeliveriesByCustomer");
 			}
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				deliveries.add(new Delivery(rs.getString("costumerAdress"),
 						DeliveryStatus.valueOf(rs.getString("deliveryStatus")), rs.getInt("orderID"),
 						Region.valueOf(rs.getString("region"))));
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Execute query failed on getDeliveriesByCustomer");
 		}
 		return deliveries;
 	}
-	
+
 	public static String getAreaManagerUsername(String region) {
-	    PreparedStatement ps;
-	    String areaManagerUsername = null;
-	    try {
-	        ps = dbConnector.prepareStatement("SELECT username FROM ekrut.users WHERE region = ? AND Role = 'AreaManager'");
-	        ps.setString(1, region);
-	        ResultSet res = ps.executeQuery();
-	        if(res.next()) {
-	            areaManagerUsername = res.getString("username");
-	        }
-	        System.out.println("Import Area Manager Usernames by region succeeded");
-	    } catch (SQLException e) {
-	        System.out.println("Import Area Manager Usernames by region failed");
-	    }
-	    return areaManagerUsername;
+		PreparedStatement ps;
+		String areaManagerUsername = null;
+		try {
+			ps = dbConnector
+					.prepareStatement("SELECT username FROM ekrut.users WHERE region = ? AND Role = 'AreaManager'");
+			ps.setString(1, region);
+			ResultSet res = ps.executeQuery();
+			if (res.next()) {
+				areaManagerUsername = res.getString("username");
+			}
+			System.out.println("Import Area Manager Usernames by region succeeded");
+		} catch (SQLException e) {
+			System.out.println("Import Area Manager Usernames by region failed");
+		}
+		return areaManagerUsername;
 	}
-	
+
 	public static Costumer getCustomerByOrderID(int orderID) {
-		 PreparedStatement ps;
-		 Costumer c = null;
-		 try {
-			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers"+
-					" WHERE username IN (SELECT username FROM ekrut.orders"+
-						"WHERE orderID IN (SELECT orderID FROM ekrut.delivery WHERE orderID = ?))");
-			 try {
-				 ps.setInt(1, orderID);
-			 }catch(SQLException e) {
-				 e.printStackTrace();
-				 System.out.println("Set query failed on getCustomerByOrderID");
-			 }
-			 ResultSet rs = ps.executeQuery();
-			 while(rs.next()) {
-				 c = new Costumer(rs.getString("username"), rs.getString("creditCard"),
-						 rs.getInt("subscriberID"), CostumerStatus.valueOf(rs.getString("status")));
-			 }
-			 
-		 }catch(SQLException e) {
-			 e.printStackTrace();
-			 System.out.println("Exceute query failed on getCustomerByOrderID");
-		 }
-		 return c;
+		PreparedStatement ps;
+		Costumer c = null;
+		try {
+			ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.costumers" + " WHERE username IN (SELECT username FROM ekrut.orders"
+							+ "WHERE orderID IN (SELECT orderID FROM ekrut.delivery WHERE orderID = ?))");
+			try {
+				ps.setInt(1, orderID);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set query failed on getCustomerByOrderID");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				c = new Costumer(rs.getString("username"), rs.getString("creditCard"), rs.getInt("subscriberID"),
+						CostumerStatus.valueOf(rs.getString("status")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Exceute query failed on getCustomerByOrderID");
+		}
+		return c;
 	}
+
+	public static void updateProductInProductsUnderThreshold(ProductInDevice product) {
+		String currentMonthNumber = String.valueOf(LocalDate.now().getMonthValue());
+		String currentYear = String.valueOf(LocalDate.now().getYear());
+		PreparedStatement ps;
+		try {
+			ps = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.products_under_threshold (deviceName, prCode, prName, month, year, count) "
+							+ "VALUES (?,?,?,?,?,1) " + "ON DUPLICATE KEY UPDATE count = count + 1");
+			ps.setString(1, product.getDevice());
+			ps.setInt(2, product.getProductCode());
+			ps.setString(3, product.getProductName());
+			ps.setString(4, currentMonthNumber);
+			ps.setString(5, currentYear);
+			ps.executeUpdate();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 }

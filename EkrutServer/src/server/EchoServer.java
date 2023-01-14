@@ -356,7 +356,7 @@ public class EchoServer extends AbstractServer {
 			break;
 
 		case Update_Customer_Request:
-			MySqlController.updateCostumerToMember((String)messageFromClient.getObject());
+			MySqlController.updateCostumerToMember((String) messageFromClient.getObject());
 			try {
 				client.sendToClient(new Message(Request.Customer_Updated, null));
 			} catch (IOException e) {
@@ -366,8 +366,8 @@ public class EchoServer extends AbstractServer {
 			break;
 		case Get_Customer_Data:
 			try {
-				client.sendToClient(new Message(Request.Customer_Data_Imported, 
-						MySqlController.importCustomerDataToUpdate((String)messageFromClient.getObject())));
+				client.sendToClient(new Message(Request.Customer_Data_Imported,
+						MySqlController.importCustomerDataToUpdate((String) messageFromClient.getObject())));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");
@@ -542,8 +542,18 @@ public class EchoServer extends AbstractServer {
 			break;
 		case Get_Customer_Username:
 			try {
-				client.sendToClient(new Message(Request.Customer_Username_Imported, 
-						MySqlController.getCustomerByOrderID((int)messageFromClient.getObject())));
+				client.sendToClient(new Message(Request.Customer_Username_Imported,
+						MySqlController.getCustomerByOrderID((int) messageFromClient.getObject())));
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Could not send message to client.");
+			}
+			break;
+		case Update_ThresholdTable:
+			ProductInDevice productToUpdate = (ProductInDevice) messageFromClient.getObject();
+			MySqlController.updateProductInProductsUnderThreshold(productToUpdate);
+			try {
+				client.sendToClient(new Message(Request.ThresholdTable_Updated, null));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");

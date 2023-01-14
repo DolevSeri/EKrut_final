@@ -433,56 +433,64 @@ public enum Request {
 			return "Request to send message";
 		}
 	},
-	Msg_Notification{
+	Msg_Notification {
 		public String toString() {
 			return "message has been sent successfully";
 		}
 	},
-	New_Notification{
+	New_Notification {
 		public String toString() {
 			return "Recieved new message";
 		}
 	},
-	Get_Customer_Deliveries{
+	Get_Customer_Deliveries {
 		public String toString() {
 			return "Request to import user deliveries";
 		}
 	},
-	Customer_Deliveries_Imported{
+	Customer_Deliveries_Imported {
 		public String toString() {
 			return "User deliveries imported";
 		}
-	}, 
-	Get_Area_manager_UserName{
-			public String toString() {
-				return "Request to import area manager usrername";
-			}
-		},	
-	Area_manager_UserName_Imported{
-			public String toString() {
-				return "area manager usrername imported";
-			}
-		},
-	Change_Delivery_Arrival{
-			public String toString() {
-				return "Request to update delivery arrival time";
-			}
-		},
-	Delivery_Arrival_Changed{
-			public String toString() {
-				return "Delivery arrival time updated";
-			}
-		},
-	Get_Customer_Username{
-			public String toString() {
-				return "Request to import username by orderID";
-			}
-		},
-	Customer_Username_Imported{
-			public String toString() {
-				return "Username imported by orderID";
-			}
+	},
+	Get_Area_manager_UserName {
+		public String toString() {
+			return "Request to import area manager usrername";
 		}
-	}
-	
-
+	},
+	Area_manager_UserName_Imported {
+		public String toString() {
+			return "area manager usrername imported";
+		}
+	},
+	Change_Delivery_Arrival {
+		public String toString() {
+			return "Request to update delivery arrival time";
+		}
+	},
+	Delivery_Arrival_Changed {
+		public String toString() {
+			return "Delivery arrival time updated";
+		}
+	},
+	Get_Customer_Username {
+		public String toString() {
+			return "Request to import username by orderID";
+		}
+	},
+	Customer_Username_Imported {
+		public String toString() {
+			return "Username imported by orderID";
+		}
+	},
+	Update_ThresholdTable {
+		public String toString() {
+			return "Request to update product in threshold table ";
+		}
+	},
+	ThresholdTable_Updated {
+		public String toString() {
+			return "products under threshold table is updated! ";
+		}
+	},
+}
