@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,8 +34,9 @@ import server.MySqlController;
 import server.ServerUI;
 
 /**
- * This class represents the controller for the server GUI FXML file.
- * It handles the user's interactions with the view and controls the server's connection and disconnection.
+ * This class represents the controller for the server GUI FXML file. It handles
+ * the user's interactions with the view and controls the server's connection
+ * and disconnection.
  * 
  * @author Dolev Seri
  */
@@ -84,16 +86,14 @@ public class ServerPortFrameController {
 	private ImageView ekrutLogo;
 
 	private PrintStream showConsole;
-	 EndOfMonthChecker endOfMonthChecker = new EndOfMonthChecker();
+	EndOfMonthChecker endOfMonthChecker;
 
-	
-	
 	/**
-	 * Handles the 'Connect' button click event.
-	 * Reads the entered port number, database name, username, and password from the text fields.
-	 * If the port number is not entered, displays an error message.
-	 * Otherwise, runs the server with the given details and enables the 'Disconnect' button.
-	 * Populates the clients table with the connected clients and sets the columns for the table.
+	 * Handles the 'Connect' button click event. Reads the entered port number,
+	 * database name, username, and password from the text fields. If the port
+	 * number is not entered, displays an error message. Otherwise, runs the server
+	 * with the given details and enables the 'Disconnect' button. Populates the
+	 * clients table with the connected clients and sets the columns for the table.
 	 *
 	 * @param event the ActionEvent object representing the button click event
 	 * @throws Exception if an exception occurs while setting the scene
@@ -119,62 +119,76 @@ public class ServerPortFrameController {
 			tblConClients.setEditable(true);
 			tblConClients.setItems(sv.getClientList());
 			setColumns();
-			if(!checkIfReportExist()){
-				createReport();
+			if (MySqlController.getdbConnector() != null) {
+				if (!checkIfReportExist()) {
+					createReport(false);
+				}
+
+				ServerPortFrameController controller = new ServerPortFrameController();
+				endOfMonthChecker = new EndOfMonthChecker(controller);
+				endOfMonthChecker.start();
 			}
-			endOfMonthChecker.start();
 		}
 	}
-	
+
 	private boolean checkIfReportExist() {
 		ArrayList<String> details = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
-		Integer currentMonth = (Integer)now.get(Calendar.MONTH) + 1;
-		Integer currentYear = (Integer)now.get(Calendar.YEAR);
-		if(currentMonth == 1) {
+		Integer currentMonth = (Integer) now.get(Calendar.MONTH) + 1;
+		Integer currentYear = (Integer) now.get(Calendar.YEAR);
+		if (currentMonth == 1) {
 			currentMonth = 12;
 			currentYear--;
+		} else {
+			currentMonth = currentMonth - 1;
 		}
-		details.addAll(Arrays.asList("NORTH", currentYear.toString(), currentMonth.toString()));
-		
-		try{
-			MySqlController.getCostumersReportData(details);
-		}catch(NullPointerException e){
+		String formattedMonth = String.format("%02d", currentMonth);
+		details.addAll(Arrays.asList("NORTH", currentYear.toString(), formattedMonth));
+
+		if (MySqlController.getCostumersReportData(details) == null) {
 			System.out.println("There is report to create");
 			return false;
+		} else {
+			System.out.println("Last month report exist");
+			return true;
 		}
-		System.out.println("Last month report exist");
-		return true;
 	}
-	
-	public void createReport() {
+
+	public void createReport(boolean isThisMonth) {
 		ArrayList<Device> devices = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
-		int currentMonth = now.get(Calendar.MONTH) + 1; // add 1 because Calendar.MONTH starts at 0
+		int currentMonth = now.get(Calendar.MONTH) + 1;
 		int currentYear = now.get(Calendar.YEAR);
-		if(currentMonth == 1) {
-			currentMonth = 12;
-			currentYear--;
+		if (!isThisMonth) {
+			if (currentMonth == 1) {
+				currentMonth = 12;
+				currentYear--;
+			} else {
+				currentMonth = currentMonth - 1;
+			}
+			System.out.println("Creating monthly reports for previous month");
+		} else {
+			System.out.println("Creating monthly reports for this month");
 		}
-		System.out.println("Creating monthly reports for previous month");
+		String formattedMonth = String.format("%02d", currentMonth);
+
 		for (Region region : Region.values()) {
-			MySqlController.createMonthlyCostumersReport(new ArrayList<String>(
-					Arrays.asList(Integer.toString(currentMonth), 
-							Integer.toString(currentYear), region.toString())));
-			MySqlController.createMonthlyOrdersReport(new ArrayList<String>(
-					Arrays.asList(Integer.toString(currentMonth), 
-							Integer.toString(currentYear), region.toString())));
-			MySqlController.createMonthlyDeliveryReport(new ArrayList<String>(
-					Arrays.asList(Integer.toString(currentMonth), 
-							Integer.toString(currentYear))));
-			devices.addAll(MySqlController.getAllDevicesByArea(region.toString()));
+			if (!region.equals(Region.ALL)) {
+				MySqlController.createMonthlyCostumersReport(new ArrayList<String>(Arrays
+						.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
+				MySqlController.createMonthlyOrdersReport(new ArrayList<String>(Arrays
+						.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
+				devices.addAll(MySqlController.getAllDevicesByArea(region.toString()));
+			}
 		}
+		MySqlController.createMonthlyDeliveryReport(
+				new ArrayList<String>(Arrays.asList(formattedMonth, Integer.toString(currentYear))));
 		for (Device device : devices) {
-			MySqlController.createMonthlyInventoryReport(new ArrayList<String>(
-					Arrays.asList(Integer.toString(currentMonth), 
-							Integer.toString(currentYear), device.getDeviceName())));
+			MySqlController.createMonthlyInventoryReport(new ArrayList<String>(Arrays
+					.asList(formattedMonth, Integer.toString(currentYear), device.getDeviceName())));
 		}
 	}
+
 	/**
 	 * Displays the console output in the console text area.
 	 */
@@ -183,32 +197,34 @@ public class ServerPortFrameController {
 		System.setOut(showConsole);
 		System.setErr(showConsole);
 	}
-	
+
 	/**
-	 * Handles the 'Disconnect' button click event.
-	 * Stops the server and disables the 'Disconnect' button.
+	 * Handles the 'Disconnect' button click event. Stops the server and disables
+	 * the 'Disconnect' button.
 	 * 
 	 * @param event the ActionEvent object representing the button click event
 	 */
 	@FXML
 	public void clickbtnDisconnect(ActionEvent event) {
-		
+		try {
+			endOfMonthChecker.getExecutor().shutdown();
+		} catch (NullPointerException e) {}
 		ServerUI.stopServer();
 		btnDisconnect.setDisable(true);
 		btnConnect.setDisable(false);
 	}
-	
+
 	/**
-	 * Initializes the view.
-	 * Displays the server's IP address and default values for the port, database name, username, and password.
-	 * Disables the 'Disconnect' button.
-	 * Calls the showConsoleStream() method to display the console output in the console text area.
+	 * Initializes the view. Displays the server's IP address and default values for
+	 * the port, database name, username, and password. Disables the 'Disconnect'
+	 * button. Calls the showConsoleStream() method to display the console output in
+	 * the console text area.
 	 */
 	public void initialize() {
-	    showConsoleStream();
+		showConsoleStream();
 		txtPort.setText("5555");
 		txtIP.setText(getLocalHost());
-		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
+		txtDbName.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST&useSSL=false");
 		txtDbUser.setText("root");
 		txtDbPass.setText("Aa123456");
 		btnDisconnect.setDisable(true);
@@ -217,7 +233,7 @@ public class ServerPortFrameController {
 		ekrutLogo.setImage(image);
 
 	}
-	
+
 	/**
 	 * Returns the server's IP address.
 	 * 
@@ -234,18 +250,22 @@ public class ServerPortFrameController {
 		}
 		return null;
 	}
+
 	/**
-	 * Handles the 'Exit' button click event.
-	 * Stops the server and closes the application.
+	 * Handles the 'Exit' button click event. Stops the server and closes the
+	 * application.
 	 * 
 	 * @param event the ActionEvent object representing the button click event
 	 * @throws Exception if an exception occurs while setting the scene
 	 */
 	public void getExitBtn(ActionEvent event) throws Exception {
+		try {
+			endOfMonthChecker.getExecutor().shutdown();
+		} catch (NullPointerException e) {}
 		ServerUI.stopServer();
 		System.exit(0);
 	}
-	
+
 	/**
 	 * Sets the columns for the clients table.
 	 */
@@ -255,6 +275,7 @@ public class ServerPortFrameController {
 		Status.setCellValueFactory(new PropertyValueFactory<ClientConnected, String>("status"));
 
 	}
+
 	/**
 	 * Starts the server GUI application.
 	 * 
@@ -269,16 +290,15 @@ public class ServerPortFrameController {
 			primaryStage.setScene(scene);
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 
-			primaryStage.show();	
+			primaryStage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@FXML
-	public void clickbtnImport(ActionEvent event) {		
+	public void clickbtnImport(ActionEvent event) {
 
 	}
 

@@ -69,6 +69,10 @@ public class MySqlController {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
+		
+	}
+	public static Connection getdbConnector(){
+		return dbConnector;
 	}
 
 	public static void disconnectFromDB() {
