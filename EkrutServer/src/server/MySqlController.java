@@ -409,10 +409,11 @@ public class MySqlController {
 
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
 		Integer lowActivity = 0, mediumActivity = 0, highActivity = 0, veryHighActivity = 0;
-
+		PreparedStatement ps;
 		try {
-			PreparedStatement ps = dbConnector.prepareStatement(
-					"SELECT * FROM ekrut.costumer_report WHERE " + "month = ? AND year = ? AND region = ?");
+			ps = dbConnector.prepareStatement(
+					"SELECT * FROM ekrut.costumer_report WHERE " + 
+					"month = ? AND year = ? AND region = ?");
 			try {
 				ps.setString(1, month);
 				ps.setString(2, year);

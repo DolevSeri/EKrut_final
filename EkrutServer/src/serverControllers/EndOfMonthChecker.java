@@ -28,7 +28,7 @@ public class EndOfMonthChecker {
 		executor.scheduleAtFixedRate(endOfMonthChecker, 0, 1, TimeUnit.DAYS);
 	}
 
-	private void createReport() {
+	public void createReport() {
 		ArrayList<Device> devices = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
 		int currentMonth = now.get(Calendar.MONTH) + 1; // add 1 because Calendar.MONTH starts at 0
@@ -41,6 +41,9 @@ public class EndOfMonthChecker {
 			MySqlController.createMonthlyOrdersReport(new ArrayList<String>(
 					Arrays.asList(Integer.toString(currentMonth), 
 							Integer.toString(currentYear), region.toString())));
+		MySqlController.createMonthlyDeliveryReport(new ArrayList<String>(
+				Arrays.asList(Integer.toString(currentMonth), 
+						Integer.toString(currentYear))));
 			devices.addAll(MySqlController.getAllDevicesByArea(region.toString()));
 		}
 		for (Device device : devices) {

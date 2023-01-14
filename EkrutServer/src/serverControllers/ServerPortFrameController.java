@@ -6,7 +6,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
+import entities.Device;
+import enums.Region;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,8 +100,7 @@ public class ServerPortFrameController {
 	 */
 	@FXML
 	public void clickBtnConnect(ActionEvent event) throws Exception {
-		
-	    endOfMonthChecker.start();
+
 		String ekrutPort, dbName, dbUserName, dbPwd;
 		ekrutPort = txtPort.getText();
 		dbName = txtDbName.getText();
@@ -117,6 +119,60 @@ public class ServerPortFrameController {
 			tblConClients.setEditable(true);
 			tblConClients.setItems(sv.getClientList());
 			setColumns();
+			if(!checkIfReportExist()){
+				createReport();
+			}
+			endOfMonthChecker.start();
+		}
+	}
+	
+	private boolean checkIfReportExist() {
+		ArrayList<String> details = new ArrayList<>();
+		Calendar now = Calendar.getInstance();
+		Integer currentMonth = (Integer)now.get(Calendar.MONTH) + 1;
+		Integer currentYear = (Integer)now.get(Calendar.YEAR);
+		if(currentMonth == 1) {
+			currentMonth = 12;
+			currentYear--;
+		}
+		details.addAll(Arrays.asList("NORTH", currentYear.toString(), currentMonth.toString()));
+		
+		try{
+			MySqlController.getCostumersReportData(details);
+		}catch(NullPointerException e){
+			System.out.println("There is report to create");
+			return false;
+		}
+		System.out.println("Last month report exist");
+		return true;
+	}
+	
+	public void createReport() {
+		ArrayList<Device> devices = new ArrayList<>();
+		Calendar now = Calendar.getInstance();
+		int currentMonth = now.get(Calendar.MONTH) + 1; // add 1 because Calendar.MONTH starts at 0
+		int currentYear = now.get(Calendar.YEAR);
+		if(currentMonth == 1) {
+			currentMonth = 12;
+			currentYear--;
+		}
+		System.out.println("Creating monthly reports for previous month");
+		for (Region region : Region.values()) {
+			MySqlController.createMonthlyCostumersReport(new ArrayList<String>(
+					Arrays.asList(Integer.toString(currentMonth), 
+							Integer.toString(currentYear), region.toString())));
+			MySqlController.createMonthlyOrdersReport(new ArrayList<String>(
+					Arrays.asList(Integer.toString(currentMonth), 
+							Integer.toString(currentYear), region.toString())));
+			MySqlController.createMonthlyDeliveryReport(new ArrayList<String>(
+					Arrays.asList(Integer.toString(currentMonth), 
+							Integer.toString(currentYear))));
+			devices.addAll(MySqlController.getAllDevicesByArea(region.toString()));
+		}
+		for (Device device : devices) {
+			MySqlController.createMonthlyInventoryReport(new ArrayList<String>(
+					Arrays.asList(Integer.toString(currentMonth), 
+							Integer.toString(currentYear), device.getDeviceName())));
 		}
 	}
 	/**
@@ -223,10 +279,6 @@ public class ServerPortFrameController {
 	
 	@FXML
 	public void clickbtnImport(ActionEvent event) {		
-		MySqlController.createMonthlyCostumersReport(new ArrayList<String>(Arrays.asList("11", "2022", "NORTH")));
-		MySqlController.createMonthlyInventoryReport(new ArrayList<String>(Arrays.asList("12", "2022", "TelAviv")));
-		MySqlController.createMonthlyOrdersReport(new ArrayList<String>(Arrays.asList("11", "2022", "SOUTH")));
-		
 
 	}
 
