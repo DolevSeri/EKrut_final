@@ -131,6 +131,12 @@ public class ServerPortFrameController {
 		}
 	}
 
+	/**
+	 * Check if the report for the previous month already exists in the database.
+	 * 
+	 * @return a boolean indicating whether the report for the previous month
+	 *         already exists in the database.
+	 */
 	private boolean checkIfReportExist() {
 		ArrayList<String> details = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
@@ -154,6 +160,14 @@ public class ServerPortFrameController {
 		}
 	}
 
+	/**
+	 * Creates monthly reports for customer, order, delivery, and inventory. The
+	 * report will be created for the current month if {@code isThisMonth} is true,
+	 * otherwise it will be created for the previous month.
+	 * 
+	 * @param isThisMonth a boolean indicating whether the report should be created
+	 *                    for the current month or the previous month.
+	 */
 	public void createReport(boolean isThisMonth) {
 		ArrayList<Device> devices = new ArrayList<>();
 		Calendar now = Calendar.getInstance();
@@ -174,18 +188,18 @@ public class ServerPortFrameController {
 
 		for (Region region : Region.values()) {
 			if (!region.equals(Region.ALL)) {
-				MySqlController.createMonthlyCostumersReport(new ArrayList<String>(Arrays
-						.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
-				MySqlController.createMonthlyOrdersReport(new ArrayList<String>(Arrays
-						.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
+				MySqlController.createMonthlyCostumersReport(new ArrayList<String>(
+						Arrays.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
+				MySqlController.createMonthlyOrdersReport(new ArrayList<String>(
+						Arrays.asList(formattedMonth, Integer.toString(currentYear), region.toString())));
 				devices.addAll(MySqlController.getAllDevicesByArea(region.toString()));
 			}
 		}
 		MySqlController.createMonthlyDeliveryReport(
 				new ArrayList<String>(Arrays.asList(formattedMonth, Integer.toString(currentYear))));
 		for (Device device : devices) {
-			MySqlController.createMonthlyInventoryReport(new ArrayList<String>(Arrays
-					.asList(formattedMonth, Integer.toString(currentYear), device.getDeviceName())));
+			MySqlController.createMonthlyInventoryReport(new ArrayList<String>(
+					Arrays.asList(formattedMonth, Integer.toString(currentYear), device.getDeviceName())));
 		}
 	}
 
@@ -208,7 +222,8 @@ public class ServerPortFrameController {
 	public void clickbtnDisconnect(ActionEvent event) {
 		try {
 			endOfMonthChecker.getExecutor().shutdown();
-		} catch (NullPointerException e) {}
+		} catch (NullPointerException e) {
+		}
 		ServerUI.stopServer();
 		btnDisconnect.setDisable(true);
 		btnConnect.setDisable(false);
@@ -261,7 +276,8 @@ public class ServerPortFrameController {
 	public void getExitBtn(ActionEvent event) throws Exception {
 		try {
 			endOfMonthChecker.getExecutor().shutdown();
-		} catch (NullPointerException e) {}
+		} catch (NullPointerException e) {
+		}
 		ServerUI.stopServer();
 		System.exit(0);
 	}
@@ -299,7 +315,12 @@ public class ServerPortFrameController {
 
 	@FXML
 	public void clickbtnImport(ActionEvent event) {
-
+		try {
+			MySqlController.importUsers();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
