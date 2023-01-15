@@ -5,9 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,6 @@ import entities.InventoryReport;
 import entities.Order;
 import entities.OrderReport;
 import entities.ProductInDevice;
-import entities.ProductUnderThreshold;
 import entities.Sale;
 import entities.SalesPattern;
 import entities.SystemMessage;
@@ -69,9 +67,10 @@ public class MySqlController {
 			System.out.println("SQLState: " + ex.getSQLState());
 			System.out.println("VendorError: " + ex.getErrorCode());
 		}
-		
+
 	}
-	public static Connection getdbConnector(){
+
+	public static Connection getdbConnector() {
 		return dbConnector;
 	}
 
@@ -1177,26 +1176,6 @@ public class MySqlController {
 		return null;
 	}
 
-	public static ArrayList<InventoryCall> getAllCallsByArea(String region) {
-		PreparedStatement ps;
-		ArrayList<InventoryCall> calls = new ArrayList<>();
-
-		try {
-			ps = dbConnector.prepareStatement("SELECT inventory_calls.* FROM inventory_calls "
-					+ "JOIN devices ON inventory_calls.deviceName = devices.deviceName " + "WHERE devices.region = ?");
-			ps.setString(1, region);
-			ResultSet res = ps.executeQuery();
-			while (res.next()) {
-				calls.add(new InventoryCall(res.getInt(1), CallStatus.valueOf(res.getString(2)), res.getString(3),
-						res.getString(4)));
-			}
-			System.out.println("Import inventory calls by region succeeded");
-		} catch (SQLException e) {
-			System.out.println("Import inventory calls by region failed");
-		}
-		return calls;
-	}
-
 	public static ArrayList<InventoryCall> getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
 		ArrayList<InventoryCall> calls = new ArrayList<>();
@@ -1627,28 +1606,28 @@ public class MySqlController {
 	}
 
 	public static Costumer getCustomerByOrderID(int orderID) {
-		 PreparedStatement ps;
-		 Costumer c = null;
-		 try {
-			 ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers WHERE username "
-			 		+ "IN(SELECT username FROM ekrut.orders WHERE orderID = ?)");
-			 try {
-				 ps.setInt(1, orderID);
-			 }catch(SQLException e) {
-				 e.printStackTrace();
-				 System.out.println("Set query failed on getCustomerByOrderID");
-			 }
-			 ResultSet rs = ps.executeQuery();
-			 while(rs.next()) {
-				 c = new Costumer(rs.getString("username"), rs.getString("creditCard"),
-						 rs.getInt("subscriberID"), CostumerStatus.valueOf(rs.getString("status")));
-			 }
-			 
-		 }catch(SQLException e) {
-			 e.printStackTrace();
-			 System.out.println("Exceute query failed on getCustomerByOrderID");
-		 }
-		 return c;
+		PreparedStatement ps;
+		Costumer c = null;
+		try {
+			ps = dbConnector.prepareStatement("SELECT * FROM ekrut.costumers WHERE username "
+					+ "IN(SELECT username FROM ekrut.orders WHERE orderID = ?)");
+			try {
+				ps.setInt(1, orderID);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("Set query failed on getCustomerByOrderID");
+			}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				c = new Costumer(rs.getString("username"), rs.getString("creditCard"), rs.getInt("subscriberID"),
+						CostumerStatus.valueOf(rs.getString("status")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Exceute query failed on getCustomerByOrderID");
+		}
+		return c;
 	}
 
 	public static void updateProductInProductsUnderThreshold(ProductInDevice product) {
@@ -1667,6 +1646,40 @@ public class MySqlController {
 			ps.executeUpdate();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
+		}
+	}
+
+	public static void importUsers() {
+		// Connect to the "register_service" schema
+		try {
+			Connection sourceConnection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/register_service?serverTimezone=IST&useSSL=false", "root", "Aa123456");
+			Statement sourceStatement = sourceConnection.createStatement();
+			ResultSet sourceResult = sourceStatement.executeQuery("SELECT * FROM users");
+
+			// Connect to the "ekrut" schema
+			PreparedStatement targetStatement = dbConnector.prepareStatement(
+					"INSERT INTO ekrut.users (username, password, firstName, lastName, email, phoneNumber, isLoggedIn, id, role, region)"
+							+ " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM ekrut.users WHERE username = ?) ");
+			while (sourceResult.next()) {
+				targetStatement.setString(1, sourceResult.getString("username"));
+				targetStatement.setString(2, sourceResult.getString("password"));
+				targetStatement.setString(3, sourceResult.getString("firstName"));
+				targetStatement.setString(4, sourceResult.getString("lastName"));
+				targetStatement.setString(5, sourceResult.getString("email"));
+				targetStatement.setString(6, sourceResult.getString("phoneNumber"));
+				targetStatement.setInt(7, 0);
+				targetStatement.setString(8, sourceResult.getString("id"));
+				targetStatement.setString(9, sourceResult.getString("role"));
+				targetStatement.setString(10, sourceResult.getString("region"));
+				targetStatement.setString(11, sourceResult.getString("username"));
+				targetStatement.executeUpdate();
+			}
+			sourceConnection.close();
+			System.out.println("Users imported succsesfully!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Users import failed!");
 		}
 	}
 
