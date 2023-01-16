@@ -83,7 +83,6 @@ public class ConnectFormController {
 		newScreen.setScreen(new Stage(), "/clientGUI/Identification_Interface.fxml");
 		// get Orders from DB
 		ClientUI.chat.accept(new Message(Request.getOrders, null));
-		ClientUI.chat.accept(new Message(Request.get_Msg_In_System, null));
 	}
 	/**
 

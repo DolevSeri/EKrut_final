@@ -16,7 +16,6 @@ import entities.Order;
 import entities.ProductInDevice;
 import entities.Sale;
 import entities.SalesPattern;
-import entities.SystemMessage;
 import entities.User;
 import enums.Request;
 import javafx.collections.FXCollections;
@@ -293,14 +292,6 @@ public class EchoServer extends AbstractServer {
 			MySqlController.updateProductsInDevice(productsInDevice);
 			try {
 				client.sendToClient(new Message(Request.Products_updated_In_Device, null));
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.out.println("Could not send message to client.");
-			}
-			break;
-		case get_Msg_In_System:
-			try {
-				client.sendToClient(new Message(Request.imported_Msg_In_System, MySqlController.getMessagesInSystem()));
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Could not send message to client.");

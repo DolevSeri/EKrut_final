@@ -23,12 +23,10 @@ import entities.OrderReport;
 import entities.ProductInDevice;
 import entities.Sale;
 import entities.SalesPattern;
-import entities.SystemMessage;
 import entities.User;
 import enums.CallStatus;
 import enums.CostumerStatus;
 import enums.DeliveryStatus;
-import enums.MessageStatus;
 import enums.ProductStatus;
 import enums.Region;
 import enums.Role;
@@ -1161,20 +1159,6 @@ public class MySqlController {
 
 	}
 
-	public static ArrayList<SystemMessage> getMessagesInSystem() {
-		ArrayList<SystemMessage> msgList = new ArrayList<>();
-		try {
-			PreparedStatement ps = dbConnector.prepareStatement("SELECT * FROM ekrut.system_message");
-			ResultSet rs = ps.executeQuery();
-			while (rs.next())
-				msgList.add(new SystemMessage(rs.getInt("msgID"), rs.getString("username"), rs.getString("description"),
-						MessageStatus.valueOf(rs.getString("status"))));
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Executing statement failed");
-		}
-		return null;
-	}
 
 	public static ArrayList<InventoryCall> getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;

@@ -260,7 +260,7 @@ public class DeliveryOperator_ManageDeliveriesController {
 	 */
 	@FXML
 	void clickBtnBack(ActionEvent event) {
-		scene.back(event, "/clientGui/DeliveryOperator_MeinView.fxml");
+		scene.back(event, "/clientGUI/DeliveryOperator_MeinView.fxml");
 	}
 
 	/**
