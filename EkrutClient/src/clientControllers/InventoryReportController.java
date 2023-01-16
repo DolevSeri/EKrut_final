@@ -48,7 +48,7 @@ public class InventoryReportController {
 
 	@FXML
 	private Label lblItemUnderTreshold;
-	
+
 	@FXML
 	private ImageView logo;
 
@@ -68,6 +68,7 @@ public class InventoryReportController {
 		String device = inventoryReport.getDeviceName();
 		String month = inventoryReport.getMonth();
 		String year = inventoryReport.getYear();
+		String area = ChatClient.inventoryReportController.getAreaForCEO();
 
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
@@ -76,7 +77,7 @@ public class InventoryReportController {
 			Integer underThresCount = pr.getValue();
 			pieChartData.add(new PieChart.Data(product + "-" + underThresCount, underThresCount));
 		}
-		
+		lblAreaField.setText(area);
 		lblDeviceField.setText(device);
 		lblTresholdField.setText(deviceThres.toString());
 		lblReportDate.setText(month + "/" + year);
@@ -98,15 +99,15 @@ public class InventoryReportController {
 
 	}
 
-    /**
-     * Handles the event when the "Exit" button is clicked. Exits the application.
-     * 
-     * @param event the event triggered by clicking the button
-     */
+	/**
+	 * Handles the exit button click event.
+	 *
+	 * @param event the action event that triggered the handler
+	 */
 	@FXML
-	void getExitBtn(ActionEvent event) {
-		ClientUI.chat.accept("Disconnect");
-		System.exit(0);
+	void clickExitBtn(ActionEvent event) {
+		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+		scene.exitOrLogOut(event, false);
 	}
 
 }

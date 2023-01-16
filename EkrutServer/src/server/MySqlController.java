@@ -354,13 +354,18 @@ public class MySqlController {
 		}
 		System.out.println("Succefully imported Monthly Orders Report Data");
 
-		deviceList = devices.split(",");
-		incomesList = incomes.split(",");
-		for (int i = 0; i < (deviceList.length); i = i + 2) {
-			mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
-			mapOfIncomes.put(incomesList[i], (float) Float.valueOf(incomesList[i + 1]));
+		if (devices != null) {
+			deviceList = devices.split(",");
 		}
-
+		if (incomes != null) {
+			incomesList = incomes.split(",");
+		}
+		if (deviceList != null && deviceList.length % 2 == 0) {
+			for (int i = 0; i < (deviceList.length); i = i + 2) {
+				mapOfDevices.put(deviceList[i], (int) Integer.valueOf(deviceList[i + 1]));
+				mapOfIncomes.put(incomesList[i], (float) Float.valueOf(incomesList[i + 1]));
+			}
+		}
 		OrderReport report = new OrderReport(mapOfDevices, numOfTotalOrders, (float) numOfTotalOrders / 30,
 				numOfPickUpOrders, area, month, year, mostSellingDevice, mapOfIncomes);
 
@@ -402,9 +407,13 @@ public class MySqlController {
 		}
 
 		System.out.println("Succefully imported Monthly Inventory Report Data");
-		prList = products.split(",");
-		for (int i = 0; i < prList.length; i += 2)
-			productsUnderThres.put(prList[i], (int) Integer.valueOf(prList[i + 1]));
+		if (products != null)
+			prList = products.split(",");
+		if (prList != null && prList.length % 2 == 0) {
+			for (int i = 0; i < prList.length; i += 2) {
+				productsUnderThres.put(prList[i], (int) Integer.valueOf(prList[i + 1]));
+			}
+		}
 		InventoryReport report = new InventoryReport(month, year, device, productsUnderThres, mexProductUnderThres,
 				deviceThres);
 		return report;
@@ -626,7 +635,11 @@ public class MySqlController {
 				ps.setInt(4, totalOrders);
 				ps.setInt(5, totalPickUpOrders);
 				ps.setString(6, mostSelling);
+				if (devices == "")
+					devices=null;
 				ps.setString(7, devices);
+				if (incomes == "")
+					incomes=null;
 				ps.setString(8, incomes);
 
 			} catch (Exception e) {
@@ -711,6 +724,8 @@ public class MySqlController {
 				ps.setString(1, month);
 				ps.setString(2, year);
 				ps.setString(3, device);
+				if (itemsList=="")
+					itemsList = null;
 				ps.setString(4, itemsList);
 				ps.setString(5, itemUnderThres);
 				ps.setInt(6, deviceThres);
@@ -1158,7 +1173,6 @@ public class MySqlController {
 		}
 
 	}
-
 
 	public static ArrayList<InventoryCall> getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
