@@ -163,6 +163,7 @@ public class ChooseReportController {
 		String areaChosen = null;
 		try {
 			areaChosen = cmbArea.getValue().toString();
+			ChatClient.inventoryReportController.setAreaForCEO(areaChosen);
 		}catch (NullPointerException e) {}
 		ClientUI.chat.accept(new Message(Request.Get_Devices_By_Area, areaChosen));
 		cmbDevice.getItems().addAll(ChatClient.deviceController.getAreaDevicesNames());

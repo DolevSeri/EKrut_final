@@ -15,7 +15,7 @@ import entities.InventoryReport;
 public class InventoryReportController {
 
 	private InventoryReport inventoryReport = null;
-
+	private String areaForCEO = null;
 	/**
 	 * 
 	 * Getter method for the InventoryReport object.
@@ -36,5 +36,13 @@ public class InventoryReportController {
 	 */
 	public void setInventoryReport(InventoryReport inventoryReport) {
 		this.inventoryReport = inventoryReport;
+	}
+
+	public String getAreaForCEO() {
+		return areaForCEO;
+	}
+
+	public void setAreaForCEO(String areaForCEO) {
+		this.areaForCEO = areaForCEO;
 	}
 }
