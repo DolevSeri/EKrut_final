@@ -313,12 +313,24 @@ public class ServerPortFrameController {
 		}
 	}
 
+	/**
+	 * 
+	 * This method is a JavaFX event handler method that is triggered when the
+	 * "Import" button is clicked. It calls the importUsers() method from the
+	 * MySqlController class to import users from a "register_service" schema in a
+	 * MySQL database and inserts them into the "ekrut" schema in the same database.
+	 * If an exception is thrown by the importUsers() method, it will print the
+	 * stack trace of the exception.
+	 * 
+	 * @param event the ActionEvent object that was generated when the button was
+	 *              clicked.
+	 */
+
 	@FXML
 	public void clickbtnImport(ActionEvent event) {
 		try {
 			MySqlController.importUsers();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

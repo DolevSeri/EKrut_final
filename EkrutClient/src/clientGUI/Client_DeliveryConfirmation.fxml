@@ -89,7 +89,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="341.0" prefHeight="18.0" prefWidth="243.0" text="For example: Ha-HAgana 10 Kiryat Atta" textFill="#ec28b1" underline="true">
+      <Label layoutX="46.0" layoutY="341.0" prefHeight="18.0" prefWidth="243.0" text="For example: Ha Hagana 10 Kiryat Atta" textFill="#ec28b1" underline="true">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -125,12 +125,12 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="lableSubscriber" layoutX="117.0" layoutY="564.0" prefHeight="26.0" prefWidth="374.0" text="Want to pay next month? Click the button :" textFill="#8d48e1" underline="true">
+      <Label fx:id="lableSubscriber" layoutX="88.0" layoutY="565.0" prefHeight="26.0" prefWidth="328.0" text="Want to pay next month? Click the button :" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="btnSubscriber" layoutX="452.0" layoutY="554.0" mnemonicParsing="false" onAction="#clickOnDeferredPayment" prefHeight="46.0" prefWidth="158.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Deferred payment" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnSubscriber" layoutX="418.0" layoutY="554.0" mnemonicParsing="false" onAction="#clickOnDeferredPayment" prefHeight="46.0" prefWidth="192.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Deferred payment" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

@@ -20,12 +20,12 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="118.0" layoutY="29.0" prefHeight="103.0" prefWidth="351.0" text="Please Make a Choice:" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="165.0" layoutY="97.0" prefHeight="66.0" prefWidth="249.0" text="Make Your Choise:" textAlignment="CENTER" textFill="#8d48e1">
          <font>
-            <Font name="Cooper Black" size="29.0" />
+            <Font name="Cooper Black" size="25.0" />
          </font>
       </Label>
-      <Button fx:id="btnCreatePickUp" layoutX="166.0" layoutY="136.0" mnemonicParsing="false" onAction="#clickOnPickUpOrder" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new PickUP order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreatePickUp" layoutX="164.0" layoutY="163.0" mnemonicParsing="false" onAction="#clickOnPickUpOrder" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new PickUP order" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -33,7 +33,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnCreateDelivery" layoutX="166.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickOnDeliveryOrder" prefHeight="66.0" prefWidth="249.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new Delivery Order" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnCreateDelivery" layoutX="164.0" layoutY="253.0" mnemonicParsing="false" onAction="#clickOnDeliveryOrder" prefHeight="66.0" prefWidth="249.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Create new Delivery Order" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -49,7 +49,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Button fx:id="btnConfirmDelivery" layoutX="166.0" layoutY="318.0" mnemonicParsing="false" onAction="#clickOnDeliveryConfirmation" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
+      <Button fx:id="btnConfirmDelivery" layoutX="164.0" layoutY="345.0" mnemonicParsing="false" onAction="#clickOnDeliveryConfirmation" prefHeight="66.0" prefWidth="250.0" style="-fx-background-color: #CEF6F5; -fx-border-color: BLACK;" text="Delivery Confirmation" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -57,5 +57,10 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
+      <Label fx:id="lblWelcome" layoutX="29.0" layoutY="52.0" prefHeight="56.0" prefWidth="478.0" text="Welcome Back ISRAEL ISRAELI" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+         <font>
+            <Font name="Cooper Black" size="29.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

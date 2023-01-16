@@ -1,9 +1,6 @@
 package clientControllers;
 
-import java.text.DecimalFormat;
-
 import client.ChatClient;
-import client.ClientUI;
 import entities.DeliveryReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * @author Inbar Mizrahi 
- * 		   DeliveryReportController class is responsible for
+ * @author Inbar Mizrahi DeliveryReportController class is responsible for
  *         displaying the delivery report to the client. It initializes the
  *         scene by setting the images, labels, and populating the pie charts
  *         with data. The class has several fields including PieChart, Button,
@@ -65,13 +61,11 @@ public class DeliveryReportController {
 		DeliveryReport deliveryReport = ChatClient.deliveryReportController.getDeliveryReport();
 		String year = deliveryReport.getYear(), month = deliveryReport.getMonth();
 		int numOfDeliveries = deliveryReport.getNumOfDeliveries();
-		float avg, totalSumIncomes = deliveryReport.getTotalSumIncomes();
-		avg = numOfDeliveries / 30;
+		double avg;
+		float totalSumIncomes = deliveryReport.getTotalSumIncomes();
+		avg = (double)numOfDeliveries / (double)30;
 
-		final DecimalFormat df = new DecimalFormat("0.00");
-		String DeliveriesPerDayAvg = df.format(avg);
-
-		lblAvg.setText(DeliveriesPerDayAvg);
+		lblAvg.setText(String.format("%.2f", avg));
 		lblDate.setText(month + "/" + year);
 
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -100,16 +94,13 @@ public class DeliveryReportController {
 	}
 
 	/**
+	 * Exit the application
 	 * 
-	 * This method is called when the user clicks on the "Exit" button. It sends a
-	 * disconnect message to the server and exits the application.
-	 * 
-	 * @param event - ActionEvent that is triggered by the button click
+	 * @param event the event that triggered the method call
 	 */
 	@FXML
 	void getExitBtn(ActionEvent event) {
-		ClientUI.chat.accept("Disconnect");
-		System.exit(0);
+		scene.exitOrLogOut(event, false);
 	}
 
 }

@@ -34,7 +34,7 @@ public class Client_OL_MainVieController {
 	SetSceneController newScreen = new SetSceneController();
 
 	@FXML
-	Label lblWelcome = null;
+	private Label lblWelcome;
 
 	@FXML
 	Button btnCreatePickUp;
@@ -60,6 +60,8 @@ public class Client_OL_MainVieController {
 		ClientUI.chat.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
 		imageLogo.setImage(image);
+		lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
+				+ ChatClient.userController.getUser().getLastName() + "!");
 	}
 
 	/**
@@ -117,7 +119,7 @@ public class Client_OL_MainVieController {
 	@FXML
 	public void getExitBtn(ActionEvent event) throws Exception {
 		ChatClient.salesForSubscriber.clear();
-		ChatClient.firstOrderSubscriber=false;
+		ChatClient.firstOrderSubscriber = false;
 		newScreen.exitOrLogOut(event, false);
 	}
 
@@ -129,7 +131,7 @@ public class Client_OL_MainVieController {
 	@FXML
 	void clickOnLogout(ActionEvent event) {
 		ChatClient.salesForSubscriber.clear();
-		ChatClient.firstOrderSubscriber=false;
+		ChatClient.firstOrderSubscriber = false;
 		newScreen.exitOrLogOut(event, true);
 	}
 

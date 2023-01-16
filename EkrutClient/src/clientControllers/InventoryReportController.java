@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import client.ChatClient;
 import client.ClientUI;
 import entities.InventoryReport;
+import enums.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +69,8 @@ public class InventoryReportController {
 		String device = inventoryReport.getDeviceName();
 		String month = inventoryReport.getMonth();
 		String year = inventoryReport.getYear();
-		String area = ChatClient.inventoryReportController.getAreaForCEO();
+		String areaCeo = ChatClient.inventoryReportController.getAreaForCEO();
+		String areaManager = ChatClient.userController.getUser().getRegion().toString();
 
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
@@ -77,7 +79,12 @@ public class InventoryReportController {
 			Integer underThresCount = pr.getValue();
 			pieChartData.add(new PieChart.Data(product + "-" + underThresCount, underThresCount));
 		}
-		lblAreaField.setText(area);
+		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
+		lblAreaField.setText(areaCeo);
+		}
+		else {
+			lblAreaField.setText(areaManager);
+		}
 		lblDeviceField.setText(device);
 		lblTresholdField.setText(deviceThres.toString());
 		lblReportDate.setText(month + "/" + year);

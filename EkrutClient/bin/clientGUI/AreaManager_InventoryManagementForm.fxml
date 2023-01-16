@@ -21,7 +21,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="92.0" layoutY="28.0" prefHeight="102.0" prefWidth="335.0" text="Inventory Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="55.0" layoutY="29.0" prefHeight="94.0" prefWidth="398.0" text="Inventory Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="32.0" />
          </font>
