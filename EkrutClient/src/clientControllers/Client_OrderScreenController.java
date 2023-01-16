@@ -255,6 +255,7 @@ public class Client_OrderScreenController {
 	 */
 	@FXML
 	void clickOnBack(ActionEvent event) {
+		ChatClient.checkWindowTimeThread.interrupt();
 		productInCartControllers.clear();
 		productControllers.clear();
 		selectedProducts.clear();
