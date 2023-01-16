@@ -283,12 +283,12 @@ public class Client_OrderConfirmationController {
 				ClientUI.chat.accept(new Message(Request.Get_Area_manager_UserName,
 						ChatClient.costumerController.getCostumer().getRegion().toString()));
 
-				ArrayList<String> nameAndMessage = new ArrayList<>();
-
-				nameAndMessage.addAll(Arrays.asList(ChatClient.userController.getAreaManagerUserNAme(), "In "
-						+ deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
-				ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
 				if (ChatClient.cartController.getCart().containsKey(product)) {
+					ArrayList<String> nameAndMessage = new ArrayList<>();
+
+					nameAndMessage.addAll(Arrays.asList(ChatClient.userController.getAreaManagerUserNAme(), "In "
+							+ deviceName + "'s device, product: " + product.getProductName() + " is under threshold!"));
+					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
 					ClientUI.chat.accept(new Message(Request.Update_ThresholdTable, product));
 				}
 			}
