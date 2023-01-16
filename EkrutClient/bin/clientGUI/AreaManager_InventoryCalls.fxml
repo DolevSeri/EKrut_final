@@ -22,7 +22,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="125.0" layoutY="45.0" prefHeight="82.0" prefWidth="388.0" text="Create Stock Calls" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="125.0" layoutY="45.0" prefHeight="81.0" prefWidth="395.0" text="Create Stock Calls" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="40.0" />
          </font>

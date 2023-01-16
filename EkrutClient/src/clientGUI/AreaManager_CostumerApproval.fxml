@@ -23,7 +23,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="187.0" layoutY="22.0" prefHeight="88.0" prefWidth="347.0" text="Users Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="168.0" layoutY="29.0" prefHeight="80.0" prefWidth="406.0" text="Users Management" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="40.0" />
          </font>

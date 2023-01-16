@@ -256,7 +256,7 @@ public class UserManagement_UserInformationController {
 		} else {
 			ClientUI.chat.accept(new Message(Request.Update_Customer_Request, username));
 			scene.popUpMessage(
-					"Customer created successfully!\nThe customer recived 20% discount for his first purchase");
+					"Customer updated successfully!\nThe customer recived 20% discount for his first purchase");
 			nameAndMessageMember.addAll(Arrays.asList(username, "Congragulation!\nYou are finally a member at EKrut!\n"
 					+ "You have 20% discount on your first purchase"));
 			ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessageMember));

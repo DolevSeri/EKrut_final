@@ -18,7 +18,7 @@
             <ImageView fx:id="picture" fitHeight="380.0" fitWidth="381.0" layoutX="13.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
-      <Label layoutX="125.0" layoutY="14.0" prefHeight="107.0" prefWidth="467.0" text="Set Devices Threshold " textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="125.0" layoutY="14.0" prefHeight="105.0" prefWidth="474.0" text="Set Devices Threshold " textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="40.0" />
          </font>

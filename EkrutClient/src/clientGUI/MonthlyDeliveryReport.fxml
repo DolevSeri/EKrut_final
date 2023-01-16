@@ -45,7 +45,7 @@
       </Button>
       <Label layoutX="39.0" layoutY="10.0" prefHeight="154.0" prefWidth="352.0" text="Deliveries Report " textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
-            <Font name="Cooper Black" size="39.0" />
+            <Font name="Cooper Black" size="30.0" />
          </font>
       </Label>
       <Label fx:id="lblDate" layoutX="231.0" layoutY="151.0" prefHeight="26.0" prefWidth="97.0">

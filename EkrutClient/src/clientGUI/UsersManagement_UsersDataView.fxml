@@ -31,7 +31,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Label layoutX="98.0" layoutY="-1.0" prefHeight="89.0" prefWidth="292.0" text="User Information" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="87.0" prefHeight="90.0" prefWidth="366.0" text="User Information" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
             <Font name="Cooper Black" size="39.0" />
          </font>

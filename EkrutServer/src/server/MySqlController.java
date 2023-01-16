@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -137,7 +138,11 @@ public class MySqlController {
 	}
 
 	/**
-	 * @author ron
+	 * @author Ron This method updates the login status of a user in the
+	 *         "ekrut.users" database table.
+	 * @param user A User object representing the user whose login status is being
+	 *             updated.
+	 * @throws SQLException If an error occurs while executing the SQL statement.
 	 */
 	public static void UserLogoutAndUpdateDB(User user) throws SQLException {
 		PreparedStatement ps = dbConnector
@@ -152,6 +157,16 @@ public class MySqlController {
 		}
 	}
 
+	/**
+	 * @author Ron This method imports user data from the "ekrut.users" database
+	 *         table and creates a User object with the imported data.
+	 * 
+	 * @param userInfo An ArrayList of Strings containing the user's username and
+	 *                 status.
+	 * @return A User object containing the imported data or null if the user is not
+	 *         found.
+	 * @throws SQLException If an error occurs while executing the SQL statement.
+	 */
 	public static User importUserData(ArrayList<String> userInfo) {
 		String username = userInfo.get(0), status = userInfo.get(1);
 		User user = null;
@@ -178,6 +193,19 @@ public class MySqlController {
 		return user;
 	}
 
+	/**
+	 * 
+	 * This method updates a user's role to "customer" in the "ekrut.users" and
+	 * "ekrut.customers" database tables.
+	 * 
+	 * Additionally, it also inserts the customer's credit card, subscriber ID,
+	 * status, and device name into the "ekrut.customers" table.
+	 * 
+	 * @param userData An ArrayList of Strings containing the user's username,
+	 *                 credit card number, and membership status.
+	 * 
+	 * @throws SQLException If an error occurs while executing the SQL statement.
+	 */
 	public static void updateUserToCustomer(ArrayList<String> userData) {
 		String username = userData.get(0), creditCard = userData.get(1);
 		int isMember = Integer.valueOf(userData.get(2));
@@ -263,6 +291,15 @@ public class MySqlController {
 		}
 	}
 
+	/**
+	 * This method updates a customer's status to "member" in the "costumers" table
+	 * in the database. It finds the maximum subscriber ID of all members,
+	 * increments it by 1, and then updates the subscriber ID for the customer with
+	 * the specified username.
+	 * 
+	 * @param username the username of the customer to update
+	 * 
+	 */
 	public static void updateCostumerToMember(String username) {
 		PreparedStatement ps = null;
 		int isMember = 0;
@@ -295,6 +332,17 @@ public class MySqlController {
 		System.out.println("Update customer to member succeed");
 	}
 
+	/**
+	 * This method retrieves delivery report data from the database for a specified
+	 * month and year.
+	 * 
+	 * @param reportDetails An ArrayList of strings containing the details of the
+	 *                      report to retrieve. The month should be in index 2 and
+	 *                      the year in index 1
+	 * @return A DeliveryReport object containing the data for the specified month
+	 *         and year, or null if no data is found or an error occurs.
+	 */
+
 	public static DeliveryReport getDeliveryReportData(ArrayList<String> reportDetails) {
 		String year = reportDetails.get(1), month = reportDetails.get(2);
 		int numOfDeliveries = 0;
@@ -322,6 +370,17 @@ public class MySqlController {
 		DeliveryReport report = new DeliveryReport(month, year, numOfDeliveries, totalSumIncomes);
 		return report;
 	}
+
+	/**
+	 * 
+	 * This method retrieves order report data from a database and returns it as an
+	 * OrderReport object.
+	 * 
+	 * @param reportDetails A list of strings containing the desired area, year, and
+	 *                      month for the report.
+	 * @return An OrderReport object containing the data for the specified month,
+	 *         year, and area. Returns null if no data is found.
+	 */
 
 	public static OrderReport getOrdersReportData(ArrayList<String> reportDetails) {
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
@@ -372,6 +431,17 @@ public class MySqlController {
 		return report;
 	}
 
+	/**
+	 * 
+	 * This method retrieves inventory report data from a database and returns it as
+	 * an InventoryReport object.
+	 * 
+	 * @param reportDetails A list of strings containing the desired year, month,
+	 *                      and device for the report.
+	 * @return An InventoryReport object containing the data for the specified
+	 *         month, year, and device. Returns null if no data is found.
+	 */
+
 	public static InventoryReport getInventoryReportData(ArrayList<String> reportDetails) {
 
 		String year = reportDetails.get(1), month = reportDetails.get(2), device = reportDetails.get(4);
@@ -419,6 +489,18 @@ public class MySqlController {
 		return report;
 	}
 
+	/**
+	 * 
+	 * Retrieves customer report data from a database for a given month, year, and
+	 * area (region). The data includes counts for low, medium, high, and very high
+	 * levels of customer activity.
+	 * 
+	 * @param reportDetails An ArrayList containing the region, year, and month for
+	 *                      which to retrieve the report data.
+	 * @return A CostumersReport object containing the retrieved data, or null if
+	 *         the data could not be retrieved.
+	 */
+
 	public static CostumersReport getCostumersReportData(ArrayList<String> reportDetails) {
 
 		String area = reportDetails.get(0), year = reportDetails.get(1), month = reportDetails.get(2);
@@ -457,6 +539,16 @@ public class MySqlController {
 		return costumersReport;
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of all devices from a database that are located in a given
+	 * area (region).
+	 * 
+	 * @param region A string representing the region for which to retrieve devices.
+	 * @return An ArrayList of Device objects representing the retrieved devices, or
+	 *         an empty list if no devices were found.
+	 */
+
 	public static ArrayList<Device> getAllDevicesByArea(String region) {
 		PreparedStatement ps;
 		ArrayList<Device> devices = new ArrayList<>();
@@ -473,6 +565,14 @@ public class MySqlController {
 		}
 		return devices;
 	}
+
+	/**
+	 * 
+	 * Retrieves a list of not approved costumers from the database by their region.
+	 * 
+	 * @param region the region to filter by
+	 * @return a list of not approved costumers from the specified region
+	 */
 
 	public static ArrayList<Costumer> getNotApprovedCostumersByArea(String region) {
 		PreparedStatement ps;
@@ -496,6 +596,12 @@ public class MySqlController {
 		return costumers;
 	}
 
+	/**
+	 * 
+	 * This method updates the threshold of a list of devices in the database.
+	 * 
+	 * @param devicesToUpdate a list of devices to update
+	 */
 	public static void updateDeviceThreshold(ArrayList<Device> devicesToUpdate) {
 		PreparedStatement ps;
 		try {
@@ -515,6 +621,13 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * 
+	 * This method updates the status of a list of costumers in the database.
+	 * 
+	 * @param CostumerToUpdate a list of costumer objects containing the new status
+	 *                         to be updated
+	 */
 	public static void updateCostumerStatus(ArrayList<Costumer> CostumerToUpdate) {
 		PreparedStatement ps;
 		try {
@@ -534,6 +647,16 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * 
+	 * This method creates a monthly delivery report for a given month and year. The
+	 * report includes the total number of deliveries and total income from those
+	 * deliveries. The report data is inserted into a delivery_report table in the
+	 * database.
+	 * 
+	 * @param reportData a list of data containing the month, year and other
+	 *                   information needed to create the report
+	 */
 	public static void createMonthlyDeliveryReport(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1);
 		int numOfDeliveries = 0;
@@ -636,10 +759,10 @@ public class MySqlController {
 				ps.setInt(5, totalPickUpOrders);
 				ps.setString(6, mostSelling);
 				if (devices == "")
-					devices=null;
+					devices = null;
 				ps.setString(7, devices);
 				if (incomes == "")
-					incomes=null;
+					incomes = null;
 				ps.setString(8, incomes);
 
 			} catch (Exception e) {
@@ -724,7 +847,7 @@ public class MySqlController {
 				ps.setString(1, month);
 				ps.setString(2, year);
 				ps.setString(3, device);
-				if (itemsList=="")
+				if (itemsList == "")
 					itemsList = null;
 				ps.setString(4, itemsList);
 				ps.setString(5, itemUnderThres);
@@ -743,15 +866,16 @@ public class MySqlController {
 
 	}
 
-	/*
+	/**
 	 * Retrieves a count of the number of products that were below a certain
 	 * threshold for a given month and year, for a specific device.
 	 * 
 	 * @param reportData an ArrayList of Strings containing the month, year, and
-	 * device for which the report is to be generated, in that order
+	 *                   device for which the report is to be generated, in that
+	 *                   order
 	 * 
 	 * @return a HashMap mapping product codes to their respective count of being
-	 * below the threshold
+	 *         below the threshold
 	 */
 	public static HashMap<String, Integer> getProductsUnderThresholdCount(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1), device = reportData.get(2);
@@ -777,6 +901,16 @@ public class MySqlController {
 		}
 		return productsThres;
 	}
+
+	/**
+	 * 
+	 * Retrieves the threshold of a specific device from the "devices" table in the
+	 * database.
+	 * 
+	 * @param device the name of the device to retrieve the threshold for
+	 * @return the threshold of the specified device or null if the device is not
+	 *         found
+	 */
 
 	public static Integer getDeviceThreshold(String device) {
 		Integer thres = 0;
@@ -845,6 +979,15 @@ public class MySqlController {
 		return null;
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of products that are below the threshold in a specific
+	 * device from the "products" and "product_in_device" table in the database.
+	 * 
+	 * @param deviceName the name of the device to retrieve the products from.
+	 * @return A list of products that are below the threshold in the specified
+	 *         device or null if no products are found or an error occurs.
+	 */
 	public static ArrayList<ProductInDevice> getProductsUnderThresholdFromDevice(String deviceName) {
 		// Need to make the query to bring only products under threshold
 		ArrayList<ProductInDevice> products = new ArrayList<>();
@@ -914,14 +1057,14 @@ public class MySqlController {
 		return null;
 	}
 
-	/*
+	/**
 	 * Creates a report on the activity level of customers in a given area during a
 	 * specific month and year. The activity level is defined as follows: low
 	 * activity: 0 to 5 orders medium activity: 6 to 12 orders high activity: 13 to
 	 * 20 orders very high activity: more than 20 orders
 	 * 
 	 * @param reportData an ArrayList of Strings containing the month, year, and
-	 * area for which the report is to be generated, in that order
+	 *                   area for which the report is to be generated, in that order
 	 */
 	public static void createMonthlyCostumersReport(ArrayList<String> reportData) {
 		String month = reportData.get(0), year = reportData.get(1), area = reportData.get(2);
@@ -990,7 +1133,7 @@ public class MySqlController {
 
 	}
 
-	/*
+	/**
 	 * method will return the number of orders that related to costumer that he made
 	 * on related month and year
 	 * 
@@ -1022,7 +1165,7 @@ public class MySqlController {
 		return cnt;
 	}
 
-	/*
+	/**
 	 * method will return all costumers that approved on specific area
 	 * 
 	 * @param area name
@@ -1062,6 +1205,18 @@ public class MySqlController {
 		return areaCostumers;
 	}
 
+	/**
+	 * 
+	 * This method creates an inventory call for a specific device and product under
+	 * thershold. It checks if there is already an open inventory call for the same
+	 * device and product, if there is, it returns false, indicating that the call
+	 * was not created. If the call is created successfully, it returns true.
+	 * 
+	 * @param callData - an ArrayList of Strings containing the device name and
+	 *                 product name to create the call for.
+	 * @return boolean - indicating whether the call was created successfully or
+	 *         not.
+	 */
 	public static boolean createInventoryCall(ArrayList<String> callData) {
 		String device = callData.get(0), product = callData.get(1);
 		int isExist = 0;
@@ -1103,6 +1258,18 @@ public class MySqlController {
 		return true;
 	}
 
+	/**
+	 * 
+	 * This method imports all orders from the database and returns a List of Order
+	 * objects. It uses a PreparedStatement to query the "ekrut.orders" table and
+	 * retrieves all rows from the table. For each row, it creates an Order object
+	 * and populates it with the data from the current row. The Order object is then
+	 * added to the List of orders. If any exception occurs, it will print the stack
+	 * trace and a message indicating that the execution of statement failed.
+	 * 
+	 * @return A List of Order objects representing all the orders in the
+	 *         "ekrut.orders" table.
+	 */
 	public static List<Order> importOrders() {
 		List<Order> orders = new ArrayList<>();
 		try {
@@ -1119,6 +1286,14 @@ public class MySqlController {
 
 		return orders;
 	}
+
+	/**
+	 * 
+	 * This method updates an existing order in the database.
+	 * 
+	 * @param order the order object containing the updated information to be stored
+	 *              in the database
+	 */
 
 	public static void updateOrder(Order order) {
 		try {
@@ -1147,6 +1322,13 @@ public class MySqlController {
 		}
 	}
 
+	/**
+	 * 
+	 * This method updates the status and quantity of a list of products in a
+	 * specific device in the database.
+	 * 
+	 * @param productsInDevice a list of products to update in the database
+	 */
 	public static void updateProductsInDevice(List<ProductInDevice> productsInDevice) {
 		PreparedStatement ps, ps2;
 		try {
@@ -1173,6 +1355,20 @@ public class MySqlController {
 		}
 
 	}
+
+	/**
+	 * 
+	 * Retrieves a list of InventoryCall objects from a database based on the given
+	 * region and status.
+	 * 
+	 * @param regionAndStatus a list containing the region and status to filter the
+	 *                        inventory calls by. The first element should be the
+	 *                        region and the second element should be the status. If
+	 *                        the status element is null, it will not be used in the
+	 *                        query.
+	 * @return an ArrayList of InventoryCall objects that match the given region and
+	 *         status.
+	 */
 
 	public static ArrayList<InventoryCall> getInventoryCallsByRegionAndStatus(ArrayList<String> regionAndStatus) {
 		PreparedStatement ps;
@@ -1204,7 +1400,7 @@ public class MySqlController {
 	/**
 	 * salesPatternToDB-a method that will save a salesPattern in the DB
 	 * 
-	 * @param SalesPattern sp
+	 * @param SalesPattern sp, sp is a sale pattern
 	 */
 
 	public static void salesPatternToDB(SalesPattern sp) {
@@ -1233,6 +1429,13 @@ public class MySqlController {
 		System.out.println("Enter new SalesPattern successfully");
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of SalesPattern objects from the database.
+	 * 
+	 * @return an ArrayList of SalesPattern objects that are in the sales_patterns
+	 *         table in the database.
+	 */
 	public static ArrayList<SalesPattern> importSalesPattern() {
 		ArrayList<SalesPattern> salespatterns = new ArrayList<>();
 		try {
@@ -1249,6 +1452,15 @@ public class MySqlController {
 
 		return salespatterns;
 	}
+
+	/**
+	 * 
+	 * Retrieves a list of Sale objects from the database that have an 'ACTIVATE'
+	 * status.
+	 * 
+	 * @return an ArrayList of Sale objects that are in the sales table in the
+	 *         database and have an 'ACTIVATE' status.
+	 */
 
 	public static ArrayList<Sale> importSales() {
 		ArrayList<Sale> sale = new ArrayList<>();
@@ -1293,6 +1505,12 @@ public class MySqlController {
 		System.out.println("Enter new Sales successfully");
 	}
 
+	/**
+	 * 
+	 * Inserts or updates a Sale object in the database.
+	 * 
+	 * @param sale the Sale object to be inserted or updated in the database.
+	 */
 	public static void savePickUpOrderInDB(int orderID) {
 		try {
 			PreparedStatement ps = dbConnector
@@ -1338,6 +1556,16 @@ public class MySqlController {
 		return pickUpOrders;
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of order IDs from the orders table in the database for a
+	 * given username where the order is a pickup order and not yet collected.
+	 * 
+	 * @param username the username to filter the orders by.
+	 * @return an ArrayList of order IDs that match the given username and are
+	 *         pickup orders that haven't been collected.
+	 */
+
 	public static void updatePickUPasCollected(Integer orderToUpdate) {
 		PreparedStatement ps;
 		try {
@@ -1355,6 +1583,12 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * 
+	 * Inserts a delivery object into the delivery table in the database
+	 * 
+	 * @param delivery the Delivery object to be inserted in the database.
+	 */
 	public static void saveDeliveryInOrders(Delivery delivery) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
@@ -1379,6 +1613,12 @@ public class MySqlController {
 
 	}
 
+	/**
+	 * 
+	 * Updates the status of a Sale object in the sales table in the database.
+	 * 
+	 * @param sale the Sale object to be updated in the database.
+	 */
 	public static void updateSaleStatusInDB(Sale sale) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
@@ -1399,6 +1639,15 @@ public class MySqlController {
 		System.out.println("UPDATE Sales successfully");
 	}
 
+	/**
+	 * 
+	 * Retrieves the order data for a specific user from the ekrut.orders table in
+	 * the database.
+	 * 
+	 * @param username The username of the user whose order data is to be retrieved.
+	 * @return An ArrayList of Order objects, containing the order data for the
+	 *         specified user.
+	 */
 	public static ArrayList<Order> getOrdersDataOfUSER(String username) {
 		ArrayList<Order> orders = new ArrayList<>();
 		try {
@@ -1422,6 +1671,14 @@ public class MySqlController {
 		return orders;
 	}
 
+	/**
+	 * 
+	 * Retrieves the customer data for a specific user from the ekrut.costumers
+	 * table in the database.
+	 * 
+	 * @param username The username of the customer whose data is to be retrieved.
+	 * @return A Costumer object, containing the data for the specified user.
+	 */
 	public static Costumer importCustomerDataToUpdate(String username) {
 		Costumer c = null;
 		try {
@@ -1443,6 +1700,13 @@ public class MySqlController {
 		return c;
 	}
 
+	/**
+	 * 
+	 * Updates the status of a specific sale in the ekrut.sales table in the
+	 * database to "DONE".
+	 * 
+	 * @param sale The Sale object whose status is to be updated.
+	 */
 	public static void updateSaleStatusdoneInDB(Sale sale) {
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement("UPDATE ekrut.sales SET status = ? WHERE saleID = ?");
@@ -1463,6 +1727,16 @@ public class MySqlController {
 		System.out.println("UPDATE Sales successfully");
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of deliveries from the ekrut.delivery table in the database
+	 * based on the specified area and status.
+	 * 
+	 * @param data ArrayList containing two elements, the area and status of the
+	 *             deliveries to be retrieved.
+	 * @return An ArrayList of Delivery objects, containing the data of the
+	 *         deliveries that match the specified area and status.
+	 */
 	public static ArrayList<Delivery> getDeliveriesByArea(ArrayList<String> data) {
 		ArrayList<Delivery> deliveries = new ArrayList<>();
 		String area = data.get(0), status = data.get(1);
@@ -1491,6 +1765,14 @@ public class MySqlController {
 		return deliveries;
 	}
 
+	/**
+	 * 
+	 * Updates the status of multiple deliveries in the ekrut.delivery table in the
+	 * database.
+	 * 
+	 * @param deliveryToUpdate An ArrayList of Delivery objects, containing the
+	 *                         updated delivery statuses.
+	 */
 	public static void updateDeliveryStatus(ArrayList<Delivery> deliveryToUpdate) {
 		try {
 			PreparedStatement ps = dbConnector
@@ -1507,6 +1789,15 @@ public class MySqlController {
 			System.out.println("Execute query failed on updateDeliveryStatus");
 		}
 	}
+
+	/**
+	 * 
+	 * Updates the arrival time of multiple deliveries in the ekrut.delivery table
+	 * in the database.
+	 * 
+	 * @param deliveryToUpdate An ArrayList of Delivery objects, containing the
+	 *                         updated arrival time of deliveries.
+	 */
 
 	public static void updateDeliveryArrivalTime(ArrayList<Delivery> deliveryToUpdate) {
 		try {
@@ -1526,6 +1817,14 @@ public class MySqlController {
 		}
 	}
 
+	/**
+	 * 
+	 * Updates the quantity of a product in a specific device, and closes a call in
+	 * the ekrut.inventory_calls table in the database.
+	 * 
+	 * @param data An ArrayList containing four elements: the device name, product
+	 *             name, new quantity and the call ID.
+	 */
 	public static void UpdateProductQuantityAndCloseCall(ArrayList<String> data) {
 		String deviceName = data.get(0), productName = data.get(1), newQuantity = data.get(2), callID = data.get(3);
 		try {
@@ -1559,6 +1858,17 @@ public class MySqlController {
 		System.out.println("Update Product Quantity And Close Call success!");
 	}
 
+	/**
+	 * 
+	 * Retrieves a list of deliveries from the ekrut.delivery table in the database
+	 * for a specific customer based on the specified status of the deliveries.
+	 * 
+	 * @param username The username of the customer whose deliveries are to be
+	 *                 retrieved.
+	 * @return An ArrayList of Delivery objects, containing the data of the
+	 *         deliveries that match the customer's username and whose status is
+	 *         either NOTAPPROVED or APPROVED.
+	 */
 	public static ArrayList<Delivery> getDeliveriesByCustomer(String username) {
 		ArrayList<Delivery> deliveries = new ArrayList<>();
 		try {
@@ -1585,6 +1895,16 @@ public class MySqlController {
 		return deliveries;
 	}
 
+	/**
+	 * 
+	 * Retrieves the username of an area manager from the ekrut.users table in the
+	 * database based on the specified region.
+	 * 
+	 * @param region The region for which the area manager's username is to be
+	 *               retrieved.
+	 * @return A string containing the username of the area manager for the
+	 *         specified region
+	 */
 	public static String getAreaManagerUsername(String region) {
 		PreparedStatement ps;
 		String areaManagerUsername = null;
@@ -1603,6 +1923,15 @@ public class MySqlController {
 		return areaManagerUsername;
 	}
 
+	/**
+	 * 
+	 * Retrieves the customer data from the ekrut.costumers table in the database
+	 * based on the specified order ID.
+	 * 
+	 * @param orderID The order ID of the customer whose data is to be retrieved.
+	 * @return A Costumer object, containing the data for the customer associated
+	 *         with the specified order ID.
+	 */
 	public static Costumer getCustomerByOrderID(int orderID) {
 		PreparedStatement ps;
 		Costumer c = null;
@@ -1628,8 +1957,22 @@ public class MySqlController {
 		return c;
 	}
 
+	/**
+	 * 
+	 * Update the count of a product that is under the threshold level in the
+	 * ekrut.products_under_threshold table in the database. The product is
+	 * identified by its deviceName, productCode, productName, month and year If the
+	 * product is not exist in the table it will be inserted with count 1 If the
+	 * product is exist it will update the count by adding 1 to the current count
+	 * 
+	 * @param product A ProductInDevice object containing the product's information.
+	 */
+
 	public static void updateProductInProductsUnderThreshold(ProductInDevice product) {
-		String currentMonthNumber = String.valueOf(LocalDate.now().getMonthValue());
+		// String currentMonthNumber = String.valueOf(LocalDate.now().getMonthValue());
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM");
+		String formattedMonth = date.format(formatter);
 		String currentYear = String.valueOf(LocalDate.now().getYear());
 		PreparedStatement ps;
 		try {
@@ -1639,13 +1982,31 @@ public class MySqlController {
 			ps.setString(1, product.getDevice());
 			ps.setInt(2, product.getProductCode());
 			ps.setString(3, product.getProductName());
-			ps.setString(4, currentMonthNumber);
+			ps.setString(4, formattedMonth);
 			ps.setString(5, currentYear);
 			ps.executeUpdate();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 	}
+
+	/**
+	 * 
+	 * This method imports users from a "register_service" schema in a MySQL
+	 * database and inserts them into the "ekrut" schema in the same database. It
+	 * first establishes a connection to the "register_service" schema using the
+	 * JDBC driver and a set of credentials (username, password) and then retrieves
+	 * the data from the "users" table. Then, it establishes a connection to the
+	 * "ekrut" schema and uses a prepared statement to insert the data into the
+	 * "users" table in the "ekrut" schema. The method uses a "WHERE NOT EXISTS"
+	 * clause to ensure that duplicate users are not inserted. The method also sets
+	 * the value of the "isLoggedIn" field to 0 for all imported users. If the
+	 * import is successful, it prints a message "Users imported succsesfully!" to
+	 * the console, otherwise it prints "Users import failed!"
+	 * 
+	 * @throws SQLException if there is an issue with the SQL query or database
+	 *                      connection.
+	 */
 
 	public static void importUsers() {
 		// Connect to the "register_service" schema

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -37,6 +38,10 @@ public class Client_EK_MainViewController {
 
 	@FXML
 	private ImageView logoImage;
+	
+    @FXML
+    private Label lblWelcome;
+    
 	/**
 	 * Initialize the view by setting the logo image.
 	 * @throws IOException
@@ -44,6 +49,8 @@ public class Client_EK_MainViewController {
 	public void initialize() throws IOException{
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
 		logoImage.setImage(image);
+		lblWelcome.setText("Welcome Back " + ChatClient.userController.getUser().getFirstName() + " "
+				+ ChatClient.userController.getUser().getLastName() + "!");
 	}
 
 	@FXML

@@ -49,7 +49,7 @@
             <Blend mode="BLUE" />
          </effect>
       </Button>
-      <Label fx:id="lblArea" layoutX="218.0" layoutY="128.0" text="Area:" textFill="#8d48e1" underline="true">
+      <Label fx:id="lblArea" layoutX="169.0" layoutY="128.0" text="Area:" textFill="#8d48e1" underline="true">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
