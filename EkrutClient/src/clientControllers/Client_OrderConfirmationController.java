@@ -189,11 +189,22 @@ public class Client_OrderConfirmationController {
 		if (cntUnderTreshold > 0)
 			updateSystemProductsUnderThreshold(tresholdLevel, deviceName);
 		ChatClient.cartController.clearCart();
+		String orderCode = "";
+		switch (ChatClient.costumerController.getSuplyMethod()) {
+		case Standart:
+			break;
+		case PickUp:
+			orderCode = "Order code: " + String.valueOf(ChatClient.orderController.getOrdersList().size() + 1);
+			break;
+		default:
+			break;
+		}
 		if (clickonDeferredPayment == true) {
 			newScreen.popUpMessage("The order has been placed!\n The payment will decrease next month\n"
-					+ "\n Order details will send to you via Email ans SMS!");
+					+ "\n Order details will send to you via Email ans SMS!\n" + orderCode);
 		} else {
-			newScreen.popUpMessage("Payment confirmed!\n Order details will send to you via Email ans SMS!");
+			newScreen.popUpMessage(
+					"Payment confirmed!\n Order details will send to you via Email ans SMS!\n" + orderCode);
 		}
 
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window

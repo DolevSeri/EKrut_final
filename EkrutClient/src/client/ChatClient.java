@@ -42,8 +42,8 @@ import entityControllers.UserController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import ocsf.client.AbstractClient;
 
