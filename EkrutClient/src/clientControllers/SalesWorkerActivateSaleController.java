@@ -48,10 +48,9 @@ public class SalesWorkerActivateSaleController {
 
 	@FXML
 	private ImageView saleImage;
-  	@FXML
+	@FXML
 	private ImageView logo;
-   public ArrayList<SaleCoulmnController> saleControllers=new ArrayList<>();
-
+	public ArrayList<SaleCoulmnController> saleControllers = new ArrayList<>();
 
 	/**
 	 * 
@@ -62,14 +61,12 @@ public class SalesWorkerActivateSaleController {
 	 */
 
 	public void initialize() throws IOException {
-			ClientUI.chat.accept(new Message(Request.import_Sales, null));
-			setSale();
-			Image image = new Image("/images/SalesMenagerScreenImage.png");
-			saleImage.setImage(image);
-			Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
-			logo.setImage(imagelogo);
-			
-		
+		ClientUI.chat.accept(new Message(Request.importNeedToActivateSale, null));
+		setSale();
+		Image image = new Image("/images/SalesMenagerScreenImage.png");
+		saleImage.setImage(image);
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
 
 	}
 
@@ -110,10 +107,8 @@ public class SalesWorkerActivateSaleController {
 	public void setSale() throws IOException {
 		int row = 3;
 		int i = 0;
-		System.out.println(ChatClient.salesController.getSales().toString());
-		for (Sale sale : ChatClient.salesController.getSales()) {
-			if (sale.getStatus().toString().equals("NEEDTOACTIVATE")
-					&& sale.getRegion().toString().equals(ChatClient.userController.getUser().getRegion().toString())) {
+		for (Sale sale : ChatClient.salesController.getSalesNeedToActivate()) {
+			if (sale.getRegion().toString().equals(ChatClient.userController.getUser().getRegion().toString())) {
 				FXMLLoader fxmlLoader = new FXMLLoader();
 				fxmlLoader.setLocation(getClass().getResource("/clientGUI/SaleCoulmn.fxml"));
 				AnchorPane anchorPane = fxmlLoader.load();

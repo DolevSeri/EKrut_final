@@ -494,17 +494,24 @@ public enum Request {
 		}
 	},
 
-
-	Get_Arrived_Deliveries{
-			public String toString() {
-				return "Request to import arrived deliveries";
-			}
-		},
-	Arrived_Deliveries_Imported{
-			public String toString() {
-				return "Arrived deliveries imported";
-			}
+	Get_Arrived_Deliveries {
+		public String toString() {
+			return "Request to import arrived deliveries";
 		}
-	}
-	
-
+	},
+	Arrived_Deliveries_Imported {
+		public String toString() {
+			return "Arrived deliveries imported";
+		}
+	},
+	importNeedToActivateSale {
+		public String toString() {
+			return "Request to import NEEDTOACTIVATE sales";
+		}
+	},
+	NeedToActivateSale_imported {
+		public String toString() {
+			return " Need to activate sales imported";
+		}
+	},
+}

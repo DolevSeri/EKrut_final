@@ -22,6 +22,27 @@ public class SaleController {
 	 * ObservableList of Sale objects that stores the sale data
 	 */
 	private ObservableList<Sale> sales = FXCollections.observableArrayList();
+	private ObservableList<Sale> salesNeedToActivate = FXCollections.observableArrayList();
+
+	/**
+	 * 
+	 * Returns the ObservableList of Sale objects
+	 * 
+	 * @return the salesNeedToActivate
+	 */
+	public ObservableList<Sale> getSalesNeedToActivate() {
+		return salesNeedToActivate;
+	}
+
+	/**
+	 * 
+	 * Sets the ObservableList of Sale objects
+	 * 
+	 * @param salesNeedToActivate the sales to set
+	 */
+	public void setSalesNeedToActivate(ObservableList<Sale> salesNeedToActivate) {
+		this.salesNeedToActivate = salesNeedToActivate;
+	}
 
 	/**
 	 * 
