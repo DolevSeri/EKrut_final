@@ -200,7 +200,7 @@ public class Client_DeliveryConfirmationController {
 			ChatClient.cartController.clearCart();
 			if (clickonDeferredPayment == true) {
 				newScreen.popUpMessage("The order has been placed!\n The payment will decrease next month (:\n"
-						+ "\n Order details will send to you via Email ans SMS!\nAnd your order code is: \"\n"
+						+ "\n Order details will send to you via Email ans SMS!\nAnd your order code is: "
 						+ delivery.getOrderID());
 			} else {
 				newScreen.popUpMessage(

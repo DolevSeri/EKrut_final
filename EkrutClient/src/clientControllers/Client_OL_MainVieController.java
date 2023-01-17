@@ -85,6 +85,8 @@ public class Client_OL_MainVieController {
 
 	@FXML
 	void clickOnDeliveryOrder(ActionEvent event) {
+		// get Orders from DB
+		ClientUI.chat.accept(new Message(Request.getOrders, null));
 		Thread t = new Thread(new InactivityLogoutController());
 		ChatClient.checkWindowTimeThread = t;
 		t.start();
@@ -102,6 +104,8 @@ public class Client_OL_MainVieController {
 	 */
 	@FXML
 	void clickOnPickUpOrder(ActionEvent event) {
+		// get Orders from DB
+		ClientUI.chat.accept(new Message(Request.getOrders, null));
 		Thread t = new Thread(new InactivityLogoutController());
 		ChatClient.checkWindowTimeThread = t;
 		t.start();
