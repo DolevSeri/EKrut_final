@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="lib"/>
-	<classpathentry kind="src" path="UnitTestClient"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EkrutCommon">
 		<attributes>
 			<attribute name="module" value="true"/>
