@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * 
@@ -21,6 +22,29 @@ public class InventoryReport implements Serializable {
 	private HashMap<String, Integer> producsUnderThreshold = new HashMap<>();
 	private String mexProductUnderThres;
 	private Integer deviceThres;
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(deviceName, deviceThres, mexProductUnderThres, month, producsUnderThreshold, year);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InventoryReport other = (InventoryReport) obj;
+		return Objects.equals(deviceName, other.deviceName) && Objects.equals(deviceThres, other.deviceThres)
+				&& Objects.equals(mexProductUnderThres, other.mexProductUnderThres)
+				&& Objects.equals(month, other.month)
+				&& Objects.equals(producsUnderThreshold, other.producsUnderThreshold)
+				&& Objects.equals(year, other.year);
+	}
+
+
 
 	public InventoryReport(String month, String year, String deviceName, HashMap<String, Integer> producsUnderThreshold,
 			String mexProductUnderThres, Integer deviceThres) {
