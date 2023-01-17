@@ -57,7 +57,7 @@ public class AreaManager_CostumerApprovalController {
 
 	@FXML
 	private ImageView picture;
-	
+
 	@FXML
 	private ImageView logo;
 	@FXML
@@ -76,7 +76,7 @@ public class AreaManager_CostumerApprovalController {
 		picture.setImage(image);
 		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
 		logo.setImage(imagelogo);
-		
+
 		tblCostumers.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		setColumns();
 		setTableItems();
@@ -105,18 +105,18 @@ public class AreaManager_CostumerApprovalController {
 			ClientUI.chat.accept(new Message(Request.Costumer_Update_Status_Request, costumersToUpdate));
 			setTableItems();
 			scene.popUpMessage("Costumer approved succesfully!\nMessage sent to relevant customers");
-			
 
-			for(Costumer c : costumersToUpdate) {
+			for (Costumer c : costumersToUpdate) {
 				ArrayList<String> nameAndMessage = new ArrayList<>();
 				ArrayList<String> nameAndMessageMember = new ArrayList<>();
-				if(c.getSubscriberID() == -1) {
-					nameAndMessage.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a customer at EKrut!"));
+				if (c.getSubscriberID() == -1) {
+					nameAndMessage.addAll(Arrays.asList(c.getUsername(),
+							"Congragulation!\nYou are finally a customer at EKrut!\n Please Loggout and Loggin again!"));
 					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessage));
-				}
-				else {
-					nameAndMessageMember.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a member at EKrut!\n"
-							+ "You have 20% discount on your first purchase"));
+				} else {
+					nameAndMessageMember
+							.addAll(Arrays.asList(c.getUsername(), "Congragulation!\nYou are finally a member at EKrut!"
+									+ "You have 20% discount on your first purchase!\n Please Loggout and Loggin again!"));
 					ClientUI.chat.accept(new Message(Request.Send_Notification, nameAndMessageMember));
 
 				}
@@ -132,10 +132,8 @@ public class AreaManager_CostumerApprovalController {
 	 */
 	@FXML
 	void clickBtnHelp(ActionEvent event) {
-		scene.popUpMessage(
-				"1. Click on the customer you want to approve\n"
-				+ "2. You can choose multiple customers using CTRL button!\n"
-				+ "3. Click Approve coustomer ");
+		scene.popUpMessage("1. Click on the customer you want to approve\n"
+				+ "2. You can choose multiple customers using CTRL button!\n" + "3. Click Approve coustomer ");
 	}
 
 	/**
@@ -175,8 +173,8 @@ public class AreaManager_CostumerApprovalController {
 	}
 
 	/**
-	 * Clears the items in the table and sets them 
-	 * to the list of not-approved costumers for the specified area.
+	 * Clears the items in the table and sets them to the list of not-approved
+	 * costumers for the specified area.
 	 */
 	private void setTableItems() {
 		tblCostumers.getItems().clear();

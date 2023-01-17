@@ -262,6 +262,10 @@ public class ChatClient extends AbstractClient {
 			ArrayList<Delivery> arrivedDeliveries = (ArrayList<Delivery>) message.getObject();
 			deliveryController.addDeliveriesToAreaDeliv((FXCollections.observableArrayList(arrivedDeliveries)));
 			break;
+		case NeedToActivateSale_imported:
+			salesController
+					.setSalesNeedToActivate(FXCollections.observableArrayList((ArrayList<Sale>) message.getObject()));
+			break;
 		default:
 			break;
 		}

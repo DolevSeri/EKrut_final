@@ -45,17 +45,19 @@ public class SaleCoulmnController {
 	private Sale sale;
 	SalesWorkerActivateSaleController salesworkeractivate;
 	SetSceneController newScreen = new SetSceneController();
+
 	/**
-
-	This method is called when the activate button is clicked. It updates the sale's status in the system and on the sales worker's interface.
-
-	@param event - the button click event
-
-	@throws IOException
-	*/
+	 * 
+	 * This method is called when the activate button is clicked. It updates the
+	 * sale's status in the system and on the sales worker's interface.
+	 * 
+	 * @param event - the button click event
+	 * 
+	 * @throws IOException
+	 */
 	@FXML
 	void clickOnActivate(ActionEvent event) throws IOException {
-		for (Sale sale : ChatClient.salesController.getSales()) {
+		for (Sale sale : ChatClient.salesController.getSalesNeedToActivate()) {
 			if (sale.getSaleID() == this.sale.getSaleID()) {
 				sale.setStatus(SaleStatus.ACTIVATE);
 				this.sale.setStatus(SaleStatus.ACTIVATE);
@@ -64,8 +66,8 @@ public class SaleCoulmnController {
 			}
 		}
 
-		newScreen.popUpMessage("Sale has been activate(:");
-		ClientUI.chat.accept(new Message(Request.import_Sales, null));
+		newScreen.popUpMessage("Sale has been activate (:");
+		ClientUI.chat.accept(new Message(Request.importNeedToActivateSale, null));
 		salesworkeractivate.clearSales();
 		salesworkeractivate.saleControllers.clear();
 		salesworkeractivate.setSale();

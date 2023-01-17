@@ -1482,15 +1482,34 @@ public class MySqlController {
 		return sale;
 	}
 
-	public static void updateSaleInDB(Sale sale) {
+	public static ArrayList<Sale> importNEEDTOACTIVATESales() {
+		ArrayList<Sale> sale = new ArrayList<>();
 		try {
 			PreparedStatement ps = dbConnector.prepareStatement(
-					"INSERT INTO ekrut.sales(region, saleID, patternID,status) " + "VALUES (?, ?, ?, ?)");
+					"SELECT ekrut.sales_patterns.*, ekrut.sales.region, ekrut.sales.saleID,ekrut.sales.status FROM ekrut.sales,ekrut.sales_patterns WHERE ekrut.sales.patternID=ekrut.sales_patterns.patternID AND ekrut.sales.status=?");
+			ps.setString(1, "NEEDTOACTIVATE");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+				sale.add(new Sale(rs.getInt("patternID"), rs.getString("discountType"), rs.getString("startDay"),
+						rs.getString("endDay"), rs.getString("startHour"), rs.getString("endHour"),
+						Region.valueOf(rs.getString("region")), rs.getInt("saleID"),
+						SaleStatus.valueOf(rs.getString("status"))));
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Executing statement failed");
+		}
+
+		return sale;
+	}
+
+	public static void updateSaleInDB(Sale sale) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("INSERT INTO ekrut.sales(region,patternID,status) " + "VALUES (?, ?, ?)");
 			try {
 				ps.setString(1, sale.getRegion().toString());
-				ps.setInt(2, sale.getSaleID());
-				ps.setInt(3, sale.getPatternID());
-				ps.setString(4, sale.getStatus().toString());
+				ps.setInt(2, sale.getPatternID());
+				ps.setString(3, sale.getStatus().toString());
 
 			} catch (Exception e) {
 				e.printStackTrace();

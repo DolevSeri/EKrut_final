@@ -18,7 +18,7 @@ import javafx.stage.StageStyle;
  * 
  * InactivityLogoutController is a class that implements the runnable interface,
  * it is responsible for controlling the user's inactivity. If the user is
- * inactive for 15 minutes, the program will automatically log out the user and
+ * inactive for 5 minutes, the program will automatically log out the user and
  * return to the login screen.
  * 
  * @author Ron
@@ -33,8 +33,8 @@ public class InactivityLogoutController implements Runnable {
 	@Override
 	public void run() {
 		try {
-			// counting 15 minutes for client to finish order
-			Thread.sleep(900000);
+			// counting 5 minutes for client to finish order
+			Thread.sleep(300000);
 			Platform.runLater(() -> {
 				ChatClient.cartController.clearCart();
 				ChatClient.primaryStage.hide();

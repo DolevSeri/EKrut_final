@@ -105,6 +105,7 @@ public class SalesManagerCreateSaleController {
 		area.addAll(Arrays.asList("NORTH", "SOUTH", "UAE"));
 		cmbArea.getItems().addAll(area);
 		ClientUI.chat.accept(new Message(Request.import_SalesPattern, null));
+		ClientUI.chat.accept(new Message(Request.import_Sales, null));
 		for (SalesPattern sale : ChatClient.salesPatternController.getSalespattern()) {
 			patternsID.add(String.valueOf(sale.getPatternID()));
 		}
@@ -133,7 +134,7 @@ public class SalesManagerCreateSaleController {
 			lblError.setVisible(true);
 
 		} else {
-
+			ClientUI.chat.accept(new Message(Request.import_Sales, null));
 			lblError.setVisible(false);
 			sale = new Sale(Integer.valueOf(txtpatternID.getText()), txtDiscuntType.getText(), txtStartDay.getText(),
 					txtEndDay.getText(), txtStartHour.getText(), txtEndHour.getText(),

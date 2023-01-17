@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_ApproveDeliveryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1110.0" style="-fx-background-color: #FBF8FF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientControllers.Client_ApproveDeliveryController">
    <children>
       <Pane layoutX="704.0" layoutY="-1.0" prefHeight="624.0" prefWidth="406.0" style="-fx-background-color: #D0A9F5;">
          <children>
@@ -23,9 +23,9 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="73.0" layoutY="14.0" prefHeight="107.0" prefWidth="568.0" text="Approve Deliveries Getting" textAlignment="CENTER" textFill="#8d48e1" underline="true">
+      <Label layoutX="106.0" layoutY="12.0" prefHeight="107.0" prefWidth="562.0" text="Approve Getting Deliveries" textAlignment="CENTER" textFill="#8d48e1" underline="true">
          <font>
-            <Font name="Cooper Black" size="40.0" />
+            <Font name="Cooper Black" size="38.0" />
          </font>
       </Label>
       <Button fx:id="btnBack" layoutX="14.0" layoutY="570.0" mnemonicParsing="false" onAction="#clickBtnBack" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #8d48e1; -fx-border-color: BLACK;" text="Back" textFill="WHITE" underline="true">
