@@ -457,7 +457,7 @@ public class MySqlController {
 				ps.setString(1, month);
 				ps.setString(2, year);
 				ps.setString(3, device);
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("Set statement parameters failed on getInventoryReportData");
 			}
