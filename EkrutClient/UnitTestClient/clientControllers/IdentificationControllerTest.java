@@ -74,7 +74,7 @@ class IdentificationControllerTest {
 	/***
 	 * checking functionality: Test for invalid login credentials Input: Invalid
 	 * username:"NOTEXIST" and password:"123" Result: Error message displayed on the
-	 * screen, changeScreen method should not be called
+	 * screen, changeScreen method should not be called .
 	 */
 	@Test
 	public void testInvalidLoginCredentials() throws Exception {
