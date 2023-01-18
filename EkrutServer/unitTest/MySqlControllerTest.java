@@ -67,7 +67,8 @@ class MySqlControllerTest {
 
 	/**
 	 * Description: Checking login method for non exist user. Input data: User
-	 * details - user name: "notValid", password:"99999". Expected result: null
+	 * details - user name: "notValid", password:"99999". 
+	 * Expected result: null
 	 */
 	@Test
 	public void LoggInForNonExistingUser() {
@@ -78,8 +79,8 @@ class MySqlControllerTest {
 
 	/**
 	 * Description: Checking login method for invalid user (unsuccessful login)
-	 * Input data: User details - username: "costumer", password: "99999" Expected
-	 * result: null
+	 * Input data: User details - username: "costumer", password: "99999"
+	 *  Expected result: null
 	 */
 	@Test
 	public void loginForExitingUserWrongPassword() {
