@@ -44,7 +44,7 @@ import enums.SupplyMethod;
 public class MySqlController {
 
 	private static Connection dbConnector = null;
-
+    
 	public static void connectToDB(String dbName, String dbUserName, String dbPwd) {
 		if (dbConnector != null) {
 			return;
@@ -137,7 +137,6 @@ public class MySqlController {
 		}
 		return null;
 	}
-
 	/**
 	 * @author Ron This method updates the login status of a user in the
 	 *         "ekrut.users" database table.
@@ -2060,5 +2059,4 @@ public class MySqlController {
 			System.out.println("Users import failed!");
 		}
 	}
-
 }

@@ -122,17 +122,19 @@ public class IdentificationController {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(screenInterface.getTxtUsername());
 		usernameAndPsw.add(screenInterface.getTxtPswd());
-		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
-		// if user is already loggedin
+		chatClient.accept(new Message(Request.Login_Request, usernameAndPsw));
+		// if user is exist in DB
 		if (!chatClient.isUserExist()) {
 			// In case the user login input was invalid (username/password) - error label
 			// will be shown
 			lblErrorOnDetails.setVisible(true);
-			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
+			screenInterface.SetTextLableErrorUserNotExist();
+			//lblErrorOnDetails.setText("Wrong username OR password! Try again!");
 		} else {
 			if (chatClient.isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
-				lblErrorOnDetails.setText("User is already logged in!");
+				screenInterface.SetTextLableErrorUserAlreadyLogIn();
+				//lblErrorOnDetails.setText("User is already logged in!");
 			} else {
 				// loading next screen for specific user.
 				if (chatClient.getRole().equals("Costumer")) {
@@ -140,9 +142,12 @@ public class IdentificationController {
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 
-					if (chatClient.getConfiguration().equals("OL") && !(chatClient.getStatus().equals("NOTAPPROVED"))) {
+					
+					if (chatClient.getConfiguration().equals("OL")
+							&& !(chatClient.getStatus().equals("NOTAPPROVED"))) {
 						screenInterface.changeScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
-					} else if (chatClient.getConfiguration().equals("EK")
+					} 
+					else if (chatClient.getConfiguration().equals("EK")
 							&& !(chatClient.getStatus().equals("NOTAPPROVED"))) {
 						screenInterface.changeScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
 					}
@@ -151,7 +156,8 @@ public class IdentificationController {
 						screenInterface.changeScreen(new Stage(), "/clientGUI/ScreenForNotApproveUserAfterLogin.fxml");
 					}
 
-				} else {
+				} 
+				else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					screenInterface.changeScreen(new Stage(),
 							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
@@ -207,89 +213,72 @@ public class IdentificationController {
 	}
 
 	/**
-	 * A class inheriting from the interface ChatClientIF for injecting dependencies
-	 * of the class ChatClient so that the original methods and variables of
-	 * chatClient will be used in the code itself
-	 * 
+	 * A class inheriting
+	 *  from the interface ChatClientIF for injecting dependencies of the class ChatClient so that the original methods 
+	 *  and variables of chatClient will be used in the code itself
 	 * @author peleg
 	 *
 	 */
 	public class ChatClientImpl implements ChatClientIF {
-		/**
-		 * isUserExist- will return if the user is exist in the DB
-		 */
-		public boolean isUserExist() {
-			return ChatClient.userController.isUserExist();
-
-		}
-
-		/**
-		 * getUser-will return the user that just do a login
-		 * 
-		 * @return User Object that login
-		 */
-		public User getUser() {
-			return ChatClient.userController.getUser();
-		}
-
-		/**
-		 * setUser-will set the user in userController that in ChatClient class
-		 * 
-		 * @param user- User object that just log in
-		 */
-		public void setUser(User user) {
-			ChatClient.userController.setUser(user);
-		}
-
-		/**
-		 * getCostumer- will return the costumer that just do a login
-		 */
+	    /**
+	     * isUserExist- will return if the user is exist in the DB
+	     */
+	    public boolean isUserExist() {
+	    	return ChatClient.userController.isUserExist();
+	       
+	    }
+	    /**
+	     *  getUser-will return the user that just do a login
+	     *  @return User Object that login
+	     */
+	    public User getUser() {
+	        return ChatClient.userController.getUser();
+	    }
+	    /**
+	     * setUser-will set the user in userController that in ChatClient class
+	     * @param user- User object that just log in
+	     */
+	    public void setUser(User user) {
+	    	ChatClient.userController.setUser(user);
+	    }
+	    /**
+	     *getCostumer- will return the costumer that just do a login
+	     */
 		@Override
 		public Costumer getCostumer() {
 			// TODO Auto-generated method stub
 			return ChatClient.costumerController.getCostumer();
 		}
-
 		@Override
 		public void accept(Message msg) {
 			ClientUI.chat.accept(msg);
-
+		
+			
 		}
-
 		/**
-		 * isLoggedIn-will return true in case the user is already LOGin and false if
-		 * not
-		 * 
+		 * isLoggedIn-will return true in case the user is already LOGin and false if not
 		 * @return boolean variable
 		 */
 		@Override
 		public boolean isLoggedIn() {
 			return ChatClient.userController.getUser().isLoggedIn();
 		}
-
-		/**
-		 * getRole-will return the role of the user that do a login
-		 * 
+		/**getRole-will return the role of the user that do a login
 		 * @return String object - a toString of the role of the user
 		 */
 		@Override
 		public String getRole() {
 			return ChatClient.userController.getUser().getRole().toString();
 		}
-
-		/**
-		 * getStatus-will return the Status of the Costumer that do a login
-		 * 
+		/**getStatus-will return the Status of the Costumer that do a login
 		 * @return String object - a toString of the status of the Costumer
 		 */
 		@Override
 		public String getStatus() {
 			return ChatClient.costumerController.getCostumer().getStatus().toString();
 		}
-
 		/**
 		 * getConfiguration-will return the Configuration of the system
-		 * 
 		 * @return String object - a toString of the Configuration
 		 */
 		@Override
@@ -297,27 +286,36 @@ public class IdentificationController {
 			return ChatClient.configuration.toString();
 		}
 	}
-
-	public class JavaFxFeatures implements ScreenInterface {
-
+	
+	public class JavaFxFeatures implements ScreenInterface{
+		
 		@Override
 		public String getTxtUsername() {
-
-			return txtUsername.getText();
+			
+			return txtUsername.getText().toString();
 		}
 
 		@Override
 		public String getTxtPswd() {
 			// TODO Auto-generated method stub
-			return txtPswd.getText();
+			return txtPswd.getText().toString();
+		}
+		public void SetTextLableErrorUserNotExist() {
+			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
+		}
+		public void SetTextLableErrorUserAlreadyLogIn() {
+			lblErrorOnDetails.setText("User is already logged in!");
 		}
 
 		@Override
-		public void changeScreen(Stage stage, String path) {
-			newScreen.setScreen(stage, path);
-
+		public void changeScreen(Stage stage,String path) {
+			newScreen.setScreen(stage,path);
+			
 		}
-
+		
+		
 	}
 
+	
 }
+
