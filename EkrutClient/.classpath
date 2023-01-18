@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="UnitTestClient"/>
 	<classpathentry kind="src" path="lib"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/EkrutCommon">
 		<attributes>
