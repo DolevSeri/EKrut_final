@@ -22,7 +22,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
-import server.MySqlController.LoginFromDB;
 
 /**
  * EchoServer is a class that extends the AbstractServer class from the Open
@@ -35,7 +34,6 @@ import server.MySqlController.LoginFromDB;
 
 public class EchoServer extends AbstractServer {
 	// Class variables *************************************************
-	final public  LoginInterfaceDB mysql;
    
 	/**
 	 * The default port to listen on.

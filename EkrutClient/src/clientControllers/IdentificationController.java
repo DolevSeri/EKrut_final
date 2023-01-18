@@ -122,7 +122,7 @@ public class IdentificationController {
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
 		usernameAndPsw.add(screenInterface.getTxtUsername());
 		usernameAndPsw.add(screenInterface.getTxtPswd());
-		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
+		chatClient.accept(new Message(Request.Login_Request, usernameAndPsw));
 		// if user is exist in DB
 		if (!chatClient.isUserExist()) {
 			// In case the user login input was invalid (username/password) - error label
