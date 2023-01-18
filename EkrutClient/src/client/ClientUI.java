@@ -10,11 +10,12 @@ public class ClientUI extends Application {
 	public static ClientController chat; // only one instance
 
 	public static void main(String args[]) throws Exception {
-		//ChatClient.configuration = args[0];
-		System.out.println("Enter Configuration: ");
-		Scanner scanner = new Scanner(System.in);
-		ChatClient.configuration = scanner.next();
-		launch(args);
+		 if (args.length < 1) {
+		        System.out.println("Please provide the configuration as a command line argument.");
+		        return;
+		    }
+		    ChatClient.configuration = args[0];
+		    launch(args);
 	} // end main
 
 	public static void setChat(String ip, int port) {
