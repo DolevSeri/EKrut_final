@@ -22,6 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import ocsf.server.AbstractServer;
 import ocsf.server.ConnectionToClient;
+import server.MySqlController.LoginFromDB;
 
 /**
  * EchoServer is a class that extends the AbstractServer class from the Open
@@ -34,7 +35,8 @@ import ocsf.server.ConnectionToClient;
 
 public class EchoServer extends AbstractServer {
 	// Class variables *************************************************
-
+	final public  LoginInterfaceDB mysql;
+   
 	/**
 	 * The default port to listen on.
 	 */
@@ -61,6 +63,7 @@ public class EchoServer extends AbstractServer {
 	 */
 	protected EchoServer(int port) {
 		super(port);
+	   // mysql=new LoginFromDB();
 	}
 
 	public ObservableList<ClientConnected> getClientList() {
@@ -119,9 +122,9 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Login_Request:
-
+            MySqlController mysql= new MySqlController();
 			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
-			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
+			User user = mysql.LoginCheckAndUpdateLoggedIn(userANDpassword);
 			Message msgToClient;
 			if (user != null) {
 				if (user.isLoggedIn() == false) {
