@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import enums.Region;
 import enums.Role;
@@ -131,6 +132,17 @@ public class User implements Serializable {
 
 	public void setRegion(Region region) {
 		this.region = region;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstName, id, isLoggedIn, lastName, password, phoneNumber, region, role, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		User other = (User) obj;
+		return Objects.equals(username, other.username);
 	}
 
 }

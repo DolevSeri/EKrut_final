@@ -44,14 +44,6 @@ import enums.SupplyMethod;
 public class MySqlController {
 
 	private static Connection dbConnector = null;
-    private LoginInterfaceDB loginInter;
-    
-    public MySqlController() {
-    	loginInter=new LoginFromDB();
-    }
-    public MySqlController(LoginInterfaceDB loginInter) {
-    	this.loginInter=loginInter;
-    }
     
 	public static void connectToDB(String dbName, String dbUserName, String dbPwd) {
 		if (dbConnector != null) {
@@ -99,10 +91,52 @@ public class MySqlController {
 	 * peleg LoginCheckAndUpdateLoggedIn method-a method that get an ArrayList with
 	 * username and password and will do the login operation for any user
 	 */
-	public User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
-		return loginInter.LoginCheckAndUpdateLoggedIn(userANDpassword);
-	}
+	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
+		try {
+			PreparedStatement ps = dbConnector
+					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
 
+			ps.setString(1, userANDpassword.get(0));
+			ps.setString(2, userANDpassword.get(1));
+			ResultSet result = ps.executeQuery();
+
+			if (result.next() == false) {
+				return null;
+			} else {
+
+				/**
+				 * peleg user- a variable that will help us save the user that wants to log in
+				 */
+				// Save user details
+				User user = new User(result.getString("username"), result.getString("password"),
+						result.getString("firstName"), result.getString("lastName"), result.getString("email"),
+						result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"),
+						Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
+
+				// Set the login status to true so no one else can access it
+				try {
+					ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
+					System.out.println("Update succsed");
+				} catch (SQLException e1) {
+					System.out.println("update user to logged in failed!");
+				}
+				try {
+
+					ps.setBoolean(1, true);
+					ps.setString(2, result.getString("username"));
+					ps.executeUpdate();
+				} catch (Exception e) {
+					System.out.println("Executing statement-Updating login status on users table had failed!");
+				}
+				// Return user details
+				return user;
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	/**
 	 * @author Ron This method updates the login status of a user in the
 	 *         "ekrut.users" database table.
@@ -2025,58 +2059,4 @@ public class MySqlController {
 			System.out.println("Users import failed!");
 		}
 	}
-	public class LoginFromDB implements LoginInterfaceDB {
-
-		@Override
-		public User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
-			try {
-				PreparedStatement ps = dbConnector
-						.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
-
-				ps.setString(1, userANDpassword.get(0));
-				ps.setString(2, userANDpassword.get(1));
-				ResultSet result = ps.executeQuery();
-
-				if (result.next() == false) {
-					return null;
-				} else {
-
-					/**
-					 * peleg user- a variable that will help us save the user that wants to log in
-					 */
-					// Save user details
-					User user = new User(result.getString("username"), result.getString("password"),
-							result.getString("firstName"), result.getString("lastName"), result.getString("email"),
-							result.getString("phoneNumber"), result.getBoolean("isLoggedIn"), result.getString("id"),
-							Role.valueOf(result.getString("role")), Region.valueOf(result.getString("region")));
-
-					// Set the login status to true so no one else can access it
-					try {
-						ps = dbConnector.prepareStatement("UPDATE ekrut.users SET isLoggedIn = ? WHERE username = ?");
-						System.out.println("Update succsed");
-					} catch (SQLException e1) {
-						System.out.println("update user to logged in failed!");
-					}
-					try {
-
-						ps.setBoolean(1, true);
-						ps.setString(2, result.getString("username"));
-						ps.executeUpdate();
-					} catch (Exception e) {
-						System.out.println("Executing statement-Updating login status on users table had failed!");
-					}
-					// Return user details
-					return user;
-
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-	}
-
-	
-
 }
