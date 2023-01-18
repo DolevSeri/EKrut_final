@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
+
 import entities.InventoryReport;
 import entities.User;
 import enums.Region;
@@ -27,10 +27,6 @@ class MySqlControllerTest {
 	ArrayList<String> data = new ArrayList<>(Arrays.asList("NORTH", "2022", "06", "InventoryReport", "Haifa"));
 	ArrayList<String> data2 = new ArrayList<>(Arrays.asList("UAE", "2022", "12", "InventoryReport", "Habshan"));
 	ArrayList<String> data3 = new ArrayList<>();
-
-
-	HashMap<String, Integer> products = new HashMap<>();
-	ArrayList<String> data = new ArrayList<>(Arrays.asList("NORTH", "2022", "06", "InventoryReport", "Haifa"));
 
 	// Lists for login:
 	ArrayList<String> userExistNotLoggedIn;
@@ -208,14 +204,14 @@ class MySqlControllerTest {
 	}
 
 	// Functionality: check createInventoryReport functionality all details valid
-		// when there is no products that was under threshold at this month
-		// Input: nullRepo (InventoryReport), res(IneventoryReport)
-		// Expected Result:true
-		@Test
-		void createInventoryReport_nullReportData() {
-			assertThrows(NullPointerException.class, () -> MySqlController.getInventoryReportData(null));
+	// when there is no products that was under threshold at this month
+	// Input: nullRepo (InventoryReport), res(IneventoryReport)
+	// Expected Result:true
+	@Test
+	void createInventoryReport_nullReportData() {
+		assertThrows(NullPointerException.class, () -> MySqlController.getInventoryReportData(null));
 
-		}
+	}
 
 	/**
 	 * Description: Checking login method for existing user with matching user name
@@ -233,8 +229,7 @@ class MySqlControllerTest {
 
 	/**
 	 * Description: Checking login method for non exist user. Input data: User
-	 * details - user name: "notValid", password:"99999". 
-	 * Expected result: null
+	 * details - user name: "notValid", password:"99999". Expected result: null
 	 */
 	@Test
 	public void LoggInForNonExistingUser() {
@@ -245,8 +240,8 @@ class MySqlControllerTest {
 
 	/**
 	 * Description: Checking login method for invalid user (unsuccessful login)
-	 * Input data: User details - username: "costumer", password: "99999"
-	 *  Expected result: null
+	 * Input data: User details - username: "costumer", password: "99999" Expected
+	 * result: null
 	 */
 	@Test
 	public void loginForExitingUserWrongPassword() {
