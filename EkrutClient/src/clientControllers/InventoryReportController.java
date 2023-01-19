@@ -116,5 +116,9 @@ public class InventoryReportController {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		scene.exitOrLogOut(event, false);
 	}
+	
+	public InventoryReportController() {
+		
+	}
 
 }
