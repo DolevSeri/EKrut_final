@@ -12,16 +12,10 @@ public class UserController {
 	private User user = null;
 	private User userToUpdate = null;
 	private String areaManagerUserNAme;
-	UserControllerIF usercontroller;
-	
+
 	public UserController() {
-		usercontroller= new UserImplem();
+
 	}
-	
-	public UserController(UserControllerIF usercontroller) {
-		this.usercontroller=usercontroller ;
-	}
-	
 
 	/**
 	 * getter method for userToUpdate
@@ -40,7 +34,6 @@ public class UserController {
 	public void setUserToUpdate(User userToUpdate) {
 		this.userToUpdate = userToUpdate;
 	}
-	
 
 	/**
 	 * constructor that takes user object as an argument
@@ -57,7 +50,7 @@ public class UserController {
 	 * @return User - an object of the user
 	 */
 	public User getUser() {
-		return usercontroller.getUser();
+		return user;
 	}
 
 	/**
@@ -66,7 +59,7 @@ public class UserController {
 	 * @param user - an object of the user
 	 */
 	public void setUser(User user) {
-		usercontroller.setUser(user);
+		this.user = user;
 	}
 
 	/**
@@ -75,7 +68,9 @@ public class UserController {
 	 * @return boolean - true if user object is exist, false otherwise
 	 */
 	public boolean isUserExist() {
-		return usercontroller.isUserExist();
+		if (user == null)
+			return false;
+		return true;
 	}
 
 	/**
@@ -105,29 +100,6 @@ public class UserController {
 	 */
 	public void setAreaManagerUserNAme(String areaManagerUserNAme) {
 		this.areaManagerUserNAme = areaManagerUserNAme;
-	}
-	
-	public class UserImplem implements UserControllerIF{
-
-		@Override
-		public User getUser() {
-			// TODO Auto-generated method stub
-			return user;
-		}
-
-		@Override
-		public void setUser(User user1) {
-			user = user1;
-			
-		}
-
-		@Override
-		public boolean isUserExist() {
-			if (user == null)
-				return false;
-			return true;
-		}
-		
 	}
 
 }

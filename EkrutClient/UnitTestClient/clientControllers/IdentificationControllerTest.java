@@ -24,6 +24,7 @@ import client.ScreenInterface;
 import entities.Message;
 import entities.User;
 import entityControllers.UserController;
+
 import enums.Request;
 import enums.Role;
 import javafx.event.ActionEvent;
@@ -37,7 +38,6 @@ class IdentificationControllerTest {
 	ChatClientIF mockChatClient;
 	@Mock
 	ScreenInterface mockScreenInterface;
-
 	private Method loginTest;
 	private IdentificationController mockController;
 	private ActionEvent event;
@@ -56,7 +56,6 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testInvalidLoginCredentials() throws Exception {
-		// doNothing().when(mockController.lblErrorOnDetails).setVisible(anyBoolean());
 		doNothing().when(mockController).setTextLableErrorUserNotExist();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
@@ -65,18 +64,6 @@ class IdentificationControllerTest {
 		verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
 		assertEquals(expected, result);
 
-		/*
-		 * when(mockScreenInterface.getTxtUsername()).thenReturn("NOTEXIST");
-		 * when(mockScreenInterface.getTxtPswd()).thenReturn("123");
-		 * doNothing().when(mockChatClient).accept(any(Message.class));
-		 * when(mockChatClient.isUserExist()).thenReturn(false);
-		 * doNothing().when(mockController.lblErrorOnDetails).setVisible(anyBoolean());
-		 * doNothing().when(mockScreenInterface).SetTextLableErrorUserNotExist(); //
-		 * Assert verify(mockChatClient, times(1)).accept(any(Message.class));
-		 * verify(mockScreenInterface, times(0)).changeScreen(any(), any());
-		 * assertEquals("Wrong username OR password! Try again!",
-		 * mockController.lblErrorOnDetails.getText());
-		 */
 	}
 
 	/*
@@ -164,13 +151,14 @@ class IdentificationControllerTest {
 	public void testExceptionHandling() throws Exception {
 		ChatClientIF mockChatClient = mock(ChatClientIF.class);
 		ScreenInterface mockScreenInterface = mock(ScreenInterface.class);
-		//IdentificationController controller = new IdentificationController(mockChatClient, mockScreenInterface);
-		//controller.txtUsername.setText("validusername");
-		//controller.txtPswd.setText("validpassword");
+		// IdentificationController controller = new
+		// IdentificationController(mockChatClient, mockScreenInterface);
+		// controller.txtUsername.setText("validusername");
+		// controller.txtPswd.setText("validpassword");
 		// configure the mockChatClient to throw an exception when the accept method is
 		// called
 		doThrow(new Exception("Server Error")).when(mockChatClient).accept(any());
-		//controller.getLoginBtn(null);
+		// controller.getLoginBtn(null);
 		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
 			{
 				add("validusername");
@@ -178,7 +166,7 @@ class IdentificationControllerTest {
 			}
 		}));
 		verify(mockScreenInterface, times(0)).changeScreen(mockStage, "mainMenu.fxml");
-		//assertTrue(controller.lblErrorOnDetails.isVisible());
+		// assertTrue(controller.lblErrorOnDetails.isVisible());
 	}
 
 	/*

@@ -69,8 +69,11 @@ public class IdentificationController {
 	public String configuration;
 	private SetSceneController newScreen = new SetSceneController();
 	
-	public IdentificationController(costumerController)
-
+	public void setUserController(UserController userController) {
+		this.userController = userController;
+	}
+	
+	
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");

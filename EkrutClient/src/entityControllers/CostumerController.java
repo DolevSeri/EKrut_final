@@ -5,6 +5,7 @@ import entities.Order;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 /**
 
 @author Ron Lahiani and Peleg Oanuno
@@ -17,17 +18,12 @@ public class CostumerController {
 	private Costumer customerToUpdate = null;
 	private Costumer getNameByOrderID = null;
 	private Costumer costumer = null;
-	private  CostumerControllerIF costomercontroller;
 	
-	public CostumerController() {
-		costomercontroller=new Costumerimplem();
+	
+	
+	public CostumerController(){
+		
 	}
-	public CostumerController(CostumerControllerIF costomercontroller) {
-		this.costomercontroller=costomercontroller;
-	}
-	
-	
-	
 	
 	public Costumer getGetNameByOrderID() {
 		return getNameByOrderID;
@@ -79,12 +75,12 @@ public class CostumerController {
 	}
 
 	public Costumer getCostumer() {
-		return  costomercontroller.getCostumer();
+		return  costumer;
 	}
 
 	public void setCostumer(Costumer costumer) {
-		costomercontroller.setCostumer(costumer);
-	}
+       this.costumer=costumer;
+}
 
 	public boolean isCostumerExist() {
 		if (costumer == null)
@@ -100,16 +96,5 @@ public class CostumerController {
 		this.areaCostumers = areaCostumers;
 	}
 	
-	public class Costumerimplem implements CostumerControllerIF{
 
-		@Override
-		public Costumer getCostumer() {
-			
-			return costumer;
-		}
-		public void setCostumer(Costumer costumer1) {
-			costumer = costumer1;
-		}
-		
-	}
 }
