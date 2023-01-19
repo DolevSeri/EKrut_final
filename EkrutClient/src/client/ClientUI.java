@@ -1,7 +1,5 @@
 package client;
 
-import java.util.Scanner;
-
 import clientControllers.ConnectFormController;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -10,12 +8,12 @@ public class ClientUI extends Application {
 	public static ClientController chat; // only one instance
 
 	public static void main(String args[]) throws Exception {
-		 if (args.length < 1) {
-		        System.out.println("Please provide the configuration as a command line argument.");
-		        return;
-		    }
-		    ChatClient.configuration = args[0];
-		    launch(args);
+		if (args.length < 1) {
+	        System.out.println("Please provide the configuration as a command line argument.");
+	        return;
+	    }
+		ChatClient.configuration = args[0];
+		launch(args);
 	} // end main
 
 	public static void setChat(String ip, int port) {

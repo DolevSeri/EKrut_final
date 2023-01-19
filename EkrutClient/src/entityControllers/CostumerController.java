@@ -5,6 +5,7 @@ import entities.Order;
 import enums.SupplyMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 /**
 
 @author Ron Lahiani and Peleg Oanuno
@@ -16,7 +17,13 @@ public class CostumerController {
 	private ObservableList<Integer> pickUpOrders = FXCollections.observableArrayList();
 	private Costumer customerToUpdate = null;
 	private Costumer getNameByOrderID = null;
+	private Costumer costumer = null;
 	
+	
+	
+	public CostumerController(){
+		
+	}
 	
 	public Costumer getGetNameByOrderID() {
 		return getNameByOrderID;
@@ -59,23 +66,21 @@ public class CostumerController {
 		this.suplyMethod = suplyMethod;
 	}
 
-	private Costumer costumer = null;
+	
 
-	// Constructors
-	public CostumerController() {
-	}
+	
 
 	public CostumerController(Costumer costumer) {
 		this.costumer = costumer;
 	}
 
 	public Costumer getCostumer() {
-		return costumer;
+		return  costumer;
 	}
 
 	public void setCostumer(Costumer costumer) {
-		this.costumer = costumer;
-	}
+       this.costumer=costumer;
+}
 
 	public boolean isCostumerExist() {
 		if (costumer == null)
@@ -90,4 +95,6 @@ public class CostumerController {
 	public void setAreaCostumers(ObservableList<Costumer> areaCostumers) {
 		this.areaCostumers = areaCostumers;
 	}
+	
+
 }

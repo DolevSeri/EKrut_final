@@ -13,6 +13,10 @@ public class UserController {
 	private User userToUpdate = null;
 	private String areaManagerUserNAme;
 
+	public UserController() {
+
+	}
+
 	/**
 	 * getter method for userToUpdate
 	 * 
@@ -29,8 +33,6 @@ public class UserController {
 	 */
 	public void setUserToUpdate(User userToUpdate) {
 		this.userToUpdate = userToUpdate;
-	}
-	public UserController() {
 	}
 
 	/**
