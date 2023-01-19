@@ -68,33 +68,8 @@ public class IdentificationController {
 	public CostumerController costumerController;
 	public String configuration;
 	private SetSceneController newScreen = new SetSceneController();
-
-	// chatClient- a variable that help us to the dependency injection of ChatClient
-	ChatClientIF chatClient;
-	// screenInterface- a variable that help us to the dependency injection of the
-	// input of the user in the screen
-	ScreenInterface screenInterface;
-
-	/**
-	 * An empty constructor that will cause the code to use the original chatClient
-	 * methods and variables
-	 */
-	public IdentificationController() {
-		chatClient = new ChatClientImpl();
-		screenInterface = new JavaFxFeatures();
-	}
-
-	/**
-	 * A constructor that receives a class that implements the interface
-	 * ChatClientIF so that we can perform dependency injection in the test
-	 * 
-	 * @param chatClient-will      help us for the test
-	 * @param screenInterface-will help us for the test
-	 */
-	public IdentificationController(ChatClientIF chatClient, ScreenInterface screenInterface) {
-		this.chatClient = chatClient;
-		this.screenInterface = screenInterface;
-	}
+	
+	public IdentificationController(costumerController)
 
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
@@ -137,13 +112,12 @@ public class IdentificationController {
 			return "UserNotExist";
 		} else {
 			if (userController.getUser().isLoggedIn()) {
-				setTextLableErrorUserNotExist();
+				setTextLableErrorUserAlreadyLoggedIn();
 				return "UserLoggedIn";
 			} else {
 				// loading next screen for specific user.
-				if (userController.getUser().getRole().equals("Costumer")) {
+				if (userController.getUser().getRole().toString().equals("Costumer")) {
 					getCostumer();
-
 					if (configuration.equals("OL")
 							&& !(costumerController.getCostumer().getStatus().equals("NOTAPPROVED"))) {
 						changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
@@ -160,8 +134,8 @@ public class IdentificationController {
 
 				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-					screenInterface.changeScreen(new Stage(),
-							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
+					changeScreenToRelevant("/clientGUI/" + userController.getUser().getRole().toString(), event);
+					// changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
 					return "EmployeeUser";
 				}
 			}
@@ -176,23 +150,27 @@ public class IdentificationController {
 	}
 
 	public void setUserDetails() {
-
 		ArrayList<String> usernameAndPsw = new ArrayList<>();
-		usernameAndPsw.add(screenInterface.getTxtUsername());
-		usernameAndPsw.add(screenInterface.getTxtPswd());
-		chatClient.accept(new Message(Request.Login_Request, usernameAndPsw));
+		usernameAndPsw.add(txtUsername.getText());
+		usernameAndPsw.add(txtPswd.getText());
+		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
 		userController = ChatClient.userController;
 		configuration = ChatClient.configuration;
 	}
 
 	public void setTextLableErrorUserNotExist() {
 		lblErrorOnDetails.setVisible(true);
-		screenInterface.SetTextLableErrorUserAlreadyLogIn();
+		lblErrorOnDetails.setText("Wrong username OR password! Try again!");
+	}
+
+	public void setTextLableErrorUserAlreadyLoggedIn() {
+		lblErrorOnDetails.setVisible(true);
+		lblErrorOnDetails.setText("User is already logged in!");
 	}
 
 	public void changeScreenToRelevant(String path, ActionEvent event) {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-		screenInterface.changeScreen(new Stage(), path);
+		newScreen.setScreen(new Stage(), path);
 	}
 
 	/**
@@ -208,23 +186,25 @@ public class IdentificationController {
 		usernameAndPsw.add("costumer2");
 		usernameAndPsw.add("123456");
 		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
+		userController = ChatClient.userController;
+		configuration = ChatClient.configuration;
 		// if user is already loggedin
-		if (!ChatClient.userController.isUserExist()) {
+		if (!userController.isUserExist()) {
 			// In case the user login input was invalid (username/password) - error label
 			// will be shown
 			lblErrorOnDetails.setVisible(true);
 			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
 		} else {
-			if (chatClient.isLoggedIn() == true) {
+			if (userController.getUser().isLoggedIn() == true) {
 				lblErrorOnDetails.setVisible(true);
 				lblErrorOnDetails.setText("User is already logged in!");
 			} else {
 				// loading next screen for specific user.
-				if (ChatClient.userController.getUser().getRole().toString().equals("Costumer")) {
+				if (userController.getUser().getRole().toString().equals("Costumer")) {
 					ClientUI.chat
 							.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
-					if (ChatClient.configuration.toString().equals("OL")) {
+					if (configuration.toString().equals("OL")) {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_OL_MainView.fxml");
 					} else {
 						newScreen.setScreen(new Stage(), "/clientGUI/Client_EK_MainView.fxml");
@@ -236,127 +216,6 @@ public class IdentificationController {
 							"/clientGUI/" + ChatClient.userController.getUser().getRole().toString());
 				}
 			}
-		}
-	}
-
-	/**
-	 * A class inheriting from the interface ChatClientIF for injecting dependencies
-	 * of the class ChatClient so that the original methods and variables of
-	 * chatClient will be used in the code itself
-	 * 
-	 * @author peleg
-	 *
-	 */
-	public class ChatClientImpl implements ChatClientIF {
-		/**
-		 * isUserExist- will return if the user is exist in the DB
-		 */
-		public boolean isUserExist() {
-			return ChatClient.userController.isUserExist();
-
-		}
-
-		/**
-		 * getUser-will return the user that just do a login
-		 * 
-		 * @return User Object that login
-		 */
-		public User getUser() {
-			return ChatClient.userController.getUser();
-		}
-
-		/**
-		 * setUser-will set the user in userController that in ChatClient class
-		 * 
-		 * @param user- User object that just log in
-		 */
-		public void setUser(User user) {
-			ChatClient.userController.setUser(user);
-		}
-
-		/**
-		 * getCostumer- will return the costumer that just do a login
-		 */
-		@Override
-		public Costumer getCostumer() {
-			// TODO Auto-generated method stub
-			return ChatClient.costumerController.getCostumer();
-		}
-
-		@Override
-		public void accept(Message msg) {
-			ClientUI.chat.accept(msg);
-
-		}
-
-		/**
-		 * isLoggedIn-will return true in case the user is already LOGin and false if
-		 * not
-		 * 
-		 * @return boolean variable
-		 */
-		@Override
-		public boolean isLoggedIn() {
-			return ChatClient.userController.getUser().isLoggedIn();
-		}
-
-		/**
-		 * getRole-will return the role of the user that do a login
-		 * 
-		 * @return String object - a toString of the role of the user
-		 */
-		@Override
-		public String getRole() {
-			return ChatClient.userController.getUser().getRole().toString();
-		}
-
-		/**
-		 * getStatus-will return the Status of the Costumer that do a login
-		 * 
-		 * @return String object - a toString of the status of the Costumer
-		 */
-		@Override
-		public String getStatus() {
-			return ChatClient.costumerController.getCostumer().getStatus().toString();
-		}
-
-		/**
-		 * getConfiguration-will return the Configuration of the system
-		 * 
-		 * @return String object - a toString of the Configuration
-		 */
-		@Override
-		public String getConfiguration() {
-			return ChatClient.configuration.toString();
-		}
-	}
-
-	public class JavaFxFeatures implements ScreenInterface {
-
-		@Override
-		public String getTxtUsername() {
-
-			return txtUsername.getText().toString();
-		}
-
-		@Override
-		public String getTxtPswd() {
-			// TODO Auto-generated method stub
-			return txtPswd.getText().toString();
-		}
-
-		public void SetTextLableErrorUserNotExist() {
-			lblErrorOnDetails.setText("Wrong username OR password! Try again!");
-		}
-
-		public void SetTextLableErrorUserAlreadyLogIn() {
-			lblErrorOnDetails.setText("User is already logged in!");
-		}
-
-		@Override
-		public void changeScreen(Stage stage, String path) {
-			newScreen.setScreen(stage, path);
-
 		}
 
 	}

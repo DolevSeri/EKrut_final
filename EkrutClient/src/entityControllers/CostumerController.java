@@ -16,6 +16,17 @@ public class CostumerController {
 	private ObservableList<Integer> pickUpOrders = FXCollections.observableArrayList();
 	private Costumer customerToUpdate = null;
 	private Costumer getNameByOrderID = null;
+	private Costumer costumer = null;
+	private  CostumerControllerIF costomercontroller;
+	
+	public CostumerController() {
+		costomercontroller=new Costumerimplem();
+	}
+	public CostumerController(CostumerControllerIF costomercontroller) {
+		this.costomercontroller=costomercontroller;
+	}
+	
+	
 	
 	
 	public Costumer getGetNameByOrderID() {
@@ -59,22 +70,20 @@ public class CostumerController {
 		this.suplyMethod = suplyMethod;
 	}
 
-	private Costumer costumer = null;
+	
 
-	// Constructors
-	public CostumerController() {
-	}
+	
 
 	public CostumerController(Costumer costumer) {
 		this.costumer = costumer;
 	}
 
 	public Costumer getCostumer() {
-		return costumer;
+		return  costomercontroller.getCostumer();
 	}
 
 	public void setCostumer(Costumer costumer) {
-		this.costumer = costumer;
+		costomercontroller.setCostumer(costumer);
 	}
 
 	public boolean isCostumerExist() {
@@ -89,5 +98,18 @@ public class CostumerController {
 
 	public void setAreaCostumers(ObservableList<Costumer> areaCostumers) {
 		this.areaCostumers = areaCostumers;
+	}
+	
+	public class Costumerimplem implements CostumerControllerIF{
+
+		@Override
+		public Costumer getCostumer() {
+			
+			return costumer;
+		}
+		public void setCostumer(Costumer costumer1) {
+			costumer = costumer1;
+		}
+		
 	}
 }
