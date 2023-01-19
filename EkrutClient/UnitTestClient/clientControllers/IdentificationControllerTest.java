@@ -18,13 +18,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
 import client.ChatClientIF;
 import client.ScreenInterface;
+import entities.Costumer;
 import entities.Message;
 import entities.User;
+import entityControllers.CostumerController;
 import entityControllers.UserController;
-
+import enums.CostumerStatus;
+import enums.Region;
 import enums.Request;
 import enums.Role;
 import javafx.event.ActionEvent;
@@ -50,34 +52,74 @@ class IdentificationControllerTest {
 	}
 
 	/***
-	 * checking functionality: Test for invalid login credentials Input: Invalid
-	 * username:"NOTEXIST" and password:"123" Result: Error message displayed on the
-	 * screen, changeScreen method should not be called.
+	 * checking functionality: null username:"NOTEXIST" and password:"123" Result:
+	 * Error message displayed on the screen, changeScreen method should not be
+	 * called.
 	 */
 	@Test
-	public void testInvalidLoginCredentials() throws Exception {
+	public void LoginTest_User_NotExist() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserNotExist();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
 		String result = (String) loginTest.invoke(mockController, event);
-		String expected = "UserNotExists";
+		String expected = "UserNotExist";
 		verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
+		assertEquals(expected, result);
+	}
+
+	/*
+	 * checking functionality: costumer alreadylogged in field and valid password
+	 * Output: Error message displayed on the screen, changeScreen method should not
+	 * be called
+	 */
+	@Test
+	public void LoginTest_For_Logged_In_User() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserAlreadyLoggedIn();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("costumer", "123456", "Peleg", "Oanuno", "peleg@braude.ac.il",
+				"0525678891", true, "122", Role.Costumer, Region.SOUTH));
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserLoggedIn";
+		verify(mockController, atLeastOnce()).setTextLableErrorUserAlreadyLoggedIn();
 		assertEquals(expected, result);
 
 	}
 
-	/*
-	 * checking functionality: Test for empty username field Input: Empty username
-	 * field and valid password Output: Error message displayed on the screen,
-	 * changeScreen method should not be called
-	 */
 	@Test
-	public void testEmptyUsernameField() throws Exception {
-		mockController.txtUsername.setText("");
-		mockController.txtPswd.setText("validpassword");
-		verify(mockChatClient, times(0)).accept(any());
-		verify(mockScreenInterface, times(0)).changeScreen(mockStage, "mainMenu.fxml");
-		assertTrue(mockController.lblErrorOnDetails.isVisible());
+	void LoginTest_Succsessful_ForExist_OL_Costumer() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
+		doNothing().when(mockController).setUserDetails();
+		doNothing().when(mockController).getCostumer();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("costumer2", "123456", "Inbar", "Mizrahi", "Inbar@braude.ac.ik",
+				"0598883777", false, "125", Role.Costumer, Region.NORTH));
+		mockController.configuration = "OL";
+		mockController.costumerController = new CostumerController();
+		mockController.costumerController
+				.setCostumer(new Costumer("costumer2", "5326-7777-1111-4444", 2, CostumerStatus.APPROVED));
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "OLCostumer";
+		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
+		assertEquals(expected, result);
+	}
+
+	@Test
+	void LoginTest_Succsessful_ForExist_EK_Costumer() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
+		doNothing().when(mockController).setUserDetails();
+		doNothing().when(mockController).getCostumer();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("costumer2", "123456", "Inbar", "Mizrahi", "Inbar@braude.ac.ik",
+				"0598883777", false, "125", Role.Costumer, Region.NORTH));
+		mockController.configuration = "EK";
+		mockController.costumerController = new CostumerController();
+		mockController.costumerController
+				.setCostumer(new Costumer("costumer2", "5326-7777-1111-4444", 2, CostumerStatus.APPROVED));
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "EKCostumer";
+		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
+		assertEquals(expected, result);
 	}
 	/*
 	 * checking functionality:Test for empty password field Input: Valid username

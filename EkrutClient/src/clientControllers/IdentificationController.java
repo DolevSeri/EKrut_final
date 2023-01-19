@@ -3,12 +3,8 @@ package clientControllers;
 import java.util.ArrayList;
 
 import client.ChatClient;
-import client.ChatClientIF;
 import client.ClientUI;
-import client.ScreenInterface;
-import entities.Costumer;
 import entities.Message;
-import entities.User;
 import entityControllers.CostumerController;
 import entityControllers.UserController;
 import enums.Request;
@@ -66,14 +62,13 @@ public class IdentificationController {
 
 	public UserController userController;
 	public CostumerController costumerController;
-	public String configuration;
+	public String configuration = new String();
 	private SetSceneController newScreen = new SetSceneController();
-	
+
 	public void setUserController(UserController userController) {
 		this.userController = userController;
 	}
-	
-	
+
 	public void initialize() {
 		lblErrorOnDetails.setVisible(false);
 		Image image = new Image("/images/FullLogo_Transparent_NoBuffer.png");
@@ -81,6 +76,7 @@ public class IdentificationController {
 
 		Image image2 = new Image("/images/QR_Code.png");
 		QRimage.setImage(image2);
+		setCongifuration(ChatClient.configuration);
 	}
 
 	@FXML
@@ -102,7 +98,6 @@ public class IdentificationController {
 	@FXML
 	public void getLoginBtn(ActionEvent event) throws Exception {
 		userLogin(event);
-
 	}
 
 	private String userLogin(ActionEvent event) {
@@ -121,14 +116,14 @@ public class IdentificationController {
 				// loading next screen for specific user.
 				if (userController.getUser().getRole().toString().equals("Costumer")) {
 					getCostumer();
-					if (configuration.equals("OL")
+					if ((configuration.equals("OL"))
 							&& !(costumerController.getCostumer().getStatus().equals("NOTAPPROVED"))) {
 						changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
-						return "EKCostumer";
-					} else if (configuration.equals("EK")
+						return "OLCostumer";
+					} else if ((configuration.equals("EK"))
 							&& !(costumerController.getCostumer().getStatus().equals("NOTAPPROVED"))) {
 						changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
-						return "OLCostumer";
+						return "EKCostumer";
 					}
 					if (costumerController.getCostumer().getStatus().equals("NOTAPPROVED")) {
 						changeScreenToRelevant("/clientGUI/ScreenForNotApproveUserAfterLogin.fxml", event);
@@ -138,7 +133,6 @@ public class IdentificationController {
 				} else {
 					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					changeScreenToRelevant("/clientGUI/" + userController.getUser().getRole().toString(), event);
-					// changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
 					return "EmployeeUser";
 				}
 			}
@@ -147,7 +141,7 @@ public class IdentificationController {
 	}
 
 	public void getCostumer() {
-		ClientUI.chat.accept(new Message(Request.Get_Costumer, ChatClient.userController.getUser().getId()));
+		ClientUI.chat.accept(new Message(Request.Get_Costumer, userController.getUser().getId()));
 		costumerController = ChatClient.costumerController;
 
 	}
@@ -158,12 +152,15 @@ public class IdentificationController {
 		usernameAndPsw.add(txtPswd.getText());
 		ClientUI.chat.accept(new Message(Request.Login_Request, usernameAndPsw));
 		userController = ChatClient.userController;
-		configuration = ChatClient.configuration;
 	}
 
 	public void setTextLableErrorUserNotExist() {
 		lblErrorOnDetails.setVisible(true);
 		lblErrorOnDetails.setText("Wrong username OR password! Try again!");
+	}
+
+	public void setCongifuration(String configuration) {
+		this.configuration = configuration;
 	}
 
 	public void setTextLableErrorUserAlreadyLoggedIn() {
