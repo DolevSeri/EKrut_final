@@ -131,7 +131,6 @@ public class IdentificationController {
 					}
 
 				} else {
-					((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary
 					changeScreenToRelevant("/clientGUI/" + userController.getUser().getRole().toString(), event);
 					return "EmployeeUser";
 				}
