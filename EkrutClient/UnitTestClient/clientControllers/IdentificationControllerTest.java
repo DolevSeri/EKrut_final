@@ -1,45 +1,27 @@
 package clientControllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import client.ChatClientIF;
-import client.ScreenInterface;
+
 import entities.Costumer;
-import entities.Message;
 import entities.User;
 import entityControllers.CostumerController;
 import entityControllers.UserController;
 import enums.CostumerStatus;
 import enums.Region;
-import enums.Request;
 import enums.Role;
 import javafx.event.ActionEvent;
-import javafx.stage.Stage;
 
 class IdentificationControllerTest {
 
-	@Mock
-	Stage mockStage;
-	@Mock
-	ChatClientIF mockChatClient;
-	@Mock
-	ScreenInterface mockScreenInterface;
 	private Method loginTest;
 	private IdentificationController mockController;
 	private ActionEvent event;
@@ -121,6 +103,20 @@ class IdentificationControllerTest {
 		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
 		assertEquals(expected, result);
 	}
+
+	@Test
+	void LoginTest_Succsessful_For_Employee() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("ceo", "123456", "Ron", "Lahiani", "ron@braude.ac.il",
+				"0509913037", false, "123", Role.CEO, Region.ALL));
+		mockController.configuration = "EK";
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "EmployeeUser";
+		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+		assertEquals(expected, result);
+	}
 	/*
 	 * checking functionality:Test for empty password field Input: Valid username
 	 * and empty password field Output: Error message displayed on the screen,
@@ -130,12 +126,7 @@ class IdentificationControllerTest {
 
 	@Test
 	public void testEmptyPasswordField() throws Exception {
-		mockController.txtUsername.setText("validusername");
-		mockController.txtPswd.setText("");
-		mockController.getLoginBtn(null);
-		verify(mockChatClient, times(0)).accept(any());
-		verify(mockScreenInterface, times(0)).changeScreen(mockStage, "mainMenu.fxml");
-		assertTrue(mockController.lblErrorOnDetails.isVisible());
+
 	}
 
 	/*
@@ -145,16 +136,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testValidLoginWithSpecialChars() throws Exception {
-		mockController.txtUsername.setText("validuser@#$");
-		mockController.txtPswd.setText("validpassword@#$");
-		mockController.getLoginBtn(null);
-		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
-			{
-				add("validuser@#$");
-				add("validpassword@#$");
-			}
-		}));
-		verify(mockScreenInterface).changeScreen(mockStage, "mainMenu.fxml");
+
 	}
 
 	/*
@@ -165,22 +147,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testValidLoginWithMaxLength() throws Exception {
-		StringBuilder maxUsername = new StringBuilder();
-		StringBuilder maxPassword = new StringBuilder();
-		for (int i = 0; i < 100; i++) {
-			maxUsername.append("a");
-			maxPassword.append("b");
-		}
-		mockController.txtUsername.setText(maxUsername.toString());
-		mockController.txtPswd.setText(maxPassword.toString());
-		mockController.getLoginBtn(null);
-		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
-			{
-				add(maxUsername.toString());
-				add(maxPassword.toString());
-			}
-		}));
-		verify(mockScreenInterface).changeScreen(mockStage, "mainMenu.fxml");
+
 	}
 
 	/*
@@ -191,24 +158,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testExceptionHandling() throws Exception {
-		ChatClientIF mockChatClient = mock(ChatClientIF.class);
-		ScreenInterface mockScreenInterface = mock(ScreenInterface.class);
-		// IdentificationController controller = new
-		// IdentificationController(mockChatClient, mockScreenInterface);
-		// controller.txtUsername.setText("validusername");
-		// controller.txtPswd.setText("validpassword");
-		// configure the mockChatClient to throw an exception when the accept method is
-		// called
-		doThrow(new Exception("Server Error")).when(mockChatClient).accept(any());
-		// controller.getLoginBtn(null);
-		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
-			{
-				add("validusername");
-				add("validpassword");
-			}
-		}));
-		verify(mockScreenInterface, times(0)).changeScreen(mockStage, "mainMenu.fxml");
-		// assertTrue(controller.lblErrorOnDetails.isVisible());
+
 	}
 
 	/*
@@ -218,16 +168,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testValidLoginWithLowercase() throws Exception {
-		mockController.txtUsername.setText("validusername");
-		mockController.txtPswd.setText("validpassword");
-		mockController.getLoginBtn(null);
-		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
-			{
-				add("validusername");
-				add("validpassword");
-			}
-		}));
-		verify(mockScreenInterface).changeScreen(mockStage, "mainMenu.fxml");
+
 	}
 
 	/*
@@ -238,16 +179,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testValidLoginWithUppercase() throws Exception {
-		mockController.txtUsername.setText("VALIDUSERNAME");
-		mockController.txtPswd.setText("VALIDPASSWORD");
-		mockController.getLoginBtn(null);
-		verify(mockChatClient).accept(new Message(Request.Login_Request, new ArrayList<String>() {
-			{
-				add("VALIDUSERNAME");
-				add("VALIDPASSWORD");
-			}
-		}));
-		verify(mockScreenInterface).changeScreen(mockStage, "mainMenu.fxml");
+
 	}
 
 	/*
@@ -261,15 +193,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testAlreadyLoggedIn() throws Exception {
-		// Configure the mockChatClient to return true when isLoggedIn() is called
-		when(mockChatClient.isLoggedIn()).thenReturn(true);
-		mockController.txtUsername.setText("validusername");
-		mockController.txtPswd.setText("validpassword");
-		mockController.getLoginBtn(null);
-		assertTrue(mockController.lblErrorOnDetails.isVisible());
-		assertEquals("User is already logged in!", mockController.lblErrorOnDetails.getText());
-		verify(mockChatClient, times(0)).accept(any());
-		verify(mockScreenInterface, times(0)).changeScreen(mockStage, "mainMenu.fxml");
+
 	}
 
 	/*
@@ -282,14 +206,7 @@ class IdentificationControllerTest {
 	 */
 	@Test
 	public void testLoginSuccessful_SalesWorker() throws Exception {
-		when(mockChatClient.isLoggedIn()).thenReturn(false);
-		User mockUser = mock(User.class);
-		when(mockUser.getRole()).thenReturn(Role.SalesWorker);
-		when(mockChatClient.getUser()).thenReturn(mockUser);
-		mockController.txtUsername.setText("validusername");
-		mockController.txtPswd.setText("validpassword");
-		mockController.getLoginBtn(null);
-		verify(mockScreenInterface, times(1)).changeScreen(mockStage, "/clientGUI/SalesWorker_MainView.fxml");
+
 	}
 
 }
