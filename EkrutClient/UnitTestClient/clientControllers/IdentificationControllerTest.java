@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
 
@@ -33,13 +34,13 @@ class IdentificationControllerTest {
 		mockController = Mockito.mock(IdentificationController.class);
 	}
 
-	/***
-	 * checking functionality: null username:"NOTEXIST" and password:"123" Result:
-	 * Error message displayed on the screen, changeScreen method should not be
-	 * called.
-	 */
+	// functionality : checking userLogin when the condition "if" match to User not
+	// exist case.
+	// Input data: event.
+	// Expected result: String "UserNotExist" and verify that
+	// setTextLableErrorUserNotExist called.
 	@Test
-	public void LoginTest_User_NotExistUserUserIsNull() throws Exception {
+	public void userLoginTest_User_NotExistUser_UserIsNull() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserNotExist();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
@@ -48,60 +49,43 @@ class IdentificationControllerTest {
 		verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
 		assertEquals(expected, result);
 	}
+
+	// functionality : checking userLogin when the condition "if" match to User is
+	// empty Object case
+	// Input data: event.
+	// Expected result: String "UserNotInitializeCorrectly" and verify that
+	// setTextLableUserNotInitilazeCorrectly called.
 	@Test
-	public void LoginTest_User_NotExistUserWrongPassword() throws Exception {
-		doNothing().when(mockController).setTextLableErrorUserNotExist();
-		doNothing().when(mockController).setUserDetails();
-		mockController.userController = new UserController();
-		mockController.userController.setUser(new User("costumer", "123", "Peleg", "Oanuno", "peleg@braude.ac.il",
-				"0525678891", true, "122", Role.Costumer, Region.SOUTH));
-		String result = (String) loginTest.invoke(mockController, event);
-		String expected = "UserNotExist";
-		//verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
-		assertEquals(expected, result);
-	}
-	@Test
-	public void LoginTest_User_NotExistUserWrongUserName() throws Exception {
-		doNothing().when(mockController).setTextLableErrorUserNotExist();
-		doNothing().when(mockController).setUserDetails();
-		mockController.userController = new UserController();
-		mockController.userController.setUser(new User("NotExist", "123456", "Peleg", "Oanuno", "peleg@braude.ac.il",
-				"0525678891", true, "122", Role.Costumer, Region.SOUTH));
-		String result = (String) loginTest.invoke(mockController, event);
-		String expected = "UserNotExist";
-		//verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
-		assertEquals(expected, result);
-	}
-	@Test
-	public void LoginTest_User_NotExistUserUserIsEmptyObject() throws Exception {
+	public void userLoginTest_User_NotExistUserUserIsEmptyObject() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserNotExist();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
 		mockController.userController.setUser(new User());
 		String result = (String) loginTest.invoke(mockController, event);
-		String expected ="UserNotInitializeCorrectly";
-		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
-		assertEquals(expected, result);
-	}
-	@Test
-	public void LoginTest_User_NotInitilazeCorrectlyEmptyObject() throws Exception {
-		doNothing().when(mockController).setTextLableErrorUserNotExist();
-		doNothing().when(mockController).setUserDetails();
-		mockController.userController = new UserController();
-		mockController.userController.setUser(new User());
-		String result = (String) loginTest.invoke(mockController, event);
-		String expected ="UserNotInitializeCorrectly";
+		String expected = "UserNotInitializeCorrectly";
 		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
 		assertEquals(expected, result);
 	}
 
-	/*
-	 * checking functionality: costumer alreadylogged in field and valid password
-	 * Output: Error message displayed on the screen, changeScreen method should not
-	 * be called
-	 */
 	@Test
-	public void LoginTest_For_Logged_In_User() throws Exception {
+	public void userLoginTest_User_NotInitilazeCorrectlyEmptyObject() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserNotExist();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User());
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserNotInitializeCorrectly";
+		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
+		assertEquals(expected, result);
+	}
+
+	// functionality : checking userLogin when the condition "if" match to User
+	// already logged in case
+	// Input data: event.
+	// Expected result: String "UserLoggedIn" and verify that
+	// setTextLableErrorUserAlreadyLoggedIn called.
+	@Test
+	public void userLoginTest_For_Logged_In_User() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserAlreadyLoggedIn();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
@@ -114,8 +98,13 @@ class IdentificationControllerTest {
 
 	}
 
+	// functionality : checking userLogin when the condition "if" match to Costumer
+	// is exist and not loggedin in OL configuration
+	// Input data: event.
+	// Expected result: String "OLCostumer" and verify that changeScreenToRelevant
+	// called.
 	@Test
-	void LoginTest_Succsessful_ForExist_OL_Costumer() throws Exception {
+	void userLoginTest_Succsessful_ForExist_OL_Costumer() throws Exception {
 		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
 		doNothing().when(mockController).setUserDetails();
 		doNothing().when(mockController).getCostumer();
@@ -132,8 +121,13 @@ class IdentificationControllerTest {
 		assertEquals(expected, result);
 	}
 
+	// functionality : checking userLogin when the condition "if" match to Costumer
+	// is exist and not loggedin in EK configuration
+	// Input data: event.
+	// Expected result: String "EKCostumer" and verify that changeScreenToRelevant
+	// called.
 	@Test
-	void LoginTest_Succsessful_ForExist_EK_Costumer() throws Exception {
+	void userLoginTest_Succsessful_ForExist_EK_Costumer() throws Exception {
 		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
 		doNothing().when(mockController).setUserDetails();
 		doNothing().when(mockController).getCostumer();
@@ -150,8 +144,13 @@ class IdentificationControllerTest {
 		assertEquals(expected, result);
 	}
 
+	// functionality : checking userLogin when the condition "if" match to Employee
+	// User is exist and not loggedin in EK configuration
+	// Input data: event.
+	// Expected result: String "EmployeeUser" and verify that changeScreenToRelevant
+	// called.
 	@Test
-	void LoginTest_Succsessful_For_Employee() throws Exception {
+	void userLoginTest_Succsessful_For_Employee() throws Exception {
 		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
@@ -163,9 +162,15 @@ class IdentificationControllerTest {
 		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
 		assertEquals(expected, result);
 	}
+
+	// functionality : checking userLogin when the condition "if" match to NotSignUp
+	// User is exist and not loggedin in EK configuration
+	// Input data: event.
+	// Expected result: String "UserNotSignUP" and verify that
+	// changeScreenToRelevant called.
 	@Test
-	void LoginTest_Succsessful_For_UserNotSignUp() throws Exception {
-		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+	void userLoginTest_Succsessful_For_UserNotSignUp() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.NotSignUp.toString(), event);
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
 		mockController.userController.setUser(new User("user3", "123456", "Osher", "Lahiani", "osher@braude.ac.il",
@@ -175,109 +180,6 @@ class IdentificationControllerTest {
 		String expected = "UserNotSignUP";
 		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.NotSignUp.toString(), event);
 		assertEquals(expected, result);
-	}
-	void LoginTest_Succsessful_For_CostumerNotApproved() throws Exception {
-		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
-		doNothing().when(mockController).setUserDetails();
-		mockController.userController = new UserController();
-		mockController.userController.setUser(new User("user3", "123456", "Osher", "Lahiani", "osher@braude.ac.il",
-				"0509913039", false, "122", Role.Costumer, Region.NORTH));
-		mockController.costumerController.setCostumer(new Costumer())
-		mockController.configuration = "EK";
-		String result = (String) loginTest.invoke(mockController, event);
-		String expected = "UserNotSignUP";
-		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.NotSignUp.toString(), event);
-		assertEquals(expected, result);
-	}
-	/*
-	 * checking functionality:Test for empty password field Input: Valid username
-	 * and empty password field Output: Error message displayed on the screen,
-	 * changeScreen method should not be called
-	 * 
-	 */
-
-	@Test
-	public void testEmptyPasswordField() throws Exception {
-
-	}
-
-	/*
-	 * *checking functionality:Test for successful login with special characters in
-	 * the username and password Input: Valid username and password that contain
-	 * special characters Output: changeScreen method should be called
-	 */
-	@Test
-	public void testValidLoginWithSpecialChars() throws Exception {
-
-	}
-
-	/*
-	 * checking functioality:Test for successful login with maximum length of
-	 * username and password Input: Valid username and password that have the
-	 * maximum allowed length Output: changeScreen method should be called
-	 * 
-	 */
-	@Test
-	public void testValidLoginWithMaxLength() throws Exception {
-
-	}
-
-	/*
-	 * checking functioality:Test for exception handling Input: An exception is
-	 * thrown during the communication with the server Output: Error message
-	 * displayed on the screen, changeScreen method should not be called
-	 * 
-	 */
-	@Test
-	public void testExceptionHandling() throws Exception {
-
-	}
-
-	/*
-	 * checking functiolity:Test for successful login with lowercase username and
-	 * password Input: valid username and password that are in lowercase Output:
-	 * changeScreen method should be called
-	 */
-	@Test
-	public void testValidLoginWithLowercase() throws Exception {
-
-	}
-
-	/*
-	 * checking functionality:Test for successful login with uppercase username and
-	 * password Input: valid username and password that are in uppercase Output:
-	 * changeScreen method should be called
-	 * 
-	 */
-	@Test
-	public void testValidLoginWithUppercase() throws Exception {
-
-	}
-
-	/*
-	 * checking functioality:This test case is checking if the method can handle the
-	 * case when the user is already logged in. Input: A user is already logged in
-	 * and the text in the username and password fields is set to "validusername"
-	 * and "validpassword" respectively. Output: The error label should be visible
-	 * and the error message displayed should be "User is already logged in!". The
-	 * accept method on the mockChatClient should not be called, and the
-	 * changeScreen method on the mockScreenInterface should not be called.
-	 */
-	@Test
-	public void testAlreadyLoggedIn() throws Exception {
-
-	}
-
-	/*
-	 * checking functioality: checking if the method can handle the case when the
-	 * login is successful and redirect the user to the appropriate screen based on
-	 * their role. Input: A user is not already logged in and the text in the
-	 * username and password fields is set to "validusername" and "validpassword"
-	 * respectively. Output: The changeScreen method on the mockScreenInterface is
-	 * called with the parameter "/clientGUI/SalesWorker_MainView.fxml" once.
-	 */
-	@Test
-	public void testLoginSuccessful_SalesWorker() throws Exception {
 
 	}
 

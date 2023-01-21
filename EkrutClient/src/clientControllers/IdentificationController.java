@@ -104,11 +104,10 @@ public class IdentificationController {
 
 	private String userLogin(ActionEvent event) {
 		setUserDetails();
-		if(userController==null) {
+		if (userController == null) {
 			return "UserControllerIsNull";
 		}
-		
-		
+
 		// if user is exist in DB
 		if (!userController.isUserExist()) {
 			// In case the user login input was invalid (username/password) - error label
@@ -116,20 +115,19 @@ public class IdentificationController {
 			setTextLableErrorUserNotExist();
 			return "UserNotExist";
 		}
-	    if(userController.checkNullFieldsOfUser(userController.getUser())) {
-	    	  setTextLableUserNotInitilazeCorrectly();
-				return "UserNotInitializeCorrectly";
-			}
-	    
-		 else {
+		if (userController.checkNullFieldsOfUser(userController.getUser())) {
+			setTextLableUserNotInitilazeCorrectly();
+			return "UserNotInitializeCorrectly";
+		}
+		else {
 			if (userController.getUser().isLoggedIn()) {
 				setTextLableErrorUserAlreadyLoggedIn();
 				return "UserLoggedIn";
 			} else {
-				if(userController.getUser().getRole()==null||userController.getUser().getFirstName()==null) {
+				if (userController.getUser().getRole() == null || userController.getUser().getFirstName() == null) {
 					return "UserHasEmptyFieldEror!";
 				}
-				
+
 				// loading next screen for specific user.
 				if (userController.getUser().getRole().toString().equals("Costumer")) {
 					getCostumer();
@@ -146,17 +144,15 @@ public class IdentificationController {
 						changeScreenToRelevant("/clientGUI/ScreenForNotApproveUserAfterLogin.fxml", event);
 						return "CostumerNotApproved";
 					}
-					
 
-				} 
-				
-				else
-				{
-					if(userController.getUser().getRole().equals(Role.NotSignUp)) {
+				}
+
+				else {
+					if (userController.getUser().getRole().equals(Role.NotSignUp)) {
 						changeScreenToRelevant("/clientGUI/" + userController.getUser().getRole().toString(), event);
 						return "UserNotSignUP";
 					}
-					
+
 					changeScreenToRelevant("/clientGUI/" + userController.getUser().getRole().toString(), event);
 					return "EmployeeUser";
 				}
@@ -164,7 +160,6 @@ public class IdentificationController {
 		}
 		return "UserNotExist";
 	}
-	
 
 	public void getCostumer() {
 		ClientUI.chat.accept(new Message(Request.Get_Costumer, userController.getUser().getId()));
@@ -193,6 +188,7 @@ public class IdentificationController {
 		lblErrorOnDetails.setVisible(true);
 		lblErrorOnDetails.setText("User is already logged in!");
 	}
+
 	public void setTextLableUserNotInitilazeCorrectly() {
 		lblErrorOnDetails.setVisible(true);
 		lblErrorOnDetails.setText("User is not sign up correctly!");
