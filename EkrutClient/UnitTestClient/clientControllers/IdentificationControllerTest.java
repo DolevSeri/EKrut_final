@@ -39,13 +39,59 @@ class IdentificationControllerTest {
 	 * called.
 	 */
 	@Test
-	public void LoginTest_User_NotExist() throws Exception {
+	public void LoginTest_User_NotExistUserUserIsNull() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserNotExist();
 		doNothing().when(mockController).setUserDetails();
 		mockController.userController = new UserController();
 		String result = (String) loginTest.invoke(mockController, event);
 		String expected = "UserNotExist";
 		verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
+		assertEquals(expected, result);
+	}
+	@Test
+	public void LoginTest_User_NotExistUserWrongPassword() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserNotExist();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("costumer", "123", "Peleg", "Oanuno", "peleg@braude.ac.il",
+				"0525678891", true, "122", Role.Costumer, Region.SOUTH));
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserNotExist";
+		//verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
+		assertEquals(expected, result);
+	}
+	@Test
+	public void LoginTest_User_NotExistUserWrongUserName() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserNotExist();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("NotExist", "123456", "Peleg", "Oanuno", "peleg@braude.ac.il",
+				"0525678891", true, "122", Role.Costumer, Region.SOUTH));
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserNotExist";
+		//verify(mockController, atLeastOnce()).setTextLableErrorUserNotExist();
+		assertEquals(expected, result);
+	}
+	@Test
+	public void LoginTest_User_NotExistUserUserIsEmptyObject() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserNotExist();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User());
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected ="UserNotInitializeCorrectly";
+		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
+		assertEquals(expected, result);
+	}
+	@Test
+	public void LoginTest_User_NotInitilazeCorrectlyEmptyObject() throws Exception {
+		doNothing().when(mockController).setTextLableErrorUserNotExist();
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User());
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected ="UserNotInitializeCorrectly";
+		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
 		assertEquals(expected, result);
 	}
 
@@ -115,6 +161,32 @@ class IdentificationControllerTest {
 		String result = (String) loginTest.invoke(mockController, event);
 		String expected = "EmployeeUser";
 		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+		assertEquals(expected, result);
+	}
+	@Test
+	void LoginTest_Succsessful_For_UserNotSignUp() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("user3", "123456", "Osher", "Lahiani", "osher@braude.ac.il",
+				"0509913039", false, "122", Role.NotSignUp, Region.NORTH));
+		mockController.configuration = "EK";
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserNotSignUP";
+		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.NotSignUp.toString(), event);
+		assertEquals(expected, result);
+	}
+	void LoginTest_Succsessful_For_CostumerNotApproved() throws Exception {
+		doNothing().when(mockController).changeScreenToRelevant("/clientGUI/" + Role.CEO.toString(), event);
+		doNothing().when(mockController).setUserDetails();
+		mockController.userController = new UserController();
+		mockController.userController.setUser(new User("user3", "123456", "Osher", "Lahiani", "osher@braude.ac.il",
+				"0509913039", false, "122", Role.Costumer, Region.NORTH));
+		mockController.costumerController.setCostumer(new Costumer())
+		mockController.configuration = "EK";
+		String result = (String) loginTest.invoke(mockController, event);
+		String expected = "UserNotSignUP";
+		verify(mockController, atLeastOnce()).changeScreenToRelevant("/clientGUI/" + Role.NotSignUp.toString(), event);
 		assertEquals(expected, result);
 	}
 	/*

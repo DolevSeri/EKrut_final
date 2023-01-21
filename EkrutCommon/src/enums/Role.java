@@ -33,6 +33,7 @@ public enum Role {
 		}
 	},
 	NotSignUp {
+		
 		public String toString() {
 			// the string will be the exact name of the FXML we would like to show
 			return "ScreenForNotSignUpUser.fxml";
@@ -57,6 +58,8 @@ public enum Role {
 			// the string will be the exact name of the FXML we would like to show
 			return "SalesManagerMainScreen.fxml";
 		}
-	},
+	},;
+
+	
 
 }
