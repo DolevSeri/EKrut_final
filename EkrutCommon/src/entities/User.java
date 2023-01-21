@@ -54,6 +54,10 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getUsername() {
 		return username;
 	}

@@ -101,5 +101,43 @@ public class UserController {
 	public void setAreaManagerUserNAme(String areaManagerUserNAme) {
 		this.areaManagerUserNAme = areaManagerUserNAme;
 	}
+	/**
+	 * checkNullFieldsOfUser- a method that check if some field of user is null
+	 * @param user
+	 * @return true-if some field is null and false-if not
+	 */
+	public boolean checkNullFieldsOfUser(User user) {
+		if(user.getEmail()==null) {
+			return true;
+		}
+		if(user.getFirstName()==null) {
+			return true;
+		}
+		if(user.getLastName()==null) {
+			return true;
+		}
+		if(user.getId()==null) {
+			return true;
+		}
+		if(user.getLastName()==null) {
+			return true;
+		}
+		if(user.getPassword()==null) {
+			return true;
+		}
+		if(user.getPhoneNumber()==null) {
+			return true;
+		}
+		if(user.getPhoneNumber()==null) {
+			return true;
+		}
+		if(user.getRegion()==null) {
+			return true;
+		}
+		if(user.getUsername()==null) {
+			return true;
+		}
+		return false;
+	}
 
 }

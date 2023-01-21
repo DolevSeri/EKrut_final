@@ -120,9 +120,9 @@ public class EchoServer extends AbstractServer {
 			}
 			break;
 		case Login_Request:
-            MySqlController mysql= new MySqlController();
+           
 			ArrayList<String> userANDpassword = (ArrayList<String>) messageFromClient.getObject();
-			User user = mysql.LoginCheckAndUpdateLoggedIn(userANDpassword);
+			User user = MySqlController.LoginCheckAndUpdateLoggedIn(userANDpassword);
 			Message msgToClient;
 			if (user != null) {
 				if (user.isLoggedIn() == false) {
