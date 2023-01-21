@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import client.ChatClient;
-import client.ClientUI;
 import entities.InventoryReport;
 import enums.Role;
 import javafx.collections.FXCollections;
@@ -54,7 +53,12 @@ public class InventoryReportController {
 	private ImageView logo;
 
 	SetSceneController scene = new SetSceneController();
-
+	public InventoryReportController inventoryReportController;
+	
+	public void setInventoryReportController(InventoryReportController inventoryReportController) {
+		this.inventoryReportController = inventoryReportController;
+	}
+	
 	/**
 	 * Initializes the fields in the Inventory Report scene with data from the
 	 * InventoryReport object.
@@ -80,17 +84,16 @@ public class InventoryReportController {
 			pieChartData.add(new PieChart.Data(product + "-" + underThresCount, underThresCount));
 		}
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
-		lblAreaField.setText(areaCeo);
+			setLabelText(lblAreaField, areaCeo);
 		}
 		else {
-			lblAreaField.setText(areaManager);
+			setLabelText(lblAreaField, areaManager);
 		}
-		lblDeviceField.setText(device);
-		lblTresholdField.setText(deviceThres.toString());
-		lblReportDate.setText(month + "/" + year);
-		lblItemUnderTreshold.setText(mexProductUnderThres);
-		chrtInventory.setData(pieChartData);
-
+		setLabelText(lblDeviceField, device);
+		setLabelText(lblTresholdField, deviceThres.toString());
+		setLabelText(lblReportDate, month + "/" + year);
+		setLabelText(lblItemUnderTreshold, mexProductUnderThres);
+		setChartData(chrtInventory, pieChartData);
 	}
 
 	/**
@@ -119,6 +122,13 @@ public class InventoryReportController {
 	
 	public InventoryReportController() {
 		
+	}
+	
+	public void setLabelText(Label l, String str) {
+		l.setText(str);
+	}
+	public void setChartData(PieChart c, ObservableList<PieChart.Data> data) {
+		c.setData(data);
 	}
 
 }
