@@ -33,6 +33,8 @@ class MySqlControllerTest {
 	ArrayList<String> userExistLoggedIn;
 	ArrayList<String> userExistWrongPswd;
 	ArrayList<String> nonExistingUser;
+	ArrayList<String> emptyFields;
+	ArrayList<String> nullCheck = null;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -59,7 +61,8 @@ class MySqlControllerTest {
 		userExistLoggedIn = new ArrayList<String>(Arrays.asList("costumer", "123456"));
 		userExistWrongPswd = new ArrayList<String>(Arrays.asList("costumer", "99999"));
 		nonExistingUser = new ArrayList<String>(Arrays.asList("notValid", "99999"));
-
+		emptyFields = new ArrayList<String>(Arrays.asList("", ""));
+		nullCheck = null;
 	}
 
 	// Functionality: check getInventoryReport functionality when report is exist on
@@ -213,12 +216,10 @@ class MySqlControllerTest {
 
 	}
 
-	/**
-	 * Description: Checking login method for existing user with matching user name
-	 * and password Input data: User details - username: "ceo", password: "123456"
-	 * Expected result: User object as follow: new User("ceo", "123456", "Ron",
-	 * "Lahiani", ron@braude.ac.il, "0509913037", "false", 123,Role.CEO,Region.ALL);
-	 */
+	// functionality: test for user is already loggedin try to loggin
+	// Input data: ArrayList<String> object that contains username="ceo" and password ="123456"
+	// expected result: new User("ceo", "123456", "Ron", "Lahiani", "ron@braude.ac.il", "0509913037", false, "123",
+	//Role.CEO, Region.ALL);
 	@Test
 	public void LoggInForExistingAndNotLoggedInUser() {
 		User result = MySqlController.LoginCheckAndUpdateLoggedIn(userExistNotLoggedIn);
@@ -227,11 +228,9 @@ class MySqlControllerTest {
 		assertEquals(expected, result);
 	}
 
-	/**
-	 * Description: Checking login method for non exist user. Input data: User
-	 * details - user name: "notValid", password:"99999". 
-	 * Expected result: null
-	 */
+	// functionality: test for empty username and password when try to loggin
+	// Input data: ArrayList<String> object that contains username="notValid" , password = "99999"
+	// expected result: null
 	@Test
 	public void LoggInForNonExistingUser() {
 		User result = MySqlController.LoginCheckAndUpdateLoggedIn(nonExistingUser);
@@ -239,11 +238,9 @@ class MySqlControllerTest {
 		assertEquals(expected, result);
 	}
 
-	/**
-	 * Description: Checking login method for invalid user (unsuccessful login)
-	 * Input data: User details - username: "costumer", password: "99999" 
-	 * Expected result: null
-	 */
+	// functionality: test for loggin with wrong password and valid username.
+	// Input data: ArrayList<String> object that contains username="costumer" , password = "99999"
+	// expected result: null
 	@Test
 	public void loginForExitingUserWrongPassword() {
 		User result = MySqlController.LoginCheckAndUpdateLoggedIn(userExistWrongPswd);
@@ -251,13 +248,10 @@ class MySqlControllerTest {
 		assertEquals(expected, result);
 	}
 
-	/**
-	 * Description: Checking login method for existing user with matching user name
-	 * and password Input data: User details - username: "ceo", password: "123456"
-	 * Expected result: user object: new User("costumer", "123456", "Peleg",
-	 * "Oanunu", "peleg@braude.ac.il", "0525678891", true, "122", Role.Costumer,
-	 * Region.SOUTH);
-	 */
+	// functionality: test for user is already loggedin try to loggin
+	// Input data: ArrayList<String> object that contains username="costumer" and password ="123456"
+	// expected result: new User("costumer", "123456", "Peleg", "Oanunu", "peleg@braude.ac.il", "0525678891", true,
+	//"122", Role.Costumer, Region.SOUTH);
 	@Test
 	public void LoggInForExistingUserAndLoggedIn() {
 		User result = MySqlController.LoginCheckAndUpdateLoggedIn(userExistLoggedIn);
@@ -266,4 +260,23 @@ class MySqlControllerTest {
 		assertEquals(expected, result);
 	}
 
+	// functionality: test for empty username and password when try to loggin
+	// Input data: ArrayList<String> object that contains "" in username and
+	// password
+	// expected result: null
+	@Test
+	public void LoggIn_For_Empty_Fields() {
+		User result = MySqlController.LoginCheckAndUpdateLoggedIn(emptyFields);
+		User expected = null;
+		assertEquals(expected, result);
+	}
+	// functionality: test when username and passwords is null
+	// Input data: null object 
+	// expected result: null
+	@Test
+	public void LoggIn_For_NULL_Fields() {
+		User result = MySqlController.LoginCheckAndUpdateLoggedIn(nullCheck);
+		User expected = null;
+		assertEquals(expected, result);
+	}
 }

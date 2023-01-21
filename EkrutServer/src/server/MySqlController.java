@@ -92,6 +92,8 @@ public class MySqlController {
 	 * username and password and will do the login operation for any user
 	 */
 	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
+		if(userANDpassword == null)
+			return null;
 		try {
 			PreparedStatement ps = dbConnector
 					.prepareStatement("SELECT * FROM ekrut.users WHERE username = ? and password = ?;");
