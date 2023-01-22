@@ -1,120 +1,86 @@
 package clientControllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doNothing;
+import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import entities.InventoryReport;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import entityControllers.InventoryReportsController;
 
 public class InventoryReportControllerTest {
 
 	@Mock
-	private entityControllers.InventoryReportController reportMock;
-	private InventoryReportController controller;
+	private InventoryReportsController inventoryReportsController;
 
-	private ActionEvent event;
-	private InventoryReport report;
+	private InventoryReportController controller = new InventoryReportController();
+	HashMap<String, Integer> products = new HashMap<>();
+	HashMap<String, Integer> noProducts = new HashMap<>();
 
-	@BeforeEach
+	@Before
 	public void setUp() {
-		reportMock = Mockito.mock(entityControllers.InventoryReportController.class);
+		inventoryReportsController = Mockito.mock(InventoryReportsController.class);
+		controller.setInventoryReportsController(inventoryReportsController);
+		products.put("Bamba", 7);
+		products.put("BisliGrill", 15);
+		products.put("DoritosExtra", 3);
+		products.put("BambaNogat", 19);
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void testInitialize_NullReport() {		
-		when((reportMock).getInventoryReport()).thenReturn(null);
-		controller.initialize();
+	/**
+	 * Description: Checking getOurReport method for existing report Input data:
+	 * InventoryReport("06", "2022", "Haifa", products, "BambaNogat", 6) Expected
+	 * result: InventoryReport("06", "2022", "Haifa", products, "BambaNogat", 6)
+	 */
+	@Test
+	public void getOurReportTest_ExsitingReport() {
+		InventoryReport expected = new InventoryReport("06", "2022", "Haifa", products, "BambaNogat", 6);
+		when((inventoryReportsController).getInventoryReport()).thenReturn(expected);
+		InventoryReport result = controller.getOurReport();
+		assertEquals(expected, result);
 	}
 
-//	@Test
-//	public void testInitialize_ExistingReportWithData() {
-//		doNothing().when(reportMock).getInventoryReport();
-//
-//	}
+	/**
+	 * Description: Checking getOurReport method for existing report with no
+	 * products under threshold Input data: InventoryReport("06", "2022", "Haifa",
+	 * noProducts, null, 6) Expected result: InventoryReport("06", "2022", "Haifa",
+	 * noProducts, null, 6)
+	 */
+	@Test
+	public void getOurReportTest_ExsitingReportWithoutProductsData() {
+		InventoryReport expected = new InventoryReport("06", "2022", "Haifa", noProducts, null, 6);
+		when((inventoryReportsController).getInventoryReport()).thenReturn(expected);
+		InventoryReport result = controller.getOurReport();
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * Description: Checking getOurReport method for not existing report Input data:
+	 * null InventoryReport Expected result: null InventoryReport
+	 */
+	@Test
+	public void getOurReportTest_NullReport() {
+		InventoryReport expected = null;
+		when((inventoryReportsController).getInventoryReport()).thenReturn(null);
+		InventoryReport result = controller.getOurReport();
+		assertEquals(expected, result);
+	}
+
+	/**
+	 * Description: Checking getOurReport method when controller is not set Input
+	 * data: null InventoryReportsController Expected result: NullPointerException
+	 * thrown
+	 */
+	@Test
+	public void getOurReportTest_NullReportController() {
+		controller.setInventoryReportsController(null);
+		assertThrows(NullPointerException.class, () -> controller.getOurReport());
+	}
 
 }
-//    private InventoryReportController controller;
-//    private InventoryReport inventoryReport;
-//    private ChatClient chatClient;
-//
-//    @Before
-//    public void setUp() {
-//        controller = new InventoryReportController();
-//        inventoryReport = mock(InventoryReport.class);
-//        chatClient = mock(ChatClient.class);
-//        ClientUI clientUI = mock(ClientUI.class);
-//        ChatClient.inventoryReportController = mock(InventoryReportController.class);
-//        ChatClient.userController = mock(UserController.class);
-//        ChatClient.setClientUI(clientUI);
-//        ChatClient.setChatClient(chatClient);
-//        when(ChatClient.inventoryReportController.getInventoryReport()).thenReturn(inventoryReport);
-//    }
-
-//    @Test
-//    public void testInitialize() {
-//        HashMap<String, Integer> producsUnderThreshold = new HashMap<>();
-//        producsUnderThreshold.put("Product1", 10);
-//        producsUnderThreshold.put("Product2", 20);
-//        when(inventoryReport.getProducsUnderThreshold()).thenReturn(producsUnderThreshold);
-//        when(inventoryReport.getMexProductUnderThres()).thenReturn("Product1");
-//        when(inventoryReport.getDeviceThres()).thenReturn(5);
-//        when(inventoryReport.getDeviceName()).thenReturn("Device1");
-//        when(inventoryReport.getMonth()).thenReturn("January");
-//        when(inventoryReport.getYear()).thenReturn("2022");
-//        when(ChatClient.inventoryReportController.getAreaForCEO()).thenReturn("Area1");
-//        when(ChatClient.userController.getUser().getRegion()).thenReturn("Area2");
-//        when(ChatClient.userController.getUser().getRole()).thenReturn(Role.MANAGER);
-//        controller.initialize();
-//
-//        assertEquals("Area2", controller.lblAreaField.getText());
-//        assertEquals("Device1", controller.lblDeviceField.getText());
-//        assertEquals("5", controller.lblTresholdField.getText());
-//        assertEquals("January/2022", controller.lblReportDate.getText());
-//        assertEquals("Product1", controller.lblItemUnderTreshold.getText());
-//        assertEquals(2, controller.chrtInventory.getData().size());
-//        for (PieChart.Data data : controller.chrtInventory.getData()) {
-//            String label = data.getName();
-//            int value = (int) data.getPieValue();
-//            assertEquals(producsUnderThreshold.get(label.split("-
-//
-//}
-
-/*
- import static org.mockito.Mockito.*;
-import java.util.Calendar;
-import org.junit.Test;
-
-public class MyClassTest {
-    @Test
-    public void testStart() {
-        // create a mock Calendar object that represents the last day of the month
-        Calendar mockCalendar = mock(Calendar.class);
-        when(mockCalendar.getInstance()).thenReturn(mockCalendar);
-        when(mockCalendar.get(Calendar.DAY_OF_MONTH)).thenReturn(31);
-        when(mockCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)).thenReturn(31);
-        
-        // create a mock controller
-        MyController mockController = mock(MyController.class);
-        
-        // create a new instance of your class and set the mock controller
-        MyClass myClass = new MyClass();
-        myClass.setController(mockController);
-        
-        // call the start method
-        myClass.start();
-        
-        // assert that the createReport method was called
-        verify(mockController, times(1)).createReport(true);
-    }
-}
-*/
-
