@@ -124,23 +124,20 @@ public class IdentificationController {
 				setTextLableErrorUserAlreadyLoggedIn();
 				return "UserLoggedIn";
 			} else {
-				if (userController.getUser().getRole() == null || userController.getUser().getFirstName() == null) {
-					return "UserHasEmptyFieldEror!";
-				}
 
 				// loading next screen for specific user.
 				if (userController.getUser().getRole().toString().equals("Costumer")) {
 					getCostumer();
 					if ((configuration.equals("OL"))
-							&& !(costumerController.getCostumer().getStatus().equals("NOTAPPROVED"))) {
+							&& !(costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED"))) {
 						changeScreenToRelevant("/clientGUI/Client_OL_MainView.fxml", event);
 						return "OLCostumer";
-					} else if ((configuration.equals("EK"))
-							&& !(costumerController.getCostumer().getStatus().equals("NOTAPPROVED"))) {
+					} else if ((configuration.equals("EK")
+							&& !(costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED")))) {
 						changeScreenToRelevant("/clientGUI/Client_EK_MainView.fxml", event);
 						return "EKCostumer";
 					}
-					if (costumerController.getCostumer().getStatus().equals("NOTAPPROVED")) {
+					if (costumerController.getCostumer().getStatus().toString().equals("NOTAPPROVED")) {
 						changeScreenToRelevant("/clientGUI/ScreenForNotApproveUserAfterLogin.fxml", event);
 						return "CostumerNotApproved";
 					}
