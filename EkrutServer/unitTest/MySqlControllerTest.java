@@ -62,7 +62,7 @@ class MySqlControllerTest {
 
 		// Login Lists initialization
 		userExistNotLoggedIn = new ArrayList<String>(Arrays.asList("ceo", "123456"));
-		userExistLoggedIn = new ArrayList<String>(Arrays.asList("costumer", "123456"));
+		userExistLoggedIn = new ArrayList<String>(Arrays.asList("costumer3", "123456"));
 		userExistWrongPswd = new ArrayList<String>(Arrays.asList("costumer", "99999"));
 		nonExistingUser = new ArrayList<String>(Arrays.asList("notValid", "99999"));
 		emptyFields = new ArrayList<String>(Arrays.asList("", ""));
@@ -263,16 +263,16 @@ class MySqlControllerTest {
 	// functionality: test for user is already loggedin try to loggin
 	// Input data: ArrayList<String> object that contains username="costumer" and
 	// password ="123456"
-	// expected result: new User("costumer", "123456", "Peleg", "Oanunu",
-	// "peleg@braude.ac.il", "0525678891", true,
-	// "122", Role.Costumer, Region.SOUTH);
+	// expected result:new User("costumer3", "123456", "Dolev", "Seri", "Dolev@gmail.il", "0501122334", true, "125"
+	//, Role.Costumer, Region.UAE);
 	@Test
 	public void LoggInForExistingUserAndLoggedIn() {
 		User result = MySqlController.LoginCheckAndUpdateLoggedIn(userExistLoggedIn);
-		User expected = new User("costumer", "123456", "Peleg", "Oanunu", "peleg@braude.ac.il", "0525678891", true,
-				"122", Role.Costumer, Region.SOUTH);
+		User expected = new User("costumer3", "123456", "Dolev", "Seri", "Dolev@gmail.il", "0501122334", true, "125"
+, Role.Costumer, Region.UAE);
 		assertEquals(expected, result);
 	}
+	
 
 	// functionality: test for empty username and password when try to loggin
 	// Input data: ArrayList<String> object that contains "" in username and
