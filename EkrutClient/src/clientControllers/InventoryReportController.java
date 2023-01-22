@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import client.ChatClient;
 import entities.InventoryReport;
+import entityControllers.InventoryReportsController;
 import enums.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.scene.image.ImageView;
  */
 public class InventoryReportController {
 
+	
 	@FXML
 	private PieChart chrtInventory;
 
@@ -53,29 +55,29 @@ public class InventoryReportController {
 	private ImageView logo;
 
 	SetSceneController scene = new SetSceneController();
-	public InventoryReportController inventoryReportController;
+	public InventoryReportsController inventoryReportsController = null;
 	
-	public void setInventoryReportController(InventoryReportController inventoryReportController) {
-		this.inventoryReportController = inventoryReportController;
+	public InventoryReportController() {
+		inventoryReportsController = new InventoryReportsController();
 	}
-	
+
 	/**
 	 * Initializes the fields in the Inventory Report scene with data from the
 	 * InventoryReport object.
 	 */
+
 	public void initialize() {
-		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
-		logo.setImage(imagelogo);
-		InventoryReport inventoryReport = ChatClient.inventoryReportController.getInventoryReport();
+		setInventoryReportsController(ChatClient.inventoryReportsController);
+		InventoryReport inventoryReport = getOurReport();
 		HashMap<String, Integer> producsUnderThreshold = inventoryReport.getProducsUnderThreshold();
 		String mexProductUnderThres = inventoryReport.getMexProductUnderThres();
 		Integer deviceThres = inventoryReport.getDeviceThres();
 		String device = inventoryReport.getDeviceName();
 		String month = inventoryReport.getMonth();
 		String year = inventoryReport.getYear();
-		String areaCeo = ChatClient.inventoryReportController.getAreaForCEO();
+		String areaCeo = ChatClient.inventoryReportsController.getAreaForCEO();
 		String areaManager = ChatClient.userController.getUser().getRegion().toString();
-
+		setImage();
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
 		for (Entry<String, Integer> pr : producsUnderThreshold.entrySet()) {
@@ -85,8 +87,7 @@ public class InventoryReportController {
 		}
 		if (ChatClient.userController.getUser().getRole().equals(Role.CEO)) {
 			setLabelText(lblAreaField, areaCeo);
-		}
-		else {
+		} else {
 			setLabelText(lblAreaField, areaManager);
 		}
 		setLabelText(lblDeviceField, device);
@@ -119,16 +120,30 @@ public class InventoryReportController {
 		((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
 		scene.exitOrLogOut(event, false);
 	}
-	
-	public InventoryReportController() {
-		
+
+	public void setInventoryReportsController
+	(InventoryReportsController inventoryReportsController) {
+		this.inventoryReportsController = inventoryReportsController;
 	}
-	
+
 	public void setLabelText(Label l, String str) {
 		l.setText(str);
 	}
+
 	public void setChartData(PieChart c, ObservableList<PieChart.Data> data) {
 		c.setData(data);
+	}
+
+	public void setImage() {
+		Image imagelogo = new Image("/images/IconOnly_Transparent_NoBuffer.png");
+		logo.setImage(imagelogo);
+	}
+	public InventoryReport getOurReport() {
+		if (inventoryReportsController == null)
+			throw new NullPointerException();
+		
+		return inventoryReportsController.getInventoryReport();
+
 	}
 
 }
