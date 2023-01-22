@@ -66,7 +66,9 @@ class IdentificationControllerTest {
 		verify(mockController, atLeastOnce()).setTextLableUserNotInitilazeCorrectly();
 		assertEquals(expected, result);
 	}
-
+	// functionality : checking userLogin when the condition "if" match to User is with null fields
+	// Input data: event.
+	// Expected result: String "UserLoggedIn" and verify that setTextLableErrorUserAlreadyLoggedIn called.
 	@Test
 	public void userLoginTest_User_NotInitilazeCorrectlyEmptyObject() throws Exception {
 		doNothing().when(mockController).setTextLableErrorUserNotExist();

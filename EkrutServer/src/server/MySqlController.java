@@ -92,7 +92,7 @@ public class MySqlController {
 	 * username and password and will do the login operation for any user
 	 */
 	public static User LoginCheckAndUpdateLoggedIn(ArrayList<String> userANDpassword) {
-		if(userANDpassword == null)
+		if(userANDpassword == null || userANDpassword.equals(new ArrayList<String>()))
 			return null;
 		try {
 			PreparedStatement ps = dbConnector
